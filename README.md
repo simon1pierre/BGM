@@ -1,52 +1,234 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Beacons of God Ministries
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**_Shining God's Light in a Darkened World_**
 
-## About Laravel
+A modern, full-featured Laravel web application for an online Christian ministry dedicated to sharing biblical truth, spiritual resources, and evangelical outreach.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🌟 Overview
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Beacons of God Ministries is a comprehensive digital platform designed to deliver spiritual guidance and biblical teaching through multiple content channels. The website serves as a hub for believers seeking deeper understanding of Scripture, spiritual encouragement, and accessible resources for personal growth in faith.
 
-## Learning Laravel
+**Mission:** To illuminate the path of righteousness through the unwavering truth of Scripture, offering peace and clarity to all believers seeking spiritual guidance.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ✨ Key Features
 
-## Laravel Sponsors
+### Content Delivery
+- **Video Sermons** — Watch powerful, scripture-based messages that bring the Bible to life
+- **Downloadable E-Books & Study Guides** — Access a curated library of PDF resources for biblical study
+- **Audio Teachings** — Listen to sermons and teachings on-the-go for your commute or quiet time
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Community Engagement
+- **Email Newsletter Subscription** — Receive weekly sermons, prayer points, and ministry updates
+- **Subscriber Management** — Maintain an active community of engaged believers
+- **Email Campaigns** — Organize and distribute targeted spiritual messages
 
-### Premium Partners
+### Administration
+- **Content Management System** — Manage videos, audio files, and downloadable resources
+- **Download Tracking** — Monitor resource engagement and usage patterns
+- **Settings & Configuration** — Customize ministry branding and preferences
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Technical Excellence
+- **Modern Responsive Design** — Optimized for desktop, tablet, and mobile devices
+- **Progressive Web App (PWA) Ready** — Install as a home screen app
+- **SEO Optimized** — Proper metadata, Open Graph, Twitter Card tags
+- **Fast Performance** — Built with Vite for optimized asset bundling
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🛠️ Tech Stack
 
-## Code of Conduct
+### Backend
+- **Framework:** Laravel 11+ (PHP modern framework)
+- **Database:** MySQL (Eloquent ORM)
+- **API:** RESTful architecture
+
+### Frontend
+- **CSS Framework:** Tailwind CSS (utility-first, customizable)
+- **Bundler:** Vite (lightning-fast build tool)
+- **Icons:** Lucide (beautiful SVG icon library)
+- **Template Engine:** Blade (Laravel's powerful templating)
+
+---
+
+## 📋 Requirements
+
+- **PHP:** 8.1 or higher
+- **Composer:** Latest version
+- **Node.js:** 18+ (for npm dependencies)
+- **MySQL/PostgreSQL:** Database server
+
+---
+
+## 🚀 Quick Start
+
+### 1. Install Dependencies
+```bash
+composer install
+npm install
+```
+
+### 2. Environment Setup
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+### 3. Configure Database
+Edit `.env` with your database credentials:
+```env
+DB_DATABASE=beacons_of_god
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 4. Run Migrations
+```bash
+php artisan migrate
+php artisan migrate:seed
+```
+
+### 5. Build Assets
+```bash
+npm run dev
+```
+
+### 6. Start Development Server
+```bash
+php artisan serve
+```
+
+Visit `http://localhost:8000`
+
+---
+
+## 📁 Project Structure
+
+```
+BGM/
+├── app/Models/
+│   ├── User.php
+│   ├── Video.php          # Sermon videos
+│   ├── Audio.php          # Audio teachings
+│   ├── Book.php           # E-books and PDFs
+│   ├── Subscriber.php     # Newsletter subscribers
+│   ├── EmailCampaign.php  # Email campaigns
+│   └── DownloadsLog.php   # Analytics
+├── database/
+│   └── migrations/        # Database schema setup
+├── resources/
+│   ├── views/
+│   │   └── home.blade.php # Main homepage
+│   ├── css/               # Stylesheets
+│   └── js/                # JavaScript
+├── public/
+│   ├── favicon.ico        # Browser tab icon
+│   └── logo/              # Brand assets
+└── storage/
+    └── app/
+        ├── private/       # Private downloads
+        └── public/        # Public assets
+```
+
+---
+
+## 🎨 Homepage Sections
+
+1. **Hero Section** — Inspiring tagline with call-to-action buttons
+2. **Mission Statement** — Ministry vision and values
+3. **Three Core Pillars** — Videos, Books, Audio offerings
+4. **Latest Messages** — Featured sermon videos
+5. **Ministry Resources** — Downloadable guides
+6. **Newsletter Signup** — Email subscription form
+7. **Footer** — Links, contact info, social media
+
+---
+
+## 🎯 Features by Content Type
+
+### Videos (Sermons)
+- YouTube integration
+- Duration and publish date
+- Category tagging
+- Engagement tracking
+
+### Audio Teachings
+- MP3 file storage
+- Streaming capability
+- Series organization
+- Download tracking
+
+### Books & Study Guides
+- PDF storage and delivery
+- Category classification
+- Free download access
+- Usage analytics
+
+### Subscribers & Campaigns
+- Double opt-in verification
+- Segmentation support
+- Email template management
+- Campaign analytics
+
+---
+
+## 🎨 Design System
+
+**Brand Colors:**
+- **Primary Blue:** `#0f2b5e` (Deep Royal Blue)
+- **Accent Gold:** `#d4af37` (Muted Gold)
+- **Light Background:** `#f8fafc` (Soft Off-white)
+
+**Typography:**
+- **Serif Font:** Playfair Display (headings)
+- **Sans Font:** Lato (body text)
+
+---
+
+## 📱 Responsive Breakpoints
+
+- **Mobile:** Below 768px
+- **Tablet:** 768px - 1023px
+- **Desktop:** 1024px+
+
+---
+
+## 🔒 Security Features
+
+- CSRF token protection
+- SQL injection prevention (Eloquent ORM)
+- XSS protection via Blade escaping
+- Input validation and sanitization
+- Environment variable handling
+
+---
+
+## 📞 Contact & Support
+
+- **Email:** contact@beaconsofgod.org
+- **Social Media:** YouTube, Facebook, Instagram
+- **Location:** Global Online Ministry
+
+---
+
+## 📝 License
+
+Proprietary software. Unauthorized copying or distribution is prohibited.
+
+---
+
+## 🙏 Credits
+
+Designed and developed with care for advancing God's Kingdom through digital ministry.
+
+**Made with ❤️ for Beacons of God Ministries**
+
+---
+
+*Last Updated: February 6, 2026*
 
 In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 

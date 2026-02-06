@@ -6,13 +6,14 @@
   <title>Beacons of God Ministries | Light, Truth, and Guidance</title>
   <meta name="description" content="Beacons of God Ministries: Shining God's light and truth. Watch sermons, explore biblical resources, and find spiritual guidance for your walk with Christ.">
   <link rel="canonical" href="https://beaconsofgod.org">
-  
+ 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://beaconsofgod.org">
   <meta property="og:title" content="Beacons of God Ministries | Light, Truth, and Guidance">
   <meta property="og:description" content="Join us in spreading the light of God's truth. Access sermons, books, and audio teachings to deepen your faith.">
   <meta property="og:image" content="https://beaconsofgod.org/og-image.jpg">
+
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
@@ -21,14 +22,17 @@
   <meta property="twitter:description" content="Biblical teaching and spiritual resources for all believers. Watch, read, and listen to the truth of God.">
   <meta property="twitter:image" content="https://beaconsofgod.org/twitter-image.jpg">
 
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
+
   <!-- Tailwind & Lucide -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+
 
   <script>
     tailwind.config = {
@@ -60,6 +64,7 @@
       }
     }
   </script>
+
 
   <style>
     /* Custom styles for the divine atmosphere */
@@ -102,43 +107,439 @@
       animation: spin 120s linear infinite;
       pointer-events: none;
     }
+
+
+    /* ===== ENGAGEMENT ANIMATIONS ===== */
+
+
+    /* Fade In Animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+
+    @keyframes bounce-light {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+
+    /* ===== EVENT-DRIVEN CONTINUOUS ANIMATIONS ===== */
+
+
+    /* Continuous Glow Pulse */
+    @keyframes glow-pulse {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(15, 43, 94, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(15, 43, 94, 0.6);
+      }
+    }
+
+
+    /* Shimmer Effect */
+    @keyframes shimmer {
+      0% {
+        background-position: -1000px 0;
+      }
+      100% {
+        background-position: 1000px 0;
+      }
+    }
+
+
+    /* Continuous Float */
+    @keyframes float-continuous {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      25% { transform: translateY(-8px) rotate(1deg); }
+      50% { transform: translateY(0px) rotate(0deg); }
+      75% { transform: translateY(-5px) rotate(-1deg); }
+    }
+
+
+    /* Ripple Click Effect */
+    @keyframes ripple {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+
+    /* Subtle Rotate on Hover */
+    @keyframes subtle-rotate {
+      0%, 100% { transform: rotateY(0deg) rotateX(0deg); }
+      50% { transform: rotateY(5deg) rotateX(-3deg); }
+    }
+
+
+    /* Continuous Background Pulse */
+    @keyframes bg-pulse {
+      0%, 100% { background-color: rgba(15, 43, 94, 0.02); }
+      50% { background-color: rgba(15, 43, 94, 0.08); }
+    }
+
+
+    /* Text Wave Animation */
+    @keyframes wave {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+
+    /* Icon Spin on Hover */
+    @keyframes spin-smooth {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+
+    /* ===== ANIMATION UTILITY CLASSES ===== */
+    .animate-fade-in-up {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+
+    .animate-fade-in-down {
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+
+    .animate-slide-in-left {
+      animation: slideInLeft 0.8s ease-out;
+    }
+
+
+    .animate-slide-in-right {
+      animation: slideInRight 0.8s ease-out;
+    }
+
+
+    .animate-scale-in {
+      animation: scaleIn 0.6s ease-out;
+    }
+
+
+    .animate-bounce-light {
+      animation: bounce-light 2s ease-in-out infinite;
+    }
+
+
+    /* Stagger animations for multiple elements */
+    .animate-stagger > * {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+
+    .animate-stagger > *:nth-child(1) { animation-delay: 0.1s; }
+    .animate-stagger > *:nth-child(2) { animation-delay: 0.2s; }
+    .animate-stagger > *:nth-child(3) { animation-delay: 0.3s; }
+    .animate-stagger > *:nth-child(4) { animation-delay: 0.4s; }
+    .animate-stagger > *:nth-child(5) { animation-delay: 0.5s; }
+
+
+    /* Scroll-triggered animation state */
+    .scroll-animate {
+      opacity: 0;
+    }
+
+
+    .scroll-animate.is-visible {
+      opacity: 1;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+
+    /* ===== EVENT-DRIVEN ANIMATION CLASSES ===== */
+
+
+    /* Continuous Glow Pulse (Always Active) */
+    .animate-glow-continuous {
+      animation: glow-pulse 3s ease-in-out infinite;
+    }
+
+
+    /* Floating Animation (Continuous) */
+    .animate-float-continuous {
+      animation: float-continuous 4s ease-in-out infinite;
+    }
+
+
+    /* Floating Animation - Slow */
+    .animate-float-slow {
+      animation: float-continuous 5.5s ease-in-out infinite;
+    }
+
+
+    /* Background Pulse on Hover */
+    .hover-bg-pulse:hover {
+      animation: bg-pulse 2s ease-in-out infinite;
+    }
+
+
+    /* Ripple Effect Container */
+    .ripple-container {
+      position: relative;
+      overflow: hidden;
+    }
+
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.6);
+      transform: scale(0);
+      animation: ripple 0.6s ease-out;
+      pointer-events: none;
+    }
+
+
+    /* Continuous Rotation on Hover */
+    .hover-spin:hover svg,
+    .hover-spin:hover i {
+      animation: spin-smooth 1s linear infinite;
+    }
+
+
+    /* Card with Continuous Glow */
+    .card-glow {
+      animation: glow-pulse 3s ease-in-out infinite;
+    }
+
+
+    /* Text Wave for Headers */
+    .animate-wave > * {
+      display: inline-block;
+    }
+
+
+    .animate-wave > *:nth-child(1) { animation: wave 1.2s ease-in-out infinite; animation-delay: 0s; }
+    .animate-wave > *:nth-child(2) { animation: wave 1.2s ease-in-out infinite; animation-delay: 0.1s; }
+    .animate-wave > *:nth-child(3) { animation: wave 1.2s ease-in-out infinite; animation-delay: 0.2s; }
+    .animate-wave > *:nth-child(4) { animation: wave 1.2s ease-in-out infinite; animation-delay: 0.3s; }
+
+
+    /* Button Click Pulse Effect */
+    .btn-pulse:active {
+      animation: scaleIn 0.4s ease-out;
+    }
+
+
+    /* Continuous Hover Effects */
+    .hover-glow-intense:hover {
+      animation: glow-pulse 1.5s ease-in-out infinite;
+    }
+
+
+    /* Shimmer Overlay for Loading States (Optional) */
+    .shimmer-overlay {
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      background-size: 1000px 100%;
+      animation: shimmer 2s infinite;
+    }
+
+
+    /* Hover Effects */
+    .hover-lift {
+      transition: all 0.3s ease-out;
+    }
+
+
+    .hover-lift:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+
+    .hover-scale {
+      transition: transform 0.3s ease-out;
+    }
+
+
+    .hover-scale:hover {
+      transform: scale(1.05);
+    }
+
+
+    .hover-glow {
+      transition: all 0.3s ease-out;
+    }
+
+
+    .hover-glow:hover {
+      box-shadow: 0 0 30px rgba(15, 43, 94, 0.3);
+    }
+
+
+    /* Pulse Animation */
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+
+    .animate-pulse-slow {
+      animation: pulse-slow 3s ease-in-out infinite;
+    }
   </style>
 </head>
 <body class="font-sans antialiased flex flex-col min-h-screen">
 
+
   <!-- Header -->
-  <header class="glass-nav sticky top-0 z-50 transition-all duration-300">
-    <div class="container mx-auto px-6 h-20 flex items-center justify-between">
-      <!-- Logo -->
-      <a href="#" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 bg-brand-blue text-white rounded-full flex items-center justify-center shadow-md group-hover:bg-brand-gold transition-colors duration-300">
-          <i data-lucide="flame" class="w-5 h-5"></i>
+  <header class="glass-nav sticky top-0 z-50 transition-all duration-300 shadow-sm">
+    <div class="container mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <!-- Logo & Branding -->
+      <a href="/" class="flex items-center gap-2 sm:gap-3 group shrink-0">
+        <img
+          src="{{ asset('images/logo.png') }}"
+          alt="Beacons of God Logo"
+          class="h-10 w-auto sm:h-12 transition-transform duration-300 group-hover:scale-105"
+        />
+        <div class="hidden sm:block">
+          <div class="font-serif text-base sm:text-lg font-bold text-brand-blue leading-tight">Beacons of God Ministries</div>
         </div>
-        <span class="font-serif text-xl font-bold text-brand-blue tracking-wide">Beacons of God</span>
       </a>
 
-      <!-- Desktop Nav -->
-      <nav class="hidden md:flex items-center gap-8">
-        <a href="#hero" class="text-slate-600 hover:text-brand-blue font-medium transition-colors">Home</a>
-        <a href="#features" class="text-slate-600 hover:text-brand-blue font-medium transition-colors">Resources</a>
-        <a href="#featured-sermon" class="text-slate-600 hover:text-brand-blue font-medium transition-colors">Sermons</a>
-        <a href="#intro" class="text-slate-600 hover:text-brand-blue font-medium transition-colors">About</a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-1">
+        <a href="#hero" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">Home</a>
+        <a href="#features" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">Resources</a>
+        <a href="#featured-sermon" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">Sermons</a>
+        <a href="#intro" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">About</a>
       </nav>
 
-      <!-- CTA & Mobile Menu -->
-      <div class="flex items-center gap-4">
-        <a href="#newsletter" class="hidden md:inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white bg-brand-blue rounded-full hover:bg-blue-800 transition-all shadow-sm hover:shadow-md">
+
+      <!-- CTA & Mobile Menu Toggle -->
+      <div class="flex items-center gap-2 sm:gap-4">
+        <a href="#newsletter" class="hidden md:inline-flex items-center justify-center px-4 sm:px-6 py-2 text-xs sm:text-sm font-semibold text-white bg-brand-blue rounded-full hover:bg-blue-800 transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5">
           Join Ministry
         </a>
-        <button class="md:hidden text-slate-600 hover:text-brand-blue">
-          <i data-lucide="menu" class="w-7 h-7"></i>
+        <button
+          id="mobile-menu-toggle"
+          class="lg:hidden inline-flex flex-col items-center justify-center w-10 h-10 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-blue"
+          aria-label="Toggle navigation menu"
+        >
+          <!-- Hamburger Menu Icon (3 lines) -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
         </button>
       </div>
     </div>
+
+
+    <!-- Mobile Navigation Menu (Hidden by default) -->
+    <nav id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-200">
+      <div class="container mx-auto px-4 sm:px-6 py-3 space-y-2">
+        <a href="#hero" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">Home</a>
+        <a href="#features" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">Resources</a>
+        <a href="#featured-sermon" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">Sermons</a>
+        <a href="#intro" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">About</a>
+        <a href="#newsletter" class="block w-full mt-3 px-4 py-2 text-center text-white bg-brand-blue rounded-lg font-semibold hover:bg-blue-800 transition-colors duration-200">Join Ministry</a>
+      </div>
+    </nav>
   </header>
 
+
+  <!-- Mobile Menu Toggle Script -->
+  <script>
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+   
+    toggle.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+
+
+    // Close menu when a link is clicked
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+      });
+    });
+  </script>
+
+
   <!-- Main Content -->
-  <main class="flex-grow">
+  <main class="grow">
     <section class="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden bg-slate-900 text-white">
   <!-- Background Image with Overlay -->
   <div class="absolute inset-0 z-0">
@@ -154,6 +555,7 @@
     />
     <div class="absolute inset-0 bg-gradient-to-b from-blue-900/80 via-blue-950/70 to-slate-900/90 mix-blend-multiply"></div>
   </div>
+
 
   <!-- Dove Animation Styles -->
   <style>
@@ -173,6 +575,7 @@
     .dove-2 { top: 40%; left: -10%; animation-duration: 30s; animation-delay: 8s; transform: scale(0.7); }
     .dove-3 { top: 70%; left: -10%; animation-duration: 22s; animation-delay: 15s; transform: scale(0.9); }
   </style>
+
 
   <!-- Animated Doves Layer -->
   <div class="absolute inset-0 z-10 pointer-events-none overflow-hidden">
@@ -197,58 +600,99 @@
     </div>
   </div>
 
+
   <!-- Content -->
   <div class="relative z-20 container mx-auto px-6 text-center">
-    <span class="inline-block py-1 px-3 rounded-full bg-blue-500/20 border border-blue-300/30 text-blue-100 text-sm font-medium tracking-widest uppercase mb-6 backdrop-blur-sm">
+    <span class="inline-block py-1 px-3 rounded-full bg-blue-500/20 border border-blue-300/30 text-blue-100 text-sm font-medium tracking-widest uppercase mb-6 backdrop-blur-sm animate-fade-in-down">
       Welcome to Beacons of God Ministries
     </span>
-    <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-medium leading-tight mb-6 drop-shadow-lg">
+    <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-medium leading-tight mb-6 drop-shadow-lg animate-fade-in-up" style="animation-delay: 0.2s;">
       Shining God’s Truth in a <br class="hidden md:block" /> Darkened World
     </h1>
-    <p class="text-lg md:text-xl text-blue-100/90 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+    <p class="text-lg md:text-xl text-blue-100/90 max-w-2xl mx-auto mb-10 font-light leading-relaxed animate-fade-in-up" style="animation-delay: 0.4s;">
       We are beacons of His light for this generation. Join us for biblical teaching, evangelism, and spiritual growth in the presence of the Lord.
     </p>
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-      <button class="px-8 py-4 bg-white text-blue-900 rounded-full font-semibold hover:bg-blue-50 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]">
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-stagger">
+      <button class="px-8 py-4 bg-white text-blue-900 rounded-full font-semibold hover:bg-blue-50 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover-lift">
         Watch Sermons
       </button>
-      <button class="px-8 py-4 bg-transparent border border-white/40 text-white rounded-full font-medium hover:bg-white/10 transition-all backdrop-blur-sm">
+      <button class="px-8 py-4 bg-transparent border border-white/40 text-white rounded-full font-medium hover:bg-white/10 transition-all backdrop-blur-sm hover-lift">
         Explore Resources
       </button>
     </div>
   </div>
 </section>
-    <section class="py-20 bg-white text-slate-800">
+<!-- About Section -->
+<section id="intro" class="py-6 bg-slate-50 text-slate-800">
   <div class="container mx-auto px-6">
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-serif text-blue-900 mb-6">
-        A Ministry of Light and Truth
+    <div class="text-center mb-8">
+      <h2 class="text-4xl md:text-5xl font-serif font-bold text-brand-blue mb-4">
+        About Our Ministry
       </h2>
-      <div class="w-16 h-1 bg-amber-400 mx-auto mb-8 rounded-full"></div>
-      <p class="text-lg md:text-xl leading-relaxed text-slate-600 mb-8">
-        At Beacons of God Ministries, our mission is simple yet profound: to illuminate the path of righteousness through the unwavering truth of Scripture. In a world often clouded by confusion, we strive to be a steady source of divine guidance, offering peace and clarity to all believers.
-      </p>
-      <p class="text-lg md:text-xl leading-relaxed text-slate-600">
-        Whether you are seeking a deeper understanding of the Bible or looking for spiritual encouragement, our doors and our hearts are open. Let us walk together in the light of His presence.
-      </p>
+      <div class="w-12 h-1 bg-brand-gold mx-auto"></div>
+    </div>
+
+
+    <!-- Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Mission Card -->
+      <div class="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow">
+        <h3 class="text-2xl font-serif font-bold text-brand-blue mb-4">Our Mission</h3>
+        <p class="text-lg text-slate-700 leading-relaxed">
+          We're here to shine God's light in a world searching for answers. Through powerful biblical teaching and genuine spiritual support, we help believers discover their divine purpose and transform their lives with faith.
+        </p>
+      </div>
+
+
+      <!-- What We Offer Card - Animated -->
+      <div class="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow animate-float-slow">
+        <h3 class="text-2xl font-serif font-bold text-brand-blue mb-4">What We Offer</h3>
+        <ul class="space-y-3 text-lg text-slate-700">
+          <li class="flex items-start gap-3 hover:translate-x-1 transition-transform">
+            <span class="text-brand-gold font-bold text-xl">✦</span>
+            <span><strong>Powerful Sermons</strong> — Stories and truths that challenge and inspire</span>
+          </li>
+          <li class="flex items-start gap-3 hover:translate-x-1 transition-transform">
+            <span class="text-brand-gold font-bold text-xl">✦</span>
+            <span><strong>Study Resources</strong> — Tools to deepen your biblical knowledge</span>
+          </li>
+          <li class="flex items-start gap-3 hover:translate-x-1 transition-transform">
+            <span class="text-brand-gold font-bold text-xl">✦</span>
+            <span><strong>Inspiring Audio</strong> — Spiritual teachings for your daily walk</span>
+          </li>
+          <li class="flex items-start gap-3 hover:translate-x-1 transition-transform">
+            <span class="text-brand-gold font-bold text-xl">✦</span>
+            <span><strong>Connected Community</strong> — Find encouragement and belonging</span>
+          </li>
+        </ul>
+      </div>
+
+
+      <!-- Vision Card -->
+      <div class="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow">
+        <h3 class="text-2xl font-serif font-bold text-brand-blue mb-4">Our Vision</h3>
+        <p class="text-lg text-slate-700 leading-relaxed">
+          We believe every person deserves access to life-changing spiritual guidance. Join thousands discovering deeper faith, finding hope, and living with renewed purpose through God's eternal truth.
+        </p>
+      </div>
     </div>
   </div>
 </section>
-    <section class="py-24 bg-slate-50">
+<section class="py-24 bg-slate-50">
   <div class="container mx-auto px-6">
     <div class="text-center mb-16">
       <h2 class="text-3xl md:text-4xl font-serif text-blue-900 mb-4">Spiritual Resources for Your Journey</h2>
       <p class="text-slate-600 max-w-2xl mx-auto">Explore our three core pillars of ministry designed to help you grow in faith and understanding.</p>
     </div>
-    
+   
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Feature 1: Sermons -->
-      <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-slate-100">
+      <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-slate-100 scroll-animate hover-lift hover-glow-intense ripple-container">
         <div class="aspect-[3/2] overflow-hidden">
           <img
             data-ai="generate"
             data-slot="feature-sermons"
-            data-prompt="A peaceful church pulpit with an open bible and soft warm lighting, inviting and holy, photorealistic"
+            a ministry of A peaceful church pulpit with an open bible and soft warm lighting, inviting and holy, photorealistic"
             data-ar="3:2"
             src="https://cdn.ailandingpage.ai/landingpage_io/user-generate/552f4586-c83c-46ac-b326-367fa6ccc9f3/552f4586-c83c-46ac-b326-367fa6ccc9f3/features/feature-sermons-1caa032ab92e4984897d6a1257a4868a.png"
             alt="Video Sermons"
@@ -268,13 +712,14 @@
         </div>
       </div>
 
+
       <!-- Feature 2: Books -->
-      <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-slate-100">
+      <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-slate-100 scroll-animate hover-lift hover-glow-intense ripple-container">
         <div class="aspect-[3/2] overflow-hidden">
           <img
             data-ai="generate"
             data-slot="feature-books"
-            data-prompt="A stack of elegant christian books on a wooden table with a cup of tea, soft daylight, reading atmosphere"
+            a ministry of light"A stack of elegant christian books on a wooden table with a cup of tea, soft daylight, reading atmosphere"
             data-ar="3:2"
             src="https://cdn.ailandingpage.ai/landingpage_io/user-generate/552f4586-c83c-46ac-b326-367fa6ccc9f3/552f4586-c83c-46ac-b326-367fa6ccc9f3/features/feature-books-5049c06b4fcb4e0887e246668bb8b930.png"
             alt="Downloadable Books"
@@ -294,13 +739,14 @@
         </div>
       </div>
 
+
       <!-- Feature 3: Audio -->
-      <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-slate-100">
+      <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-slate-100 scroll-animate hover-lift hover-glow-intense ripple-container">
         <div class="aspect-[3/2] overflow-hidden">
           <img
             data-ai="generate"
             data-slot="feature-audio"
-            data-prompt="Close up of vintage headphones resting on a bible, calm and serene composition, soft focus"
+            A Ministry of Light and Truth Close up of vintage headphones resting on a bible, calm and serene composition, soft focus"
             data-ar="3:2"
             src="https://cdn.ailandingpage.ai/landingpage_io/user-generate/552f4586-c83c-46ac-b326-367fa6ccc9f3/552f4586-c83c-46ac-b326-367fa6ccc9f3/features/feature-audio-8fdfc52770dd449da1f89949a5b099e2.png"
             alt="Audio Teachings"
@@ -327,7 +773,7 @@
     <span class="block text-amber-600 font-semibold tracking-widest uppercase text-sm mb-3">Latest Messages</span>
     <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950 mb-4">Walking in Divine Light</h2>
     <p class="text-lg text-slate-600 mb-10 italic">"Your word is a lamp for my feet, a light on my path." — Psalm 119:105</p>
-    
+   
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Video 1 -->
       <div class="flex flex-col">
@@ -338,6 +784,7 @@
         <p class="text-sm text-slate-500 text-left">Sunday Service • 45 min</p>
       </div>
 
+
       <!-- Video 2 -->
       <div class="flex flex-col">
         <div class="relative w-full aspect-video bg-slate-100 rounded-xl overflow-hidden shadow-lg border border-slate-200 mb-4">
@@ -346,6 +793,7 @@
         <h3 class="text-lg font-serif font-semibold text-blue-900 text-left">Walking in Faith</h3>
         <p class="text-sm text-slate-500 text-left">Bible Study • 38 min</p>
       </div>
+
 
       <!-- Video 3 -->
       <div class="flex flex-col">
@@ -364,65 +812,138 @@
       <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950 mb-4">Ministry Resources</h2>
       <p class="text-slate-600 max-w-2xl mx-auto text-lg">Deepen your understanding with our curated collection of study guides and audio teachings, available for free download.</p>
     </div>
-    <div class="grid md:grid-cols-2 gap-10">
-      <!-- Card 1: Book/PDF -->
-      <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col">
-        <div class="relative h-64 overflow-hidden">
-          <img
-            data-ai="generate"
-            data-slot="resource-preview-1"
-            data-prompt="A peaceful, open bible on a wooden table with soft morning light, spiritual study atmosphere, high quality photography"
-            data-ar="3:2"
-            src="https://cdn.ailandingpage.ai/landingpage_io/user-generate/552f4586-c83c-46ac-b326-367fa6ccc9f3/552f4586-c83c-46ac-b326-367fa6ccc9f3/resources/resource-preview-1-75b8e778cbf843c7be0aa4bdea54cb0a.png"
-            alt="Bible study guide preview"
-            width="1200"
-            height="900"
-            class="w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
-            fetchpriority="auto"
-          />
-        </div>
-        <div class="p-8 flex-1 flex flex-col">
-          <div class="flex items-center gap-2 text-amber-600 text-sm font-semibold mb-3">
-            <i data-lucide="book-open" class="w-4 h-4"></i>
-            <span>Study Guide</span>
+
+
+    <!-- PDF Downloads Section -->
+    <div class="mb-16">
+      <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">Downloadable PDF Resources</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- PDF Card 1 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
+          <div class="relative h-48 overflow-hidden bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center">
+            <div class="text-center">
+              <i data-lucide="book-open" class="w-16 h-16 text-blue-900 mx-auto"></i>
+              <p class="text-sm text-blue-700 mt-2">Study Guide</p>
+            </div>
           </div>
-          <h3 class="text-2xl font-serif font-bold text-blue-950 mb-3">Foundations of Faith</h3>
-          <p class="text-slate-600 mb-8 flex-1 leading-relaxed">A comprehensive guide to understanding the core pillars of our spiritual walk and biblical truth.</p>
-          <button class="w-full py-3 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2">
-            <i data-lucide="download" class="w-4 h-4"></i> Download PDF
-          </button>
+          <div class="p-8 flex-1 flex flex-col">
+            <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">Foundations of Faith</h3>
+            <p class="text-slate-600 mb-6 flex-1 leading-relaxed">A comprehensive guide to understanding the core pillars of our spiritual walk and biblical truth.</p>
+            <button class="w-full py-3 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
+              <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+            </button>
+          </div>
+        </div>
+
+
+        <!-- PDF Card 2 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
+          <div class="relative h-48 overflow-hidden bg-gradient-to-br from-amber-100 to-amber-50 flex items-center justify-center">
+            <div class="text-center">
+              <i data-lucide="scroll" class="w-16 h-16 text-amber-900 mx-auto"></i>
+              <p class="text-sm text-amber-700 mt-2">Prayer Guide</p>
+            </div>
+          </div>
+          <div class="p-8 flex-1 flex flex-col">
+            <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">The Power of Prayer</h3>
+            <p class="text-slate-600 mb-6 flex-1 leading-relaxed">Learn effective prayer techniques and biblical foundations that will transform your spiritual life and connection with God.</p>
+            <button class="w-full py-3 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
+              <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+            </button>
+          </div>
+        </div>
+
+
+        <!-- PDF Card 3 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
+          <div class="relative h-48 overflow-hidden bg-gradient-to-br from-green-100 to-green-50 flex items-center justify-center">
+            <div class="text-center">
+              <i data-lucide="bible" class="w-16 h-16 text-green-900 mx-auto"></i>
+              <p class="text-sm text-green-700 mt-2">Scripture Study</p>
+            </div>
+          </div>
+          <div class="p-8 flex-1 flex flex-col">
+            <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">Walking in Scripture</h3>
+            <p class="text-slate-600 mb-6 flex-1 leading-relaxed">Deep dive into key biblical passages with commentary, historical context, and practical applications for modern life.</p>
+            <button class="w-full py-3 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
+              <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+            </button>
+          </div>
         </div>
       </div>
-      <!-- Card 2: Audio -->
-      <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col">
-        <div class="relative h-64 overflow-hidden">
-          <img
-            data-ai="generate"
-            data-slot="resource-preview-2"
-            data-prompt="A calm nature scene with headphones or a vintage radio, symbolizing listening to god's word, soft blue tones, cinematic lighting"
-            data-ar="3:2"
-            src="https://cdn.ailandingpage.ai/landingpage_io/user-generate/552f4586-c83c-46ac-b326-367fa6ccc9f3/552f4586-c83c-46ac-b326-367fa6ccc9f3/resources/resource-preview-2-b8f1457951f945ffab6c2b397686ca7d.png"
-            alt="Audio sermon series preview"
-            width="1200"
-            height="900"
-            class="w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
-            fetchpriority="auto"
-          />
-        </div>
-        <div class="p-8 flex-1 flex flex-col">
-          <div class="flex items-center gap-2 text-amber-600 text-sm font-semibold mb-3">
-            <i data-lucide="headphones" class="w-4 h-4"></i>
-            <span>Audio Series</span>
+    </div>
+
+
+    <!-- Audio Resources Section -->
+    <div>
+      <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">Audio Teachings</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Audio Card 1 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
+          <div class="relative h-48 overflow-hidden bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center">
+            <div class="text-center">
+              <i data-lucide="headphones" class="w-16 h-16 text-purple-900 mx-auto"></i>
+              <p class="text-sm text-purple-700 mt-2">Sermon Series</p>
+            </div>
           </div>
-          <h3 class="text-2xl font-serif font-bold text-blue-950 mb-3">Echoes of Grace</h3>
-          <p class="text-slate-600 mb-8 flex-1 leading-relaxed">Listen to our latest series on finding peace and grace in everyday life through the Holy Spirit.</p>
-          <button class="w-full py-3 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2">
-            <i data-lucide="play-circle" class="w-4 h-4"></i> Listen Now
-          </button>
+          <div class="p-8 flex-1 flex flex-col">
+            <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">Echoes of Grace</h3>
+            <p class="text-slate-600 mb-6 flex-1 leading-relaxed">Listen to our latest series on finding peace and grace in everyday life through the Holy Spirit and God's love.</p>
+            <div class="space-y-2">
+              <button class="w-full py-3 px-6 bg-purple-50 text-purple-900 font-medium rounded-lg hover:bg-purple-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
+                <i data-lucide="play-circle" class="w-4 h-4"></i> Play Audio
+              </button>
+              <button class="w-full py-2 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 text-sm">
+                <i data-lucide="download" class="w-4 h-4"></i> Download
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Audio Card 2 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
+          <div class="relative h-48 overflow-hidden bg-gradient-to-br from-indigo-100 to-indigo-50 flex items-center justify-center">
+            <div class="text-center">
+              <i data-lucide="volume-2" class="w-16 h-16 text-indigo-900 mx-auto"></i>
+              <p class="text-sm text-indigo-700 mt-2">Daily Devotional</p>
+            </div>
+          </div>
+          <div class="p-8 flex-1 flex flex-col">
+            <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">Daily Strength</h3>
+            <p class="text-slate-600 mb-6 flex-1 leading-relaxed">Short daily audio devotions to strengthen your faith and set the right spiritual tone for each day.</p>
+            <div class="space-y-2">
+              <button class="w-full py-3 px-6 bg-indigo-50 text-indigo-900 font-medium rounded-lg hover:bg-indigo-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
+                <i data-lucide="play-circle" class="w-4 h-4"></i> Play Audio
+              </button>
+              <button class="w-full py-2 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 text-sm">
+                <i data-lucide="download" class="w-4 h-4"></i> Download
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Audio Card 3 -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
+          <div class="relative h-48 overflow-hidden bg-gradient-to-br from-rose-100 to-rose-50 flex items-center justify-center">
+            <div class="text-center">
+              <i data-lucide="music" class="w-16 h-16 text-rose-900 mx-auto"></i>
+              <p class="text-sm text-rose-700 mt-2">Worship Music</p>
+            </div>
+          </div>
+          <div class="p-8 flex-1 flex flex-col">
+            <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">Hymns of Faith</h3>
+            <p class="text-slate-600 mb-6 flex-1 leading-relaxed">Beautiful worship music and hymns to inspire your prayers and strengthen your connection with the Divine.</p>
+            <div class="space-y-2">
+              <button class="w-full py-3 px-6 bg-rose-50 text-rose-900 font-medium rounded-lg hover:bg-rose-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
+                <i data-lucide="play-circle" class="w-4 h-4"></i> Play Audio
+              </button>
+              <button class="w-full py-2 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 text-sm">
+                <i data-lucide="download" class="w-4 h-4"></i> Download
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -435,23 +956,23 @@
       <path d="M0 100 C 30 50 70 50 100 100 Z" fill="white" />
     </svg>
   </div>
-  
+ 
   <div class="container mx-auto px-6 max-w-3xl text-center relative z-10">
     <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-900 mb-6">
       <i data-lucide="mail" class="w-8 h-8 text-amber-500"></i>
     </div>
     <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">Receive Spiritual Nourishment</h2>
     <p class="text-blue-100 text-lg mb-10 leading-relaxed">Join our community to receive weekly sermons, prayer points, and ministry updates directly in your inbox.</p>
-    
+   
     <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-      <input 
-        type="email" 
-        placeholder="Your email address" 
+      <input
+        type="email"
+        placeholder="Your email address"
         class="flex-1 px-6 py-4 rounded-lg text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder-slate-400"
         required
       />
-      <button 
-        type="submit" 
+      <button
+        type="submit"
         class="px-8 py-4 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-lg transition-colors shadow-lg whitespace-nowrap"
       >
         Subscribe
@@ -461,6 +982,7 @@
   </div>
 </section>
   </main>
+
 
   <!-- Footer -->
   <footer class="bg-brand-blue text-slate-300 py-12 border-t border-blue-800">
@@ -477,6 +999,7 @@
           </p>
         </div>
 
+
         <!-- Links 1 -->
         <div>
           <h4 class="text-white font-serif font-semibold mb-4">Ministry</h4>
@@ -488,6 +1011,7 @@
           </ul>
         </div>
 
+
         <!-- Links 2 -->
         <div>
           <h4 class="text-white font-serif font-semibold mb-4">Resources</h4>
@@ -498,6 +1022,7 @@
             <li><a href="#" class="hover:text-brand-gold transition-colors">Devotionals</a></li>
           </ul>
         </div>
+
 
         <!-- Contact / Social -->
         <div>
@@ -520,6 +1045,7 @@
         </div>
       </div>
 
+
       <div class="border-t border-blue-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-blue-200 opacity-60">
         <p>&copy; 2023 Beacons of God Ministries. All rights reserved.</p>
         <p class="mt-2 md:mt-0">Designed & developed with care</p>
@@ -527,5 +1053,39 @@
     </div>
   </footer>
 
+
+  <!-- Scroll Animation Trigger Script -->
+  <script>
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+
+    // Observe all scroll-animate elements
+    document.querySelectorAll('.scroll-animate').forEach(el => {
+      observer.observe(el);
+    });
+
+
+    // Lucide icon initialization
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  </script>
+
+
 </body>
 </html>
+

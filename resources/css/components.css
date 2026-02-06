@@ -1,0 +1,263 @@
+/* ============================================
+   Beacons of God Ministries - Component Styles
+   ============================================ */
+
+/* Custom brand colors */
+:root {
+  --color-brand-blue: #0f2b5e;
+  --color-brand-gold: #d4af37;
+  --color-brand-off-white: #f8fafc;
+}
+
+/* ============================================
+   TYPOGRAPHY & LAYOUT
+   ============================================ */
+
+body {
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+/* Glass effect navbar */
+.glass-nav {
+  background: white;
+  border-bottom: 1px solid rgba(15, 43, 94, 0.05);
+}
+
+/* Header when scrolled */
+.glass-nav.scrolled {
+  background: white;
+  border-bottom: 1px solid rgba(15, 43, 94, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================
+   ANIMATIONS - KEYFRAMES
+   ============================================ */
+
+/* Fade In Up Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade In Down Animation */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Continuous Float Animation */
+@keyframes float-continuous {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+}
+
+/* Glow Pulse Animation */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(212, 175, 55, 0.3), inset 0 0 5px rgba(212, 175, 55, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.6), inset 0 0 10px rgba(212, 175, 55, 0.2);
+  }
+}
+
+/* Ripple Effect Animation */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Background Pulse Animation */
+@keyframes bg-pulse {
+  0%, 100% {
+    background-color: rgba(15, 43, 94, 0.02);
+  }
+  50% {
+    background-color: rgba(15, 43, 94, 0.08);
+  }
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Wave Animation */
+@keyframes wave {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Smooth Spin Animation */
+@keyframes spin-smooth {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   ANIMATION UTILITY CLASSES
+   ============================================ */
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.animate-float-slow {
+  animation: float-continuous 5.5s ease-in-out infinite;
+}
+
+.animate-glow-continuous {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.animate-ripple {
+  animation: ripple 0.6s ease-out;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
+  background-size: 1000px 100%;
+}
+
+.animate-wave {
+  animation: wave 2s ease-in-out infinite;
+}
+
+.animate-spin-smooth {
+  animation: spin-smooth 2s linear infinite;
+}
+
+/* ============================================
+   SCROLL ANIMATION CLASSES
+   ============================================ */
+
+.scroll-animate {
+  opacity: 0;
+}
+
+.scroll-animate.is-visible {
+  opacity: 1;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* ============================================
+   HOVER EFFECT CLASSES
+   ============================================ */
+
+.hover-lift {
+  transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+.hover-glow-intense {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-glow-intense:hover {
+  animation: glow-pulse 2s ease-in-out;
+}
+
+/* ============================================
+   STAGGER ANIMATION
+   ============================================ */
+
+.animate-stagger > * {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.animate-stagger > *:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.animate-stagger > *:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.animate-stagger > *:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.animate-stagger > *:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.animate-stagger > *:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+/* ============================================
+   INTERACTIVE ELEMENTS
+   ============================================ */
+
+.ripple-container {
+  position: relative;
+  overflow: hidden;
+}
+
+button, a {
+  transition: all 0.3s ease;
+}

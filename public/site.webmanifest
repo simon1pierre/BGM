@@ -1,0 +1,36 @@
+{
+  "name": "Beacons of God Ministries",
+  "short_name": "Beacons",
+  "description": "Shining God's light and truth. Watch sermons, explore biblical resources, and find spiritual guidance for your walk with Christ.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0f2b5e",
+  "background_color": "#f8fafc",
+  "icons": [
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg"
+    }
+  ],
+  "categories": ["religion", "lifestyle"]
+}
