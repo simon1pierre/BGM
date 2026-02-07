@@ -3,10 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beacons of God Ministries | Light, Truth, and Guidance</title>
+  <title>{{ config('app.name','Beacons of God Ministries || Light, Truth, and Guidance')}}</title>
   <meta name="description" content="Beacons of God Ministries: Shining God's light and truth. Watch sermons, explore biblical resources, and find spiritual guidance for your walk with Christ.">
   <link rel="canonical" href="https://beaconsofgod.org">
- 
+ <!-- Favicon -->
+<link rel="icon" type="image/png" sizes="18x18" href="{{asset('logo/favicon-16x16.png')}}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{asset('logo/favicon-32x32.png')}}">
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" sizes="180x180" href="{{asset('logo/apple-touch-icon.png')}}">
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://beaconsofgod.org">
