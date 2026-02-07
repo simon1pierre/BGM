@@ -77,6 +77,9 @@
                                     <td>
                                         <div class="d-flex align-items-center gap-3">
                                             <div class="avatar-text avatar-md bg-light">
+                                                @if($user->avatar)
+                                                <img src="{{$user->avatar}}" alt="">
+                                                @endif
                                                 <i class="feather-user"></i>
                                             </div>
                                             <div>

@@ -50,7 +50,9 @@ class UserController extends Controller
 
         $users = $query->orderByDesc('created_at')->paginate(15)->withQueryString();
 
-        return view('Admin.Users.index', compact('users'));
+        return view('Admin.Users.index',[
+            'users' => $users,
+        ]);
     }
 
     public function show(User $user)

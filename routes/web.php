@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\EmailCampaigns\EmailCampaignController;
+use App\Http\Controllers\Admin\Settings\SettingsController;
 use App\Http\Controllers\Admin\Users\ManageController;
 use App\Http\Controllers\Admin\Users\UserController;
 use App\Http\Controllers\Home\HomeController;
@@ -17,6 +19,18 @@ Route::controller(AdminController::class)->group(function(){
 Route::controller(ManageController::class)->group(function(){
     Route::get('/beacons/admin/register','index')->name('admin.register')->middleware('auth');
     Route::post('/beacons/admin/register','store')->name('admin.register.store')->middleware('auth');
+});
+Route::controller(SettingsController::class)->group(function(){
+    Route::get('/beacons/admin/settings','edit')->name('admin.settings.edit')->middleware('auth');
+    Route::post('/beacons/admin/settings','update')->name('admin.settings.update')->middleware('auth');
+    Route::post('/beacons/admin/settings/test-email','testEmail')->name('admin.settings.test-email')->middleware('auth');
+});
+Route::prefix('beacons/admin')->middleware('auth')->name('admin.campaigns.')->group(function () {
+    Route::get('/campaigns', [EmailCampaignController::class, 'index'])->name('index');
+    Route::get('/campaigns/create', [EmailCampaignController::class, 'create'])->name('create');
+    Route::post('/campaigns', [EmailCampaignController::class, 'store'])->name('store');
+    Route::get('/campaigns/{campaign}/edit', [EmailCampaignController::class, 'edit'])->name('edit');
+    Route::put('/campaigns/{campaign}', [EmailCampaignController::class, 'update'])->name('update');
 });
 Route::prefix('beacons/admin')->middleware('auth')->name('admin.users.')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('index');
