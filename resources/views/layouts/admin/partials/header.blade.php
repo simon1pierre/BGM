@@ -55,6 +55,18 @@
                   'subscriber_status_toggled',
                   'subscriber_deleted',
                   'subscriber_restored',
+                  'video_created',
+                  'video_updated',
+                  'video_deleted',
+                  'video_restored',
+                  'audio_created',
+                  'audio_updated',
+                  'audio_deleted',
+                  'audio_restored',
+                  'document_created',
+                  'document_updated',
+                  'document_deleted',
+                  'document_restored',
                ];
                $currentAdminId = Auth::id();
                $unreadCount = 0;
@@ -104,6 +116,18 @@
                               'subscriber_status_toggled' => 'Subscriber status changed',
                               'subscriber_deleted' => 'Subscriber deleted',
                               'subscriber_restored' => 'Subscriber restored',
+                              'video_created' => 'Video added',
+                              'video_updated' => 'Video updated',
+                              'video_deleted' => 'Video deleted',
+                              'video_restored' => 'Video restored',
+                              'audio_created' => 'Audio added',
+                              'audio_updated' => 'Audio updated',
+                              'audio_deleted' => 'Audio deleted',
+                              'audio_restored' => 'Audio restored',
+                              'document_created' => 'Document added',
+                              'document_updated' => 'Document updated',
+                              'document_deleted' => 'Document deleted',
+                              'document_restored' => 'Document restored',
                            ];
                            $title = $labels[$notification->action] ?? 'System update';
                            $actor = $notification->actorUser?->email ?? 'Guest';

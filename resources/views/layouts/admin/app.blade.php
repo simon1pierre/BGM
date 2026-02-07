@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/vendors/css/vendors.min.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/vendors/css/daterangepicker.min.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/theme.min.css')}}" />
+    @livewireStyles
 </head>
 
 <body>
@@ -49,5 +50,6 @@
     <script src="{{asset('admin/assets/js/common-init.min.js')}}"></script>
     <script src="{{asset('admin/assets/js/dashboard-init.min.js')}}"></script>
     <script src="{{ asset('admin/assets/js/theme-customizer-init.min.js')}}"></script>
+    @livewireScripts
 </body>
 </html>

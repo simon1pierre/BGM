@@ -8,8 +8,12 @@ use App\Http\Controllers\Admin\Subscribers\SubscriberController;
 use App\Http\Controllers\Admin\Settings\SettingsController;
 use App\Http\Controllers\Admin\Users\ManageController;
 use App\Http\Controllers\Admin\Users\UserController;
+use App\Http\Controllers\Admin\Content\VideoController;
+use App\Http\Controllers\Admin\Content\AudioController;
+use App\Http\Controllers\Admin\Content\DocumentController;
 use App\Http\Controllers\Admin\Auth\TwoFactorController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Content\ContentDownloadController;
 use App\Http\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +48,19 @@ Route::prefix('beacons/admin')->middleware('auth')->name('admin.campaigns.')->gr
     Route::get('/campaigns/{campaign}/preview', [EmailCampaignController::class, 'preview'])->name('preview');
     Route::get('/campaigns/{campaign}/preview/raw', [EmailCampaignController::class, 'previewRaw'])->name('preview.raw');
 });
+Route::prefix('beacons/admin')->middleware('auth')->group(function () {
+    Route::resource('videos', VideoController::class)->except(['show'])->names('admin.videos');
+    Route::get('videos/{video}/preview', [VideoController::class, 'preview'])->name('admin.videos.preview');
+    Route::post('videos/{video}/restore', [VideoController::class, 'restore'])->name('admin.videos.restore');
+
+    Route::resource('audios', AudioController::class)->except(['show'])->names('admin.audios');
+    Route::get('audios/{audio}/preview', [AudioController::class, 'preview'])->name('admin.audios.preview');
+    Route::post('audios/{audio}/restore', [AudioController::class, 'restore'])->name('admin.audios.restore');
+
+    Route::resource('documents', DocumentController::class)->except(['show'])->names('admin.documents');
+    Route::get('documents/{document}/preview', [DocumentController::class, 'preview'])->name('admin.documents.preview');
+    Route::post('documents/{document}/restore', [DocumentController::class, 'restore'])->name('admin.documents.restore');
+});
 Route::prefix('beacons/admin')->middleware('auth')->name('admin.subscribers.')->group(function () {
     Route::get('/subscribers', [SubscriberController::class, 'index'])->name('index');
     Route::post('/subscribers/{subscriber}/toggle', [SubscriberController::class, 'toggle'])->name('toggle');
@@ -77,3 +94,10 @@ Route::post('/beacons/admin/notifications/read-all', [AdminNotificationControlle
 Route::get('/beacons/admin/notifications/{notification}', [AdminNotificationController::class, 'show'])
     ->name('admin.notifications.show')
     ->middleware('auth');
+
+Route::get('/downloads/audio/{audio}', [ContentDownloadController::class, 'audio'])
+    ->name('content.download.audio');
+Route::get('/downloads/document/{document}', [ContentDownloadController::class, 'document'])
+    ->name('content.download.document');
+Route::post('/videos/{video}/view', [ContentDownloadController::class, 'videoView'])
+    ->name('content.video.view');

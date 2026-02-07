@@ -14,6 +14,10 @@
                 $isSettings = request()->routeIs('admin.settings.*');
                 $isCampaigns = request()->routeIs('admin.campaigns.*');
                 $isSubscribers = request()->routeIs('admin.subscribers.*');
+                $isVideos = request()->routeIs('admin.videos.*');
+                $isAudios = request()->routeIs('admin.audios.*');
+                $isDocuments = request()->routeIs('admin.documents.*');
+                $isContentMenu = $isVideos || $isAudios || $isDocuments;
             @endphp
             <div class="navbar-content">
                 <ul class="nxl-navbar">
@@ -41,6 +45,17 @@
                             <span class="nxl-micon"><i style="color: white" class="feather-mail"></i></span>
                             <span class="nxl-mtext" style="color: white">Campaigns</span>
                         </a>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu {{ $isContentMenu ? 'active' : '' }}">
+                        <a href="javascript:void(0);" class="nxl-link">
+                            <span class="nxl-micon"><i style="color: white" class="feather-film"></i></span>
+                            <span class="nxl-mtext" style="color: white">Content</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+                        </a>
+                        <ul class="nxl-submenu">
+                            <li class="nxl-item {{ $isVideos ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.videos.index') }}">Videos</a></li>
+                            <li class="nxl-item {{ $isAudios ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.audios.index') }}">Audios</a></li>
+                            <li class="nxl-item {{ $isDocuments ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.documents.index') }}">Documents</a></li>
+                        </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isSubscribers ? 'active' : '' }}">
                         <a href="{{ route('admin.subscribers.index') }}" class="nxl-link">
