@@ -51,28 +51,28 @@
 
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">Mail Mailer</label>
-                        <input type="text" name="mail_mailer" value="{{ old('mail_mailer', $settings->mail_mailer) }}" class="form-control" placeholder="smtp">
+                        <input type="text" readonly name="mail_mailer" value="{{ old('mail_mailer', $settings->mail_mailer) }}" class="form-control" placeholder="smtp">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">Mail Host</label>
-                        <input type="text" name="mail_host" value="{{ old('mail_host', $settings->mail_host) }}" class="form-control">
+                        <input type="text" readonly name="mail_host" value="{{ old('mail_host', $settings->mail_host) }}" class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">Mail Port</label>
-                        <input type="number" name="mail_port" value="{{ old('mail_port', $settings->mail_port) }}" class="form-control">
+                        <input type="number" readonly name="mail_port" value="{{ old('mail_port', $settings->mail_port) }}" class="form-control">
                     </div>
 
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">Mail Username</label>
-                        <input type="text" name="mail_username" value="{{ old('mail_username', $settings->mail_username) }}" class="form-control">
+                        <input type="text" readonly name="mail_username" value="{{ old('mail_username', $settings->mail_username) }}" class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">Mail Password</label>
-                        <input type="password" name="mail_password" value="" class="form-control" placeholder="Leave blank to keep current">
+                        <input type="password" readonly name="mail_password" value="" class="form-control" placeholder="Leave blank to keep current">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">Mail Scheme</label>
-                        <input type="text" name="mail_scheme" value="{{ old('mail_scheme', $settings->mail_scheme) }}" class="form-control" placeholder="smtp or smtps">
+                        <input type="text" readonly name="mail_scheme" value="{{ old('mail_scheme', $settings->mail_scheme) }}" class="form-control" placeholder="smtp or smtps">
                     </div>
 
                     <div class="col-md-6">

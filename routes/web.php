@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\EmailCampaigns\EmailCampaignController;
 use App\Http\Controllers\Admin\Settings\SettingsController;
 use App\Http\Controllers\Admin\Users\ManageController;
 use App\Http\Controllers\Admin\Users\UserController;
+use App\Http\Controllers\Admin\Auth\TwoFactorController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 Route::controller(HomeController::class)->group(function(){
     Route::get('/', 'index')->name('home');
     Route::post('/subscribe', 'subscribe')->name('subscribe');
+});
+Route::controller(VerificationController::class)->group(function () {
+    Route::get('/verify', 'show')->name('verify.show');
+    Route::post('/verify', 'verify')->name('verify.check');
+    Route::post('/verify/resend', 'resend')->name('verify.resend');
 });
 Route::controller(AdminController::class)->group(function(){
     Route::get('/beacons/dashboard','index')->name('admin.dashboard')->middleware('auth');
@@ -48,4 +55,9 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/beacons/admin/login', 'create')->name('admin.login')->middleware('guest');
     Route::post('/beacons/admin/login', 'store')->name('admin.login.store')->middleware('guest');
     Route::post('/beacons/admin/logout', 'destroy')->name('admin.logout')->middleware('auth');
+});
+Route::controller(TwoFactorController::class)->group(function () {
+    Route::get('/beacons/admin/login/verify', 'show')->name('admin.login.verify')->middleware('guest');
+    Route::post('/beacons/admin/login/verify', 'verify')->name('admin.login.verify.post')->middleware('guest');
+    Route::post('/beacons/admin/login/verify/resend', 'resend')->name('admin.login.verify.resend')->middleware('guest');
 });

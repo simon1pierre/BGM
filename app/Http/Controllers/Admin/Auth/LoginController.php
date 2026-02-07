@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\UserLoginLog;
 use App\Models\UserActivityLog;
+use App\Models\VerificationCode;
+use App\Notifications\VerificationCodeNotification;
+use Illuminate\Support\Facades\Notification;
 
 class LoginController extends Controller
 {
@@ -74,28 +77,42 @@ class LoginController extends Controller
 
         $user = Auth::user();
         if ($user instanceof User) {
-            $user->last_login_at = now();
-            $user->save();
+            if (!$user->email_verified_at) {
+                $verification = VerificationCode::create([
+                    'user_id' => $user->id,
+                    'email' => $user->email,
+                    'code' => (string) random_int(100000, 999999),
+                    'purpose' => 'register',
+                    'expires_at' => now()->addMinutes(10),
+                ]);
+                Notification::route('mail', $user->email)->notify(new VerificationCodeNotification($verification));
 
-            UserLoginLog::create([
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return redirect()->route('verify.show', ['email' => $user->email])
+                    ->with('status', 'Please verify your email before logging in.');
+            }
+
+            $verification = VerificationCode::create([
                 'user_id' => $user->id,
                 'email' => $user->email,
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->userAgent(),
-                'success' => true,
-                'logged_in_at' => now(),
+                'code' => (string) random_int(100000, 999999),
+                'purpose' => 'login',
+                'expires_at' => now()->addMinutes(10),
             ]);
-            UserActivityLog::create([
-                'actor_user_id' => $user->id,
-                'action' => 'login_success',
-                'meta' => [
-                    'email' => $user->email,
-                    'ip' => $request->ip(),
-                ],
-            ]);
+            Notification::route('mail', $user->email)->notify(new VerificationCodeNotification($verification));
+
+            Auth::logout();
+            $request->session()->put('pending_2fa_user_id', $user->id);
+            $request->session()->put('pending_2fa_email', $user->email);
+
+            return redirect()->route('admin.login.verify')
+                ->with('status', 'A verification code has been sent to your email.');
         }
 
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.login');
     }
 
     public function destroy(Request $request)

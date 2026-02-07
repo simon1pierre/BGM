@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Admin\Users;
 use App\Http\Controllers\Controller;
 use App\Models\UserActivityLog;
 use App\Models\User;
+use App\Models\VerificationCode;
+use App\Notifications\VerificationCodeNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 
 class ManageController extends Controller
 {
@@ -55,6 +58,15 @@ class ManageController extends Controller
             ],
         ]);
 
-        return redirect()->back()->with('status', 'Account created successfully.');
+        $verification = VerificationCode::create([
+            'user_id' => $user->id,
+            'email' => $user->email,
+            'code' => (string) random_int(100000, 999999),
+            'purpose' => 'register',
+            'expires_at' => now()->addMinutes(10),
+        ]);
+        Notification::route('mail', $user->email)->notify(new VerificationCodeNotification($verification));
+
+        return redirect()->back()->with('status', 'Account created. Verification code sent to user email.');
     }
 }
