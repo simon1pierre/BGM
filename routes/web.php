@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(HomeController::class)->group(function(){
     Route::get('/', 'index')->name('home');
+    Route::post('/subscribe', 'subscribe')->name('subscribe');
 });
 Route::controller(AdminController::class)->group(function(){
     Route::get('/beacons/dashboard','index')->name('admin.dashboard')->middleware('auth');

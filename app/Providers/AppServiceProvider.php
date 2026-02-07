@@ -78,6 +78,24 @@ class AppServiceProvider extends ServiceProvider
                     return;
                 }
 
+                $notifiableActions = [
+                    'user_created',
+                    'user_updated',
+                    'user_status_toggled',
+                    'user_deleted',
+                    'user_restored',
+                    'password_reset',
+                    'email_verified',
+                    'login_success',
+                    'login_failed',
+                    'security_issue',
+                    'subscriber_created',
+                ];
+
+                if (!in_array($activity->action, $notifiableActions, true)) {
+                    return;
+                }
+
                 $to = $settings->notifications_email
                     ?: $settings->contact_email
                     ?: config('mail.from.address');

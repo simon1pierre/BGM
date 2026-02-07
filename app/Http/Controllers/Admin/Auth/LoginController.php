@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\UserLoginLog;
+use App\Models\UserActivityLog;
 
 class LoginController extends Controller
 {
@@ -30,6 +31,15 @@ class LoginController extends Controller
                 'success' => false,
                 'logged_in_at' => now(),
             ]);
+            UserActivityLog::create([
+                'actor_user_id' => null,
+                'action' => 'login_failed',
+                'meta' => [
+                    'email' => $credentials['email'],
+                    'ip' => $request->ip(),
+                    'user_agent' => $request->userAgent(),
+                ],
+            ]);
             return back()
                 ->withErrors(['email' => 'Invalid email or password.'])
                 ->onlyInput('email');
@@ -43,6 +53,15 @@ class LoginController extends Controller
                 'user_agent' => $request->userAgent(),
                 'success' => false,
                 'logged_in_at' => now(),
+            ]);
+            UserActivityLog::create([
+                'actor_user_id' => Auth::id(),
+                'action' => 'security_issue',
+                'meta' => [
+                    'reason' => 'inactive_account_login_attempt',
+                    'email' => $credentials['email'],
+                    'ip' => $request->ip(),
+                ],
             ]);
             Auth::logout();
             $request->session()->invalidate();
@@ -65,6 +84,14 @@ class LoginController extends Controller
                 'user_agent' => $request->userAgent(),
                 'success' => true,
                 'logged_in_at' => now(),
+            ]);
+            UserActivityLog::create([
+                'actor_user_id' => $user->id,
+                'action' => 'login_success',
+                'meta' => [
+                    'email' => $user->email,
+                    'ip' => $request->ip(),
+                ],
             ]);
         }
 

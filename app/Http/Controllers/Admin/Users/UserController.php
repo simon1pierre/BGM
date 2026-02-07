@@ -105,6 +105,7 @@ class UserController extends Controller
         unset($validated['email_verified']);
 
         $oldStatus = $user->is_active;
+        $oldEmailVerified = (bool) $user->email_verified_at;
         $user->update($validated);
 
         UserActivityLog::create([
@@ -124,6 +125,17 @@ class UserController extends Controller
                 'old_status' => $oldStatus,
                 'new_status' => $user->is_active,
                 'reason' => 'updated_via_admin',
+            ]);
+        }
+
+        if (!$oldEmailVerified && $user->email_verified_at) {
+            UserActivityLog::create([
+                'actor_user_id' => Auth::id(),
+                'target_user_id' => $user->id,
+                'action' => 'email_verified',
+                'meta' => [
+                    'email' => $user->email,
+                ],
             ]);
         }
 

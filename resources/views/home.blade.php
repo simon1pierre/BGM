@@ -423,9 +423,18 @@
     <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">Receive Spiritual Nourishment</h2>
     <p class="text-blue-100 text-lg mb-10 leading-relaxed">Join our community to receive weekly sermons, prayer points, and ministry updates directly in your inbox.</p>
    
-    <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+    <form method="POST" action="{{ route('subscribe') }}" class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+      @csrf
+      <input
+        type="text"
+        name="name"
+        required
+        placeholder="Your full name"
+        class="flex-1 px-6 py-4 rounded-lg text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder-slate-400"
+      />
       <input
         type="email"
+        name="email"
         placeholder="Your email address"
         class="flex-1 px-6 py-4 rounded-lg text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder-slate-400"
         required
