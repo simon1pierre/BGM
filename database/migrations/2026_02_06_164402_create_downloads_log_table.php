@@ -17,6 +17,7 @@ return new class extends Migration
         $table->unsignedBigInteger('item_id');
         $table->string('ip_address')->nullable();
         $table->timestamp('downloaded_at')->useCurrent();
+        $table->softDeletes();
     });
 }
 

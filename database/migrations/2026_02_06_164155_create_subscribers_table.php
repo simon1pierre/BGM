@@ -17,6 +17,7 @@ return new class extends Migration
         $table->string('name')->nullable();
         $table->boolean('is_active')->default(true);
         $table->timestamp('subscribed_at')->useCurrent();
+        $table->softDeletes();
     });
 }
 

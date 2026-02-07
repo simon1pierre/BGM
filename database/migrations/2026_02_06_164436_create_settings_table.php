@@ -19,6 +19,7 @@ return new class extends Migration
         $table->string('logo')->nullable();
         $table->string('youtube_channel')->nullable();
         $table->string('contact_email')->nullable();
+        $table->softDeletes();
         $table->timestamps();
     });
 }

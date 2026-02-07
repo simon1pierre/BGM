@@ -19,6 +19,7 @@ return new class extends Migration
         $table->string('duration')->nullable();
         $table->unsignedInteger('download_count')->default(0);
         $table->boolean('is_published')->default(true);
+        $table->softDeletes();
         $table->timestamps();
     });
 }

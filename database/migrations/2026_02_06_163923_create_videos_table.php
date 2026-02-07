@@ -19,6 +19,7 @@ return new class extends Migration
         $table->string('youtube_id');
         $table->string('thumbnail')->nullable();
         $table->boolean('is_published')->default(true);
+        $table->softDeletes();
         $table->timestamps();
     });
 }

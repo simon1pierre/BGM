@@ -51,15 +51,20 @@
             </div>
             <div class="dropdown nxl-h-item">
                <a href="javascript:void(0);" data-bs-toggle="dropdown" role="button" data-bs-auto-close="outside">
-               <img src="{{asset('admin/assets/images/avatar/1.png')}}" alt="user-image" class="img-fluid user-avtar me-0" />
+               <img src="{{ Auth::user()?->avatar ? asset('storage/'.Auth::user()->avatar) : asset('admin/assets/images/avatar/1.png') }}" alt="user-image" class="img-fluid user-avtar me-0" />
                </a>
                <div class="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-user-dropdown">
                   <div class="dropdown-header">
                      <div class="d-flex align-items-center">
-                        <img src="{{asset('admin/assets/images/avatar/1.png')}}" alt="user-image" class="img-fluid user-avtar" />
+                        <img src="{{ Auth::user()?->avatar ? asset('storage/'.Auth::user()->avatar) : asset('admin/assets/images/avatar/1.png') }}" alt="user-image" class="img-fluid user-avtar" />
                         <div>
-                           <h6 class="text-dark mb-0">Alexandra Della <span class="badge bg-soft-success text-success ms-1">PRO</span></h6>
-                           <span class="fs-12 fw-medium text-muted">alex@example.com</span>
+                           @auth
+                              <h6 class="text-dark mb-0">{{ Auth::user()->name }}</h6>
+                              <span class="fs-12 fw-medium text-muted">{{ Auth::user()->email }}</span>
+                           @else
+                              <h6 class="text-dark mb-0">Guest</h6>
+                              <span class="fs-12 fw-medium text-muted">Not signed in</span>
+                           @endauth
                         </div>
                      </div>
                   </div>
@@ -74,10 +79,15 @@
                   <span>Account Settings</span>
                   </a>
                   <div class="dropdown-divider"></div>
-                  <a href="#" class="dropdown-item">
-                  <i class="feather-log-out"></i>
-                  <span>Logout</span>
-                  </a>
+                  @auth
+                     <form action="{{ route('admin.logout') }}" method="POST" class="px-2">
+                        @csrf
+                        <button type="submit" class="dropdown-item w-100 text-start">
+                           <i class="feather-log-out"></i>
+                           <span>Logout</span>
+                        </button>
+                     </form>
+                  @endauth
                </div>
             </div>
          </div>

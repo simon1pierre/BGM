@@ -16,6 +16,7 @@ return new class extends Migration
         $table->string('subject');
         $table->longText('message');
         $table->enum('status', ['draft', 'scheduled', 'sent'])->default('draft');
+        $table->softDeletes();
         $table->timestamps();
     });
 }
