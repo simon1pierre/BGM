@@ -42,6 +42,7 @@
                                     <td class="text-muted fs-12">{{ $campaign->scheduled_at?->toDateTimeString() ?? '—' }}</td>
                                     <td class="text-muted fs-12">{{ $campaign->sent_at?->toDateTimeString() ?? '—' }}</td>
                                     <td class="text-end">
+                                        <a href="{{ route('admin.campaigns.preview', $campaign) }}" class="btn btn-sm btn-outline-primary">Preview</a>
                                         <a href="{{ route('admin.campaigns.edit', $campaign) }}" class="btn btn-sm btn-light">Edit</a>
                                     </td>
                                 </tr>

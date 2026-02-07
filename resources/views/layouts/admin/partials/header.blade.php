@@ -52,6 +52,9 @@
                   'user_restored',
                   'password_reset',
                   'subscriber_created',
+                  'subscriber_status_toggled',
+                  'subscriber_deleted',
+                  'subscriber_restored',
                ];
                $currentAdminId = Auth::id();
                $unreadCount = 0;
@@ -98,6 +101,9 @@
                               'user_restored' => 'User account restored',
                               'password_reset' => 'Password reset by admin',
                               'subscriber_created' => 'New newsletter subscriber',
+                              'subscriber_status_toggled' => 'Subscriber status changed',
+                              'subscriber_deleted' => 'Subscriber deleted',
+                              'subscriber_restored' => 'Subscriber restored',
                            ];
                            $title = $labels[$notification->action] ?? 'System update';
                            $actor = $notification->actorUser?->email ?? 'Guest';

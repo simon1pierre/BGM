@@ -2,9 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Mail\EmailCampaignMailable;
 use App\Models\EmailCampaign;
 use App\Models\Subscriber;
-use App\Notifications\EmailCampaignNotification;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -33,8 +34,7 @@ class SendEmailCampaignJob implements ShouldQueue
             ->orderBy('id')
             ->chunkById(200, function ($subscribers) use ($campaign): void {
                 foreach ($subscribers as $subscriber) {
-                    Notification::route('mail', $subscriber->email)
-                        ->notify(new EmailCampaignNotification($campaign));
+                    Mail::to($subscriber->email)->send(new EmailCampaignMailable($campaign));
                 }
             });
 

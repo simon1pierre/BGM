@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\EmailCampaigns\EmailCampaignController;
 use App\Http\Controllers\Admin\Notifications\AdminNotificationController;
+use App\Http\Controllers\Admin\Subscribers\SubscriberController;
 use App\Http\Controllers\Admin\Settings\SettingsController;
 use App\Http\Controllers\Admin\Users\ManageController;
 use App\Http\Controllers\Admin\Users\UserController;
@@ -40,6 +41,14 @@ Route::prefix('beacons/admin')->middleware('auth')->name('admin.campaigns.')->gr
     Route::post('/campaigns', [EmailCampaignController::class, 'store'])->name('store');
     Route::get('/campaigns/{campaign}/edit', [EmailCampaignController::class, 'edit'])->name('edit');
     Route::put('/campaigns/{campaign}', [EmailCampaignController::class, 'update'])->name('update');
+    Route::get('/campaigns/{campaign}/preview', [EmailCampaignController::class, 'preview'])->name('preview');
+    Route::get('/campaigns/{campaign}/preview/raw', [EmailCampaignController::class, 'previewRaw'])->name('preview.raw');
+});
+Route::prefix('beacons/admin')->middleware('auth')->name('admin.subscribers.')->group(function () {
+    Route::get('/subscribers', [SubscriberController::class, 'index'])->name('index');
+    Route::post('/subscribers/{subscriber}/toggle', [SubscriberController::class, 'toggle'])->name('toggle');
+    Route::delete('/subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('destroy');
+    Route::post('/subscribers/{subscriber}/restore', [SubscriberController::class, 'restore'])->name('restore');
 });
 Route::prefix('beacons/admin')->middleware('auth')->name('admin.users.')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('index');

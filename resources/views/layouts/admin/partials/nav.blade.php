@@ -13,6 +13,7 @@
                 $isUsersMenu = $isUsers || $isRegister;
                 $isSettings = request()->routeIs('admin.settings.*');
                 $isCampaigns = request()->routeIs('admin.campaigns.*');
+                $isSubscribers = request()->routeIs('admin.subscribers.*');
             @endphp
             <div class="navbar-content">
                 <ul class="nxl-navbar">
@@ -24,16 +25,6 @@
                             <span class="nxl-micon"><i style="color: white" class="feather-airplay"></i></span>
                             <span class="nxl-mtext" style="color: white">Dashboard</span>
                         </a>
-                    </li>
-                    <li class="nxl-item nxl-hasmenu">
-                        <a href="javascript:void(0);" class="nxl-link">
-                            <span class="nxl-micon"><i style="color: white" class="feather-cast"></i></span>
-                            <span class="nxl-mtext" style="color: white">Reports</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
-                        </a>
-                        <ul class="nxl-submenu">
-                            <li class="nxl-item"><a class="nxl-link" style="color: white" href="#">Sales Report</a></li>
-                            <li class="nxl-item"><a class="nxl-link" style="color: white" href="#">Leads Report</a></li>
-                        </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isUsersMenu ? 'active' : '' }}">
                         <a href="javascript:void(0);" class="nxl-link">
@@ -49,6 +40,12 @@
                         <a href="{{ route('admin.campaigns.index') }}" class="nxl-link">
                             <span class="nxl-micon"><i style="color: white" class="feather-mail"></i></span>
                             <span class="nxl-mtext" style="color: white">Campaigns</span>
+                        </a>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu {{ $isSubscribers ? 'active' : '' }}">
+                        <a href="{{ route('admin.subscribers.index') }}" class="nxl-link">
+                            <span class="nxl-micon"><i style="color: white" class="feather-users"></i></span>
+                            <span class="nxl-mtext" style="color: white">Subscribers</span>
                         </a>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isSettings ? 'active' : '' }}">
