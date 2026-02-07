@@ -43,11 +43,77 @@
                </a>
             </div>
             
+            @php
+               $inAppActions = [
+                  'user_created',
+                  'user_updated',
+                  'user_status_toggled',
+                  'user_deleted',
+                  'user_restored',
+                  'password_reset',
+                  'subscriber_created',
+               ];
+               $currentAdminId = Auth::id();
+               $unreadCount = 0;
+               $notifications = collect();
+               if ($currentAdminId) {
+                  $unreadCount = \App\Models\UserActivityLog::query()
+                     ->whereIn('action', $inAppActions)
+                     ->whereDoesntHave('reads', function ($q) use ($currentAdminId) {
+                        $q->where('user_id', $currentAdminId);
+                     })
+                     ->count();
+
+                  $notifications = \App\Models\UserActivityLog::query()
+                     ->whereIn('action', $inAppActions)
+                     ->orderByDesc('created_at')
+                     ->limit(6)
+                     ->get();
+               }
+            @endphp
             <div class="dropdown nxl-h-item">
                <a class="nxl-head-link me-3" data-bs-toggle="dropdown" href="#" role="button" data-bs-auto-close="outside">
                <i class="feather-bell" style="color: white"></i>
-               <span class="badge bg-danger nxl-h-badge">3</span>
+               @if ($unreadCount > 0)
+                  <span class="badge bg-danger nxl-h-badge">{{ $unreadCount }}</span>
+               @endif
                </a>
+               <div class="dropdown-menu dropdown-menu-end nxl-h-dropdown">
+                  <div class="dropdown-header d-flex align-items-center justify-content-between">
+                     <span class="text-dark fw-semibold">Notifications</span>
+                     <form method="POST" action="{{ route('admin.notifications.read-all') }}">
+                        @csrf
+                        <button class="btn btn-sm btn-light">Mark all as read</button>
+                     </form>
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <div class="px-3 pb-2" style="max-height: 280px; overflow-y: auto;">
+                     @forelse ($notifications as $notification)
+                        @php
+                           $labels = [
+                              'user_created' => 'New user account created',
+                              'user_updated' => 'User account updated',
+                              'user_status_toggled' => 'User status changed',
+                              'user_deleted' => 'User account deleted',
+                              'user_restored' => 'User account restored',
+                              'password_reset' => 'Password reset by admin',
+                              'subscriber_created' => 'New newsletter subscriber',
+                           ];
+                           $title = $labels[$notification->action] ?? 'System update';
+                           $actor = $notification->actorUser?->email ?? 'Guest';
+                           $metaEmail = $notification->meta['email'] ?? null;
+                        @endphp
+                        <a href="{{ route('admin.notifications.show', $notification) }}" class="d-block text-decoration-none py-2 border-bottom">
+                           <div class="fw-semibold text-dark">{{ $title }}</div>
+                           <div class="fs-12 text-muted">
+                              {{ $metaEmail ? $metaEmail.' • ' : '' }}{{ $actor }} • {{ $notification->created_at?->diffForHumans() }}
+                           </div>
+                        </a>
+                     @empty
+                        <div class="text-muted fs-12">No notifications.</div>
+                     @endforelse
+                  </div>
+               </div>
             </div>
             <div class="dropdown nxl-h-item">
                <a href="javascript:void(0);" data-bs-toggle="dropdown" role="button" data-bs-auto-close="outside">

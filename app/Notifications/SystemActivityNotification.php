@@ -24,17 +24,17 @@ class SystemActivityNotification extends Notification
             : 'Guest';
 
         $labels = [
-            'user_created' => 'New user account created',
-            'user_updated' => 'User account updated',
+            'user_created' => 'Account registered!!',
+            'user_updated' => 'Account updated!!',
             'user_status_toggled' => 'User status changed',
-            'user_deleted' => 'User account deleted',
-            'user_restored' => 'User account restored',
-            'password_reset' => 'Password reset',
-            'email_verified' => 'Email verified',
-            'login_success' => 'Successful login',
-            'login_failed' => 'Failed login attempt',
-            'security_issue' => 'Security issue detected',
-            'subscriber_created' => 'New newsletter subscriber',
+            'user_deleted' => 'Account removed!!',
+            'user_restored' => 'Account restored!!',
+            'password_reset' => 'Password changed!!',
+            'email_verified' => 'Email verified!!',
+            'login_success' => 'Successful login!!',
+            'login_failed' => 'Failed login attempt!!',
+            'security_issue' => 'Security issue detected!!',
+            'subscriber_created' => 'New subscriber!!',
         ];
 
         $title = $labels[$this->activity->action] ?? 'System activity';

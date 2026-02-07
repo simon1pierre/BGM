@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\EmailCampaigns\EmailCampaignController;
+use App\Http\Controllers\Admin\Notifications\AdminNotificationController;
 use App\Http\Controllers\Admin\Settings\SettingsController;
 use App\Http\Controllers\Admin\Users\ManageController;
 use App\Http\Controllers\Admin\Users\UserController;
@@ -61,3 +62,9 @@ Route::controller(TwoFactorController::class)->group(function () {
     Route::post('/beacons/admin/login/verify', 'verify')->name('admin.login.verify.post')->middleware('guest');
     Route::post('/beacons/admin/login/verify/resend', 'resend')->name('admin.login.verify.resend')->middleware('guest');
 });
+Route::post('/beacons/admin/notifications/read-all', [AdminNotificationController::class, 'readAll'])
+    ->name('admin.notifications.read-all')
+    ->middleware('auth');
+Route::get('/beacons/admin/notifications/{notification}', [AdminNotificationController::class, 'show'])
+    ->name('admin.notifications.show')
+    ->middleware('auth');
