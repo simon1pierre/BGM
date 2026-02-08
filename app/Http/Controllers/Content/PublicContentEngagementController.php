@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ContentEvent;
 use App\Models\audio;
 use App\Models\book;
+use App\Services\GeoIpService;
 use Illuminate\Http\Request;
 
 class PublicContentEngagementController extends Controller
@@ -29,7 +30,9 @@ class PublicContentEngagementController extends Controller
             $watchSeconds = null;
         }
 
-        ContentEvent::create([
+        $geo = $this->geoPayload($request);
+
+        ContentEvent::create(array_merge([
             'content_type' => $audio->getMorphClass(),
             'content_id' => $audio->id,
             'event_type' => $event,
@@ -47,7 +50,7 @@ class PublicContentEngagementController extends Controller
             'device_hash' => $deviceHash,
             'watch_seconds' => $watchSeconds,
             'share_channel' => $request->input('share_channel'),
-        ]);
+        ], $geo));
 
         return response()->noContent();
     }
@@ -61,7 +64,9 @@ class PublicContentEngagementController extends Controller
 
         $deviceHash = $this->deviceHash($request);
 
-        ContentEvent::create([
+        $geo = $this->geoPayload($request);
+
+        ContentEvent::create(array_merge([
             'content_type' => $book->getMorphClass(),
             'content_id' => $book->id,
             'event_type' => $event,
@@ -78,7 +83,7 @@ class PublicContentEngagementController extends Controller
             'platform' => $request->input('platform'),
             'device_hash' => $deviceHash,
             'share_channel' => $request->input('share_channel'),
-        ]);
+        ], $geo));
 
         return response()->noContent();
     }
@@ -111,5 +116,10 @@ class PublicContentEngagementController extends Controller
         }
 
         return $deviceType;
+    }
+
+    private function geoPayload(Request $request): array
+    {
+        return app(GeoIpService::class)->lookup($request->ip());
     }
 }

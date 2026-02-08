@@ -1,31 +1,57 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+@php
+  $siteName = $siteSettings?->translated('site_name') ?: config('app.name', 'Beacons of God Ministries');
+  $siteTagline = $siteSettings?->translated('site_tagline') ?: 'Light, Truth, and Guidance';
+  $siteDescription = $siteSettings?->translated('site_description')
+    ?: 'Beacons of God Ministries: Shining God\'s light and truth. Watch sermons, explore biblical resources, and find spiritual guidance for your walk with Christ.';
+  $siteTitle = trim($siteName . ' | ' . $siteTagline, ' |');
+  $logoPath = $siteSettings?->logo ? asset('storage/' . $siteSettings->logo) : asset('images/logo.png');
+  $faviconPath = $siteSettings?->favicon ? asset('storage/' . $siteSettings->favicon) : asset('logo/favicon-32x32.png');
+  $faviconPathSmall = $siteSettings?->favicon ? asset('storage/' . $siteSettings->favicon) : asset('logo/favicon-16x16.png');
+  $contactEmail = $siteSettings?->contact_email ?: 'contact@beaconsofgod.org';
+  $contactAddress = $siteSettings?->contact_address ?: 'Global Online Ministry';
+  $footerText = $siteSettings?->translated('footer_text')
+    ?: 'Shining the light of truth and biblical guidance to believers everywhere. Walking together in faith and grace.';
+  $facebookUrl = $siteSettings?->facebook_url ?: '#';
+  $instagramUrl = $siteSettings?->instagram_url ?: '#';
+  $youtubeUrl = $siteSettings?->youtube_channel ?: '#';
+  $currentLocale = app()->getLocale();
+  $themeColor = $siteSettings?->primary_color ?: '#0f2b5e';
+@endphp
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ config('app.name','Beacons of God Ministries || Light, Truth, and Guidance')}}</title>
+  <title>{{ $siteTitle }}</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <meta name="description" content="Beacons of God Ministries: Shining God's light and truth. Watch sermons, explore biblical resources, and find spiritual guidance for your walk with Christ.">
+  <meta name="description" content="{{ $siteDescription }}">
+  <meta name="application-name" content="{{ $siteName }}">
+  <meta name="theme-color" content="{{ $themeColor }}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
   <link rel="canonical" href="https://beaconsofgod.org">
  <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="18x18" href="{{asset('logo/favicon-16x16.png')}}">
-<link rel="icon" type="image/png" sizes="32x32" href="{{asset('logo/favicon-32x32.png')}}">
+<link rel="icon" type="image/png" sizes="18x18" href="{{ $faviconPathSmall }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ $faviconPath }}">
 <!-- Apple Touch Icon -->
-<link rel="apple-touch-icon" sizes="180x180" href="{{asset('logo/apple-touch-icon.png')}}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ $faviconPath }}">
+<link rel="apple-touch-icon" sizes="192x192" href="{{ asset('pwa/icon-192.png') }}">
+<link rel="apple-touch-icon" sizes="512x512" href="{{ asset('pwa/icon-512.png') }}">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://beaconsofgod.org">
-  <meta property="og:title" content="Beacons of God Ministries | Light, Truth, and Guidance">
-  <meta property="og:description" content="Join us in spreading the light of God's truth. Access sermons, books, and audio teachings to deepen your faith.">
+  <meta property="og:title" content="{{ $siteTitle }}">
+  <meta property="og:description" content="{{ $siteDescription }}">
   <meta property="og:image" content="https://beaconsofgod.org/og-image.jpg">
 
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://beaconsofgod.org">
-  <meta property="twitter:title" content="Beacons of God Ministries | Light, Truth, and Guidance">
-  <meta property="twitter:description" content="Biblical teaching and spiritual resources for all believers. Watch, read, and listen to the truth of God.">
+  <meta property="twitter:title" content="{{ $siteTitle }}">
+  <meta property="twitter:description" content="{{ $siteDescription }}">
   <meta property="twitter:image" content="https://beaconsofgod.org/twitter-image.jpg">
 
 
@@ -474,8 +500,8 @@
       <!-- Logo & Branding -->
       <a href="/" class="flex items-center gap-2 sm:gap-3 group shrink-0">
         <img
-          src="{{ asset('images/logo.png') }}"
-          alt="Beacons of God Logo"
+          src="{{ $logoPath }}"
+          alt="{{ $siteName }} Logo"
           class="h-10 w-auto sm:h-12 transition-transform duration-300 group-hover:scale-105"
         />
         <div class="hidden sm:block">
@@ -486,18 +512,29 @@
 
       <!-- Desktop Navigation -->
       <nav class="hidden lg:flex items-center gap-1">
-        <a href="/" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">Home</a>
-        <a href="#resources" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">Resources</a>
-        <a href="#sermons" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">Sermons</a>
-        <a href="#about" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">About</a>
+        <a href="/" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.home') }}</a>
+        <a href="#resources" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.resources') }}</a>
+        <a href="#sermons" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.sermons') }}</a>
+        <a href="#about" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.about') }}</a>
       </nav>
 
 
-      <!-- CTA & Mobile Menu Toggle -->
+      <!-- CTA, Language Switcher & Mobile Menu Toggle -->
       <div class="flex items-center gap-2 sm:gap-4">
         <a href="#newslatter" class="hidden md:inline-flex items-center justify-center px-4 sm:px-6 py-2 text-xs sm:text-sm font-semibold text-white bg-brand-blue rounded-full hover:bg-blue-800 transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5">
-          Join Ministry
+          {{ __('messages.nav.join_ministry') }}
         </a>
+        <div class="hidden sm:block">
+          <select
+            onchange="window.location.href=this.value"
+            class="px-3 py-2 rounded-full border border-slate-200 text-xs sm:text-sm text-slate-700 bg-white"
+            aria-label="Language"
+          >
+            <option value="{{ route('locale.switch', 'en') }}" {{ $currentLocale === 'en' ? 'selected' : '' }}>English</option>
+            <option value="{{ route('locale.switch', 'fr') }}" {{ $currentLocale === 'fr' ? 'selected' : '' }}>Français</option>
+            <option value="{{ route('locale.switch', 'rw') }}" {{ $currentLocale === 'rw' ? 'selected' : '' }}>Kinyarwanda</option>
+          </select>
+        </div>
         <button
           id="mobile-menu-toggle"
           class="lg:hidden inline-flex flex-col items-center justify-center w-10 h-10 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-blue"
@@ -515,11 +552,11 @@
     <!-- Mobile Navigation Menu (Hidden by default) -->
     <nav id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-200">
       <div class="container mx-auto px-4 sm:px-6 py-3 space-y-2">
-        <a href="/" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">Home</a>
-        <a href="#resources" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">Resources</a>
-        <a href="#sermons" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">Sermons</a>
-        <a href="#about" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">About</a>
-        <a href="#newsletter" class="block w-full mt-3 px-4 py-2 text-center text-white bg-brand-blue rounded-lg font-semibold hover:bg-blue-800 transition-colors duration-200">Join Ministry</a>
+        <a href="/" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.home') }}</a>
+        <a href="#resources" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.resources') }}</a>
+        <a href="#sermons" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.sermons') }}</a>
+        <a href="#about" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.about') }}</a>
+        <a href="#newsletter" class="block w-full mt-3 px-4 py-2 text-center text-white bg-brand-blue rounded-lg font-semibold hover:bg-blue-800 transition-colors duration-200">{{ __('messages.nav.join_ministry') }}</a>
       </div>
     </nav>
   </header>
@@ -553,55 +590,59 @@
         <!-- Brand Column -->
         <div class="col-span-1 md:col-span-1">
           <div class="flex items-center gap-2 mb-4 text-white">
+            @if($siteName)
+            <img src="{{$faviconPath}}" alt="">
+            @else
             <i data-lucide="flame" class="w-6 h-6 text-brand-gold"></i>
-            <span class="font-serif text-xl font-bold">Beacons of God</span>
+            @endif
+            <span class="font-serif text-xl font-bold">Beacons of God Ministries</span>
           </div>
           <p class="text-sm leading-relaxed text-blue-100 opacity-80">
-            Shining the light of truth and biblical guidance to believers everywhere. Walking together in faith and grace.
+            {{ $footerText }}
           </p>
         </div>
 
 
         <!-- Links 1 -->
         <div>
-          <h4 class="text-white font-serif font-semibold mb-4">Ministry</h4>
+          <h4 class="text-white font-serif font-semibold mb-4">{{ __('messages.footer.ministry') }}</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="#" class="hover:text-brand-gold transition-colors">About Us</a></li>
-            <li><a href="#" class="hover:text-brand-gold transition-colors">Statement of Faith</a></li>
-            <li><a href="#" class="hover:text-brand-gold transition-colors">Leadership</a></li>
-            <li><a href="#" class="hover:text-brand-gold transition-colors">Contact</a></li>
+            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.about_us') }}</a></li>
+            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.faith_statement') }}</a></li>
+            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.leadership') }}</a></li>
+            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.contact') }}</a></li>
           </ul>
         </div>
 
 
         <!-- Links 2 -->
         <div>
-          <h4 class="text-white font-serif font-semibold mb-4">Resources</h4>
+          <h4 class="text-white font-serif font-semibold mb-4">{{ __('messages.footer.resources') }}</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="#" class="hover:text-brand-gold transition-colors">Latest Sermons</a></li>
-            <li><a href="#" class="hover:text-brand-gold transition-colors">Audio Teachings</a></li>
-            <li><a href="#" class="hover:text-brand-gold transition-colors">E-Books</a></li>
-            <li><a href="#" class="hover:text-brand-gold transition-colors">Devotionals</a></li>
+            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.latest_sermons') }}</a></li>
+            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.audio_teachings') }}</a></li>
+            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.ebooks') }}</a></li>
+            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.devotionals') }}</a></li>
           </ul>
         </div>
 
 
         <!-- Contact / Social -->
         <div>
-          <h4 class="text-white font-serif font-semibold mb-4">Connect</h4>
+          <h4 class="text-white font-serif font-semibold mb-4">{{ __('messages.footer.connect') }}</h4>
           <ul class="space-y-3 text-sm">
             <li class="flex items-center gap-2">
               <i data-lucide="mail" class="w-4 h-4 text-brand-gold"></i>
-              <span>contact@beaconsofgod.org</span>
+              <span>{{ $contactEmail }}</span>
             </li>
             <li class="flex items-center gap-2">
               <i data-lucide="map-pin" class="w-4 h-4 text-brand-gold"></i>
-              <span>Global Online Ministry</span>
+              <span>{{ $contactAddress }}</span>
             </li>
             <li class="flex gap-4 mt-2">
-              <a href="#" class="text-blue-200 hover:text-white transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a>
-              <a href="#" class="text-blue-200 hover:text-white transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-              <a href="#" class="text-blue-200 hover:text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+              <a href="{{ $youtubeUrl }}" class="text-blue-200 hover:text-white transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+              <a href="{{ $facebookUrl }}" class="text-blue-200 hover:text-white transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+              <a href="{{ $instagramUrl }}" class="text-blue-200 hover:text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
             </li>
           </ul>
         </div>
@@ -609,8 +650,8 @@
 
 
       <div class="border-t border-blue-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-blue-200 opacity-60">
-        <p>&copy; 2023 Beacons of God Ministries. All rights reserved.</p>
-        <p class="mt-2 md:mt-0">Designed & developed with care</p>
+        <p>&copy; {{ date('Y') }} {{ $siteName }}. {{ __('messages.footer.rights') }}</p>
+        <p class="mt-2 md:mt-0">{{ __('messages.footer.made_with_care') }}</p>
       </div>
     </div>
   </footer>
@@ -644,6 +685,14 @@
     // Lucide icon initialization
     if (typeof lucide !== 'undefined') {
       lucide.createIcons();
+    }
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('{{ asset('sw.js') }}')
+          .catch(() => {});
+      });
     }
   </script>
 

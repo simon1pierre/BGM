@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\ContentCategory;
 use App\Models\ContentLike;
 use App\Models\ContentComment;
+use App\Models\Concerns\HasTranslations;
 
 class book extends Model
 {
     use SoftDeletes;
+    use HasTranslations;
 
     protected $fillable = [
         'title',
@@ -39,6 +41,16 @@ class book extends Model
     public function category()
     {
         return $this->belongsTo(ContentCategory::class, 'category_id');
+    }
+
+    public function getTitleAttribute($value)
+    {
+        return $this->translatedValue('title', $value);
+    }
+
+    public function getDescriptionAttribute($value)
+    {
+        return $this->translatedValue('description', $value);
     }
 
     public function getThumbnailUrlAttribute(): ?string

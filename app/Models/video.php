@@ -8,10 +8,12 @@ use App\Models\ContentCategory;
 use App\Models\Playlist;
 use App\Models\ContentLike;
 use App\Models\ContentComment;
+use App\Models\Concerns\HasTranslations;
 
 class video extends Model
 {
     use SoftDeletes;
+    use HasTranslations;
 
     protected $fillable = [
         'title',
@@ -55,6 +57,16 @@ class video extends Model
     public function category()
     {
         return $this->belongsTo(ContentCategory::class, 'category_id');
+    }
+
+    public function getTitleAttribute($value)
+    {
+        return $this->translatedValue('title', $value);
+    }
+
+    public function getDescriptionAttribute($value)
+    {
+        return $this->translatedValue('description', $value);
     }
 
     public function playlists()

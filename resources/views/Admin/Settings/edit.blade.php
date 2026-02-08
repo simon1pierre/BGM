@@ -17,6 +17,13 @@
         @if (session('status'))
             <div class="alert alert-success mb-4">{{ session('status') }}</div>
         @endif
+        @php
+            $translations = [
+                'en' => $settings->translationFor('en'),
+                'fr' => $settings->translationFor('fr'),
+                'rw' => $settings->translationFor('rw'),
+            ];
+        @endphp
 
         <div class="card mb-4">
             <div class="card-body">
@@ -24,7 +31,7 @@
                     @csrf
 
                     <div class="col-12">
-                        <h6 class="fw-semibold">A. Site Identity</h6>
+                        <h6 class="fw-semibold">Site Identity</h6>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Site Name</label>
@@ -49,7 +56,49 @@
 
                     <div class="col-12">
                         <hr>
-                        <h6 class="fw-semibold">B. Contact & Social</h6>
+                        <h6 class="fw-semibold">Translations (EN / FR / RW)</h6>
+                    </div>
+                    @foreach (['en' => 'English', 'fr' => 'French', 'rw' => 'Kinyarwanda'] as $locale => $label)
+                        <div class="col-12">
+                            <h6 class="fw-semibold text-muted">{{ $label }}</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Site Name ({{ strtoupper($locale) }})</label>
+                            <input type="text" name="site_name_{{ $locale }}" value="{{ old('site_name_'.$locale, $translations[$locale]?->site_name) }}" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Tagline ({{ strtoupper($locale) }})</label>
+                            <input type="text" name="site_tagline_{{ $locale }}" value="{{ old('site_tagline_'.$locale, $translations[$locale]?->site_tagline) }}" class="form-control">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-semibold">Site Description ({{ strtoupper($locale) }})</label>
+                            <textarea name="site_description_{{ $locale }}" class="form-control" rows="2">{{ old('site_description_'.$locale, $translations[$locale]?->site_description) }}</textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-semibold">Footer Text ({{ strtoupper($locale) }})</label>
+                            <input type="text" name="footer_text_{{ $locale }}" value="{{ old('footer_text_'.$locale, $translations[$locale]?->footer_text) }}" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Hero Title ({{ strtoupper($locale) }})</label>
+                            <input type="text" name="hero_title_{{ $locale }}" value="{{ old('hero_title_'.$locale, $translations[$locale]?->hero_title) }}" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Hero Subtitle ({{ strtoupper($locale) }})</label>
+                            <input type="text" name="hero_subtitle_{{ $locale }}" value="{{ old('hero_subtitle_'.$locale, $translations[$locale]?->hero_subtitle) }}" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Primary CTA Label ({{ strtoupper($locale) }})</label>
+                            <input type="text" name="hero_primary_label_{{ $locale }}" value="{{ old('hero_primary_label_'.$locale, $translations[$locale]?->hero_primary_label) }}" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Secondary CTA Label ({{ strtoupper($locale) }})</label>
+                            <input type="text" name="hero_secondary_label_{{ $locale }}" value="{{ old('hero_secondary_label_'.$locale, $translations[$locale]?->hero_secondary_label) }}" class="form-control">
+                        </div>
+                    @endforeach
+
+                    <div class="col-12">
+                        <hr>
+                        <h6 class="fw-semibold">Contact & Social</h6>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">Contact Email</label>
@@ -65,20 +114,20 @@
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">YouTube</label>
-                        <input type="text" name="youtube_channel" value="{{ old('youtube_channel', $settings->youtube_channel) }}" class="form-control">
+                        <input type="text" placeholder="url..." name="youtube_channel" value="{{ old('youtube_channel', $settings->youtube_channel) }}" class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">Facebook</label>
-                        <input type="text" name="facebook_url" value="{{ old('facebook_url', $settings->facebook_url) }}" class="form-control">
+                        <input type="text" name="facebook_url" placeholder="url..." value="{{ old('facebook_url', $settings->facebook_url) }}" class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">Instagram</label>
-                        <input type="text" name="instagram_url" value="{{ old('instagram_url', $settings->instagram_url) }}" class="form-control">
+                        <input type="text" placeholder="url..." name="instagram_url" value="{{ old('instagram_url', $settings->instagram_url) }}" class="form-control">
                     </div>
 
                     <div class="col-12">
                         <hr>
-                        <h6 class="fw-semibold">C. Homepage Controls</h6>
+                        <h6 class="fw-semibold">Homepage Controls</h6>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Hero Title</label>
@@ -127,7 +176,7 @@
 
                     <div class="col-12">
                         <hr>
-                        <h6 class="fw-semibold">D. Content Defaults</h6>
+                        <h6 class="fw-semibold">Content Defaults</h6>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label fw-semibold">Default Per Page</label>
@@ -144,7 +193,7 @@
 
                     <div class="col-12">
                         <hr>
-                        <h6 class="fw-semibold">E. Moderation</h6>
+                        <h6 class="fw-semibold">Moderation</h6>
                     </div>
                     <div class="col-md-3 d-flex align-items-end">
                         <div class="form-check">
@@ -236,7 +285,7 @@
 
                     <div class="col-12">
                         <hr>
-                        <h6 class="fw-semibold">I. Email & Notifications</h6>
+                        <h6 class="fw-semibold">Email & Notifications</h6>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Notifications Email</label>

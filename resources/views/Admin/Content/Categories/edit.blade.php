@@ -15,6 +15,13 @@
         </div>
 
         <div class="main-content">
+            @php
+                $translations = [
+                    'en' => $category->translationFor('en'),
+                    'fr' => $category->translationFor('fr'),
+                    'rw' => $category->translationFor('rw'),
+                ];
+            @endphp
             <div class="card">
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.categories.update', $category) }}">
@@ -53,6 +60,36 @@
                                 <label class="form-label fw-semibold">Description</label>
                                 <textarea name="description" class="form-control" rows="4">{{ old('description', $category->description) }}</textarea>
                                 @error('description') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card border border-dashed">
+                                    <div class="card-body">
+                                        <div class="fw-semibold mb-3">Translations (EN / FR / RW)</div>
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Name (EN)</label>
+                                                <input type="text" name="name_en" value="{{ old('name_en', $translations['en']?->title) }}" class="form-control" required>
+                                                @error('name_en') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                                                <label class="form-label fw-semibold mt-3">Description (EN)</label>
+                                                <textarea name="description_en" class="form-control" rows="3">{{ old('description_en', $translations['en']?->description) }}</textarea>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Name (FR)</label>
+                                                <input type="text" name="name_fr" value="{{ old('name_fr', $translations['fr']?->title) }}" class="form-control" required>
+                                                @error('name_fr') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                                                <label class="form-label fw-semibold mt-3">Description (FR)</label>
+                                                <textarea name="description_fr" class="form-control" rows="3">{{ old('description_fr', $translations['fr']?->description) }}</textarea>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Name (RW)</label>
+                                                <input type="text" name="name_rw" value="{{ old('name_rw', $translations['rw']?->title) }}" class="form-control" required>
+                                                @error('name_rw') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                                                <label class="form-label fw-semibold mt-3">Description (RW)</label>
+                                                <textarea name="description_rw" class="form-control" rows="3">{{ old('description_rw', $translations['rw']?->description) }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

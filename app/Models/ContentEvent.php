@@ -24,6 +24,16 @@ class ContentEvent extends Model
         'device_hash',
         'watch_seconds',
         'share_channel',
+        'geo_country',
+        'geo_country_code',
+        'geo_region',
+        'geo_city',
+        'geo_continent_code',
+        'geo_latitude',
+        'geo_longitude',
+        'geo_timezone',
+        'geo_org',
+        'geo_asn',
     ];
 
     public function content()

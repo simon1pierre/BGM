@@ -5,10 +5,10 @@
         <div class="container mx-auto px-6">
             <div class="max-w-4xl">
                 <span class="inline-block py-1 px-3 rounded-full bg-blue-500/20 border border-blue-300/30 text-blue-100 text-xs font-medium tracking-widest uppercase mb-4">
-                    Book Library
+                    {{ __('messages.books.badge') }}
                 </span>
                 <h1 class="text-3xl md:text-5xl font-serif font-bold mb-3">{{ $book->title }}</h1>
-                <p class="text-blue-100/90 text-lg">{{ $book->category?->name ?? 'Book' }}</p>
+                <p class="text-blue-100/90 text-lg">{{ $book->category?->name ?? __('messages.common.book') }}</p>
             </div>
         </div>
     </section>
@@ -27,7 +27,7 @@
                                     frameborder="0"
                                 ></iframe>
                             @else
-                                <div class="w-full h-full flex items-center justify-center text-slate-500">No PDF available</div>
+                                <div class="w-full h-full flex items-center justify-center text-slate-500">{{ __('messages.books.no_pdf') }}</div>
                             @endif
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                                 <svg viewBox="0 0 24 24" class="w-4 h-4" aria-hidden="true">
                                     <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6 3.99 4 6.5 4c1.74 0 3.41 0.81 4.5 2.09C12.09 4.81 13.76 4 15.5 4 18.01 4 20 6 20 8.5c0 3.78-3.4 6.86-8.55 11.54z"/>
                                 </svg>
-                                <span>Like</span>
+                                <span>{{ __('messages.common.like') }}</span>
                                 <span data-like-count>{{ $book->likes_count ?? 0 }}</span>
                             </button>
                             <button
@@ -52,26 +52,26 @@
                                 data-comment-toggle
                                 onclick="toggleCommentPanel(this)"
                             >
-                                Comment (<span data-comment-count>{{ $book->comments_count ?? 0 }}</span>)
+                                {{ __('messages.common.comment') }} (<span data-comment-count>{{ $book->comments_count ?? 0 }}</span>)
                             </button>
                         </div>
                         <div class="hidden space-y-3 border-t border-slate-100 pt-4" data-comment-panel>
                             <div class="space-y-2" data-comment-list>
                                 @foreach ($book->comments as $comment)
                                     <div class="text-xs text-slate-600 bg-slate-50 rounded-lg p-3">
-                                        <div class="font-semibold text-slate-700">{{ $comment->name ?: 'Anonymous' }}</div>
+                                        <div class="font-semibold text-slate-700">{{ $comment->name ?: __('messages.common.anonymous') }}</div>
                                         <div class="mt-1">{{ $comment->body }}</div>
                                     </div>
                                 @endforeach
                             </div>
                             <form data-comment-form data-book-id="{{ $book->id }}" onsubmit="return submitBookComment(this)">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                    <input type="text" name="name" placeholder="Your name (optional)" class="rounded-lg border border-slate-200 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400">
-                                    <input type="email" name="email" placeholder="Email (optional)" class="rounded-lg border border-slate-200 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                    <input type="text" name="name" placeholder="{{ __('messages.common.name_optional') }}" class="rounded-lg border border-slate-200 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                    <input type="email" name="email" placeholder="{{ __('messages.common.email_optional') }}" class="rounded-lg border border-slate-200 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400">
                                 </div>
-                                <textarea name="body" rows="3" placeholder="Write a comment..." class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400" required></textarea>
+                                <textarea name="body" rows="3" placeholder="{{ __('messages.common.write_comment') }}" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400" required></textarea>
                                 <button type="submit" class="mt-2 inline-flex items-center justify-center px-4 py-2 text-xs font-semibold text-white bg-blue-900 rounded-lg hover:bg-blue-800 transition-colors">
-                                    Post Comment
+                                    {{ __('messages.common.post_comment') }}
                                 </button>
                             </form>
                         </div>
@@ -79,21 +79,21 @@
                 </div>
                 <div class="space-y-6">
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                        <h2 class="text-xl font-serif font-bold text-blue-950 mb-3">About this book</h2>
+                        <h2 class="text-xl font-serif font-bold text-blue-950 mb-3">{{ __('messages.books.about_book') }}</h2>
                         <p class="text-slate-600 text-sm leading-relaxed">{{ $book->description }}</p>
                         <div class="mt-4 text-xs text-slate-500">
-                            Published: {{ $book->published_at?->toDateString() ?? $book->created_at?->toDateString() }}
+                            {{ __('messages.common.published') }}: {{ $book->published_at?->toDateString() ?? $book->created_at?->toDateString() }}
                         </div>
                     </div>
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-3">
                         <a href="{{ route('content.download.document', $book) }}" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-white bg-blue-900 rounded-lg hover:bg-blue-800 transition-colors">
-                            Download PDF
+                            {{ __('messages.home.download_pdf') }}
                         </a>
                         <button type="button" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors" onclick="shareBook()">
-                            Share
+                            {{ __('messages.common.share') }}
                         </button>
                         <a href="{{ route('books.index') }}" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-blue-900 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
-                            Browse Library
+                            {{ __('messages.books.browse_library') }}
                         </a>
                     </div>
                 </div>
@@ -101,8 +101,8 @@
             @if (!empty($relatedBooks) && $relatedBooks->count())
                 <div class="mt-12">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-serif font-bold text-blue-950">You May Also Like</h3>
-                        <a href="{{ route('books.index') }}" class="text-sm text-blue-700 hover:text-blue-900">Browse all</a>
+                        <h3 class="text-xl font-serif font-bold text-blue-950">{{ __('messages.common.you_may_also_like') }}</h3>
+                        <a href="{{ route('books.index') }}" class="text-sm text-blue-700 hover:text-blue-900">{{ __('messages.common.browse_all') }}</a>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         @foreach ($relatedBooks as $item)
@@ -111,13 +111,13 @@
                                     @if ($item->cover_image)
                                         <img src="{{ asset('storage/'.$item->cover_image) }}" alt="{{ $item->title }}" class="w-full h-full object-cover">
                                     @else
-                                        <div class="w-full h-full flex items-center justify-center text-slate-500">No cover</div>
+                                        <div class="w-full h-full flex items-center justify-center text-slate-500">{{ __('messages.books.no_cover') }}</div>
                                     @endif
                                 </div>
                                 <div class="p-4">
                                     <div class="font-serif text-blue-950 font-semibold text-sm">{{ $item->title }}</div>
-                                    <div class="text-xs text-slate-500 mt-1">{{ $item->category?->name ?? 'Book' }}</div>
-                                    <a href="{{ route('books.show', $item) }}" class="inline-flex text-sm text-blue-700 hover:text-blue-900 mt-3">Read</a>
+                                    <div class="text-xs text-slate-500 mt-1">{{ $item->category?->name ?? __('messages.common.book') }}</div>
+                                    <a href="{{ route('books.show', $item) }}" class="inline-flex text-sm text-blue-700 hover:text-blue-900 mt-3">{{ __('messages.common.read') }}</a>
                                 </div>
                             </div>
                         @endforeach
@@ -190,7 +190,7 @@
         } else {
             navigator.clipboard.writeText(shareData.url).then(() => {
                 trackBook('share', { share_channel: 'copy' });
-                alert('Link copied!');
+                alert(@json(__('messages.common.link_copied')));
             });
         }
     }

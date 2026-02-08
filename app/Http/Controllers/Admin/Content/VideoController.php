@@ -10,12 +10,15 @@ use App\Jobs\SendContentNotificationJob;
 use App\Models\ContentNotification;
 use App\Models\Playlist;
 use App\Models\PlaylistItem;
+use App\Http\Controllers\Concerns\HandlesTranslations;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class VideoController extends Controller
 {
+    use HandlesTranslations;
+
     public function index()
     {
         return view('Admin.Content.Videos.index');
@@ -43,6 +46,12 @@ class VideoController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'title_en' => ['required', 'string', 'max:255'],
+            'title_fr' => ['required', 'string', 'max:255'],
+            'title_rw' => ['required', 'string', 'max:255'],
+            'description_en' => ['nullable', 'string'],
+            'description_fr' => ['nullable', 'string'],
+            'description_rw' => ['nullable', 'string'],
             'youtube_url' => ['required', 'url', 'max:255'],
             'thumbnail' => ['nullable', 'image', 'max:4096'],
             'category_id' => [
@@ -96,6 +105,8 @@ class VideoController extends Controller
             ],
         ]);
 
+        $this->syncTranslations($video, $request, ['title', 'description']);
+
         $this->syncPlaylists($request, $video->id, 'video');
 
         $this->maybeNotifySubscribers($request, [
@@ -146,6 +157,12 @@ class VideoController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'title_en' => ['required', 'string', 'max:255'],
+            'title_fr' => ['required', 'string', 'max:255'],
+            'title_rw' => ['required', 'string', 'max:255'],
+            'description_en' => ['nullable', 'string'],
+            'description_fr' => ['nullable', 'string'],
+            'description_rw' => ['nullable', 'string'],
             'youtube_url' => ['required', 'url', 'max:255'],
             'thumbnail' => ['nullable', 'image', 'max:4096'],
             'category_id' => [
@@ -198,6 +215,8 @@ class VideoController extends Controller
                 'title' => $video->title,
             ],
         ]);
+
+        $this->syncTranslations($video, $request, ['title', 'description']);
 
         $this->syncPlaylists($request, $video->id, 'video');
 

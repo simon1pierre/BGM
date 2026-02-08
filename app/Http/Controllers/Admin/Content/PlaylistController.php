@@ -8,12 +8,15 @@ use App\Models\PlaylistItem;
 use App\Models\UserActivityLog;
 use App\Models\video;
 use App\Models\audio;
+use App\Http\Controllers\Concerns\HandlesTranslations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class PlaylistController extends Controller
 {
+    use HandlesTranslations;
+
     public function index()
     {
         $playlists = Playlist::query()
@@ -37,6 +40,12 @@ class PlaylistController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'title_en' => ['required', 'string', 'max:255'],
+            'title_fr' => ['required', 'string', 'max:255'],
+            'title_rw' => ['required', 'string', 'max:255'],
+            'description_en' => ['nullable', 'string'],
+            'description_fr' => ['nullable', 'string'],
+            'description_rw' => ['nullable', 'string'],
             'type' => ['required', 'in:video,audio'],
             'cover_image' => ['nullable', 'image', 'max:4096'],
             'is_published' => ['nullable', 'boolean'],
@@ -72,6 +81,8 @@ class PlaylistController extends Controller
             ],
         ]);
 
+        $this->syncTranslations($playlist, $request, ['title', 'description']);
+
         return redirect()->route('admin.playlists.index')->with('status', 'Playlist created.');
     }
 
@@ -100,6 +111,12 @@ class PlaylistController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'title_en' => ['required', 'string', 'max:255'],
+            'title_fr' => ['required', 'string', 'max:255'],
+            'title_rw' => ['required', 'string', 'max:255'],
+            'description_en' => ['nullable', 'string'],
+            'description_fr' => ['nullable', 'string'],
+            'description_rw' => ['nullable', 'string'],
             'type' => ['required', 'in:video,audio'],
             'cover_image' => ['nullable', 'image', 'max:4096'],
             'is_published' => ['nullable', 'boolean'],
@@ -133,6 +150,8 @@ class PlaylistController extends Controller
                 'title' => $playlist->title,
             ],
         ]);
+
+        $this->syncTranslations($playlist, $request, ['title', 'description']);
 
         return redirect()->route('admin.playlists.index')->with('status', 'Playlist updated.');
     }

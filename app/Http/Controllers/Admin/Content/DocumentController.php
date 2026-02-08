@@ -8,12 +8,15 @@ use App\Models\UserActivityLog;
 use App\Models\book;
 use App\Jobs\SendContentNotificationJob;
 use App\Models\ContentNotification;
+use App\Http\Controllers\Concerns\HandlesTranslations;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class DocumentController extends Controller
 {
+    use HandlesTranslations;
+
     public function index()
     {
         return view('Admin.Content.Documents.index');
@@ -35,6 +38,12 @@ class DocumentController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'title_en' => ['required', 'string', 'max:255'],
+            'title_fr' => ['required', 'string', 'max:255'],
+            'title_rw' => ['required', 'string', 'max:255'],
+            'description_en' => ['nullable', 'string'],
+            'description_fr' => ['nullable', 'string'],
+            'description_rw' => ['nullable', 'string'],
             'document_file' => ['required', 'mimetypes:application/pdf', 'max:20480'],
             'cover_image' => ['nullable', 'image', 'max:4096'],
             'author' => ['nullable', 'string', 'max:255'],
@@ -82,6 +91,8 @@ class DocumentController extends Controller
             ],
         ]);
 
+        $this->syncTranslations($document, $request, ['title', 'description']);
+
         $this->maybeNotifySubscribers($request, [
             'type' => 'document',
             'title' => $document->title,
@@ -118,6 +129,12 @@ class DocumentController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'title_en' => ['required', 'string', 'max:255'],
+            'title_fr' => ['required', 'string', 'max:255'],
+            'title_rw' => ['required', 'string', 'max:255'],
+            'description_en' => ['nullable', 'string'],
+            'description_fr' => ['nullable', 'string'],
+            'description_rw' => ['nullable', 'string'],
             'document_file' => ['nullable', 'mimetypes:application/pdf', 'max:20480'],
             'cover_image' => ['nullable', 'image', 'max:4096'],
             'author' => ['nullable', 'string', 'max:255'],
@@ -168,6 +185,8 @@ class DocumentController extends Controller
                 'title' => $document->title,
             ],
         ]);
+
+        $this->syncTranslations($document, $request, ['title', 'description']);
 
         $this->maybeNotifySubscribers($request, [
             'type' => 'document',

@@ -5,10 +5,10 @@
         <div class="container mx-auto px-6">
             <div class="max-w-3xl">
                 <span class="inline-block py-1 px-3 rounded-full bg-blue-500/20 border border-blue-300/30 text-blue-100 text-xs font-medium tracking-widest uppercase mb-4">
-                    Book Library
+                    {{ __('messages.books.badge') }}
                 </span>
-                <h1 class="text-3xl md:text-5xl font-serif font-bold mb-4">Read, Study, and Grow</h1>
-                <p class="text-blue-100/90 text-lg">Download PDFs, read online, and share with your community.</p>
+                <h1 class="text-3xl md:text-5xl font-serif font-bold mb-4">{{ __('messages.books.title') }}</h1>
+                <p class="text-blue-100/90 text-lg">{{ __('messages.books.subtitle') }}</p>
             </div>
         </div>
     </section>
@@ -25,7 +25,7 @@
                             type="text"
                             name="q"
                             value="{{ $search ?? '' }}"
-                            placeholder="Search books, authors, series..."
+                            placeholder="{{ __('messages.books.search_placeholder') }}"
                             class="w-full bg-transparent text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none"
                         >
                         @if (!empty($activeCategory))
@@ -39,7 +39,7 @@
                 @endphp
                 <a href="{{ route('books.index') }}"
                    class="whitespace-nowrap px-4 py-2 rounded-full border text-sm font-medium inline-flex items-center gap-2 {{ $allActive ? 'bg-blue-900 text-white border-blue-900' : 'bg-white text-slate-700 border-slate-200' }}">
-                    All
+                    {{ __('messages.common.all') }}
                     <span class="text-[11px] px-2 py-0.5 rounded-full {{ $allActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-700' }}">{{ $allCount ?? 0 }}</span>
                 </a>
                 @foreach ($categories as $category)
@@ -59,13 +59,13 @@
                             @if ($book->cover_image)
                                 <img src="{{ asset('storage/'.$book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
                             @else
-                                <img src="{{ asset('landingpage/download-book.webp') }}" alt="Downloadable Books" class="w-full h-full object-cover">
+                                <img src="{{ asset('landingpage/download-book.webp') }}" alt="{{ __('messages.home.downloadable_books') }}" class="w-full h-full object-cover">
                             @endif
                             <div class="absolute bottom-3 left-3 text-white text-sm font-medium drop-shadow">
-                                {{ $book->category?->name ?? 'Book' }}
+                                {{ $book->category?->name ?? __('messages.common.book') }}
                             </div>
                             @if ($book->featured)
-                                <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">Featured</span>
+                                <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">{{ __('messages.common.featured') }}</span>
                             @endif
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
@@ -82,21 +82,21 @@
                                     <svg viewBox="0 0 24 24" class="w-4 h-4" aria-hidden="true">
                                         <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6 3.99 4 6.5 4c1.74 0 3.41 0.81 4.5 2.09C12.09 4.81 13.76 4 15.5 4 18.01 4 20 6 20 8.5c0 3.78-3.4 6.86-8.55 11.54z"/>
                                     </svg>
-                                    <span>Like</span>
+                                    <span>{{ __('messages.common.like') }}</span>
                                     <span data-like-count>{{ $book->likes_count ?? 0 }}</span>
                                 </button>
                                 <a href="{{ route('books.show', $book) }}" class="text-slate-600 hover:text-blue-700 transition-colors">
-                                    Comments ({{ $book->comments_count ?? 0 }})
+                                    {{ __('messages.common.comments') }} ({{ $book->comments_count ?? 0 }})
                                 </a>
                             </div>
                             <div class="mt-auto flex items-center justify-between">
                                 <span class="text-xs text-slate-500">{{ $book->published_at?->toDateString() ?? $book->created_at?->toDateString() }}</span>
-                                <a href="{{ route('books.show', $book) }}" class="text-blue-700 font-medium text-sm hover:text-blue-900">Read Online</a>
+                                <a href="{{ route('books.show', $book) }}" class="text-blue-700 font-medium text-sm hover:text-blue-900">{{ __('messages.home.read_online') }}</a>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div class="col-span-3 text-center text-slate-500">No books found for this category.</div>
+                    <div class="col-span-3 text-center text-slate-500">{{ __('messages.books.none') }}</div>
                 @endforelse
             </div>
 

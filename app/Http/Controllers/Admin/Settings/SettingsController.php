@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use App\Models\SettingTranslation;
 use App\Notifications\SystemTestEmailNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
@@ -12,47 +13,7 @@ class SettingsController extends Controller
 {
     public function edit()
     {
-        $settings = Setting::current();
-
-        if (!$settings) {
-            $settings = new Setting([
-                'site_name' => config('app.name'),
-                'site_tagline' => null,
-                'site_description' => null,
-                'contact_email' => config('mail.from.address'),
-                'contact_phone' => null,
-                'contact_address' => null,
-                'youtube_channel' => null,
-                'facebook_url' => null,
-                'instagram_url' => null,
-                'notifications_email' => config('mail.from.address'),
-                'notifications_enabled' => true,
-                'home_featured_video_limit' => 3,
-                'home_recommended_books_limit' => 6,
-                'home_recommended_audios_limit' => 6,
-                'home_recommended_enabled' => true,
-                'per_page_default' => 9,
-                'auto_publish' => false,
-                'comments_auto_approve' => true,
-                'comments_require_name' => false,
-                'comments_require_email' => false,
-                'analytics_enabled' => true,
-                'analytics_retention_days' => 365,
-                'analytics_anonymize_ip' => false,
-                'maintenance_mode' => false,
-                'maintenance_message' => null,
-                'force_admin_2fa' => false,
-                'session_timeout_minutes' => 120,
-                'mail_mailer' => config('mail.default'),
-                'mail_host' => config('mail.mailers.smtp.host'),
-                'mail_port' => config('mail.mailers.smtp.port'),
-                'mail_username' => config('mail.mailers.smtp.username'),
-                'mail_password' => null,
-                'mail_scheme' => config('mail.mailers.smtp.scheme'),
-                'mail_from_address' => config('mail.from.address'),
-                'mail_from_name' => config('mail.from.name'),
-            ]);
-        }
+        $settings = Setting::currentOrDefault();
 
         return view('Admin.Settings.edit', compact('settings'));
     }
@@ -63,6 +24,15 @@ class SettingsController extends Controller
             'site_name' => ['required', 'string', 'max:255'],
             'site_tagline' => ['nullable', 'string', 'max:255'],
             'site_description' => ['nullable', 'string'],
+            'site_name_en' => ['required', 'string', 'max:255'],
+            'site_name_fr' => ['required', 'string', 'max:255'],
+            'site_name_rw' => ['required', 'string', 'max:255'],
+            'site_tagline_en' => ['nullable', 'string', 'max:255'],
+            'site_tagline_fr' => ['nullable', 'string', 'max:255'],
+            'site_tagline_rw' => ['nullable', 'string', 'max:255'],
+            'site_description_en' => ['nullable', 'string'],
+            'site_description_fr' => ['nullable', 'string'],
+            'site_description_rw' => ['nullable', 'string'],
             'logo' => ['nullable', 'image', 'max:4096'],
             'favicon' => ['nullable', 'image', 'max:1024'],
             'contact_email' => ['nullable', 'email', 'max:255'],
@@ -80,6 +50,21 @@ class SettingsController extends Controller
             'hero_primary_url' => ['nullable', 'string', 'max:255'],
             'hero_secondary_label' => ['nullable', 'string', 'max:100'],
             'hero_secondary_url' => ['nullable', 'string', 'max:255'],
+            'footer_text_en' => ['required', 'string', 'max:255'],
+            'footer_text_fr' => ['required', 'string', 'max:255'],
+            'footer_text_rw' => ['required', 'string', 'max:255'],
+            'hero_title_en' => ['required', 'string', 'max:255'],
+            'hero_title_fr' => ['required', 'string', 'max:255'],
+            'hero_title_rw' => ['required', 'string', 'max:255'],
+            'hero_subtitle_en' => ['required', 'string'],
+            'hero_subtitle_fr' => ['required', 'string'],
+            'hero_subtitle_rw' => ['required', 'string'],
+            'hero_primary_label_en' => ['required', 'string', 'max:100'],
+            'hero_primary_label_fr' => ['required', 'string', 'max:100'],
+            'hero_primary_label_rw' => ['required', 'string', 'max:100'],
+            'hero_secondary_label_en' => ['required', 'string', 'max:100'],
+            'hero_secondary_label_fr' => ['required', 'string', 'max:100'],
+            'hero_secondary_label_rw' => ['required', 'string', 'max:100'],
             'home_featured_video_limit' => ['nullable', 'integer', 'min:1', 'max:12'],
             'home_recommended_books_limit' => ['nullable', 'integer', 'min:1', 'max:12'],
             'home_recommended_audios_limit' => ['nullable', 'integer', 'min:1', 'max:12'],
@@ -146,6 +131,8 @@ class SettingsController extends Controller
         $settings->fill($validated);
         $settings->save();
 
+        $this->syncTranslations($settings, $request);
+
         return redirect()->route('admin.settings.edit')->with('status', 'Settings updated.');
     }
 
@@ -163,5 +150,41 @@ class SettingsController extends Controller
         Notification::route('mail', $to)->notify(new SystemTestEmailNotification());
 
         return redirect()->route('admin.settings.edit')->with('status', 'Test email sent.');
+    }
+
+    private function syncTranslations(Setting $settings, Request $request): void
+    {
+        $locales = ['en', 'fr', 'rw'];
+
+        foreach ($locales as $locale) {
+            $payload = [
+                'site_name' => $request->input("site_name_{$locale}"),
+                'site_tagline' => $request->input("site_tagline_{$locale}"),
+                'site_description' => $request->input("site_description_{$locale}"),
+                'footer_text' => $request->input("footer_text_{$locale}"),
+                'hero_title' => $request->input("hero_title_{$locale}"),
+                'hero_subtitle' => $request->input("hero_subtitle_{$locale}"),
+                'hero_primary_label' => $request->input("hero_primary_label_{$locale}"),
+                'hero_secondary_label' => $request->input("hero_secondary_label_{$locale}"),
+            ];
+
+            $hasAny = collect($payload)->filter(fn ($value) => filled($value))->isNotEmpty();
+
+            if (!$hasAny) {
+                SettingTranslation::query()
+                    ->where('setting_id', $settings->id)
+                    ->where('locale', $locale)
+                    ->delete();
+                continue;
+            }
+
+            SettingTranslation::updateOrCreate(
+                [
+                    'setting_id' => $settings->id,
+                    'locale' => $locale,
+                ],
+                $payload
+            );
+        }
     }
 }

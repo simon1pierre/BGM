@@ -15,7 +15,7 @@ class HomeController extends Controller
 {
     public function index(){
         $latestVideos = video::query()
-            ->with('category')
+            ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('featured')
             ->orderByDesc('published_at')
@@ -24,7 +24,7 @@ class HomeController extends Controller
             ->get();
 
         $featuredVideo = video::query()
-            ->with('category')
+            ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('featured')
             ->orderByDesc('published_at')
@@ -32,7 +32,7 @@ class HomeController extends Controller
             ->first();
 
         $featuredBook = book::query()
-            ->with('category')
+            ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('featured')
             ->orderByDesc('published_at')
@@ -40,7 +40,7 @@ class HomeController extends Controller
             ->first();
 
         $featuredAudio = audio::query()
-            ->with('category')
+            ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('featured')
             ->orderByDesc('published_at')
@@ -48,7 +48,7 @@ class HomeController extends Controller
             ->first();
 
         $recommendedBooks = book::query()
-            ->with('category')
+            ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->where('recommended', true)
             ->orderByDesc('published_at')
@@ -57,7 +57,7 @@ class HomeController extends Controller
             ->get();
 
         $recommendedAudios = audio::query()
-            ->with('category')
+            ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->where('recommended', true)
             ->orderByDesc('published_at')
@@ -73,6 +73,7 @@ class HomeController extends Controller
         $categories = ContentCategory::query()
             ->whereIn('type', ['video', 'all'])
             ->where('is_active', true)
+            ->with('translations')
             ->withCount(['videos as videos_count' => function ($query) {
                 $query->where('is_published', true);
             }])
@@ -83,8 +84,10 @@ class HomeController extends Controller
         $onlyFeatured = $request->boolean('featured');
         $search = trim((string) $request->query('q'));
 
+        $locale = app()->getLocale();
+
         $videosQuery = video::query()
-            ->with('category')
+            ->with(['category.translations', 'translations'])
             ->withCount(['likes', 'comments' => function ($query) {
                 $query->where('is_approved', true);
             }])
@@ -94,12 +97,19 @@ class HomeController extends Controller
                     ->limit(2);
             }])
             ->where('is_published', true)
-            ->when($search, function ($query) use ($search) {
-                $query->where(function ($inner) use ($search) {
+            ->when($search, function ($query) use ($search, $locale) {
+                $query->where(function ($inner) use ($search, $locale) {
                     $inner->where('title', 'like', '%'.$search.'%')
                         ->orWhere('description', 'like', '%'.$search.'%')
                         ->orWhere('speaker', 'like', '%'.$search.'%')
-                        ->orWhere('series', 'like', '%'.$search.'%');
+                        ->orWhere('series', 'like', '%'.$search.'%')
+                        ->orWhereHas('translations', function ($translation) use ($search, $locale) {
+                            $translation->where('locale', $locale)
+                                ->where(function ($sub) use ($search) {
+                                    $sub->where('title', 'like', '%'.$search.'%')
+                                        ->orWhere('description', 'like', '%'.$search.'%');
+                                });
+                        });
                 });
             })
             ->when($onlyFeatured, function ($query) {
@@ -124,7 +134,7 @@ class HomeController extends Controller
             ->withQueryString();
 
         $recommendedVideos = video::query()
-            ->with('category')
+            ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->whereNotIn('id', $videos->pluck('id'))
             ->orderByDesc('featured')
@@ -141,6 +151,7 @@ class HomeController extends Controller
         $categories = ContentCategory::query()
             ->whereIn('type', ['document', 'all'])
             ->where('is_active', true)
+            ->with('translations')
             ->withCount(['documents as documents_count' => function ($query) {
                 $query->where('is_published', true);
             }])
@@ -150,18 +161,27 @@ class HomeController extends Controller
         $activeCategory = $request->query('category');
         $search = trim((string) $request->query('q'));
 
+        $locale = app()->getLocale();
+
         $booksQuery = book::query()
-            ->with('category')
+            ->with(['category.translations', 'translations'])
             ->withCount(['likes', 'comments' => function ($query) {
                 $query->where('is_approved', true);
             }])
             ->where('is_published', true)
-            ->when($search, function ($query) use ($search) {
-                $query->where(function ($inner) use ($search) {
+            ->when($search, function ($query) use ($search, $locale) {
+                $query->where(function ($inner) use ($search, $locale) {
                     $inner->where('title', 'like', '%'.$search.'%')
                         ->orWhere('description', 'like', '%'.$search.'%')
                         ->orWhere('author', 'like', '%'.$search.'%')
-                        ->orWhere('series', 'like', '%'.$search.'%');
+                        ->orWhere('series', 'like', '%'.$search.'%')
+                        ->orWhereHas('translations', function ($translation) use ($search, $locale) {
+                            $translation->where('locale', $locale)
+                                ->where(function ($sub) use ($search) {
+                                    $sub->where('title', 'like', '%'.$search.'%')
+                                        ->orWhere('description', 'like', '%'.$search.'%');
+                                });
+                        });
                 });
             })
             ->when($activeCategory, function ($query) use ($activeCategory) {
@@ -188,6 +208,8 @@ class HomeController extends Controller
         }
 
         $book->load('category');
+        $book->load('translations');
+        $book->category?->load('translations');
         $book->loadCount(['likes', 'comments' => function ($query) {
             $query->where('is_approved', true);
         }]);
@@ -198,7 +220,7 @@ class HomeController extends Controller
         }]);
 
         $relatedBooks = book::query()
-            ->with('category')
+            ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->where('id', '!=', $book->id)
             ->when($book->category_id, function ($query) use ($book) {
@@ -217,6 +239,7 @@ class HomeController extends Controller
         $categories = ContentCategory::query()
             ->whereIn('type', ['audio', 'all'])
             ->where('is_active', true)
+            ->with('translations')
             ->withCount(['audios as audios_count' => function ($query) {
                 $query->where('is_published', true);
             }])
@@ -226,18 +249,27 @@ class HomeController extends Controller
         $activeCategory = $request->query('category');
         $search = trim((string) $request->query('q'));
 
+        $locale = app()->getLocale();
+
         $audiosQuery = audio::query()
-            ->with('category')
+            ->with(['category.translations', 'translations'])
             ->withCount(['likes', 'comments' => function ($query) {
                 $query->where('is_approved', true);
             }])
             ->where('is_published', true)
-            ->when($search, function ($query) use ($search) {
-                $query->where(function ($inner) use ($search) {
+            ->when($search, function ($query) use ($search, $locale) {
+                $query->where(function ($inner) use ($search, $locale) {
                     $inner->where('title', 'like', '%'.$search.'%')
                         ->orWhere('description', 'like', '%'.$search.'%')
                         ->orWhere('speaker', 'like', '%'.$search.'%')
-                        ->orWhere('series', 'like', '%'.$search.'%');
+                        ->orWhere('series', 'like', '%'.$search.'%')
+                        ->orWhereHas('translations', function ($translation) use ($search, $locale) {
+                            $translation->where('locale', $locale)
+                                ->where(function ($sub) use ($search) {
+                                    $sub->where('title', 'like', '%'.$search.'%')
+                                        ->orWhere('description', 'like', '%'.$search.'%');
+                                });
+                        });
                 });
             })
             ->when($activeCategory, function ($query) use ($activeCategory) {
@@ -264,6 +296,8 @@ class HomeController extends Controller
         }
 
         $audio->load('category');
+        $audio->load('translations');
+        $audio->category?->load('translations');
         $audio->loadCount(['likes', 'comments' => function ($query) {
             $query->where('is_approved', true);
         }]);
@@ -274,7 +308,7 @@ class HomeController extends Controller
         }]);
 
         $relatedAudios = audio::query()
-            ->with('category')
+            ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->where('id', '!=', $audio->id)
             ->when($audio->category_id, function ($query) use ($audio) {
@@ -314,6 +348,6 @@ class HomeController extends Controller
             ],
         ]);
 
-        return redirect()->back()->with('status', 'Thank you for subscribing.');
+        return redirect()->back()->with('status', __('messages.home.subscribe_thanks'));
     }
 }

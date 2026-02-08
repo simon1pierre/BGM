@@ -33,6 +33,8 @@ Beacons of God Ministries is a comprehensive digital platform designed to delive
 - **Featured vs Recommended** are separate flags
 - **Content Notifications** to subscribers when new content is uploaded
 - **Email Campaigns** with audience selection, preview, and drafts
+- **Analytics** dashboard + audience insights + event logs + content insights
+- **Settings Center** for site identity, homepage controls, moderation, analytics, maintenance, and security
 
 ### Analytics & Tracking
 - **Video analytics:** impressions, plays, watch time, shares, and unique views.
@@ -61,7 +63,7 @@ Beacons of God Ministries is a comprehensive digital platform designed to delive
 - **Categories** — Categories for videos, audios, documents
 - **Playlists** — Playlists for videos/audios with ordering
 - **Featured vs Recommended** — Separate flags for homepage placement
-- **Settings & Configuration** — Customize ministry branding and preferences
+- **Settings Center** — Full control of branding, homepage, moderation, analytics
 
 ### Analytics & Tracking
 - **Video Analytics** — View counts (unique per device), impressions, shares, watch time
@@ -135,6 +137,16 @@ Visit `http://localhost:8000`
 
 ---
 
+## Documentation
+
+See detailed docs in `docs/`:
+- `docs/ARCHITECTURE.md`
+- `docs/ROUTES.md`
+- `docs/ANALYTICS.md`
+- `docs/SETTINGS.md`
+
+---
+
 ## Project Structure
 
 ```
@@ -190,6 +202,8 @@ All admin routes are prefixed with `/beacons/admin` and protected by `auth`.
 - `/beacons/admin/playlists`
 - `/beacons/admin/campaigns`
 - `/beacons/admin/content-notifications`
+- `/beacons/admin/analytics`
+- `/beacons/admin/settings`
 
 ---
 

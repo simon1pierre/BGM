@@ -8,10 +8,12 @@ use Illuminate\Support\Str;
 use App\Models\video;
 use App\Models\audio;
 use App\Models\book;
+use App\Models\Concerns\HasTranslations;
 
 class ContentCategory extends Model
 {
     use SoftDeletes;
+    use HasTranslations;
 
     protected $fillable = [
         'name',
@@ -47,5 +49,15 @@ class ContentCategory extends Model
     public function documents()
     {
         return $this->hasMany(book::class, 'category_id');
+    }
+
+    public function getNameAttribute($value)
+    {
+        return $this->translatedValue('title', $value);
+    }
+
+    public function getDescriptionAttribute($value)
+    {
+        return $this->translatedValue('description', $value);
     }
 }

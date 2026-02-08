@@ -29,8 +29,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
         
+        $settings = null;
+
         if (Schema::hasTable('settings')) {
-            $settings = Setting::current();
+            $settings = Setting::currentOrDefault();
 
             if ($settings) {
                 Config::set('app.name', $settings->site_name ?: config('app.name'));
@@ -74,6 +76,12 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
         }
+
+        if (!$settings) {
+            $settings = new Setting(Setting::defaults());
+        }
+
+        view()->share('siteSettings', $settings);
 
         if (Schema::hasTable('user_activity_logs')) {
             UserActivityLog::created(function (UserActivityLog $activity): void {

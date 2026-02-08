@@ -8,6 +8,7 @@ use App\Models\audio;
 use App\Models\book;
 use App\Models\video;
 use App\Models\VideoEvent;
+use App\Services\GeoIpService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -91,7 +92,9 @@ class ContentDownloadController extends Controller
             $watchSeconds = null;
         }
 
-        VideoEvent::create([
+        $geo = $this->geoPayload($request);
+
+        VideoEvent::create(array_merge([
             'video_id' => $video->id,
             'event_type' => $event,
             'ip_address' => $request->ip(),
@@ -108,7 +111,7 @@ class ContentDownloadController extends Controller
             'device_hash' => $deviceHash,
             'watch_seconds' => $watchSeconds,
             'share_channel' => $request->input('share_channel'),
-        ]);
+        ], $geo));
 
         return response()->noContent();
     }
@@ -134,7 +137,9 @@ class ContentDownloadController extends Controller
 
     private function recordContentEvent(Request $request, string $contentType, int $contentId, string $eventType): void
     {
-        \App\Models\ContentEvent::create([
+        $geo = $this->geoPayload($request);
+
+        \App\Models\ContentEvent::create(array_merge([
             'content_type' => $contentType,
             'content_id' => $contentId,
             'event_type' => $eventType,
@@ -144,7 +149,7 @@ class ContentDownloadController extends Controller
             'page_url' => $request->fullUrl(),
             'session_id' => $request->session()->getId(),
             'device_hash' => $this->deviceHash($request),
-        ]);
+        ], $geo));
     }
 
     private function deviceHash(Request $request): string
@@ -160,5 +165,10 @@ class ContentDownloadController extends Controller
         ];
 
         return hash('sha256', implode('|', $parts));
+    }
+
+    private function geoPayload(Request $request): array
+    {
+        return app(GeoIpService::class)->lookup($request->ip());
     }
 }

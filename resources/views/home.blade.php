@@ -1,5 +1,14 @@
 @extends('layouts.audiences.app')
 @section('contents')
+@php
+  $siteName = $siteSettings?->translated('site_name') ?: config('app.name', 'Beacons of God Ministries');
+  $heroTitle = $siteSettings?->translated('hero_title') ?: "Shining God's Truth in a Darkened World";
+  $heroSubtitle = $siteSettings?->translated('hero_subtitle') ?: 'We are beacons of His light for this generation. Join us for biblical teaching, evangelism, and spiritual growth in the presence of the Lord.';
+  $heroPrimaryLabel = $siteSettings?->translated('hero_primary_label') ?: 'Watch Sermons';
+  $heroPrimaryUrl = $siteSettings?->hero_primary_url ?: route('videos.index');
+  $heroSecondaryLabel = $siteSettings?->translated('hero_secondary_label') ?: 'Explore Resources';
+  $heroSecondaryUrl = $siteSettings?->hero_secondary_url ?: '#resources';
+@endphp
  <main class="grow">
 <section class="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden bg-slate-900 text-white">
   <!-- Background Image with Overlay -->
@@ -65,20 +74,20 @@
   <!-- Content -->
   <div class="relative z-20 container mx-auto px-6 text-center">
     <span class="inline-block py-1 px-3 rounded-full bg-blue-500/20 border border-blue-300/30 text-blue-100 text-sm font-medium tracking-widest uppercase mb-6 backdrop-blur-sm animate-fade-in-down">
-      Welcome to Beacons of God Ministries
+      {{ __('messages.home.welcome', ['name' => $siteName]) }}
     </span>
     <h1 class="text-4xl md:text-6xl lg:text-7xl font-serif font-medium leading-tight mb-6 drop-shadow-lg animate-fade-in-up" style="animation-delay: 0.2s;">
-      Shining God’s Truth in a <br class="hidden md:block" /> Darkened World
+      {{ $heroTitle }}
     </h1>
     <p class="text-lg md:text-xl text-blue-100/90 max-w-2xl mx-auto mb-10 font-light leading-relaxed animate-fade-in-up" style="animation-delay: 0.4s;">
-      We are beacons of His light for this generation. Join us for biblical teaching, evangelism, and spiritual growth in the presence of the Lord.
+      {{ $heroSubtitle }}
     </p>
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-stagger">
-      <a href="{{ route('videos.index') }}" class="px-8 py-4 bg-white text-blue-900 rounded-full font-semibold hover:bg-blue-50 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover-lift">
-        Watch Sermons
+      <a href="{{ $heroPrimaryUrl }}" class="px-8 py-4 bg-white text-blue-900 rounded-full font-semibold hover:bg-blue-50 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover-lift">
+        {{ $heroPrimaryLabel }}
       </a>
-      <a href="#resources" class="px-8 py-4 bg-transparent border border-white/40 text-white rounded-full font-medium hover:bg-white/10 transition-all backdrop-blur-sm hover-lift">
-        Explore Resources
+      <a href="{{ $heroSecondaryUrl }}" class="px-8 py-4 bg-transparent border border-white/40 text-white rounded-full font-medium hover:bg-white/10 transition-all backdrop-blur-sm hover-lift">
+        {{ $heroSecondaryLabel }}
       </a>
     </div>
   </div>
@@ -87,9 +96,9 @@
 <section id="about" class="py-6 bg-slate-50 text-slate-800">
   <div class="container mx-auto px-6">
     <div class="text-center mb-8">
-      <h2 class="text-4xl md:text-5xl font-serif font-bold text-brand-blue mb-4">
-        About Our Ministry
-      </h2>
+    <h2 class="text-4xl md:text-5xl font-serif font-bold text-brand-blue mb-4">
+        {{ __('messages.home.about_title') }}
+    </h2>
       <div class="w-12 h-1 bg-brand-gold mx-auto"></div>
     </div>
 
@@ -98,32 +107,32 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Mission Card -->
       <div class="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow">
-        <h3 class="text-2xl font-serif font-bold text-brand-blue mb-4">Our Mission</h3>
+        <h3 class="text-2xl font-serif font-bold text-brand-blue mb-4">{{ __('messages.home.mission_title') }}</h3>
         <p class="text-lg text-slate-700 leading-relaxed">
-          We're here to shine God's light in a world searching for answers. Through powerful biblical teaching and genuine spiritual support, we help believers discover their divine purpose and transform their lives with faith.
+          {{ __('messages.home.mission_body') }}
         </p>
       </div>
 
 
       <!-- What We Offer Card - Animated -->
       <div class="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow animate-float-slow">
-        <h3 class="text-2xl font-serif font-bold text-brand-blue mb-4">What We Offer</h3>
+        <h3 class="text-2xl font-serif font-bold text-brand-blue mb-4">{{ __('messages.home.offer_title') }}</h3>
         <ul class="space-y-3 text-lg text-slate-700">
           <li class="flex items-start gap-3 hover:translate-x-1 transition-transform">
             <span class="text-brand-gold font-bold text-xl">✦</span>
-            <span><strong>Powerful Sermons</strong> — Stories and truths that challenge and inspire</span>
+            <span><strong>{{ __('messages.home.offer_sermons_title') }}</strong> — {{ __('messages.home.offer_sermons_body') }}</span>
           </li>
           <li class="flex items-start gap-3 hover:translate-x-1 transition-transform">
             <span class="text-brand-gold font-bold text-xl">✦</span>
-            <span><strong>Study Resources</strong> — Tools to deepen your biblical knowledge</span>
+            <span><strong>{{ __('messages.home.offer_resources_title') }}</strong> — {{ __('messages.home.offer_resources_body') }}</span>
           </li>
           <li class="flex items-start gap-3 hover:translate-x-1 transition-transform">
             <span class="text-brand-gold font-bold text-xl">✦</span>
-            <span><strong>Inspiring Audio</strong> — Spiritual teachings for your daily walk</span>
+            <span><strong>{{ __('messages.home.offer_audio_title') }}</strong> — {{ __('messages.home.offer_audio_body') }}</span>
           </li>
           <li class="flex items-start gap-3 hover:translate-x-1 transition-transform">
             <span class="text-brand-gold font-bold text-xl">✦</span>
-            <span><strong>Connected Community</strong> — Find encouragement and belonging</span>
+            <span><strong>{{ __('messages.home.offer_community_title') }}</strong> — {{ __('messages.home.offer_community_body') }}</span>
           </li>
         </ul>
       </div>
@@ -131,9 +140,9 @@
 
       <!-- Vision Card -->
       <div class="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow">
-        <h3 class="text-2xl font-serif font-bold text-brand-blue mb-4">Our Vision</h3>
+        <h3 class="text-2xl font-serif font-bold text-brand-blue mb-4">{{ __('messages.home.vision_title') }}</h3>
         <p class="text-lg text-slate-700 leading-relaxed">
-          We believe every person deserves access to life-changing spiritual guidance. Join thousands discovering deeper faith, finding hope, and living with renewed purpose through God's eternal truth.
+          {{ __('messages.home.vision_body') }}
         </p>
       </div>
     </div>
@@ -142,8 +151,8 @@
 <section id="resources" class="py-24 bg-slate-50">
   <div class="container mx-auto px-6">
     <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-4xl font-serif text-blue-900 mb-4">Spiritual Resources for Your Journey</h2>
-      <p class="text-slate-600 max-w-2xl mx-auto">Explore our three core pillars of ministry designed to help you grow in faith and understanding.</p>
+      <h2 class="text-3xl md:text-4xl font-serif text-blue-900 mb-4">{{ __('messages.home.resources_title') }}</h2>
+      <p class="text-slate-600 max-w-2xl mx-auto">{{ __('messages.home.resources_subtitle') }}</p>
     </div>
    
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -162,19 +171,19 @@
           @else
             <img
               src="{{asset('landingpage/video-sermons.webp')}}"
-              alt="Video Sermons"
+              alt="{{ __('messages.home.video_sermons') }}"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
             />
           @endif
         </div>
         <div class="p-8 text-center">
-          <h3 class="text-xl font-serif text-blue-900 mb-3">{{ $featuredVideo?->title ?? 'Video Sermons' }}</h3>
+          <h3 class="text-xl font-serif text-blue-900 mb-3">{{ $featuredVideo?->title ?? __('messages.home.video_sermons') }}</h3>
           <p class="text-slate-600 mb-6 text-sm leading-relaxed">
-            {{ $featuredVideo?->description ? \Illuminate\Support\Str::limit($featuredVideo->description, 140) : 'Watch powerful, scripture-based messages that bring the Bible to life and speak directly to your heart.' }}
+            {{ $featuredVideo?->description ? \Illuminate\Support\Str::limit($featuredVideo->description, 140) : __('messages.home.video_sermons_body') }}
           </p>
           <a href="{{ route('videos.index') }}" class="text-blue-700 font-medium hover:text-blue-900 inline-flex items-center gap-2 text-sm uppercase tracking-wide">
-            Watch More
+            {{ __('messages.home.watch_more') }}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
           </a>
         </div>
@@ -194,19 +203,19 @@
           @else
             <img
               src="{{asset('landingpage/download-book.webp')}}"
-              alt="Downloadable Books"
+              alt="{{ __('messages.home.downloadable_books') }}"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
             />
           @endif
         </div>
         <div class="p-8 text-center">
-          <h3 class="text-xl font-serif text-blue-900 mb-3">{{ $featuredBook?->title ?? 'Downloadable Books' }}</h3>
+          <h3 class="text-xl font-serif text-blue-900 mb-3">{{ $featuredBook?->title ?? __('messages.home.downloadable_books') }}</h3>
           <p class="text-slate-600 mb-6 text-sm leading-relaxed">
-            {{ $featuredBook?->description ? \Illuminate\Support\Str::limit($featuredBook->description, 140) : 'Deepen your study with our library of PDF books and guides, available for free download to aid your walk.' }}
+            {{ $featuredBook?->description ? \Illuminate\Support\Str::limit($featuredBook->description, 140) : __('messages.home.downloadable_books_body') }}
           </p>
           <a href="{{ $featuredBook ? route('books.show', $featuredBook) : route('books.index') }}" class="text-blue-700 font-medium hover:text-blue-900 inline-flex items-center gap-2 text-sm uppercase tracking-wide">
-            Read Library
+            {{ __('messages.home.read_library') }}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
           </a>
         </div>
@@ -233,19 +242,19 @@
           @else
             <img
               src="{{asset('landingpage/download-audio.webp')}}"
-              alt="Audio Teachings"
+              alt="{{ __('messages.home.audio_teachings') }}"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
             />
           @endif
         </div>
         <div class="p-8 text-center">
-          <h3 class="text-xl font-serif text-blue-900 mb-3">{{ $featuredAudio?->title ?? 'Audio Teachings' }}</h3>
+          <h3 class="text-xl font-serif text-blue-900 mb-3">{{ $featuredAudio?->title ?? __('messages.home.audio_teachings') }}</h3>
           <p class="text-slate-600 mb-6 text-sm leading-relaxed">
-            {{ $featuredAudio?->description ? \Illuminate\Support\Str::limit($featuredAudio->description, 140) : 'Listen to teachings on the go. Perfect for your commute or quiet time, bringing God\'s word to your ears.' }}
+            {{ $featuredAudio?->description ? \Illuminate\Support\Str::limit($featuredAudio->description, 140) : __('messages.home.audio_teachings_body') }}
           </p>
           <a href="{{ $featuredAudio ? route('audios.show', $featuredAudio) : route('audios.index') }}" class="text-blue-700 font-medium hover:text-blue-900 inline-flex items-center gap-2 text-sm uppercase tracking-wide">
-            Start Listening
+            {{ __('messages.home.start_listening') }}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
           </a>
         </div>
@@ -255,8 +264,8 @@
 </section>
 <section id="sermons" class="py-6 bg-white text-slate-800">
   <div class="container mx-auto px-6 max-w-6xl text-center">
-    <span class="block text-amber-600 font-semibold tracking-widest uppercase text-sm mb-3">Latest Messages</span>
-    <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950 mb-4">Walking in Divine Light</h2>
+    <span class="block text-amber-600 font-semibold tracking-widest uppercase text-sm mb-3">{{ __('messages.home.latest_messages') }}</span>
+    <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950 mb-4">{{ __('messages.home.walking_light') }}</h2>
     <p class="text-lg text-slate-600 mb-10 italic">"Your word is a lamp for my feet, a light on my path." — Psalm 119:105</p>
    
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -266,24 +275,24 @@
             @if ($video->youtube_id)
               <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/{{ $video->youtube_id }}" title="{{ $video->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             @else
-              <div class="absolute inset-0 flex items-center justify-center text-slate-500">No video preview</div>
+              <div class="absolute inset-0 flex items-center justify-center text-slate-500">{{ __('messages.home.no_video_preview') }}</div>
             @endif
             @if ($video->featured)
-              <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">Featured</span>
+              <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">{{ __('messages.common.featured') }}</span>
             @endif
           </div>
           <h3 class="text-lg font-serif font-semibold text-blue-900 text-left">{{ $video->title }}</h3>
           <p class="text-sm text-slate-500 text-left">
-            {{ $video->category?->name ?? 'Sermon' }} • {{ $video->published_at?->toDateString() ?? $video->created_at?->toDateString() }}
+            {{ $video->category?->name ?? __('messages.common.sermon') }} • {{ $video->published_at?->toDateString() ?? $video->created_at?->toDateString() }}
           </p>
         </div>
       @empty
-        <div class="col-span-3 text-center text-slate-500">No videos available yet.</div>
+        <div class="col-span-3 text-center text-slate-500">{{ __('messages.home.no_videos_available') }}</div>
       @endforelse
     </div>
     <div class="mt-10">
       <a href="{{ route('videos.index') }}" class="block w-full text-center px-6 py-4 bg-blue-900 text-white font-semibold rounded-xl hover:bg-blue-800 transition-colors shadow-lg">
-        Explore More Videos
+        {{ __('messages.home.explore_more_videos') }}
       </a>
     </div>
   </div>
@@ -291,14 +300,14 @@
 <section class="py-24 bg-slate-50">
   <div class="container mx-auto px-6 max-w-6xl">
     <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950 mb-4">Ministry Resources</h2>
-      <p class="text-slate-600 max-w-2xl mx-auto text-lg">Deepen your understanding with our curated collection of study guides and audio teachings, available for free download.</p>
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950 mb-4">{{ __('messages.home.ministry_resources') }}</h2>
+      <p class="text-slate-600 max-w-2xl mx-auto text-lg">{{ __('messages.home.ministry_resources_body') }}</p>
     </div>
 
 
     <!-- PDF Downloads Section -->
     <div class="mb-16">
-      <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">Highly Recommended Books</h3>
+      <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">{{ __('messages.home.recommended_books') }}</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         @forelse ($recommendedBooks as $book)
           <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
@@ -306,13 +315,13 @@
               @if ($book->cover_image)
                 <img src="{{ asset('storage/'.$book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
               @else
-                <img src="{{ asset('landingpage/download-book.webp') }}" alt="Downloadable Books" class="w-full h-full object-cover">
+                <img src="{{ asset('landingpage/download-book.webp') }}" alt="{{ __('messages.home.downloadable_books') }}" class="w-full h-full object-cover">
               @endif
               <div class="absolute bottom-3 left-3 text-white text-xs font-semibold drop-shadow">
-                {{ $book->category?->name ?? 'Book' }}
+                {{ $book->category?->name ?? __('messages.common.book') }}
               </div>
               @if ($book->featured)
-                <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">Featured</span>
+                <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">{{ __('messages.common.featured') }}</span>
               @endif
             </div>
             <div class="p-8 flex-1 flex flex-col">
@@ -320,16 +329,16 @@
               <p class="text-slate-600 mb-6 flex-1 leading-relaxed">{{ \Illuminate\Support\Str::limit($book->description, 120) }}</p>
               <div class="space-y-2">
                 <a href="{{ route('books.show', $book) }}" class="w-full py-3 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
-                  <i data-lucide="book-open" class="w-4 h-4"></i> Read Online
+                  <i data-lucide="book-open" class="w-4 h-4"></i> {{ __('messages.home.read_online') }}
                 </a>
                 <a href="{{ route('content.download.document', $book) }}" class="w-full py-2 px-6 bg-white text-blue-900 font-medium rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 text-sm border border-blue-100">
-                  <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+                  <i data-lucide="download" class="w-4 h-4"></i> {{ __('messages.home.download_pdf') }}
                 </a>
               </div>
             </div>
           </div>
         @empty
-          <div class="col-span-3 text-center text-slate-500">No recommended books yet.</div>
+          <div class="col-span-3 text-center text-slate-500">{{ __('messages.home.no_recommended_books') }}</div>
         @endforelse
       </div>
     </div>
@@ -337,7 +346,7 @@
 
     <!-- Audio Resources Section -->
     <div>
-      <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">Highly Recommended Audios</h3>
+      <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">{{ __('messages.home.recommended_audios') }}</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         @forelse ($recommendedAudios as $audio)
           <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
@@ -345,13 +354,13 @@
               @if ($audio->thumbnail)
                 <img src="{{ asset('storage/'.$audio->thumbnail) }}" alt="{{ $audio->title }}" class="w-full h-full object-cover">
               @else
-                <img src="{{ asset('landingpage/download-audio.webp') }}" alt="Audio Teachings" class="w-full h-full object-cover">
+                <img src="{{ asset('landingpage/download-audio.webp') }}" alt="{{ __('messages.home.audio_teachings') }}" class="w-full h-full object-cover">
               @endif
               <div class="absolute bottom-3 left-3 text-white text-xs font-semibold drop-shadow">
-                {{ $audio->category?->name ?? 'Audio' }}
+                {{ $audio->category?->name ?? __('messages.common.audio') }}
               </div>
               @if ($audio->featured)
-                <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">Featured</span>
+                <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">{{ __('messages.common.featured') }}</span>
               @endif
             </div>
             <div class="p-8 flex-1 flex flex-col">
@@ -359,16 +368,16 @@
               <p class="text-slate-600 mb-6 flex-1 leading-relaxed">{{ \Illuminate\Support\Str::limit($audio->description, 120) }}</p>
               <div class="space-y-2">
                 <a href="{{ route('audios.show', $audio) }}" class="w-full py-3 px-6 bg-purple-50 text-purple-900 font-medium rounded-lg hover:bg-purple-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
-                  <i data-lucide="play-circle" class="w-4 h-4"></i> Play Audio
+                  <i data-lucide="play-circle" class="w-4 h-4"></i> {{ __('messages.home.play_audio') }}
                 </a>
                 <a href="{{ route('content.download.audio', $audio) }}" class="w-full py-2 px-6 bg-white text-blue-900 font-medium rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 text-sm border border-blue-100">
-                  <i data-lucide="download" class="w-4 h-4"></i> Download
+                  <i data-lucide="download" class="w-4 h-4"></i> {{ __('messages.home.download') }}
                 </a>
               </div>
             </div>
           </div>
         @empty
-          <div class="col-span-3 text-center text-slate-500">No recommended audios yet.</div>
+          <div class="col-span-3 text-center text-slate-500">{{ __('messages.home.no_recommended_audios') }}</div>
         @endforelse
       </div>
     </div>
@@ -386,8 +395,8 @@
     <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-900 mb-6">
       <i data-lucide="mail" class="w-8 h-8 text-amber-500"></i>
     </div>
-    <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">Receive Spiritual Nourishment</h2>
-    <p class="text-blue-100 text-lg mb-10 leading-relaxed">Join our community to receive weekly sermons, prayer points, and ministry updates directly in your inbox.</p>
+    <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">{{ __('messages.home.newsletter_title') }}</h2>
+    <p class="text-blue-100 text-lg mb-10 leading-relaxed">{{ __('messages.home.newsletter_body') }}</p>
    
     <form method="POST" action="{{ route('subscribe') }}" class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
       @csrf
@@ -395,13 +404,13 @@
         type="text"
         name="name"
         required
-        placeholder="Your full name"
+        placeholder="{{ __('messages.home.form_name') }}"
         class="flex-1 px-6 py-4 rounded-lg text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder-slate-400"
       />
       <input
         type="email"
         name="email"
-        placeholder="Your email address"
+        placeholder="{{ __('messages.home.form_email') }}"
         class="flex-1 px-6 py-4 rounded-lg text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder-slate-400"
         required
       />
@@ -409,10 +418,10 @@
         type="submit"
         class="px-8 py-4 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-lg transition-colors shadow-lg whitespace-nowrap"
       >
-        Subscribe
+        {{ __('messages.home.subscribe') }}
       </button>
     </form>
-    <p class="text-blue-400 text-sm mt-6">We respect your privacy. Unsubscribe at any time.</p>
+    <p class="text-blue-400 text-sm mt-6">{{ __('messages.home.privacy_note') }}</p>
   </div>
 </section>
   </main>

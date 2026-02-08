@@ -5,10 +5,10 @@
         <div class="container mx-auto px-6">
             <div class="max-w-3xl">
                 <span class="inline-block py-1 px-3 rounded-full bg-blue-500/20 border border-blue-300/30 text-blue-100 text-xs font-medium tracking-widest uppercase mb-4">
-                    Video Library
+                    {{ __('messages.videos.badge') }}
                 </span>
-                <h1 class="text-3xl md:text-5xl font-serif font-bold mb-4">Explore Our Latest Messages</h1>
-                <p class="text-blue-100/90 text-lg">Find teachings by category and grow with each message.</p>
+                <h1 class="text-3xl md:text-5xl font-serif font-bold mb-4">{{ __('messages.videos.title') }}</h1>
+                <p class="text-blue-100/90 text-lg">{{ __('messages.videos.subtitle') }}</p>
             </div>
         </div>
     </section>
@@ -25,7 +25,7 @@
                             type="text"
                             name="q"
                             value="{{ $search ?? '' }}"
-                            placeholder="Search videos, speakers, series..."
+                            placeholder="{{ __('messages.videos.search_placeholder') }}"
                             class="w-full bg-transparent text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none"
                         >
                         @if (!empty($activeCategory))
@@ -42,12 +42,12 @@
                 @endphp
                 <a href="{{ route('videos.index') }}"
                    class="whitespace-nowrap px-4 py-2 rounded-full border text-sm font-medium inline-flex items-center gap-2 {{ $allActive && !$onlyFeatured ? 'bg-blue-900 text-white border-blue-900' : 'bg-white text-slate-700 border-slate-200' }}">
-                    All
+                    {{ __('messages.common.all') }}
                     <span class="text-[11px] px-2 py-0.5 rounded-full {{ $allActive && !$onlyFeatured ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-700' }}">{{ $allCount ?? 0 }}</span>
                 </a>
                 <a href="{{ route('videos.index', ['featured' => 1]) }}"
                    class="whitespace-nowrap px-4 py-2 rounded-full border text-sm font-medium inline-flex items-center gap-2 {{ $onlyFeatured ? 'bg-amber-500 text-white border-amber-500' : 'bg-white text-slate-700 border-slate-200' }}">
-                    Featured
+                    {{ __('messages.common.featured') }}
                     <span class="text-[11px] px-2 py-0.5 rounded-full {{ $onlyFeatured ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-700' }}">{{ $featuredCount ?? 0 }}</span>
                 </a>
                 @foreach ($categories as $category)
@@ -67,14 +67,14 @@
                             @if ($video->thumbnail_url)
                                 <img src="{{ $video->thumbnail_url }}" alt="{{ $video->title }}" class="w-full h-full object-cover">
                             @else
-                                <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-500">No thumbnail</div>
+                                <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-500">{{ __('messages.common.no_thumbnail') }}</div>
                             @endif
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent"></div>
                             <div class="absolute bottom-3 left-3 text-white text-sm font-medium">
-                                {{ $video->category?->name ?? 'Sermon' }}
+                                {{ $video->category?->name ?? __('messages.common.sermon') }}
                             </div>
                             @if ($video->featured)
-                                <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">Featured</span>
+                                <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">{{ __('messages.common.featured') }}</span>
                             @endif
                             @if ($video->youtube_id)
                                 <button
@@ -106,7 +106,7 @@
                                     <svg viewBox="0 0 24 24" class="w-4 h-4" aria-hidden="true">
                                         <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6 3.99 4 6.5 4c1.74 0 3.41 0.81 4.5 2.09C12.09 4.81 13.76 4 15.5 4 18.01 4 20 6 20 8.5c0 3.78-3.4 6.86-8.55 11.54z"/>
                                     </svg>
-                                    <span>Like</span>
+                                    <span>{{ __('messages.common.like') }}</span>
                                     <span data-like-count>{{ $video->likes_count ?? 0 }}</span>
                                 </button>
                                 <button
@@ -115,7 +115,7 @@
                                     data-comment-toggle
                                     onclick="toggleCommentPanel(this)"
                                 >
-                                    Comment (<span data-comment-count>{{ $video->comments_count ?? 0 }}</span>)
+                                    {{ __('messages.common.comment') }} (<span data-comment-count>{{ $video->comments_count ?? 0 }}</span>)
                                 </button>
                                 <button
                                     type="button"
@@ -126,45 +126,45 @@
                                     data-video-url="{{ $video->youtube_url }}"
                                     onclick="shareFromCard(this)"
                                 >
-                                    Share
+                                    {{ __('messages.common.share') }}
                                 </button>
                             </div>
                             <div class="hidden space-y-3 border-t border-slate-100 pt-4" data-comment-panel>
                                 <div class="space-y-2" data-comment-list>
                                     @foreach ($video->comments as $comment)
                                         <div class="text-xs text-slate-600 bg-slate-50 rounded-lg p-3">
-                                            <div class="font-semibold text-slate-700">{{ $comment->name ?: 'Anonymous' }}</div>
+                                            <div class="font-semibold text-slate-700">{{ $comment->name ?: __('messages.common.anonymous') }}</div>
                                             <div class="mt-1">{{ $comment->body }}</div>
                                         </div>
                                     @endforeach
                                 </div>
                                 <form data-comment-form data-video-id="{{ $video->id }}" onsubmit="return submitComment(this)">
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                        <input type="text" name="name" placeholder="Your name (optional)" class="rounded-lg border border-slate-200 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400">
-                                        <input type="email" name="email" placeholder="Email (optional)" class="rounded-lg border border-slate-200 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                        <input type="text" name="name" placeholder="{{ __('messages.common.name_optional') }}" class="rounded-lg border border-slate-200 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                        <input type="email" name="email" placeholder="{{ __('messages.common.email_optional') }}" class="rounded-lg border border-slate-200 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400">
                                     </div>
-                                    <textarea name="body" rows="3" placeholder="Write a comment..." class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400" required></textarea>
+                                    <textarea name="body" rows="3" placeholder="{{ __('messages.common.write_comment') }}" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400" required></textarea>
                                     <button type="submit" class="mt-2 inline-flex items-center justify-center px-4 py-2 text-xs font-semibold text-white bg-blue-900 rounded-lg hover:bg-blue-800 transition-colors">
-                                        Post Comment
+                                        {{ __('messages.common.post_comment') }}
                                     </button>
                                 </form>
                             </div>
                             <div class="mt-auto flex items-center justify-between">
                                 <span class="text-xs text-slate-500">{{ $video->published_at?->toDateString() ?? $video->created_at?->toDateString() }}</span>
-                                <a href="{{ $video->youtube_url }}" target="_blank" class="text-blue-700 font-medium text-sm hover:text-blue-900" onclick="trackYoutubeClick({{ $video->id }})">Watch on YouTube</a>
+                                <a href="{{ $video->youtube_url }}" target="_blank" class="text-blue-700 font-medium text-sm hover:text-blue-900" onclick="trackYoutubeClick({{ $video->id }})">{{ __('messages.common.watch_on_youtube') }}</a>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div class="col-span-3 text-center text-slate-500">No videos found for this category.</div>
+                    <div class="col-span-3 text-center text-slate-500">{{ __('messages.videos.none') }}</div>
                 @endforelse
             </div>
 
             @if (!empty($recommendedVideos) && $recommendedVideos->count())
                 <div class="mt-12">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-serif font-bold text-blue-950">Recommended for You</h3>
-                        <a href="{{ route('videos.index') }}" class="text-sm text-blue-700 hover:text-blue-900">View all</a>
+                        <h3 class="text-xl font-serif font-bold text-blue-950">{{ __('messages.common.recommended_for_you') }}</h3>
+                        <a href="{{ route('videos.index') }}" class="text-sm text-blue-700 hover:text-blue-900">{{ __('messages.common.view_all') }}</a>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         @foreach ($recommendedVideos as $video)
@@ -173,13 +173,13 @@
                                     @if ($video->thumbnail_url)
                                         <img src="{{ $video->thumbnail_url }}" alt="{{ $video->title }}" class="w-full h-full object-cover">
                                     @else
-                                        <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-500">No thumbnail</div>
+                                        <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-500">{{ __('messages.common.no_thumbnail') }}</div>
                                     @endif
                                     <div class="absolute bottom-3 left-3 text-white text-xs font-medium drop-shadow">
-                                        {{ $video->category?->name ?? 'Sermon' }}
+                                        {{ $video->category?->name ?? __('messages.common.sermon') }}
                                     </div>
                                     @if ($video->featured)
-                                        <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">Featured</span>
+                                        <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">{{ __('messages.common.featured') }}</span>
                                     @endif
                                 </div>
                                 <div class="p-4">
@@ -208,8 +208,8 @@
                 <iframe id="videoModalFrame" class="absolute inset-0 w-full h-full" src="" title="Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             <div class="px-4 py-3 border-t flex flex-wrap gap-3 justify-end">
-                <button type="button" class="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50" onclick="shareVideo()">Share</button>
-                <a id="videoModalLink" href="#" target="_blank" class="px-4 py-2 bg-blue-900 text-white rounded-lg">Watch on YouTube</a>
+                <button type="button" class="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50" onclick="shareVideo()">{{ __('messages.common.share') }}</button>
+                <a id="videoModalLink" href="#" target="_blank" class="px-4 py-2 bg-blue-900 text-white rounded-lg">{{ __('messages.common.watch_on_youtube') }}</a>
             </div>
         </div>
     </div>
@@ -273,10 +273,10 @@
         const url = button.getAttribute('data-video-url');
 
         activeVideoId = dbId;
-        activeVideoTitle = title || 'Video';
+        activeVideoTitle = title || @json(__('messages.common.video'));
         activeVideoUrl = url || window.location.href;
 
-        document.getElementById('videoModalTitle').textContent = title || 'Video';
+        document.getElementById('videoModalTitle').textContent = title || @json(__('messages.common.video'));
         const frame = document.getElementById('videoModalFrame');
         frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&controls=1&modestbranding=1&rel=0&enablejsapi=1&origin=${window.location.origin}`;
         document.getElementById('videoModalLink').href = url || '#';
@@ -390,8 +390,8 @@
     function shareVideo() {
         if (!activeVideoId) return;
         const shareData = {
-            title: activeVideoTitle || 'Video',
-            text: activeVideoTitle || 'Watch this video',
+            title: activeVideoTitle || @json(__('messages.common.video')),
+            text: activeVideoTitle || @json(__('messages.common.watch_this_video')),
             url: activeVideoUrl || window.location.href
         };
 
@@ -406,14 +406,14 @@
             navigator.clipboard.writeText(shareData.url).then(() => {
                 trackEvent(activeVideoId, 'share', window.location.href);
                 trackShareChannel(activeVideoId, 'copy');
-                alert('Link copied!');
+                alert(@json(__('messages.common.link_copied')));
             });
         }
     }
 
     function shareFromCard(button) {
         const videoId = button.getAttribute('data-video-id');
-        const title = button.getAttribute('data-video-title') || 'Video';
+        const title = button.getAttribute('data-video-title') || @json(__('messages.common.video'));
         const url = button.getAttribute('data-video-url') || window.location.href;
         if (!videoId) return;
 
@@ -434,7 +434,7 @@
             navigator.clipboard.writeText(shareData.url).then(() => {
                 trackEvent(videoId, 'share', window.location.href);
                 trackShareChannel(videoId, 'copy');
-                alert('Link copied!');
+                alert(@json(__('messages.common.link_copied')));
             });
         }
     }

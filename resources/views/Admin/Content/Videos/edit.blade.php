@@ -15,6 +15,13 @@
         </div>
 
         <div class="main-content">
+            @php
+                $translations = [
+                    'en' => $video->translationFor('en'),
+                    'fr' => $video->translationFor('fr'),
+                    'rw' => $video->translationFor('rw'),
+                ];
+            @endphp
             <div class="card">
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.videos.update', $video) }}" enctype="multipart/form-data">
@@ -60,6 +67,36 @@
                                 <label class="form-label fw-semibold">Description</label>
                                 <textarea name="description" class="form-control" rows="4">{{ old('description', $video->description) }}</textarea>
                                 @error('description') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card border border-dashed">
+                                    <div class="card-body">
+                                        <div class="fw-semibold mb-3">Translations (EN / FR / RW)</div>
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Title (EN)</label>
+                                                <input type="text" name="title_en" value="{{ old('title_en', $translations['en']?->title) }}" class="form-control" required>
+                                                @error('title_en') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                                                <label class="form-label fw-semibold mt-3">Description (EN)</label>
+                                                <textarea name="description_en" class="form-control" rows="3">{{ old('description_en', $translations['en']?->description) }}</textarea>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Title (FR)</label>
+                                                <input type="text" name="title_fr" value="{{ old('title_fr', $translations['fr']?->title) }}" class="form-control" required>
+                                                @error('title_fr') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                                                <label class="form-label fw-semibold mt-3">Description (FR)</label>
+                                                <textarea name="description_fr" class="form-control" rows="3">{{ old('description_fr', $translations['fr']?->description) }}</textarea>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Title (RW)</label>
+                                                <input type="text" name="title_rw" value="{{ old('title_rw', $translations['rw']?->title) }}" class="form-control" required>
+                                                @error('title_rw') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                                                <label class="form-label fw-semibold mt-3">Description (RW)</label>
+                                                <textarea name="description_rw" class="form-control" rows="3">{{ old('description_rw', $translations['rw']?->description) }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Thumbnail</label>

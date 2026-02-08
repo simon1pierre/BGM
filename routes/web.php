@@ -21,6 +21,7 @@ use App\Http\Controllers\Content\ContentDownloadController;
 use App\Http\Controllers\Content\ContentEngagementController;
 use App\Http\Controllers\Content\PublicContentEngagementController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\LocaleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,7 @@ Route::controller(HomeController::class)->group(function(){
     Route::get('/audios', 'audios')->name('audios.index');
     Route::get('/audios/{audio}', 'audioShow')->name('audios.show');
 });
+Route::get('/locale/{locale}', [LocaleController::class, 'switch'])->name('locale.switch');
 Route::controller(VerificationController::class)->group(function () {
     Route::get('/verify', 'show')->name('verify.show');
     Route::post('/verify', 'verify')->name('verify.check');

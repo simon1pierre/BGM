@@ -10,12 +10,15 @@ use App\Jobs\SendContentNotificationJob;
 use App\Models\ContentNotification;
 use App\Models\Playlist;
 use App\Models\PlaylistItem;
+use App\Http\Controllers\Concerns\HandlesTranslations;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class AudioController extends Controller
 {
+    use HandlesTranslations;
+
     public function index()
     {
         return view('Admin.Content.Audios.index');
@@ -55,6 +58,12 @@ class AudioController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'title_en' => ['required', 'string', 'max:255'],
+            'title_fr' => ['required', 'string', 'max:255'],
+            'title_rw' => ['required', 'string', 'max:255'],
+            'description_en' => ['nullable', 'string'],
+            'description_fr' => ['nullable', 'string'],
+            'description_rw' => ['nullable', 'string'],
             'audio_file' => ['required', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:20480'],
             'thumbnail' => ['nullable', 'image', 'max:4096'],
             'duration' => ['nullable', 'string', 'max:50'],
@@ -108,6 +117,8 @@ class AudioController extends Controller
                 'title' => $audio->title,
             ],
         ]);
+
+        $this->syncTranslations($audio, $request, ['title', 'description']);
 
         $this->syncPlaylists($request, $audio->id, 'audio');
 
@@ -165,6 +176,12 @@ class AudioController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'title_en' => ['required', 'string', 'max:255'],
+            'title_fr' => ['required', 'string', 'max:255'],
+            'title_rw' => ['required', 'string', 'max:255'],
+            'description_en' => ['nullable', 'string'],
+            'description_fr' => ['nullable', 'string'],
+            'description_rw' => ['nullable', 'string'],
             'audio_file' => ['nullable', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:20480'],
             'thumbnail' => ['nullable', 'image', 'max:4096'],
             'duration' => ['nullable', 'string', 'max:50'],
@@ -222,6 +239,8 @@ class AudioController extends Controller
                 'title' => $audio->title,
             ],
         ]);
+
+        $this->syncTranslations($audio, $request, ['title', 'description']);
 
         $this->syncPlaylists($request, $audio->id, 'audio');
 

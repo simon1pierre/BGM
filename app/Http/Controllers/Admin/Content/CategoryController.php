@@ -8,11 +8,14 @@ use App\Models\UserActivityLog;
 use App\Models\audio;
 use App\Models\book;
 use App\Models\video;
+use App\Http\Controllers\Concerns\HandlesTranslations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+    use HandlesTranslations;
+
     public function index(Request $request)
     {
         $perPage = (int) $request->query('per_page', 10);
@@ -69,9 +72,15 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'name_en' => ['required', 'string', 'max:255'],
+            'name_fr' => ['required', 'string', 'max:255'],
+            'name_rw' => ['required', 'string', 'max:255'],
             'slug' => ['nullable', 'string', 'max:255', 'unique:content_categories,slug'],
             'type' => ['required', 'in:video,audio,document,all'],
             'description' => ['nullable', 'string'],
+            'description_en' => ['nullable', 'string'],
+            'description_fr' => ['nullable', 'string'],
+            'description_rw' => ['nullable', 'string'],
             'is_active' => ['nullable', 'boolean'],
         ]);
 
@@ -90,6 +99,11 @@ class CategoryController extends Controller
                 'id' => $category->id,
                 'name' => $category->name,
             ],
+        ]);
+
+        $this->syncTranslationsMapped($category, $request, [
+            'name' => 'title',
+            'description' => 'description',
         ]);
 
         return redirect()->route('admin.categories.index')->with('status', 'Category created.');
@@ -140,9 +154,15 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'name_en' => ['required', 'string', 'max:255'],
+            'name_fr' => ['required', 'string', 'max:255'],
+            'name_rw' => ['required', 'string', 'max:255'],
             'slug' => ['nullable', 'string', 'max:255', 'unique:content_categories,slug,'.$category->id],
             'type' => ['required', 'in:video,audio,document,all'],
             'description' => ['nullable', 'string'],
+            'description_en' => ['nullable', 'string'],
+            'description_fr' => ['nullable', 'string'],
+            'description_rw' => ['nullable', 'string'],
             'is_active' => ['nullable', 'boolean'],
         ]);
 
@@ -161,6 +181,11 @@ class CategoryController extends Controller
                 'id' => $category->id,
                 'name' => $category->name,
             ],
+        ]);
+
+        $this->syncTranslationsMapped($category, $request, [
+            'name' => 'title',
+            'description' => 'description',
         ]);
 
         return redirect()->route('admin.categories.index')->with('status', 'Category updated.');
