@@ -67,6 +67,14 @@
                   'document_updated',
                   'document_deleted',
                   'document_restored',
+                  'category_created',
+                  'category_updated',
+                  'category_deleted',
+                  'category_restored',
+                  'playlist_created',
+                  'playlist_updated',
+                  'playlist_deleted',
+                  'playlist_restored',
                ];
                $currentAdminId = Auth::id();
                $unreadCount = 0;
@@ -128,6 +136,14 @@
                               'document_updated' => 'Document updated',
                               'document_deleted' => 'Document deleted',
                               'document_restored' => 'Document restored',
+                              'category_created' => 'Category added',
+                              'category_updated' => 'Category updated',
+                              'category_deleted' => 'Category deleted',
+                              'category_restored' => 'Category restored',
+                              'playlist_created' => 'Playlist added',
+                              'playlist_updated' => 'Playlist updated',
+                              'playlist_deleted' => 'Playlist deleted',
+                              'playlist_restored' => 'Playlist restored',
                            ];
                            $title = $labels[$notification->action] ?? 'System update';
                            $actor = $notification->actorUser?->email ?? 'Guest';

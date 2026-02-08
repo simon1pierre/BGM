@@ -7,6 +7,7 @@ use App\Models\DownloadsLog;
 use App\Models\audio;
 use App\Models\book;
 use App\Models\video;
+use App\Models\VideoEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -20,6 +21,7 @@ class ContentDownloadController extends Controller
         }
 
         $this->recordDownload('audio', $audio->id, $request->ip());
+        $this->recordContentEvent($request, $audio->getMorphClass(), $audio->id, 'download');
         $audio->increment('download_count');
 
         return Storage::disk('public')->download(
@@ -35,6 +37,7 @@ class ContentDownloadController extends Controller
         }
 
         $this->recordDownload('book', $document->id, $request->ip());
+        $this->recordContentEvent($request, $document->getMorphClass(), $document->id, 'download');
         $document->increment('download_count');
 
         return Storage::disk('public')->download(
@@ -46,6 +49,66 @@ class ContentDownloadController extends Controller
     public function videoView(video $video)
     {
         $video->increment('view_count');
+
+        return response()->noContent();
+    }
+
+    public function trackVideo(Request $request, video $video)
+    {
+        $event = $request->input('event');
+        if (!in_array($event, ['play', 'youtube_click', 'impression', 'watch', 'share'], true)) {
+            return response()->json(['message' => 'Invalid event'], 422);
+        }
+
+        $deviceType = $request->input('device_type');
+        if (!in_array($deviceType, ['mobile', 'desktop', 'tablet', 'unknown'], true)) {
+            $deviceType = 'unknown';
+        }
+
+        $screenWidth = $request->input('screen_width');
+        $screenWidth = is_numeric($screenWidth) ? (int) $screenWidth : null;
+
+        $screenHeight = $request->input('screen_height');
+        $screenHeight = is_numeric($screenHeight) ? (int) $screenHeight : null;
+
+        $deviceHash = $this->deviceHash($request);
+
+        if ($event === 'play') {
+            $alreadyViewed = VideoEvent::query()
+                ->where('video_id', $video->id)
+                ->where('event_type', 'play')
+                ->where('device_hash', $deviceHash)
+                ->exists();
+
+            if (!$alreadyViewed) {
+                $video->increment('view_count');
+            }
+        }
+
+        $watchSeconds = $request->input('watch_seconds');
+        $watchSeconds = is_numeric($watchSeconds) ? (int) $watchSeconds : null;
+        if ($watchSeconds !== null && $watchSeconds < 0) {
+            $watchSeconds = null;
+        }
+
+        VideoEvent::create([
+            'video_id' => $video->id,
+            'event_type' => $event,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'referrer' => $request->headers->get('referer'),
+            'page_url' => $request->input('page_url'),
+            'session_id' => $request->session()->getId(),
+            'device_type' => $deviceType,
+            'screen_width' => $screenWidth,
+            'screen_height' => $screenHeight,
+            'timezone' => $request->input('timezone'),
+            'language' => $request->input('language'),
+            'platform' => $request->input('platform'),
+            'device_hash' => $deviceHash,
+            'watch_seconds' => $watchSeconds,
+            'share_channel' => $request->input('share_channel'),
+        ]);
 
         return response()->noContent();
     }
@@ -67,5 +130,35 @@ class ContentDownloadController extends Controller
         $name = $name !== '' ? $name : 'download';
 
         return $name.'.'.$extension;
+    }
+
+    private function recordContentEvent(Request $request, string $contentType, int $contentId, string $eventType): void
+    {
+        \App\Models\ContentEvent::create([
+            'content_type' => $contentType,
+            'content_id' => $contentId,
+            'event_type' => $eventType,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'referrer' => $request->headers->get('referer'),
+            'page_url' => $request->fullUrl(),
+            'session_id' => $request->session()->getId(),
+            'device_hash' => $this->deviceHash($request),
+        ]);
+    }
+
+    private function deviceHash(Request $request): string
+    {
+        $parts = [
+            (string) $request->ip(),
+            (string) $request->userAgent(),
+            (string) $request->input('platform'),
+            (string) $request->input('screen_width'),
+            (string) $request->input('screen_height'),
+            (string) $request->input('language'),
+            (string) $request->input('timezone'),
+        ];
+
+        return hash('sha256', implode('|', $parts));
     }
 }

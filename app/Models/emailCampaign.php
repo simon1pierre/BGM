@@ -15,6 +15,9 @@ class EmailCampaign extends Model
         'message',
         'body_html',
         'status',
+        'target_type',
+        'target_subscriber_ids',
+        'target_emails',
         'scheduled_at',
         'sent_at',
         'featured_image_url',
@@ -28,5 +31,7 @@ class EmailCampaign extends Model
     protected $casts = [
         'scheduled_at' => 'datetime',
         'sent_at' => 'datetime',
+        'target_subscriber_ids' => 'array',
+        'target_emails' => 'array',
     ];
 }

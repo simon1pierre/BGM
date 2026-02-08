@@ -45,14 +45,24 @@
                                 @error('document_file') <div class="text-danger fs-12">{{ $message }}</div> @enderror
                             </div>
                             <div class="col-md-6">
+                                <label class="form-label fw-semibold">Category</label>
+                                <select name="category_id" class="form-select" required>
+                                    <option value="">Select category</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" @selected(old('category_id', $document->category_id) == $category->id)>{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('category_id') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-6">
                                 <label class="form-label fw-semibold">Author</label>
                                 <input type="text" name="author" value="{{ old('author', $document->author) }}" class="form-control">
                                 @error('author') <div class="text-danger fs-12">{{ $message }}</div> @enderror
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold">Category</label>
-                                <input type="text" name="category" value="{{ old('category', $document->category) }}" class="form-control">
-                                @error('category') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                                <label class="form-label fw-semibold">Series</label>
+                                <input type="text" name="series" value="{{ old('series', $document->series) }}" class="form-control" placeholder="e.g. Foundations of Faith">
+                                @error('series') <div class="text-danger fs-12">{{ $message }}</div> @enderror
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label fw-semibold">Description</label>
@@ -80,6 +90,42 @@
                                     <div class="form-check mt-4">
                                         <input class="form-check-input" type="checkbox" name="featured" value="1" @checked(old('featured', $document->featured))>
                                         <label class="form-check-label">Featured</label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <input type="hidden" name="recommended" value="0">
+                                    <div class="form-check mt-4">
+                                        <input class="form-check-input" type="checkbox" name="recommended" value="1" @checked(old('recommended', $document->recommended))>
+                                        <label class="form-check-label">Recommended</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card border border-dashed">
+                                    <div class="card-body">
+                                        <div class="form-check mb-3">
+                                            <input type="hidden" name="notify_subscribers" value="0">
+                                            <input class="form-check-input" type="checkbox" name="notify_subscribers" value="1" id="notifySubscribersDocumentEdit">
+                                            <label class="form-check-label fw-semibold" for="notifySubscribersDocumentEdit">Notify subscribers about this document update</label>
+                                        </div>
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Notify Target</label>
+                                                <select name="notify_target" class="form-select">
+                                                    <option value="all">All active subscribers</option>
+                                                    <option value="custom">Custom email list</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <label class="form-label fw-semibold">Custom Emails (comma separated)</label>
+                                                <input type="text" name="notify_emails" class="form-control" placeholder="user1@example.com, user2@example.com">
+                                                @error('notify_emails') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label fw-semibold">Extra Message</label>
+                                                <textarea name="notify_message" class="form-control" rows="3" placeholder="Add a short encouraging note...">{{ old('notify_message') }}</textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

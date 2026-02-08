@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\Analytics\AnalyticsController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\EmailCampaigns\EmailCampaignController;
 use App\Http\Controllers\Admin\Notifications\AdminNotificationController;
@@ -11,9 +12,14 @@ use App\Http\Controllers\Admin\Users\UserController;
 use App\Http\Controllers\Admin\Content\VideoController;
 use App\Http\Controllers\Admin\Content\AudioController;
 use App\Http\Controllers\Admin\Content\DocumentController;
+use App\Http\Controllers\Admin\Content\CategoryController;
+use App\Http\Controllers\Admin\Content\ContentNotificationController;
+use App\Http\Controllers\Admin\Content\PlaylistController;
 use App\Http\Controllers\Admin\Auth\TwoFactorController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Content\ContentDownloadController;
+use App\Http\Controllers\Content\ContentEngagementController;
+use App\Http\Controllers\Content\PublicContentEngagementController;
 use App\Http\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +27,11 @@ use Illuminate\Support\Facades\Route;
 Route::controller(HomeController::class)->group(function(){
     Route::get('/', 'index')->name('home');
     Route::post('/subscribe', 'subscribe')->name('subscribe');
+    Route::get('/videos', 'videos')->name('videos.index');
+    Route::get('/books', 'books')->name('books.index');
+    Route::get('/books/{book}', 'bookShow')->name('books.show');
+    Route::get('/audios', 'audios')->name('audios.index');
+    Route::get('/audios/{audio}', 'audioShow')->name('audios.show');
 });
 Route::controller(VerificationController::class)->group(function () {
     Route::get('/verify', 'show')->name('verify.show');
@@ -29,6 +40,13 @@ Route::controller(VerificationController::class)->group(function () {
 });
 Route::controller(AdminController::class)->group(function(){
     Route::get('/beacons/dashboard','index')->name('admin.dashboard')->middleware('auth');
+    Route::get('/beacons/admin/stats','stats')->name('admin.stats')->middleware('auth');
+});
+Route::prefix('beacons/admin')->middleware('auth')->name('admin.analytics.')->group(function () {
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('index');
+    Route::get('/analytics/events', [AnalyticsController::class, 'events'])->name('events');
+    Route::get('/analytics/audiences', [AnalyticsController::class, 'audiences'])->name('audiences');
+    Route::get('/analytics/content', [AnalyticsController::class, 'content'])->name('content');
 });
 Route::controller(ManageController::class)->group(function(){
     Route::get('/beacons/admin/register','index')->name('admin.register')->middleware('auth');
@@ -60,6 +78,15 @@ Route::prefix('beacons/admin')->middleware('auth')->group(function () {
     Route::resource('documents', DocumentController::class)->except(['show'])->names('admin.documents');
     Route::get('documents/{document}/preview', [DocumentController::class, 'preview'])->name('admin.documents.preview');
     Route::post('documents/{document}/restore', [DocumentController::class, 'restore'])->name('admin.documents.restore');
+
+    Route::resource('categories', CategoryController::class)->names('admin.categories');
+    Route::post('categories/{category}/restore', [CategoryController::class, 'restore'])->name('admin.categories.restore');
+
+    Route::get('content-notifications', [ContentNotificationController::class, 'index'])->name('admin.content-notifications.index');
+    Route::post('content-notifications/{notification}/resend', [ContentNotificationController::class, 'resend'])->name('admin.content-notifications.resend');
+
+    Route::resource('playlists', PlaylistController::class)->names('admin.playlists');
+    Route::post('playlists/{playlist}/restore', [PlaylistController::class, 'restore'])->name('admin.playlists.restore');
 });
 Route::prefix('beacons/admin')->middleware('auth')->name('admin.subscribers.')->group(function () {
     Route::get('/subscribers', [SubscriberController::class, 'index'])->name('index');
@@ -101,3 +128,21 @@ Route::get('/downloads/document/{document}', [ContentDownloadController::class, 
     ->name('content.download.document');
 Route::post('/videos/{video}/view', [ContentDownloadController::class, 'videoView'])
     ->name('content.video.view');
+Route::post('/videos/{video}/track', [ContentDownloadController::class, 'trackVideo'])
+    ->name('content.video.track');
+Route::post('/videos/{video}/like', [ContentEngagementController::class, 'likeVideo'])
+    ->name('content.video.like');
+Route::post('/videos/{video}/comment', [ContentEngagementController::class, 'commentVideo'])
+    ->name('content.video.comment');
+Route::post('/books/{book}/like', [ContentEngagementController::class, 'likeBook'])
+    ->name('content.book.like');
+Route::post('/books/{book}/comment', [ContentEngagementController::class, 'commentBook'])
+    ->name('content.book.comment');
+Route::post('/audios/{audio}/like', [ContentEngagementController::class, 'likeAudio'])
+    ->name('content.audio.like');
+Route::post('/audios/{audio}/comment', [ContentEngagementController::class, 'commentAudio'])
+    ->name('content.audio.comment');
+Route::post('/audios/{audio}/track', [PublicContentEngagementController::class, 'trackAudio'])
+    ->name('content.audio.track');
+Route::post('/books/{book}/track', [PublicContentEngagementController::class, 'trackBook'])
+    ->name('content.book.track');

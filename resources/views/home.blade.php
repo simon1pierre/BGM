@@ -74,12 +74,12 @@
       We are beacons of His light for this generation. Join us for biblical teaching, evangelism, and spiritual growth in the presence of the Lord.
     </p>
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-stagger">
-      <button class="px-8 py-4 bg-white text-blue-900 rounded-full font-semibold hover:bg-blue-50 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover-lift">
+      <a href="{{ route('videos.index') }}" class="px-8 py-4 bg-white text-blue-900 rounded-full font-semibold hover:bg-blue-50 transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover-lift">
         Watch Sermons
-      </button>
-      <button class="px-8 py-4 bg-transparent border border-white/40 text-white rounded-full font-medium hover:bg-white/10 transition-all backdrop-blur-sm hover-lift">
+      </a>
+      <a href="#resources" class="px-8 py-4 bg-transparent border border-white/40 text-white rounded-full font-medium hover:bg-white/10 transition-all backdrop-blur-sm hover-lift">
         Explore Resources
-      </button>
+      </a>
     </div>
   </div>
 </section>
@@ -149,121 +149,142 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Feature 1: Sermons -->
       <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-slate-100 scroll-animate hover-lift hover-glow-intense ripple-container">
-        <div class="aspect-[3/2] overflow-hidden">
-          <img
-            data-ai="generate"
-            data-slot="feature-sermons"
-            a ministry of A peaceful church pulpit with an open bible and soft warm lighting, inviting and holy, photorealistic"
-            data-ar="3:2"
-            src="{{asset('landingpage/video-sermons.webp')}}"
-            alt="Video Sermons"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            loading="lazy"
-          />
+        <div class="aspect-[3/2] overflow-hidden bg-slate-100">
+          @if (!empty($featuredVideo?->youtube_id))
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/{{ $featuredVideo->youtube_id }}?controls=1&modestbranding=1&rel=0" title="{{ $featuredVideo->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          @elseif (!empty($featuredVideo?->thumbnail_url))
+            <img
+              src="{{ $featuredVideo->thumbnail_url }}"
+              alt="{{ $featuredVideo->title }}"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          @else
+            <img
+              src="{{asset('landingpage/video-sermons.webp')}}"
+              alt="Video Sermons"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          @endif
         </div>
         <div class="p-8 text-center">
-          <h3 class="text-xl font-serif text-blue-900 mb-3">Video Sermons</h3>
+          <h3 class="text-xl font-serif text-blue-900 mb-3">{{ $featuredVideo?->title ?? 'Video Sermons' }}</h3>
           <p class="text-slate-600 mb-6 text-sm leading-relaxed">
-            Watch powerful, scripture-based messages that bring the Bible to life and speak directly to your heart.
+            {{ $featuredVideo?->description ? \Illuminate\Support\Str::limit($featuredVideo->description, 140) : 'Watch powerful, scripture-based messages that bring the Bible to life and speak directly to your heart.' }}
           </p>
-          <button class="text-blue-700 font-medium hover:text-blue-900 inline-flex items-center gap-2 text-sm uppercase tracking-wide">
-            Watch Now
+          <a href="{{ route('videos.index') }}" class="text-blue-700 font-medium hover:text-blue-900 inline-flex items-center gap-2 text-sm uppercase tracking-wide">
+            Watch More
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-          </button>
+          </a>
         </div>
       </div>
 
 
       <!-- Feature 2: Books -->
       <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-slate-100 scroll-animate hover-lift hover-glow-intense ripple-container">
-        <div class="aspect-[3/2] overflow-hidden">
-          <img
-            data-ai="generate"
-            data-slot="feature-books"
-            a ministry of light A stack of elegant christian books on a wooden table with a cup of tea, soft daylight, reading atmosphere"
-            data-ar="3:2"
-            src="{{asset('landingpage/download-book.webp')}}"
-            alt="Downloadable Books"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            loading="lazy"
-          />
+        <div class="aspect-[3/2] overflow-hidden bg-slate-100">
+          @if ($featuredBook && $featuredBook->cover_image)
+            <img
+              src="{{ asset('storage/'.$featuredBook->cover_image) }}"
+              alt="{{ $featuredBook->title }}"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          @else
+            <img
+              src="{{asset('landingpage/download-book.webp')}}"
+              alt="Downloadable Books"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          @endif
         </div>
         <div class="p-8 text-center">
-          <h3 class="text-xl font-serif text-blue-900 mb-3">Downloadable Books</h3>
+          <h3 class="text-xl font-serif text-blue-900 mb-3">{{ $featuredBook?->title ?? 'Downloadable Books' }}</h3>
           <p class="text-slate-600 mb-6 text-sm leading-relaxed">
-            Deepen your study with our library of PDF books and guides, available for free download to aid your walk.
+            {{ $featuredBook?->description ? \Illuminate\Support\Str::limit($featuredBook->description, 140) : 'Deepen your study with our library of PDF books and guides, available for free download to aid your walk.' }}
           </p>
-          <button class="text-blue-700 font-medium hover:text-blue-900 inline-flex items-center gap-2 text-sm uppercase tracking-wide">
-            Browse Library
+          <a href="{{ $featuredBook ? route('books.show', $featuredBook) : route('books.index') }}" class="text-blue-700 font-medium hover:text-blue-900 inline-flex items-center gap-2 text-sm uppercase tracking-wide">
+            Read Library
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-          </button>
+          </a>
         </div>
       </div>
 
 
       <!-- Feature 3: Audio -->
       <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-slate-100 scroll-animate hover-lift hover-glow-intense ripple-container">
-        <div class="aspect-[3/2] overflow-hidden">
-          <img
-            data-ai="generate"
-            data-slot="feature-audio"
-            A Ministry of Light and Truth Close up of vintage headphones resting on a bible, calm and serene composition, soft focus"
-            data-ar="3:2"
-            src="{{asset('landingpage/download-audio.webp')}}"
-            alt="Audio Teachings"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            loading="lazy"
-          />
+        <div class="aspect-[3/2] overflow-hidden bg-slate-100 relative">
+          @if ($featuredAudio && $featuredAudio->thumbnail)
+            <img
+              src="{{ asset('storage/'.$featuredAudio->thumbnail) }}"
+              alt="{{ $featuredAudio->title }}"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-4 right-4">
+              <div class="text-xs uppercase tracking-widest text-slate-200 mb-2">Listen Now</div>
+              <audio controls class="w-full">
+                <source src="{{ asset('storage/'.$featuredAudio->audio_file) }}" type="audio/mpeg">
+              </audio>
+            </div>
+          @else
+            <img
+              src="{{asset('landingpage/download-audio.webp')}}"
+              alt="Audio Teachings"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          @endif
         </div>
         <div class="p-8 text-center">
-          <h3 class="text-xl font-serif text-blue-900 mb-3">Audio Teachings</h3>
+          <h3 class="text-xl font-serif text-blue-900 mb-3">{{ $featuredAudio?->title ?? 'Audio Teachings' }}</h3>
           <p class="text-slate-600 mb-6 text-sm leading-relaxed">
-            Listen to teachings on the go. Perfect for your commute or quiet time, bringing God's word to your ears.
+            {{ $featuredAudio?->description ? \Illuminate\Support\Str::limit($featuredAudio->description, 140) : 'Listen to teachings on the go. Perfect for your commute or quiet time, bringing God\'s word to your ears.' }}
           </p>
-          <button class="text-blue-700 font-medium hover:text-blue-900 inline-flex items-center gap-2 text-sm uppercase tracking-wide">
+          <a href="{{ $featuredAudio ? route('audios.show', $featuredAudio) : route('audios.index') }}" class="text-blue-700 font-medium hover:text-blue-900 inline-flex items-center gap-2 text-sm uppercase tracking-wide">
             Start Listening
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-          </button>
+          </a>
         </div>
       </div>
     </div>
   </div>
 </section>
-<section id="sermons" class="py-20 bg-white text-slate-800">
+<section id="sermons" class="py-6 bg-white text-slate-800">
   <div class="container mx-auto px-6 max-w-6xl text-center">
     <span class="block text-amber-600 font-semibold tracking-widest uppercase text-sm mb-3">Latest Messages</span>
     <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950 mb-4">Walking in Divine Light</h2>
     <p class="text-lg text-slate-600 mb-10 italic">"Your word is a lamp for my feet, a light on my path." — Psalm 119:105</p>
    
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Video 1 -->
-      <div class="flex flex-col">
-        <div class="relative w-full aspect-video bg-slate-100 rounded-xl overflow-hidden shadow-lg border border-slate-200 mb-4">
-          <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=placeholder" title="Sermon Video 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      @forelse ($latestVideos as $video)
+        <div class="flex flex-col">
+          <div class="relative w-full aspect-video bg-slate-100 rounded-xl overflow-hidden shadow-lg border border-slate-200 mb-4">
+            @if ($video->youtube_id)
+              <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/{{ $video->youtube_id }}" title="{{ $video->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            @else
+              <div class="absolute inset-0 flex items-center justify-center text-slate-500">No video preview</div>
+            @endif
+            @if ($video->featured)
+              <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">Featured</span>
+            @endif
+          </div>
+          <h3 class="text-lg font-serif font-semibold text-blue-900 text-left">{{ $video->title }}</h3>
+          <p class="text-sm text-slate-500 text-left">
+            {{ $video->category?->name ?? 'Sermon' }} • {{ $video->published_at?->toDateString() ?? $video->created_at?->toDateString() }}
+          </p>
         </div>
-        <h3 class="text-lg font-serif font-semibold text-blue-900 text-left">The Power of Prayer</h3>
-        <p class="text-sm text-slate-500 text-left">Sunday Service • 45 min</p>
-      </div>
-
-
-      <!-- Video 2 -->
-      <div class="flex flex-col">
-        <div class="relative w-full aspect-video bg-slate-100 rounded-xl overflow-hidden shadow-lg border border-slate-200 mb-4">
-          <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=placeholder" title="Sermon Video 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-        <h3 class="text-lg font-serif font-semibold text-blue-900 text-left">Walking in Faith</h3>
-        <p class="text-sm text-slate-500 text-left">Bible Study • 38 min</p>
-      </div>
-
-
-      <!-- Video 3 -->
-      <div class="flex flex-col">
-        <div class="relative w-full aspect-video bg-slate-100 rounded-xl overflow-hidden shadow-lg border border-slate-200 mb-4">
-          <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=placeholder" title="Sermon Video 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-        <h3 class="text-lg font-serif font-semibold text-blue-900 text-left">Grace Abounds</h3>
-        <p class="text-sm text-slate-500 text-left">Youth Ministry • 32 min</p>
-      </div>
+      @empty
+        <div class="col-span-3 text-center text-slate-500">No videos available yet.</div>
+      @endforelse
+    </div>
+    <div class="mt-10">
+      <a href="{{ route('videos.index') }}" class="block w-full text-center px-6 py-4 bg-blue-900 text-white font-semibold rounded-xl hover:bg-blue-800 transition-colors shadow-lg">
+        Explore More Videos
+      </a>
     </div>
   </div>
 </section>
@@ -277,133 +298,78 @@
 
     <!-- PDF Downloads Section -->
     <div class="mb-16">
-      <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">Downloadable PDF Resources</h3>
+      <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">Highly Recommended Books</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- PDF Card 1 -->
-        <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
-          <div class="relative h-48 overflow-hidden bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center">
-            <div class="text-center">
-              <i data-lucide="book-open" class="w-16 h-16 text-blue-900 mx-auto"></i>
-              <p class="text-sm text-blue-700 mt-2">Study Guide</p>
+        @forelse ($recommendedBooks as $book)
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
+            <div class="relative h-48 overflow-hidden bg-slate-100">
+              @if ($book->cover_image)
+                <img src="{{ asset('storage/'.$book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
+              @else
+                <img src="{{ asset('landingpage/download-book.webp') }}" alt="Downloadable Books" class="w-full h-full object-cover">
+              @endif
+              <div class="absolute bottom-3 left-3 text-white text-xs font-semibold drop-shadow">
+                {{ $book->category?->name ?? 'Book' }}
+              </div>
+              @if ($book->featured)
+                <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">Featured</span>
+              @endif
+            </div>
+            <div class="p-8 flex-1 flex flex-col">
+              <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">{{ $book->title }}</h3>
+              <p class="text-slate-600 mb-6 flex-1 leading-relaxed">{{ \Illuminate\Support\Str::limit($book->description, 120) }}</p>
+              <div class="space-y-2">
+                <a href="{{ route('books.show', $book) }}" class="w-full py-3 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
+                  <i data-lucide="book-open" class="w-4 h-4"></i> Read Online
+                </a>
+                <a href="{{ route('content.download.document', $book) }}" class="w-full py-2 px-6 bg-white text-blue-900 font-medium rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 text-sm border border-blue-100">
+                  <i data-lucide="download" class="w-4 h-4"></i> Download PDF
+                </a>
+              </div>
             </div>
           </div>
-          <div class="p-8 flex-1 flex flex-col">
-            <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">Foundations of Faith</h3>
-            <p class="text-slate-600 mb-6 flex-1 leading-relaxed">A comprehensive guide to understanding the core pillars of our spiritual walk and biblical truth.</p>
-            <button class="w-full py-3 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
-              <i data-lucide="download" class="w-4 h-4"></i> Download PDF
-            </button>
-          </div>
-        </div>
-
-
-        <!-- PDF Card 2 -->
-        <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
-          <div class="relative h-48 overflow-hidden bg-gradient-to-br from-amber-100 to-amber-50 flex items-center justify-center">
-            <div class="text-center">
-              <i data-lucide="scroll" class="w-16 h-16 text-amber-900 mx-auto"></i>
-              <p class="text-sm text-amber-700 mt-2">Prayer Guide</p>
-            </div>
-          </div>
-          <div class="p-8 flex-1 flex flex-col">
-            <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">The Power of Prayer</h3>
-            <p class="text-slate-600 mb-6 flex-1 leading-relaxed">Learn effective prayer techniques and biblical foundations that will transform your spiritual life and connection with God.</p>
-            <button class="w-full py-3 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
-              <i data-lucide="download" class="w-4 h-4"></i> Download PDF
-            </button>
-          </div>
-        </div>
-
-
-        <!-- PDF Card 3 -->
-        <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
-          <div class="relative h-48 overflow-hidden bg-gradient-to-br from-green-100 to-green-50 flex items-center justify-center">
-            <div class="text-center">
-              <i data-lucide="bible" class="w-16 h-16 text-green-900 mx-auto"></i>
-              <p class="text-sm text-green-700 mt-2">Scripture Study</p>
-            </div>
-          </div>
-          <div class="p-8 flex-1 flex flex-col">
-            <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">Walking in Scripture</h3>
-            <p class="text-slate-600 mb-6 flex-1 leading-relaxed">Deep dive into key biblical passages with commentary, historical context, and practical applications for modern life.</p>
-            <button class="w-full py-3 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
-              <i data-lucide="download" class="w-4 h-4"></i> Download PDF
-            </button>
-          </div>
-        </div>
+        @empty
+          <div class="col-span-3 text-center text-slate-500">No recommended books yet.</div>
+        @endforelse
       </div>
     </div>
 
 
     <!-- Audio Resources Section -->
     <div>
-      <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">Audio Teachings</h3>
+      <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">Highly Recommended Audios</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Audio Card 1 -->
-        <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
-          <div class="relative h-48 overflow-hidden bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center">
-            <div class="text-center">
-              <i data-lucide="headphones" class="w-16 h-16 text-purple-900 mx-auto"></i>
-              <p class="text-sm text-purple-700 mt-2">Sermon Series</p>
+        @forelse ($recommendedAudios as $audio)
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
+            <div class="relative h-48 overflow-hidden bg-slate-100">
+              @if ($audio->thumbnail)
+                <img src="{{ asset('storage/'.$audio->thumbnail) }}" alt="{{ $audio->title }}" class="w-full h-full object-cover">
+              @else
+                <img src="{{ asset('landingpage/download-audio.webp') }}" alt="Audio Teachings" class="w-full h-full object-cover">
+              @endif
+              <div class="absolute bottom-3 left-3 text-white text-xs font-semibold drop-shadow">
+                {{ $audio->category?->name ?? 'Audio' }}
+              </div>
+              @if ($audio->featured)
+                <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">Featured</span>
+              @endif
+            </div>
+            <div class="p-8 flex-1 flex flex-col">
+              <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">{{ $audio->title }}</h3>
+              <p class="text-slate-600 mb-6 flex-1 leading-relaxed">{{ \Illuminate\Support\Str::limit($audio->description, 120) }}</p>
+              <div class="space-y-2">
+                <a href="{{ route('audios.show', $audio) }}" class="w-full py-3 px-6 bg-purple-50 text-purple-900 font-medium rounded-lg hover:bg-purple-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
+                  <i data-lucide="play-circle" class="w-4 h-4"></i> Play Audio
+                </a>
+                <a href="{{ route('content.download.audio', $audio) }}" class="w-full py-2 px-6 bg-white text-blue-900 font-medium rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 text-sm border border-blue-100">
+                  <i data-lucide="download" class="w-4 h-4"></i> Download
+                </a>
+              </div>
             </div>
           </div>
-          <div class="p-8 flex-1 flex flex-col">
-            <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">Echoes of Grace</h3>
-            <p class="text-slate-600 mb-6 flex-1 leading-relaxed">Listen to our latest series on finding peace and grace in everyday life through the Holy Spirit and God's love.</p>
-            <div class="space-y-2">
-              <button class="w-full py-3 px-6 bg-purple-50 text-purple-900 font-medium rounded-lg hover:bg-purple-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
-                <i data-lucide="play-circle" class="w-4 h-4"></i> Play Audio
-              </button>
-              <button class="w-full py-2 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 text-sm">
-                <i data-lucide="download" class="w-4 h-4"></i> Download
-              </button>
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Audio Card 2 -->
-        <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
-          <div class="relative h-48 overflow-hidden bg-gradient-to-br from-indigo-100 to-indigo-50 flex items-center justify-center">
-            <div class="text-center">
-              <i data-lucide="volume-2" class="w-16 h-16 text-indigo-900 mx-auto"></i>
-              <p class="text-sm text-indigo-700 mt-2">Daily Devotional</p>
-            </div>
-          </div>
-          <div class="p-8 flex-1 flex flex-col">
-            <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">Daily Strength</h3>
-            <p class="text-slate-600 mb-6 flex-1 leading-relaxed">Short daily audio devotions to strengthen your faith and set the right spiritual tone for each day.</p>
-            <div class="space-y-2">
-              <button class="w-full py-3 px-6 bg-indigo-50 text-indigo-900 font-medium rounded-lg hover:bg-indigo-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
-                <i data-lucide="play-circle" class="w-4 h-4"></i> Play Audio
-              </button>
-              <button class="w-full py-2 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 text-sm">
-                <i data-lucide="download" class="w-4 h-4"></i> Download
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- Audio Card 3 -->
-        <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
-          <div class="relative h-48 overflow-hidden bg-gradient-to-br from-rose-100 to-rose-50 flex items-center justify-center">
-            <div class="text-center">
-              <i data-lucide="music" class="w-16 h-16 text-rose-900 mx-auto"></i>
-              <p class="text-sm text-rose-700 mt-2">Worship Music</p>
-            </div>
-          </div>
-          <div class="p-8 flex-1 flex flex-col">
-            <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">Hymns of Faith</h3>
-            <p class="text-slate-600 mb-6 flex-1 leading-relaxed">Beautiful worship music and hymns to inspire your prayers and strengthen your connection with the Divine.</p>
-            <div class="space-y-2">
-              <button class="w-full py-3 px-6 bg-rose-50 text-rose-900 font-medium rounded-lg hover:bg-rose-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
-                <i data-lucide="play-circle" class="w-4 h-4"></i> Play Audio
-              </button>
-              <button class="w-full py-2 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 text-sm">
-                <i data-lucide="download" class="w-4 h-4"></i> Download
-              </button>
-            </div>
-          </div>
-        </div>
+        @empty
+          <div class="col-span-3 text-center text-slate-500">No recommended audios yet.</div>
+        @endforelse
       </div>
     </div>
   </div>

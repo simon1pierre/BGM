@@ -6,7 +6,7 @@ A modern, full-featured Laravel web application for an online Christian ministry
 
 ---
 
-## 🌟 Overview
+## Overview
 
 Beacons of God Ministries is a comprehensive digital platform designed to deliver spiritual guidance and biblical teaching through multiple content channels. The website serves as a hub for believers seeking deeper understanding of Scripture, spiritual encouragement, and accessible resources for personal growth in faith.
 
@@ -14,56 +14,87 @@ Beacons of God Ministries is a comprehensive digital platform designed to delive
 
 ---
 
-## ✨ Key Features
+## Current System Status (February 8, 2026)
 
-### Content Delivery
-- **Video Sermons** — Watch powerful, scripture-based messages that bring the Bible to life
-- **Downloadable E-Books & Study Guides** — Access a curated library of PDF resources for biblical study
-- **Audio Teachings** — Listen to sermons and teachings on-the-go for your commute or quiet time
+### Public Audience Experience
+- **Home Page** includes dynamic featured content and recommended resources pulled from the DB.
+- **Public Libraries**
+  - `/videos` � Video library with category filters, featured filter, search, pagination, likes, comments, share, modal player, and engagement tracking.
+  - `/books` � Book library with category filters, search, pagination, likes, comments, share, online reader, and downloads.
+  - `/audios` � Audio library with category filters, search, pagination, likes, comments, share, inline player on list + full player on detail page.
+- **Engagement**
+  - Likes + comments are supported for videos, books, and audios.
+  - **Video view counts** are **unique per device**. All other actions (plays, downloads, shares, reads) count every time.
 
-### Community Engagement
-- **Email Newsletter Subscription** — Receive weekly sermons, prayer points, and ministry updates
-- **Subscriber Management** — Maintain an active community of engaged believers
-- **Email Campaigns** — Organize and distribute targeted spiritual messages
+### Admin Experience
+- **Content Management** (videos, audios, documents)
+- **Categories** per content type
+- **Playlists** for video/audio content
+- **Featured vs Recommended** are separate flags
+- **Content Notifications** to subscribers when new content is uploaded
+- **Email Campaigns** with audience selection, preview, and drafts
 
-### Administration
-- **Content Management System** — Manage videos, audio files, and downloadable resources
-- **Download Tracking** — Monitor resource engagement and usage patterns
-- **Settings & Configuration** — Customize ministry branding and preferences
-
-### Technical Excellence
-- **Modern Responsive Design** — Optimized for desktop, tablet, and mobile devices
-- **Progressive Web App (PWA) Ready** — Install as a home screen app
-- **SEO Optimized** — Proper metadata, Open Graph, Twitter Card tags
-- **Fast Performance** — Built with Vite for optimized asset bundling
+### Analytics & Tracking
+- **Video analytics:** impressions, plays, watch time, shares, and unique views.
+- **Audio/Book analytics:** plays, reads, downloads, shares (tracked in content events).
+- **Download logs** for documents and audios.
 
 ---
 
-## 🛠️ Tech Stack
+## Key Features
+
+### Content Delivery (Public)
+- **Video Sermons** � YouTube integration with modal playback
+- **Downloadable E-Books & Study Guides** � Public book library with online reader + download
+- **Audio Teachings** � Public audio library with in-page playback + full player
+- **Public Resource Libraries** � `/videos`, `/books`, `/audios` with search, category filters, pagination
+- **Engagement** � Likes + comments on videos, books, audios
+
+### Community Engagement
+- **Email Newsletter Subscription**
+- **Subscriber Management**
+- **Email Campaigns** � Targeted campaigns with audience selection + preview
+- **Content Notifications** � Notify subscribers on new content uploads
+
+### Administration
+- **Content Management System** � Manage videos, audio files, and downloadable resources
+- **Categories** � Categories for videos, audios, documents
+- **Playlists** � Playlists for videos/audios with ordering
+- **Featured vs Recommended** � Separate flags for homepage placement
+- **Settings & Configuration** � Customize ministry branding and preferences
+
+### Analytics & Tracking
+- **Video Analytics** � View counts (unique per device), impressions, shares, watch time
+- **Audio/Book Analytics** � Plays, reads, shares, downloads (event tracking)
+- **Downloads Log** � Tracks downloads for resources
+
+---
+
+## Tech Stack
 
 ### Backend
-- **Framework:** Laravel 11+ (PHP modern framework)
+- **Framework:** Laravel 12+ (PHP modern framework)
 - **Database:** MySQL (Eloquent ORM)
 - **API:** RESTful architecture
 
 ### Frontend
 - **CSS Framework:** Tailwind CSS (utility-first, customizable)
-- **Bundler:** Vite (lightning-fast build tool)
-- **Icons:** Lucide (beautiful SVG icon library)
-- **Template Engine:** Blade (Laravel's powerful templating)
+- **Bundler:** Vite
+- **Icons:** Lucide
+- **Template Engine:** Blade
 
 ---
 
-## 📋 Requirements
+## Requirements
 
-- **PHP:** 8.1 or higher
+- **PHP:** 8.2 or higher
 - **Composer:** Latest version
 - **Node.js:** 18+ (for npm dependencies)
 - **MySQL/PostgreSQL:** Database server
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Install Dependencies
 ```bash
@@ -80,7 +111,7 @@ php artisan key:generate
 ### 3. Configure Database
 Edit `.env` with your database credentials:
 ```env
-DB_DATABASE=beacons_of_god
+DB_DATABASE=bgm
 DB_USERNAME=root
 DB_PASSWORD=
 ```
@@ -88,7 +119,6 @@ DB_PASSWORD=
 ### 4. Run Migrations
 ```bash
 php artisan migrate
-php artisan migrate:seed
 ```
 
 ### 5. Build Assets
@@ -105,82 +135,136 @@ Visit `http://localhost:8000`
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 BGM/
-├── app/Models/
-│   ├── User.php
-│   ├── Video.php          # Sermon videos
-│   ├── Audio.php          # Audio teachings
-│   ├── Book.php           # E-books and PDFs
-│   ├── Subscriber.php     # Newsletter subscribers
-│   ├── EmailCampaign.php  # Email campaigns
-│   └── DownloadsLog.php   # Analytics
-├── database/
-│   └── migrations/        # Database schema setup
-├── resources/
-│   ├── views/
-│   │   └── home.blade.php # Main homepage
-│   ├── css/               # Stylesheets
-│   └── js/                # JavaScript
-├── public/
-│   ├── favicon.ico        # Browser tab icon
-│   └── logo/              # Brand assets
-└── storage/
-    └── app/
-        ├── private/       # Private downloads
-        └── public/        # Public assets
++-- app/Models/
+�   +-- User.php
+�   +-- video.php               # Sermon videos
+�   +-- audio.php               # Audio teachings
+�   +-- book.php                # E-books and PDFs
+�   +-- ContentCategory.php     # Categories
+�   +-- Playlist.php            # Playlists
+�   +-- ContentNotification.php # Content notification logs
+�   +-- EmailCampaign.php       # Email campaigns
+�   +-- VideoEvent.php          # Video analytics
+�   +-- ContentEvent.php        # Audio/Book analytics
+�   +-- ContentLike.php         # Likes
+�   +-- ContentComment.php      # Comments
++-- app/Http/Controllers/
+�   +-- Home/HomeController.php         # Home + public libraries
+�   +-- Content/ContentDownloadController.php
+�   +-- Content/ContentEngagementController.php
+�   +-- Content/PublicContentEngagementController.php
++-- database/migrations/
++-- resources/views/
+�   +-- home.blade.php
+�   +-- videos/
+�   +-- books/
+�   +-- audios/
++-- routes/web.php
 ```
 
 ---
 
-## 🎨 Homepage Sections
+## Public Routes (Important)
 
-1. **Hero Section** — Inspiring tagline with call-to-action buttons
-2. **Mission Statement** — Ministry vision and values
-3. **Three Core Pillars** — Videos, Books, Audio offerings
-4. **Latest Messages** — Featured sermon videos
-5. **Ministry Resources** — Downloadable guides
-6. **Newsletter Signup** — Email subscription form
-7. **Footer** — Links, contact info, social media
+- `/` � Home
+- `/videos` � Video library
+- `/books` � Book library
+- `/books/{book}` � Book reader
+- `/audios` � Audio library
+- `/audios/{audio}` � Audio player
 
 ---
 
-## 🎯 Features by Content Type
+## Admin Routes (Important)
+
+All admin routes are prefixed with `/beacons/admin` and protected by `auth`.
+
+- `/beacons/admin/videos`
+- `/beacons/admin/audios`
+- `/beacons/admin/documents`
+- `/beacons/admin/categories`
+- `/beacons/admin/playlists`
+- `/beacons/admin/campaigns`
+- `/beacons/admin/content-notifications`
+
+---
+
+## Homepage Sections
+
+1. **Hero Section** � CTA buttons
+2. **Mission Statement**
+3. **Three Core Pillars** � Videos, Books, Audios (dynamic)
+4. **Latest Messages** � Latest featured videos
+5. **Ministry Resources** � 6 recommended books + 6 recommended audios
+6. **Newsletter Signup**
+7. **Footer**
+
+---
+
+## Features by Content Type
 
 ### Videos (Sermons)
-- YouTube integration
-- Duration and publish date
-- Category tagging
-- Engagement tracking
+- YouTube integration with modal playback
+- Category tagging + playlist support
+- Featured content + recommended content
+- Engagement tracking (views, impressions, shares, watch time)
+- Likes and comments
 
 ### Audio Teachings
 - MP3 file storage
-- Streaming capability
+- Streaming capability (list + detail players)
 - Series organization
-- Download tracking
+- Recommended flag
+- Likes and comments
+- Download + share tracking
 
 ### Books & Study Guides
 - PDF storage and delivery
-- Category classification
-- Free download access
+- Category classification + series
+- Online reader + downloads
+- Recommended flag
+- Likes and comments
 - Usage analytics
-
-### Subscribers & Campaigns
-- Double opt-in verification
-- Segmentation support
-- Email template management
-- Campaign analytics
 
 ---
 
-## 🎨 Design System
+## Where to Start (For New Contributors)
+
+### 1. Home Page Logic
+- `app/Http/Controllers/Home/HomeController.php`
+- `resources/views/home.blade.php`
+
+### 2. Public Libraries
+- `resources/views/videos/index.blade.php`
+- `resources/views/books/index.blade.php`
+- `resources/views/audios/index.blade.php`
+
+### 3. Engagement & Analytics
+- `app/Http/Controllers/Content/ContentDownloadController.php`
+- `app/Http/Controllers/Content/ContentEngagementController.php`
+- `app/Http/Controllers/Content/PublicContentEngagementController.php`
+- Models: `VideoEvent`, `ContentEvent`, `ContentLike`, `ContentComment`
+
+### 4. Admin Content Management
+- Controllers:
+  - `app/Http/Controllers/Admin/Content/VideoController.php`
+  - `app/Http/Controllers/Admin/Content/AudioController.php`
+  - `app/Http/Controllers/Admin/Content/DocumentController.php`
+- Views:
+  - `resources/views/Admin/Content/*`
+
+---
+
+## Design System
 
 **Brand Colors:**
-- **Primary Blue:** `#0f2b5e` (Deep Royal Blue)
-- **Accent Gold:** `#d4af37` (Muted Gold)
-- **Light Background:** `#f8fafc` (Soft Off-white)
+- **Primary Blue:** `#0f2b5e`
+- **Accent Gold:** `#d4af37`
+- **Light Background:** `#f8fafc`
 
 **Typography:**
 - **Serif Font:** Playfair Display (headings)
@@ -188,7 +272,7 @@ BGM/
 
 ---
 
-## 📱 Responsive Breakpoints
+## Responsive Breakpoints
 
 - **Mobile:** Below 768px
 - **Tablet:** 768px - 1023px
@@ -196,7 +280,7 @@ BGM/
 
 ---
 
-## 🔒 Security Features
+## Security Features
 
 - CSRF token protection
 - SQL injection prevention (Eloquent ORM)
@@ -206,7 +290,7 @@ BGM/
 
 ---
 
-## 📞 Contact & Support
+## Contact & Support
 
 - **Email:** contact@beaconsofgod.org
 - **Social Media:** YouTube, Facebook, Instagram
@@ -214,20 +298,14 @@ BGM/
 
 ---
 
-## 📝 License
+## License
 
 Proprietary software. Unauthorized copying or distribution is prohibited.
 
 ---
 
-## 🙏 Credits
+## Credits
 
 Designed and developed with care for advancing God's Kingdom through digital ministry.
 
-**Made with ❤️ for Beacons of God Ministries**
-
----
-
-*Last Updated: February 6, 2026*
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+*Last Updated: February 8, 2026*

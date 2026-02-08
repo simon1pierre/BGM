@@ -134,9 +134,83 @@
                     </div>
 
                     <div class="col-12 mt-2">
+                        <div class="ev-section-label">Recipients</div>
+                        <div class="card-title">Choose who will receive this campaign</div>
+                        <div class="ev-help">Send to all, selected subscribers, or a custom list.</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Send To</label>
+                        <select name="target_type" class="form-select">
+                            <option value="all" @selected(old('target_type', $campaign->target_type) === 'all')>All Active Subscribers</option>
+                            <option value="selected" @selected(old('target_type', $campaign->target_type) === 'selected')>Selected Subscribers</option>
+                            <option value="custom" @selected(old('target_type', $campaign->target_type) === 'custom')>Custom Emails</option>
+                        </select>
+                        @error('target_type')<div class="text-danger fs-12">{{ $message }}</div>@enderror
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label fw-semibold">Custom Emails (comma separated)</label>
+                        <input type="text" name="target_emails" value="{{ old('target_emails', $campaign->target_emails ? implode(', ', $campaign->target_emails) : '') }}" class="form-control" placeholder="user1@example.com, user2@example.com">
+                        @error('target_emails')<div class="text-danger fs-12">{{ $message }}</div>@enderror
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Select Subscribers</label>
+                        @error('subscriber_ids')<div class="text-danger fs-12">{{ $message }}</div>@enderror
+                        <div class="border rounded p-3" style="max-height: 260px; overflow-y: auto;">
+                            <div class="row">
+                                @foreach ($subscribers as $subscriber)
+                                    <div class="col-md-4">
+                                        <label class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="subscriber_ids[]" value="{{ $subscriber->id }}"
+                                                @checked(collect(old('subscriber_ids', $campaign->target_subscriber_ids ?? []))->contains($subscriber->id))>
+                                            <span class="form-check-label">{{ $subscriber->email }}</span>
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-2">
                         <div class="ev-section-label">Media</div>
                         <div class="card-title">Add visuals and resources</div>
                         <div class="ev-help">Optional. Add only what supports the message.</div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card border border-dashed">
+                            <div class="card-body">
+                                <div class="ev-section-label">Attach existing content</div>
+                                <div class="ev-help">Choose an uploaded video, audio, or document to auto-fill the links.</div>
+                                <div class="row g-3 mt-1">
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">Video</label>
+                                        <select name="video_id" class="form-select">
+                                            <option value="">Select video</option>
+                                            @foreach ($videos as $video)
+                                                <option value="{{ $video->id }}">{{ $video->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">Audio</label>
+                                        <select name="audio_id" class="form-select">
+                                            <option value="">Select audio</option>
+                                            @foreach ($audios as $audio)
+                                                <option value="{{ $audio->id }}">{{ $audio->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">Document</label>
+                                        <select name="document_id" class="form-select">
+                                            <option value="">Select document</option>
+                                            @foreach ($documents as $document)
+                                                <option value="{{ $document->id }}">{{ $document->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Featured Image (upload)</label>

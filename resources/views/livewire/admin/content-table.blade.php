@@ -30,6 +30,31 @@
                         <option value="only">Only</option>
                     </select>
                 </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Category</label>
+                    <select wire:model="categoryId" class="form-select">
+                        <option value="">All</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-semibold">Per Page</label>
+                    <select wire:model="perPage" class="form-select">
+                        <option value="2">2</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-semibold d-block">&nbsp;</label>
+                    <button type="button" class="btn btn-primary w-100" wire:click="$refresh">
+                        Filter
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -45,6 +70,7 @@
                                     Title
                                 </button>
                             </th>
+                            <th>Category</th>
                             <th>
                                 @if ($type === 'documents')
                                     Author
@@ -76,12 +102,13 @@
                                         <div>
                                             <div class="fw-semibold text-dark">{{ $item->title }}</div>
                                             <div class="fs-12 text-muted text-truncate">
-                                                {{ $item->series ?? $item->category ?? '—' }}
+                                                {{ $item->series ?? $item->category?->name ?? '-' }}
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{ $item->speaker ?? $item->author ?? '—' }}</td>
+                                <td>{{ $item->category?->name ?? '-' }}</td>
+                                <td>{{ $item->speaker ?? $item->author ?? '-' }}</td>
                                 <td>
                                     @if ($item->trashed())
                                         <span class="badge bg-soft-secondary text-muted">Deleted</span>
@@ -105,7 +132,7 @@
                                         {{ $item->download_count ?? 0 }}
                                     @endif
                                 </td>
-                                <td class="text-muted fs-12">{{ $item->published_at?->toDateString() ?? '—' }}</td>
+                                <td class="text-muted fs-12">{{ $item->published_at?->toDateString() ?? '-' }}</td>
                                 <td class="text-end">
                                     @if ($item->trashed())
                                         <form method="POST" action="{{ route('admin.'.$type.'.restore', $item->id) }}" class="d-inline">
@@ -125,7 +152,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center text-muted">No content found.</td>
+                                <td colspan="8" class="text-center text-muted">No content found.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -133,7 +160,7 @@
             </div>
 
             <div class="mt-3">
-                {{ $items->links() }}
+                {{ $items->links('pagination.admin') }}
             </div>
         </div>
     </div>

@@ -28,15 +28,19 @@
                     </audio>
 
                     <div class="row g-3">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="fw-semibold">Speaker</div>
                             <div class="text-muted">{{ $audio->speaker ?? '—' }}</div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <div class="fw-semibold">Category</div>
+                            <div class="text-muted">{{ $audio->category?->name ?? '—' }}</div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="fw-semibold">Series</div>
                             <div class="text-muted">{{ $audio->series ?? '—' }}</div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="fw-semibold">Duration</div>
                             <div class="text-muted">{{ $audio->duration ?? '—' }}</div>
                         </div>

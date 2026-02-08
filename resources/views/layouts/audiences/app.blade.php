@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ config('app.name','Beacons of God Ministries || Light, Truth, and Guidance')}}</title>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="description" content="Beacons of God Ministries: Shining God's light and truth. Watch sermons, explore biblical resources, and find spiritual guidance for your walk with Christ.">
   <link rel="canonical" href="https://beaconsofgod.org">
  <!-- Favicon -->

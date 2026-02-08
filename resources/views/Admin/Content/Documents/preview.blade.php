@@ -34,7 +34,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="fw-semibold">Category</div>
-                            <div class="text-muted">{{ $document->category ?? '—' }}</div>
+                            <div class="text-muted">{{ $document->category?->name ?? '—' }}</div>
                         </div>
                         <div class="col-md-4">
                             <div class="fw-semibold">Published</div>

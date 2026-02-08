@@ -55,7 +55,7 @@
                     </table>
                 </div>
                 <div class="mt-3">
-                    {{ $campaigns->links() }}
+                    {{ $campaigns->links('pagination.admin') }}
                 </div>
             </div>
         </div>

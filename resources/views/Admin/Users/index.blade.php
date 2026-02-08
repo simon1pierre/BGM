@@ -131,7 +131,7 @@
                     </table>
                 </div>
                 <div class="mt-3">
-                    {{ $users->links() }}
+                    {{ $users->links('pagination.admin') }}
                 </div>
             </div>
         </div>

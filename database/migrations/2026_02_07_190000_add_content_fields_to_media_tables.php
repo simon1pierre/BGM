@@ -27,6 +27,7 @@ return new class extends Migration
         Schema::table('books', function (Blueprint $table) {
             $table->string('author')->nullable()->after('description');
             $table->string('category')->nullable()->after('author');
+            $table->string('series')->nullable()->after('category');
             $table->timestamp('published_at')->nullable()->after('cover_image');
             $table->boolean('featured')->default(false)->after('published_at');
         });
@@ -43,7 +44,7 @@ return new class extends Migration
         });
 
         Schema::table('books', function (Blueprint $table) {
-            $table->dropColumn(['author', 'category', 'published_at', 'featured']);
+            $table->dropColumn(['author', 'category', 'series', 'published_at', 'featured']);
         });
     }
 };

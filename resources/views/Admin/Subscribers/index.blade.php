@@ -104,7 +104,7 @@
                     </table>
                 </div>
                 <div class="mt-3">
-                    {{ $subscribers->links() }}
+                    {{ $subscribers->links('pagination.admin') }}
                 </div>
             </div>
         </div>

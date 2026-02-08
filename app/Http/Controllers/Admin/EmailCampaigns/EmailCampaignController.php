@@ -5,7 +5,12 @@ namespace App\Http\Controllers\Admin\EmailCampaigns;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendEmailCampaignJob;
 use App\Models\EmailCampaign;
+use App\Models\Subscriber;
+use App\Models\video;
+use App\Models\audio;
+use App\Models\book;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class EmailCampaignController extends Controller
 {
@@ -20,7 +25,16 @@ class EmailCampaignController extends Controller
 
     public function create()
     {
-        return view('Admin.EmailCampaigns.create');
+        $subscribers = Subscriber::query()
+            ->where('is_active', true)
+            ->orderBy('email')
+            ->get();
+
+        $videos = video::query()->orderByDesc('created_at')->limit(50)->get();
+        $audios = audio::query()->orderByDesc('created_at')->limit(50)->get();
+        $documents = book::query()->orderByDesc('created_at')->limit(50)->get();
+
+        return view('Admin.EmailCampaigns.create', compact('subscribers', 'videos', 'audios', 'documents'));
     }
 
     public function store(Request $request)
@@ -42,6 +56,13 @@ class EmailCampaignController extends Controller
             'cta_url' => ['nullable', 'url', 'max:255'],
             'status' => ['required', 'in:draft,scheduled,sent'],
             'scheduled_at' => ['nullable', 'date'],
+            'target_type' => ['required', 'in:all,selected,custom'],
+            'subscriber_ids' => ['nullable', 'array'],
+            'subscriber_ids.*' => ['integer', 'exists:subscribers,id'],
+            'target_emails' => ['nullable', 'string'],
+            'video_id' => ['nullable', 'integer', 'exists:videos,id'],
+            'audio_id' => ['nullable', 'integer', 'exists:audios,id'],
+            'document_id' => ['nullable', 'integer', 'exists:books,id'],
         ]);
 
         if ($validated['status'] === 'scheduled' && empty($validated['scheduled_at'])) {
@@ -53,17 +74,35 @@ class EmailCampaignController extends Controller
             $featuredImageUrl = asset('storage/'.$request->file('featured_image')->store('campaigns/images', 'public'));
         }
         $videoUrl = $validated['video_url'] ?? null;
+        if (!empty($validated['video_id'])) {
+            $videoModel = video::find($validated['video_id']);
+            $videoUrl = $videoModel?->youtube_url ?? $videoUrl;
+        }
         if ($request->hasFile('video_file')) {
             $videoUrl = asset('storage/'.$request->file('video_file')->store('campaigns/videos', 'public'));
         }
         $audioUrl = $validated['audio_url'] ?? null;
+        if (!empty($validated['audio_id'])) {
+            $audioModel = audio::find($validated['audio_id']);
+            if ($audioModel?->audio_file) {
+                $audioUrl = asset('storage/'.$audioModel->audio_file);
+            }
+        }
         if ($request->hasFile('audio_file')) {
             $audioUrl = asset('storage/'.$request->file('audio_file')->store('campaigns/audios', 'public'));
         }
         $documentUrl = $validated['document_url'] ?? null;
+        if (!empty($validated['document_id'])) {
+            $documentModel = book::find($validated['document_id']);
+            if ($documentModel?->file_path) {
+                $documentUrl = asset('storage/'.$documentModel->file_path);
+            }
+        }
         if ($request->hasFile('document_file')) {
             $documentUrl = asset('storage/'.$request->file('document_file')->store('campaigns/documents', 'public'));
         }
+
+        $targets = $this->resolveTargets($validated['target_type'], $validated['subscriber_ids'] ?? [], $validated['target_emails'] ?? null);
 
         $campaign = EmailCampaign::create([
             'subject' => $validated['subject'],
@@ -71,6 +110,9 @@ class EmailCampaignController extends Controller
             'message' => $validated['message'],
             'body_html' => $validated['body_html'] ?? null,
             'status' => $validated['status'],
+            'target_type' => $targets['type'],
+            'target_subscriber_ids' => $targets['subscriber_ids'],
+            'target_emails' => $targets['emails'],
             'scheduled_at' => $validated['scheduled_at'] ?? null,
             'featured_image_url' => $featuredImageUrl,
             'video_url' => $videoUrl,
@@ -89,7 +131,16 @@ class EmailCampaignController extends Controller
 
     public function edit(EmailCampaign $campaign)
     {
-        return view('Admin.EmailCampaigns.edit', compact('campaign'));
+        $subscribers = Subscriber::query()
+            ->where('is_active', true)
+            ->orderBy('email')
+            ->get();
+
+        $videos = video::query()->orderByDesc('created_at')->limit(50)->get();
+        $audios = audio::query()->orderByDesc('created_at')->limit(50)->get();
+        $documents = book::query()->orderByDesc('created_at')->limit(50)->get();
+
+        return view('Admin.EmailCampaigns.edit', compact('campaign', 'subscribers', 'videos', 'audios', 'documents'));
     }
 
     public function update(Request $request, EmailCampaign $campaign)
@@ -111,6 +162,13 @@ class EmailCampaignController extends Controller
             'cta_url' => ['nullable', 'url', 'max:255'],
             'status' => ['required', 'in:draft,scheduled,sent'],
             'scheduled_at' => ['nullable', 'date'],
+            'target_type' => ['required', 'in:all,selected,custom'],
+            'subscriber_ids' => ['nullable', 'array'],
+            'subscriber_ids.*' => ['integer', 'exists:subscribers,id'],
+            'target_emails' => ['nullable', 'string'],
+            'video_id' => ['nullable', 'integer', 'exists:videos,id'],
+            'audio_id' => ['nullable', 'integer', 'exists:audios,id'],
+            'document_id' => ['nullable', 'integer', 'exists:books,id'],
         ]);
 
         if ($validated['status'] === 'scheduled' && empty($validated['scheduled_at'])) {
@@ -122,17 +180,35 @@ class EmailCampaignController extends Controller
             $featuredImageUrl = asset('storage/'.$request->file('featured_image')->store('campaigns/images', 'public'));
         }
         $videoUrl = $validated['video_url'] ?? $campaign->video_url;
+        if (!empty($validated['video_id'])) {
+            $videoModel = video::find($validated['video_id']);
+            $videoUrl = $videoModel?->youtube_url ?? $videoUrl;
+        }
         if ($request->hasFile('video_file')) {
             $videoUrl = asset('storage/'.$request->file('video_file')->store('campaigns/videos', 'public'));
         }
         $audioUrl = $validated['audio_url'] ?? $campaign->audio_url;
+        if (!empty($validated['audio_id'])) {
+            $audioModel = audio::find($validated['audio_id']);
+            if ($audioModel?->audio_file) {
+                $audioUrl = asset('storage/'.$audioModel->audio_file);
+            }
+        }
         if ($request->hasFile('audio_file')) {
             $audioUrl = asset('storage/'.$request->file('audio_file')->store('campaigns/audios', 'public'));
         }
         $documentUrl = $validated['document_url'] ?? $campaign->document_url;
+        if (!empty($validated['document_id'])) {
+            $documentModel = book::find($validated['document_id']);
+            if ($documentModel?->file_path) {
+                $documentUrl = asset('storage/'.$documentModel->file_path);
+            }
+        }
         if ($request->hasFile('document_file')) {
             $documentUrl = asset('storage/'.$request->file('document_file')->store('campaigns/documents', 'public'));
         }
+
+        $targets = $this->resolveTargets($validated['target_type'], $validated['subscriber_ids'] ?? [], $validated['target_emails'] ?? null);
 
         $campaign->update([
             'subject' => $validated['subject'],
@@ -140,6 +216,9 @@ class EmailCampaignController extends Controller
             'message' => $validated['message'],
             'body_html' => $validated['body_html'] ?? null,
             'status' => $validated['status'],
+            'target_type' => $targets['type'],
+            'target_subscriber_ids' => $targets['subscriber_ids'],
+            'target_emails' => $targets['emails'],
             'scheduled_at' => $validated['scheduled_at'] ?? null,
             'featured_image_url' => $featuredImageUrl,
             'video_url' => $videoUrl,
@@ -164,6 +243,50 @@ class EmailCampaignController extends Controller
     public function previewRaw(EmailCampaign $campaign)
     {
         return view('emails.campaign', ['campaign' => $campaign]);
+    }
+
+    private function resolveTargets(string $targetType, array $subscriberIds, ?string $targetEmails): array
+    {
+        if ($targetType === 'selected') {
+            if (count($subscriberIds) === 0) {
+                throw ValidationException::withMessages([
+                    'subscriber_ids' => 'Please select at least one subscriber.',
+                ]);
+            }
+
+            return [
+                'type' => 'selected',
+                'subscriber_ids' => array_values(array_unique($subscriberIds)),
+                'emails' => null,
+            ];
+        }
+
+        if ($targetType === 'custom') {
+            $emails = collect(explode(',', (string) $targetEmails))
+                ->map(fn ($email) => trim($email))
+                ->filter(fn ($email) => $email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL))
+                ->unique()
+                ->values()
+                ->all();
+
+            if (count($emails) === 0) {
+                throw ValidationException::withMessages([
+                    'target_emails' => 'Please provide at least one valid email address.',
+                ]);
+            }
+
+            return [
+                'type' => 'custom',
+                'subscriber_ids' => null,
+                'emails' => $emails,
+            ];
+        }
+
+        return [
+            'type' => 'all',
+            'subscriber_ids' => null,
+            'emails' => null,
+        ];
     }
 
 }

@@ -28,15 +28,32 @@ class SendEmailCampaignJob implements ShouldQueue
             return;
         }
 
-        Subscriber::query()
-            ->where('is_active', true)
-            ->whereNotNull('email')
-            ->orderBy('id')
-            ->chunkById(200, function ($subscribers) use ($campaign): void {
-                foreach ($subscribers as $subscriber) {
-                    Mail::to($subscriber->email)->send(new EmailCampaignMailable($campaign));
-                }
-            });
+        if ($campaign->target_type === 'custom' && !empty($campaign->target_emails)) {
+            foreach ($campaign->target_emails as $email) {
+                Mail::to($email)->send(new EmailCampaignMailable($campaign));
+            }
+        } elseif ($campaign->target_type === 'selected' && !empty($campaign->target_subscriber_ids)) {
+            Subscriber::query()
+                ->whereIn('id', $campaign->target_subscriber_ids)
+                ->where('is_active', true)
+                ->whereNotNull('email')
+                ->orderBy('id')
+                ->chunkById(200, function ($subscribers) use ($campaign): void {
+                    foreach ($subscribers as $subscriber) {
+                        Mail::to($subscriber->email)->send(new EmailCampaignMailable($campaign));
+                    }
+                });
+        } else {
+            Subscriber::query()
+                ->where('is_active', true)
+                ->whereNotNull('email')
+                ->orderBy('id')
+                ->chunkById(200, function ($subscribers) use ($campaign): void {
+                    foreach ($subscribers as $subscriber) {
+                        Mail::to($subscriber->email)->send(new EmailCampaignMailable($campaign));
+                    }
+                });
+        }
 
         $campaign->status = 'sent';
         $campaign->sent_at = now();

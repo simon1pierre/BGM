@@ -17,7 +17,11 @@
                 $isVideos = request()->routeIs('admin.videos.*');
                 $isAudios = request()->routeIs('admin.audios.*');
                 $isDocuments = request()->routeIs('admin.documents.*');
-                $isContentMenu = $isVideos || $isAudios || $isDocuments;
+                $isCategories = request()->routeIs('admin.categories.*');
+                $isContentNotifications = request()->routeIs('admin.content-notifications.*');
+                $isPlaylists = request()->routeIs('admin.playlists.*');
+                $isAnalytics = request()->routeIs('admin.analytics.*');
+                $isContentMenu = $isVideos || $isAudios || $isDocuments || $isCategories || $isContentNotifications || $isPlaylists;
             @endphp
             <div class="navbar-content">
                 <ul class="nxl-navbar">
@@ -52,15 +56,24 @@
                             <span class="nxl-mtext" style="color: white">Content</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
                         </a>
                         <ul class="nxl-submenu">
+                            <li class="nxl-item {{ $isCategories ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.categories.index') }}">Categories</a></li>
+                            <li class="nxl-item {{ $isPlaylists ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.playlists.index') }}">Playlists</a></li>
                             <li class="nxl-item {{ $isVideos ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.videos.index') }}">Videos</a></li>
                             <li class="nxl-item {{ $isAudios ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.audios.index') }}">Audios</a></li>
                             <li class="nxl-item {{ $isDocuments ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.documents.index') }}">Documents</a></li>
+                            <li class="nxl-item {{ $isContentNotifications ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.content-notifications.index') }}">Content Emails</a></li>
                         </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isSubscribers ? 'active' : '' }}">
                         <a href="{{ route('admin.subscribers.index') }}" class="nxl-link">
                             <span class="nxl-micon"><i style="color: white" class="feather-users"></i></span>
                             <span class="nxl-mtext" style="color: white">Subscribers</span>
+                        </a>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu {{ $isAnalytics ? 'active' : '' }}">
+                        <a href="{{ route('admin.analytics.index') }}" class="nxl-link">
+                            <span class="nxl-micon"><i style="color: white" class="feather-activity"></i></span>
+                            <span class="nxl-mtext" style="color: white">Analytics</span>
                         </a>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isSettings ? 'active' : '' }}">

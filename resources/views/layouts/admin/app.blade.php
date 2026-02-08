@@ -51,5 +51,6 @@
     <script src="{{asset('admin/assets/js/dashboard-init.min.js')}}"></script>
     <script src="{{ asset('admin/assets/js/theme-customizer-init.min.js')}}"></script>
     @livewireScripts
+    @stack('scripts')
 </body>
 </html>

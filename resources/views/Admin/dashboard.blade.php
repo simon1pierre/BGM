@@ -31,6 +31,26 @@
 
         <div class="main-content">
             <div class="row">
+                <div class="col-xxl-12">
+                    <div class="card stretch stretch-full mb-4">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h5 class="card-title">Engagement Trends (Last 7 Days)</h5>
+                                <div class="d-flex align-items-center gap-2">
+                                    <a href="{{ route('admin.analytics.index') }}" class="btn btn-sm btn-light">Open Analytics</a>
+                                    <span class="text-muted fs-12" id="statsLastUpdated">Updating...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div style="height: 320px;">
+                                <canvas id="engagementChart" height="320"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-xxl-3 col-md-6">
                     <div class="card stretch stretch-full">
                         <div class="card-body">
@@ -129,6 +149,187 @@
             </div>
 
             <div class="row">
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex gap-3 align-items-center">
+                                    <div class="avatar-text avatar-lg bg-gray-200">
+                                        <i class="feather-user"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fs-6 fw-semibold text-dark">Users</div>
+                                        <div class="fs-12 text-muted">Manage accounts</div>
+                                    </div>
+                                </div>
+                                <a href="{{ route('admin.users.index') }}" class="btn btn-sm btn-light">Open</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex gap-3 align-items-center">
+                                    <div class="avatar-text avatar-lg bg-gray-200">
+                                        <i class="feather-mail"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fs-6 fw-semibold text-dark">Campaigns</div>
+                                        <div class="fs-12 text-muted">Email outreach</div>
+                                    </div>
+                                </div>
+                                <a href="{{ route('admin.campaigns.index') }}" class="btn btn-sm btn-light">Open</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex gap-3 align-items-center">
+                                    <div class="avatar-text avatar-lg bg-gray-200">
+                                        <i class="feather-folder"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fs-6 fw-semibold text-dark">Contents</div>
+                                        <div class="fs-12 text-muted">Videos, audios, books</div>
+                                    </div>
+                                </div>
+                                <a href="{{ route('admin.videos.index') }}" class="btn btn-sm btn-light">Open</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex gap-3 align-items-center">
+                                    <div class="avatar-text avatar-lg bg-gray-200">
+                                        <i class="feather-users"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fs-6 fw-semibold text-dark">Subscribers</div>
+                                        <div class="fs-12 text-muted">Audience list</div>
+                                    </div>
+                                </div>
+                                <a href="{{ route('admin.subscribers.index') }}" class="btn btn-sm btn-light">Open</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="fs-12 text-muted">Video Views (Unique)</div>
+                                    <div class="fs-4 fw-bold text-dark" data-stat="videoViews">{{ $totalVideoViews }}</div>
+                                </div>
+                                <span class="badge bg-soft-primary text-primary">All time</span>
+                            </div>
+                            <div class="fs-12 text-muted mt-2">Last 7 days: {{ $videoViewsLast7 }}</div>
+                            <a href="{{ route('admin.analytics.events', ['type' => 'video']) }}" class="fs-12 text-primary d-inline-block mt-2">Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="fs-12 text-muted">Video Plays</div>
+                                    <div class="fs-4 fw-bold text-dark" data-stat="videoPlays">{{ $totalVideoPlays }}</div>
+                                </div>
+                                <span class="badge bg-soft-secondary text-muted">All time</span>
+                            </div>
+                            <div class="fs-12 text-muted mt-2">Impressions: <span data-stat="videoImpressions">{{ $totalVideoImpressions }}</span></div>
+                            <a href="{{ route('admin.analytics.events', ['type' => 'video', 'event' => 'play']) }}" class="fs-12 text-primary d-inline-block mt-2">Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="fs-12 text-muted">Video Shares</div>
+                                    <div class="fs-4 fw-bold text-dark" data-stat="videoShares">{{ $totalVideoShares }}</div>
+                                </div>
+                                <span class="badge bg-soft-warning text-warning">All time</span>
+                            </div>
+                            <div class="fs-12 text-muted mt-2">Last 7 days: {{ $videoSharesLast7 }}</div>
+                            <a href="{{ route('admin.analytics.events', ['type' => 'video', 'event' => 'share']) }}" class="fs-12 text-primary d-inline-block mt-2">Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="fs-12 text-muted">Watch Time</div>
+                                    <div class="fs-4 fw-bold text-dark"><span data-stat="videoWatchMinutes">{{ number_format($totalVideoWatchSeconds / 60, 1) }}</span> min</div>
+                                </div>
+                                <span class="badge bg-soft-success text-success">All time</span>
+                            </div>
+                            <div class="fs-12 text-muted mt-2">Avg per play: {{ $totalVideoPlays ? number_format(($totalVideoWatchSeconds / 60) / $totalVideoPlays, 1) : 0 }} min</div>
+                            <a href="{{ route('admin.analytics.events', ['type' => 'video', 'event' => 'watch']) }}" class="fs-12 text-primary d-inline-block mt-2">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="fs-12 text-muted">Audio Plays</div>
+                            <div class="fs-4 fw-bold text-dark" data-stat="audioPlays">{{ $audioPlays }}</div>
+                            <div class="fs-12 text-muted mt-2">Shares: <span data-stat="audioShares">{{ $audioShares }}</span> | Downloads: <span data-stat="audioDownloads">{{ $audioDownloads }}</span></div>
+                            <a href="{{ route('admin.analytics.events', ['type' => 'audio']) }}" class="fs-12 text-primary d-inline-block mt-2">Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="fs-12 text-muted">Book Reads</div>
+                            <div class="fs-4 fw-bold text-dark" data-stat="bookReads">{{ $bookReads }}</div>
+                            <div class="fs-12 text-muted mt-2">Shares: <span data-stat="bookShares">{{ $bookShares }}</span> | Downloads: <span data-stat="bookDownloads">{{ $bookDownloads }}</span></div>
+                            <a href="{{ route('admin.analytics.events', ['type' => 'book']) }}" class="fs-12 text-primary d-inline-block mt-2">Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="fs-12 text-muted">Total Likes</div>
+                            <div class="fs-4 fw-bold text-dark" data-stat="likes">{{ $totalLikes }}</div>
+                            <div class="fs-12 text-muted mt-2">Total Comments: <span data-stat="comments">{{ $totalComments }}</span></div>
+                            <a href="{{ route('admin.analytics.content') }}" class="fs-12 text-primary d-inline-block mt-2">Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-body">
+                            <div class="fs-12 text-muted">New Subscribers</div>
+                            <div class="fs-4 fw-bold text-dark" data-stat="subscribers">{{ $newSubscribersLast7 }}</div>
+                            <div class="fs-12 text-muted mt-2">Last 7 days</div>
+                            <a href="{{ route('admin.analytics.audiences') }}" class="fs-12 text-primary d-inline-block mt-2">Audience</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-xxl-4">
                     <div class="card stretch stretch-full mb-4">
                         <div class="card-header">
@@ -192,6 +393,66 @@
             </div>
 
             <div class="row">
+                <div class="col-xxl-4">
+                    <div class="card stretch stretch-full mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title">Top Videos (Views)</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mb-0">
+                                @forelse ($topVideosByViews as $video)
+                                    <li class="mb-3">
+                                        <div class="fw-semibold text-dark">{{ $video->title }}</div>
+                                        <div class="fs-12 text-muted">Views: {{ $video->view_count ?? 0 }}</div>
+                                    </li>
+                                @empty
+                                    <li class="text-muted fs-12">No data yet.</li>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-4">
+                    <div class="card stretch stretch-full mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title">Top Audios (Plays)</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mb-0">
+                                @forelse ($topAudiosByPlays as $row)
+                                    <li class="mb-3">
+                                        <div class="fw-semibold text-dark">{{ $row->audio?->title ?? 'Unknown' }}</div>
+                                        <div class="fs-12 text-muted">Plays: {{ $row->total }}</div>
+                                    </li>
+                                @empty
+                                    <li class="text-muted fs-12">No data yet.</li>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-4">
+                    <div class="card stretch stretch-full mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title">Top Books (Reads)</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mb-0">
+                                @forelse ($topBooksByReads as $row)
+                                    <li class="mb-3">
+                                        <div class="fw-semibold text-dark">{{ $row->book?->title ?? 'Unknown' }}</div>
+                                        <div class="fs-12 text-muted">Reads: {{ $row->total }}</div>
+                                    </li>
+                                @empty
+                                    <li class="text-muted fs-12">No data yet.</li>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-xxl-12">
                     <div class="card stretch stretch-full">
                         <div class="card-header">
@@ -231,3 +492,129 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+        let engagementChart = null;
+
+        function buildChart(labels, series) {
+            const ctx = document.getElementById('engagementChart');
+            if (!ctx) return;
+
+            const data = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Video Plays',
+                        data: series.videoPlays,
+                        borderColor: '#0f2b5e',
+                        backgroundColor: 'rgba(15, 43, 94, 0.08)',
+                        tension: 0.35,
+                        fill: true,
+                    },
+                    {
+                        label: 'Video Shares',
+                        data: series.videoShares,
+                        borderColor: '#d4af37',
+                        backgroundColor: 'rgba(212, 175, 55, 0.12)',
+                        tension: 0.35,
+                        fill: true,
+                    },
+                    {
+                        label: 'Audio Plays',
+                        data: series.audioPlays,
+                        borderColor: '#4b5563',
+                        backgroundColor: 'rgba(75, 85, 99, 0.08)',
+                        tension: 0.35,
+                        fill: true,
+                    },
+                    {
+                        label: 'Book Reads',
+                        data: series.bookReads,
+                        borderColor: '#16a34a',
+                        backgroundColor: 'rgba(22, 163, 74, 0.08)',
+                        tension: 0.35,
+                        fill: true,
+                    },
+                    {
+                        label: 'Subscribers',
+                        data: series.subscriberAdds,
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.08)',
+                        tension: 0.35,
+                        fill: true,
+                    }
+                ]
+            };
+
+            const options = {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { intersect: false, mode: 'index' },
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: { enabled: true },
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { beginAtZero: true }
+                }
+            };
+
+            if (engagementChart) {
+                engagementChart.data = data;
+                engagementChart.update();
+                return;
+            }
+
+            engagementChart = new Chart(ctx, { type: 'line', data, options });
+        }
+
+        function updateTotals(totals) {
+            const map = {
+                videoViews: 'videoViews',
+                videoPlays: 'videoPlays',
+                videoImpressions: 'videoImpressions',
+                videoShares: 'videoShares',
+                videoWatchMinutes: 'videoWatchMinutes',
+                audioPlays: 'audioPlays',
+                audioDownloads: 'audioDownloads',
+                audioShares: 'audioShares',
+                bookReads: 'bookReads',
+                bookDownloads: 'bookDownloads',
+                bookShares: 'bookShares',
+                likes: 'likes',
+                comments: 'comments',
+                subscribers: 'subscribers',
+            };
+
+            Object.keys(map).forEach((key) => {
+                const el = document.querySelector(`[data-stat="${map[key]}"]`);
+                if (el && totals[key] !== undefined) {
+                    el.textContent = totals[key];
+                }
+            });
+        }
+
+        async function fetchStats() {
+            try {
+                const response = await fetch('{{ route('admin.stats') }}');
+                if (!response.ok) return;
+                const data = await response.json();
+                buildChart(data.labels, data.series);
+                updateTotals(data.totals);
+                const stamp = new Date().toLocaleTimeString();
+                const stampEl = document.getElementById('statsLastUpdated');
+                if (stampEl) stampEl.textContent = `Updated ${stamp}`;
+            } catch (e) {
+                // no-op
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchStats();
+            setInterval(fetchStats, 30000);
+        });
+    </script>
+@endpush

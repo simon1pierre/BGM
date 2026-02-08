@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\audio;
 use App\Models\book;
+use App\Models\ContentCategory;
 use App\Models\video;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
@@ -18,6 +19,8 @@ class ContentTable extends Component
     public string $status = 'all';
     public string $featured = 'all';
     public string $deleted = 'exclude';
+    public string $categoryId = '';
+    public int $perPage = 5;
     public string $sortField = 'created_at';
     public string $sortDirection = 'desc';
 
@@ -26,6 +29,8 @@ class ContentTable extends Component
         'status' => ['except' => 'all'],
         'featured' => ['except' => 'all'],
         'deleted' => ['except' => 'exclude'],
+        'categoryId' => ['except' => ''],
+        'perPage' => ['except' => 5],
     ];
 
     public function updatingSearch(): void
@@ -44,6 +49,16 @@ class ContentTable extends Component
     }
 
     public function updatingDeleted(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingCategoryId(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingPerPage(): void
     {
         $this->resetPage();
     }
@@ -72,7 +87,7 @@ class ContentTable extends Component
     {
         return match ($this->type) {
             'audios' => ['title', 'description', 'speaker', 'series'],
-            'documents' => ['title', 'description', 'author', 'category'],
+            'documents' => ['title', 'description', 'author'],
             default => ['title', 'description', 'speaker', 'series'],
         };
     }
@@ -104,14 +119,29 @@ class ContentTable extends Component
             });
         }
 
+        if ($this->categoryId !== '') {
+            $query->where('category_id', $this->categoryId);
+        }
+
         return $query->orderBy($this->sortField, $this->sortDirection);
     }
 
     public function render()
     {
+        $categories = ContentCategory::query()
+            ->whereIn('type', match ($this->type) {
+                'audios' => ['audio', 'all'],
+                'documents' => ['document', 'all'],
+                default => ['video', 'all'],
+            })
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
         return view('livewire.admin.content-table', [
-            'items' => $this->buildQuery()->paginate(15),
+            'items' => $this->buildQuery()->paginate($this->perPage),
             'type' => $this->type,
+            'categories' => $categories,
         ]);
     }
 }
