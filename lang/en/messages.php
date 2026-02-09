@@ -73,6 +73,8 @@ return [
         'subscribe' => 'Subscribe',
         'privacy_note' => 'We respect your privacy. Unsubscribe at any time.',
         'subscribe_thanks' => 'Thank you for subscribing.',
+        'social_title' => 'Connect With Us',
+        'social_body' => 'Follow our channels to stay updated with the latest messages, resources, and announcements.',
     ],
     'common' => [
         'all' => 'All',

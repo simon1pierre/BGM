@@ -73,6 +73,8 @@ return [
         'subscribe' => 'S\'abonner',
         'privacy_note' => 'Nous respectons votre vie privée. Désabonnez-vous à tout moment.',
         'subscribe_thanks' => 'Merci pour votre abonnement.',
+        'social_title' => 'Restez connectés',
+        'social_body' => 'Suivez nos chaînes pour rester informés des derniers messages, ressources et annonces.',
     ],
     'common' => [
         'all' => 'Tout',

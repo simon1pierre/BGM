@@ -13,11 +13,27 @@
   $contactAddress = $siteSettings?->contact_address ?: 'Global Online Ministry';
   $footerText = $siteSettings?->translated('footer_text')
     ?: 'Shining the light of truth and biblical guidance to believers everywhere. Walking together in faith and grace.';
-  $facebookUrl = $siteSettings?->facebook_url ?: '#';
-  $instagramUrl = $siteSettings?->instagram_url ?: '#';
-  $youtubeUrl = $siteSettings?->youtube_channel ?: '#';
+  $normalizeUrl = function (?string $value, string $fallback) {
+    if (empty($value)) {
+      return $fallback;
+    }
+    if (!preg_match('~^https?://~i', $value)) {
+      return 'https://'.$value;
+    }
+    return $value;
+  };
+  $facebookUrl = $normalizeUrl($siteSettings?->facebook_url, 'https://www.facebook.com/');
+  $instagramUrl = $normalizeUrl($siteSettings?->instagram_url, 'https://www.instagram.com/');
+  $youtubeUrl = $normalizeUrl($siteSettings?->youtube_channel, 'https://www.youtube.com/');
+  $twitterUrl = $normalizeUrl($siteSettings?->twitter_url, 'https://x.com/');
+  $tiktokUrl = $normalizeUrl($siteSettings?->tiktok_url, 'https://www.tiktok.com/');
+  $whatsappUrl = $normalizeUrl($siteSettings?->whatsapp_url, 'https://www.whatsapp.com/');
+  $telegramUrl = $normalizeUrl($siteSettings?->telegram_url, 'https://telegram.org/');
   $currentLocale = app()->getLocale();
   $themeColor = $siteSettings?->primary_color ?: '#0f2b5e';
+  $tawkEnabled = (bool) ($siteSettings?->live_chat_enabled ?? false);
+  $tawkProperty = $siteSettings?->tawk_property_id;
+  $tawkWidget = $siteSettings?->tawk_widget_id;
 @endphp
 <head>
   <meta charset="UTF-8">
@@ -639,10 +655,12 @@
               <i data-lucide="map-pin" class="w-4 h-4 text-brand-gold"></i>
               <span>{{ $contactAddress }}</span>
             </li>
-            <li class="flex gap-4 mt-2">
-              <a href="{{ $youtubeUrl }}" class="text-blue-200 hover:text-white transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a>
-              <a href="{{ $facebookUrl }}" class="text-blue-200 hover:text-white transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-              <a href="{{ $instagramUrl }}" class="text-blue-200 hover:text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+            <li class="flex flex-wrap gap-3 mt-2">
+              <a href="{{ $youtubeUrl }}" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-red-600/90 text-white flex items-center justify-center hover:bg-red-700 transition-colors"><i data-lucide="youtube" class="w-4 h-4"></i></a>
+              <a href="{{ $facebookUrl }}" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-blue-600/90 text-white flex items-center justify-center hover:bg-blue-700 transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+              <a href="{{ $instagramUrl }}" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-pink-600/90 text-white flex items-center justify-center hover:bg-pink-700 transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+              <a href="{{ $twitterUrl }}" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-slate-900/90 text-white flex items-center justify-center hover:bg-slate-900 transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+              <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-emerald-500/90 text-white flex items-center justify-center hover:bg-emerald-600 transition-colors"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
             </li>
           </ul>
         </div>
@@ -655,6 +673,36 @@
       </div>
     </div>
   </footer>
+
+  <!-- PWA Install Button + Modal -->
+  <button
+    id="pwa-install-button"
+    class="hidden fixed bottom-6 right-6 z-50 px-5 py-3 bg-brand-blue text-white text-sm font-semibold rounded-full shadow-lg hover:bg-blue-800 transition-colors"
+    type="button"
+  >
+    Install App
+  </button>
+  <div id="pwa-install-modal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/60 px-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-lg font-semibold text-slate-900">Install BGM App</h3>
+        <button id="pwa-install-close" class="text-slate-500 hover:text-slate-900" type="button" aria-label="Close">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true"><path fill="currentColor" d="M18.3 5.71L12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.71 2.88 18.3 9.17 12 2.88 5.71 4.29 4.29 10.59 10.6l6.3-6.31z"/></svg>
+        </button>
+      </div>
+      <p class="text-sm text-slate-600 mb-6">
+        Install Beacons of God Ministries for quick access and an app-like experience.
+      </p>
+      <div class="flex items-center justify-end gap-2">
+        <button id="pwa-install-later" class="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50" type="button">
+          Later
+        </button>
+        <button id="pwa-install-now" class="px-4 py-2 text-sm rounded-lg bg-blue-900 text-white hover:bg-blue-800" type="button">
+          Install
+        </button>
+      </div>
+    </div>
+  </div>
 
 
   <!-- Scroll Animation Trigger Script -->
@@ -692,6 +740,80 @@
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('{{ asset('sw.js') }}')
           .catch(() => {});
+      });
+    }
+  </script>
+  @if ($tawkEnabled && $tawkProperty && $tawkWidget)
+    <script>
+      var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+      (function(){
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = "https://embed.tawk.to/{{ $tawkProperty }}/{{ $tawkWidget }}";
+        s1.charset = "UTF-8";
+        s1.setAttribute("crossorigin", "*");
+        s0.parentNode.insertBefore(s1, s0);
+      })();
+    </script>
+  @endif
+  <script>
+    let deferredPrompt = null;
+    const installButton = document.getElementById('pwa-install-button');
+    const installModal = document.getElementById('pwa-install-modal');
+    const installNow = document.getElementById('pwa-install-now');
+    const installLater = document.getElementById('pwa-install-later');
+    const installClose = document.getElementById('pwa-install-close');
+
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      deferredPrompt = event;
+      if (installButton) {
+        installButton.classList.remove('hidden');
+      }
+    });
+
+    function hideInstallModal() {
+      if (installModal) {
+        installModal.classList.add('hidden');
+        installModal.classList.remove('flex');
+      }
+    }
+
+    function showInstallModal() {
+      if (installModal) {
+        installModal.classList.remove('hidden');
+        installModal.classList.add('flex');
+      }
+    }
+
+    if (installButton) {
+      installButton.addEventListener('click', () => {
+        showInstallModal();
+      });
+    }
+    if (installLater) {
+      installLater.addEventListener('click', hideInstallModal);
+    }
+    if (installClose) {
+      installClose.addEventListener('click', hideInstallModal);
+    }
+    if (installModal) {
+      installModal.addEventListener('click', (event) => {
+        if (event.target === installModal) {
+          hideInstallModal();
+        }
+      });
+    }
+    if (installNow) {
+      installNow.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        if (installButton) {
+          installButton.classList.add('hidden');
+        }
+        hideInstallModal();
       });
     }
   </script>

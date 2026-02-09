@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
+use App\Models\ContactMessage;
+use App\Models\Setting;
 use App\Models\Subscriber;
 use App\Models\UserActivityLog;
 use App\Models\video;
@@ -349,5 +351,123 @@ class HomeController extends Controller
         ]);
 
         return redirect()->back()->with('status', __('messages.home.subscribe_thanks'));
+    }
+
+    public function about()
+    {
+        $stats = [
+            'videos' => video::query()->where('is_published', true)->count(),
+            'audios' => audio::query()->where('is_published', true)->count(),
+            'books' => book::query()->where('is_published', true)->count(),
+            'subscribers' => Subscriber::query()->where('is_active', true)->count(),
+        ];
+
+        return view('pages.about', compact('stats'));
+    }
+
+    public function resources()
+    {
+        $settings = Setting::currentOrDefault();
+        $limit = max(3, (int) ($settings->home_featured_video_limit ?? 3));
+
+        $featuredVideo = video::query()
+            ->with(['category.translations', 'translations'])
+            ->where('is_published', true)
+            ->orderByDesc('featured')
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->first();
+
+        $featuredBook = book::query()
+            ->with(['category.translations', 'translations'])
+            ->where('is_published', true)
+            ->orderByDesc('featured')
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->first();
+
+        $featuredAudio = audio::query()
+            ->with(['category.translations', 'translations'])
+            ->where('is_published', true)
+            ->orderByDesc('featured')
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->first();
+
+        $videos = video::query()
+            ->with(['category.translations', 'translations'])
+            ->where('is_published', true)
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->limit($limit)
+            ->get();
+
+        $books = book::query()
+            ->with(['category.translations', 'translations'])
+            ->where('is_published', true)
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->limit(6)
+            ->get();
+
+        $audios = audio::query()
+            ->with(['category.translations', 'translations'])
+            ->where('is_published', true)
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->limit(6)
+            ->get();
+
+        return view('pages.resources', compact('featuredVideo', 'featuredBook', 'featuredAudio', 'videos', 'books', 'audios'));
+    }
+
+    public function contact()
+    {
+        return view('pages.contact');
+    }
+
+    public function contactSubmit(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['nullable', 'string', 'max:120'],
+            'email' => ['required', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:50'],
+            'subject' => ['nullable', 'string', 'max:255'],
+            'message' => ['required', 'string', 'max:2000'],
+        ]);
+
+        ContactMessage::create([
+            'name' => $validated['name'] ?? null,
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+            'subject' => $validated['subject'] ?? null,
+            'message' => $validated['message'],
+            'ip_address' => $request->ip(),
+            'user_agent' => substr((string) $request->userAgent(), 0, 500),
+            'locale' => app()->getLocale(),
+            'page_url' => $request->headers->get('referer'),
+        ]);
+
+        return redirect()->route('contact')->with('status', __('messages.contact.thanks'));
+    }
+
+    public function events()
+    {
+        return view('pages.events');
+    }
+
+    public function give()
+    {
+        return view('pages.give');
+    }
+
+    public function privacy()
+    {
+        return view('pages.privacy');
+    }
+
+    public function terms()
+    {
+        return view('pages.terms');
     }
 }

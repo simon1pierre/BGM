@@ -33,6 +33,14 @@ Route::controller(HomeController::class)->group(function(){
     Route::get('/books/{book}', 'bookShow')->name('books.show');
     Route::get('/audios', 'audios')->name('audios.index');
     Route::get('/audios/{audio}', 'audioShow')->name('audios.show');
+    Route::get('/about', 'about')->name('about');
+    Route::get('/resources', 'resources')->name('resources');
+    Route::get('/contact', 'contact')->name('contact');
+    Route::post('/contact', 'contactSubmit')->name('contact.submit');
+    Route::get('/events', 'events')->name('events');
+    Route::get('/give', 'give')->name('give');
+    Route::get('/privacy', 'privacy')->name('privacy');
+    Route::get('/terms', 'terms')->name('terms');
 });
 Route::get('/locale/{locale}', [LocaleController::class, 'switch'])->name('locale.switch');
 Route::controller(VerificationController::class)->group(function () {

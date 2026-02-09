@@ -73,6 +73,8 @@ return [
         'subscribe' => 'Iyandikishe',
         'privacy_note' => 'Twubaha ibanga ryawe. Ushobora kuva ku iyandikisha igihe icyo ari cyo cyose.',
         'subscribe_thanks' => 'Murakoze kwiyandikisha.',
+        'social_title' => 'Dukurikire',
+        'social_body' => 'Dukurikire ku mbuga nkoranyambaga kugira ngo umenye ubutumwa, ibikoresho n’amakuru mashya.',
     ],
     'common' => [
         'all' => 'Byose',
