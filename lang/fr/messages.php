@@ -6,6 +6,7 @@ return [
         'resources' => 'Ressources',
         'sermons' => 'Sermons',
         'about' => 'À propos',
+        'contact' => 'Contact',
         'join_ministry' => 'Rejoindre le ministère',
     ],
     'footer' => [
@@ -76,6 +77,9 @@ return [
         'social_title' => 'Restez connectés',
         'social_body' => 'Suivez nos chaînes pour rester informés des derniers messages, ressources et annonces.',
     ],
+    'contact' => [
+        'thanks' => 'Merci pour votre message. Nous repondrons bientot.',
+    ],
     'common' => [
         'all' => 'Tout',
         'featured' => 'En vedette',
@@ -136,3 +140,9 @@ return [
         'no_cover' => 'Pas de couverture',
     ],
 ];
+
+
+
+
+
+

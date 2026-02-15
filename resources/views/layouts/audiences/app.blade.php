@@ -18,7 +18,7 @@
       return $fallback;
     }
     if (!preg_match('~^https?://~i', $value)) {
-      return 'https://'.$value;
+      // return 'https://'.$value;
     }
     return $value;
   };
@@ -30,6 +30,11 @@
   $whatsappUrl = $normalizeUrl($siteSettings?->whatsapp_url, 'https://www.whatsapp.com/');
   $telegramUrl = $normalizeUrl($siteSettings?->telegram_url, 'https://telegram.org/');
   $currentLocale = app()->getLocale();
+  $isHome = request()->routeIs('home');
+  $homeUrl = route('home');
+  $resourcesLink = $isHome ? '#resources' : $homeUrl . '#resources';
+  $sermonsLink = $isHome ? '#sermons' : $homeUrl . '#sermons';
+  $homeAboutLink = $isHome ? '#about' : $homeUrl . '#about';
   $themeColor = $siteSettings?->primary_color ?: '#0f2b5e';
   $tawkEnabled = (bool) ($siteSettings?->live_chat_enabled ?? false);
   $tawkProperty = $siteSettings?->tawk_property_id;
@@ -528,10 +533,11 @@
 
       <!-- Desktop Navigation -->
       <nav class="hidden lg:flex items-center gap-1">
-        <a href="/" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.home') }}</a>
-        <a href="#resources" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.resources') }}</a>
-        <a href="#sermons" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.sermons') }}</a>
-        <a href="#about" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.about') }}</a>
+        <a href="{{ $homeUrl }}" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.home') }}</a>
+        <a href="{{ $resourcesLink }}" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.resources') }}</a>
+        <a href="{{ $sermonsLink }}" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.sermons') }}</a>
+        <a href="{{ route('about') }}" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.about') }}</a>
+        <a href="{{ route('contact') }}" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.contact') }}</a>
       </nav>
 
 
@@ -568,10 +574,11 @@
     <!-- Mobile Navigation Menu (Hidden by default) -->
     <nav id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-200">
       <div class="container mx-auto px-4 sm:px-6 py-3 space-y-2">
-        <a href="/" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.home') }}</a>
-        <a href="#resources" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.resources') }}</a>
-        <a href="#sermons" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.sermons') }}</a>
-        <a href="#about" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.about') }}</a>
+        <a href="{{ $homeUrl }}" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.home') }}</a>
+        <a href="{{ $resourcesLink }}" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.resources') }}</a>
+        <a href="{{ $sermonsLink }}" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.sermons') }}</a>
+        <a href="{{ route('about') }}" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.about') }}</a>
+        <a href="{{ route('contact') }}" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.contact') }}</a>
         <a href="#newsletter" class="block w-full mt-3 px-4 py-2 text-center text-white bg-brand-blue rounded-lg font-semibold hover:bg-blue-800 transition-colors duration-200">{{ __('messages.nav.join_ministry') }}</a>
       </div>
     </nav>
@@ -623,10 +630,10 @@
         <div>
           <h4 class="text-white font-serif font-semibold mb-4">{{ __('messages.footer.ministry') }}</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.about_us') }}</a></li>
-            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.faith_statement') }}</a></li>
-            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.leadership') }}</a></li>
-            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.contact') }}</a></li>
+            <li><a href="{{ route('about') }}" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.about_us') }}</a></li>
+            <li><a href="{{ route('about') }}#faith" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.faith_statement') }}</a></li>
+            <li><a href="{{ route('about') }}#leadership" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.leadership') }}</a></li>
+            <li><a href="{{ route('contact') }}" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.contact') }}</a></li>
           </ul>
         </div>
 
@@ -635,10 +642,10 @@
         <div>
           <h4 class="text-white font-serif font-semibold mb-4">{{ __('messages.footer.resources') }}</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.latest_sermons') }}</a></li>
-            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.audio_teachings') }}</a></li>
-            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.ebooks') }}</a></li>
-            <li><a href="#" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.devotionals') }}</a></li>
+            <li><a href="{{ route('videos.index') }}" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.latest_sermons') }}</a></li>
+            <li><a href="{{ route('audios.index') }}" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.audio_teachings') }}</a></li>
+            <li><a href="{{ route('books.index') }}" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.ebooks') }}</a></li>
+            <li><a href="{{ route('resources') }}" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.devotionals') }}</a></li>
           </ul>
         </div>
 
@@ -660,7 +667,7 @@
               <a href="{{ $facebookUrl }}" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-blue-600/90 text-white flex items-center justify-center hover:bg-blue-700 transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a>
               <a href="{{ $instagramUrl }}" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-pink-600/90 text-white flex items-center justify-center hover:bg-pink-700 transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
               <a href="{{ $twitterUrl }}" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-slate-900/90 text-white flex items-center justify-center hover:bg-slate-900 transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
-              <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-emerald-500/90 text-white flex items-center justify-center hover:bg-emerald-600 transition-colors"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
+              <a href="https://wa.me/+25{{$whatsappUrl}}" target="_blank" rel="noopener" class="w-9 h-9 rounded-full bg-emerald-500/90 text-white flex items-center justify-center hover:bg-emerald-600 transition-colors"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
             </li>
           </ul>
         </div>

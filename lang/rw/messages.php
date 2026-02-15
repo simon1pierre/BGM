@@ -6,6 +6,7 @@ return [
         'resources' => 'Ibikoresho',
         'sermons' => 'Ibyigisho',
         'about' => 'Ibyerekeye',
+        'contact' => 'Twandikire',
         'join_ministry' => 'Injira mu murimo',
     ],
     'footer' => [
@@ -76,6 +77,9 @@ return [
         'social_title' => 'Dukurikire',
         'social_body' => 'Dukurikire ku mbuga nkoranyambaga kugira ngo umenye ubutumwa, ibikoresho n’amakuru mashya.',
     ],
+    'contact' => [
+        'thanks' => 'Murakoze kutwandikira. Tuzabasubiza vuba.',
+    ],
     'common' => [
         'all' => 'Byose',
         'featured' => 'Byatoranyijwe',
@@ -136,3 +140,6 @@ return [
         'no_cover' => 'Nta gifuniko',
     ],
 ];
+
+
+

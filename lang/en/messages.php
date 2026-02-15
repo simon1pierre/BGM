@@ -6,6 +6,7 @@ return [
         'resources' => 'Resources',
         'sermons' => 'Sermons',
         'about' => 'About',
+        'contact' => 'Contact',
         'join_ministry' => 'Join Ministry',
     ],
     'footer' => [
@@ -75,6 +76,9 @@ return [
         'subscribe_thanks' => 'Thank you for subscribing.',
         'social_title' => 'Connect With Us',
         'social_body' => 'Follow our channels to stay updated with the latest messages, resources, and announcements.',
+    ],
+    'contact' => [
+        'thanks' => 'Thank you for your message. We will respond soon.',
     ],
     'common' => [
         'all' => 'All',
