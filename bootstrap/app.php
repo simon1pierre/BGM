@@ -13,6 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->appendToGroup('web', \App\Http\Middleware\SetLocale::class);
         $middleware->appendToGroup('web', \App\Http\Middleware\LogActivity::class);
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\EnsureAdminUser::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -126,6 +126,12 @@
         return meta ? meta.getAttribute('content') : '';
     }
 
+    function notify(message, type = 'info') {
+        if (window.appToast) {
+            window.appToast(message, type);
+        }
+    }
+
     function collectClientMetrics() {
         const w = window.screen ? window.screen.width : null;
         const h = window.screen ? window.screen.height : null;
@@ -178,12 +184,15 @@
             navigator.share(shareData)
                 .then(() => {
                     trackAudio('share', { share_channel: 'native' });
+                    notify('Shared successfully.', 'success');
                 })
                 .catch(() => {});
         } else {
             navigator.clipboard.writeText(shareData.url).then(() => {
                 trackAudio('share', { share_channel: 'copy' });
-                alert(@json(__('messages.common.link_copied')));
+                notify(@json(__('messages.common.link_copied')), 'success');
+            }).catch(() => {
+                notify('Unable to copy link right now.', 'error');
             });
         }
     }
@@ -247,8 +256,11 @@
             }
             button.classList.toggle('text-rose-600', data.liked);
             button.classList.toggle('text-slate-600', !data.liked);
+            notify(data.liked ? 'Added to liked items.' : 'Removed from liked items.', 'success');
         })
-        .catch(() => {});
+        .catch(() => {
+            notify('Request failed. Please try again.', 'error');
+        });
     }
 
     function submitAudioComment(form) {
@@ -284,8 +296,11 @@
                 countEl.textContent = data.comments_count;
             }
             form.reset();
+            notify('Comment submitted successfully.', 'success');
         })
-        .catch(() => {});
+        .catch(() => {
+            notify('Unable to post comment. Please try again.', 'error');
+        });
 
         return false;
     }

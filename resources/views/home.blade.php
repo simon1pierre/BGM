@@ -433,6 +433,31 @@
         @endforelse
       </div>
     </div>
+    <div class="mt-16">
+      <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">Featured Audiobooks</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        @forelse ($featuredAudiobooks as $audiobook)
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col">
+            <div class="relative h-40 overflow-hidden bg-slate-100">
+              @if ($audiobook->thumbnail)
+                <img src="{{ asset('storage/'.$audiobook->thumbnail) }}" alt="{{ $audiobook->title }}" class="w-full h-full object-cover">
+              @else
+                <img src="{{ asset('landingpage/download-audio.webp') }}" alt="{{ $audiobook->title }}" class="w-full h-full object-cover">
+              @endif
+            </div>
+            <div class="p-5 flex-1 flex flex-col">
+              <h4 class="text-lg font-serif font-bold text-blue-950 mb-2">{{ $audiobook->title }}</h4>
+              <p class="text-slate-600 text-sm mb-3">{{ \Illuminate\Support\Str::limit($audiobook->description, 90) }}</p>
+              <div class="mt-auto">
+                <a href="{{ route('audiobooks.show', $audiobook) }}" class="text-blue-700 font-medium text-sm hover:text-blue-900">Listen</a>
+              </div>
+            </div>
+          </div>
+        @empty
+          <div class="col-span-4 text-center text-slate-500">No featured audiobooks yet.</div>
+        @endforelse
+      </div>
+    </div>
   </div>
 </section>
 <section id="newslatter" class="py-24 bg-blue-950 text-white relative overflow-hidden">

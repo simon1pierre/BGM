@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\Users\UserController;
 use App\Http\Controllers\Admin\Content\VideoController;
 use App\Http\Controllers\Admin\Content\AudioController;
 use App\Http\Controllers\Admin\Content\DocumentController;
+use App\Http\Controllers\Admin\Content\AudiobookController;
 use App\Http\Controllers\Admin\Content\CategoryController;
 use App\Http\Controllers\Admin\Content\ContentNotificationController;
 use App\Http\Controllers\Admin\Content\PlaylistController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Content\ContentDownloadController;
 use App\Http\Controllers\Content\ContentEngagementController;
 use App\Http\Controllers\Content\PublicContentEngagementController;
+use App\Http\Controllers\Content\AudienceAnalyticsController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\LocaleController;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +38,8 @@ Route::controller(HomeController::class)->group(function(){
     Route::get('/books/{book}/reader', 'bookReader')->name('books.reader');
     Route::get('/audios', 'audios')->name('audios.index');
     Route::get('/audios/{audio}', 'audioShow')->name('audios.show');
+    Route::get('/audiobooks', 'audiobooks')->name('audiobooks.index');
+    Route::get('/audiobooks/{audiobook}', 'audiobookShow')->name('audiobooks.show');
     Route::get('/about', 'about')->name('about');
     Route::get('/resources', 'resources')->name('resources');
     Route::get('/contact', 'contact')->name('contact');
@@ -53,25 +57,25 @@ Route::controller(VerificationController::class)->group(function () {
     Route::post('/verify/resend', 'resend')->name('verify.resend');
 });
 Route::controller(AdminController::class)->group(function(){
-    Route::get('/beacons/dashboard','index')->name('admin.dashboard')->middleware('auth');
-    Route::get('/beacons/admin/stats','stats')->name('admin.stats')->middleware('auth');
+    Route::get('/beacons/dashboard','index')->name('admin.dashboard')->middleware(['auth', 'admin']);
+    Route::get('/beacons/admin/stats','stats')->name('admin.stats')->middleware(['auth', 'admin']);
 });
-Route::prefix('beacons/admin')->middleware('auth')->name('admin.analytics.')->group(function () {
+Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.analytics.')->group(function () {
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('index');
     Route::get('/analytics/events', [AnalyticsController::class, 'events'])->name('events');
     Route::get('/analytics/audiences', [AnalyticsController::class, 'audiences'])->name('audiences');
     Route::get('/analytics/content', [AnalyticsController::class, 'content'])->name('content');
 });
 Route::controller(ManageController::class)->group(function(){
-    Route::get('/beacons/admin/register','index')->name('admin.register')->middleware('auth');
-    Route::post('/beacons/admin/register','store')->name('admin.register.store')->middleware('auth');
+    Route::get('/beacons/admin/register','index')->name('admin.register')->middleware(['auth', 'admin']);
+    Route::post('/beacons/admin/register','store')->name('admin.register.store')->middleware(['auth', 'admin']);
 });
 Route::controller(SettingsController::class)->group(function(){
-    Route::get('/beacons/admin/settings','edit')->name('admin.settings.edit')->middleware('auth');
-    Route::post('/beacons/admin/settings','update')->name('admin.settings.update')->middleware('auth');
-    Route::post('/beacons/admin/settings/test-email','testEmail')->name('admin.settings.test-email')->middleware('auth');
+    Route::get('/beacons/admin/settings','edit')->name('admin.settings.edit')->middleware(['auth', 'admin']);
+    Route::post('/beacons/admin/settings','update')->name('admin.settings.update')->middleware(['auth', 'admin']);
+    Route::post('/beacons/admin/settings/test-email','testEmail')->name('admin.settings.test-email')->middleware(['auth', 'admin']);
 });
-Route::prefix('beacons/admin')->middleware('auth')->name('admin.campaigns.')->group(function () {
+Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.campaigns.')->group(function () {
     Route::get('/campaigns', [EmailCampaignController::class, 'index'])->name('index');
     Route::get('/campaigns/create', [EmailCampaignController::class, 'create'])->name('create');
     Route::post('/campaigns', [EmailCampaignController::class, 'store'])->name('store');
@@ -80,7 +84,7 @@ Route::prefix('beacons/admin')->middleware('auth')->name('admin.campaigns.')->gr
     Route::get('/campaigns/{campaign}/preview', [EmailCampaignController::class, 'preview'])->name('preview');
     Route::get('/campaigns/{campaign}/preview/raw', [EmailCampaignController::class, 'previewRaw'])->name('preview.raw');
 });
-Route::prefix('beacons/admin')->middleware('auth')->group(function () {
+Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('videos', VideoController::class)->except(['show'])->names('admin.videos');
     Route::get('videos/{video}/preview', [VideoController::class, 'preview'])->name('admin.videos.preview');
     Route::post('videos/{video}/restore', [VideoController::class, 'restore'])->name('admin.videos.restore');
@@ -88,6 +92,10 @@ Route::prefix('beacons/admin')->middleware('auth')->group(function () {
     Route::resource('audios', AudioController::class)->except(['show'])->names('admin.audios');
     Route::get('audios/{audio}/preview', [AudioController::class, 'preview'])->name('admin.audios.preview');
     Route::post('audios/{audio}/restore', [AudioController::class, 'restore'])->name('admin.audios.restore');
+
+    Route::resource('audiobooks', AudiobookController::class)->except(['show'])->names('admin.audiobooks');
+    Route::get('audiobooks/{audiobook}/preview', [AudiobookController::class, 'preview'])->name('admin.audiobooks.preview');
+    Route::post('audiobooks/{audiobook}/restore', [AudiobookController::class, 'restore'])->name('admin.audiobooks.restore');
 
     Route::resource('documents', DocumentController::class)->except(['show'])->names('admin.documents');
     Route::get('documents/{document}/preview', [DocumentController::class, 'preview'])->name('admin.documents.preview');
@@ -102,24 +110,24 @@ Route::prefix('beacons/admin')->middleware('auth')->group(function () {
     Route::resource('playlists', PlaylistController::class)->names('admin.playlists');
     Route::post('playlists/{playlist}/restore', [PlaylistController::class, 'restore'])->name('admin.playlists.restore');
 });
-Route::prefix('beacons/admin')->middleware('auth')->name('admin.subscribers.')->group(function () {
+Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.subscribers.')->group(function () {
     Route::get('/subscribers', [SubscriberController::class, 'index'])->name('index');
     Route::post('/subscribers/{subscriber}/toggle', [SubscriberController::class, 'toggle'])->name('toggle');
     Route::delete('/subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('destroy');
     Route::post('/subscribers/{subscriber}/restore', [SubscriberController::class, 'restore'])->name('restore');
 });
-Route::prefix('beacons/admin')->middleware('auth')->name('admin.contacts.')->group(function () {
+Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.contacts.')->group(function () {
     Route::get('/contacts', [ContactMessageController::class, 'index'])->name('index');
     Route::get('/contacts/{contactMessage}', [ContactMessageController::class, 'show'])->name('show');
     Route::post('/contacts/{contactMessage}/reply', [ContactMessageController::class, 'reply'])->name('reply');
 });
-Route::prefix('beacons/admin')->middleware('auth')->group(function () {
+Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('events', AdminEventController::class)->except(['show'])->names('admin.events');
     Route::post('events/{event}/restore', [AdminEventController::class, 'restore'])->name('admin.events.restore');
     Route::post('events/{event}/toggle-published', [AdminEventController::class, 'togglePublished'])->name('admin.events.toggle-published');
     Route::post('events/{event}/toggle-featured', [AdminEventController::class, 'toggleFeatured'])->name('admin.events.toggle-featured');
 });
-Route::prefix('beacons/admin')->middleware('auth')->name('admin.users.')->group(function () {
+Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.users.')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('index');
     Route::get('/users/{user}', [UserController::class, 'show'])->name('show');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('edit');
@@ -133,7 +141,7 @@ Route::prefix('beacons/admin')->middleware('auth')->name('admin.users.')->group(
 Route::controller(LoginController::class)->group(function () {
     Route::get('/beacons/admin/login', 'create')->name('admin.login')->middleware('guest');
     Route::post('/beacons/admin/login', 'store')->name('admin.login.store')->middleware('guest');
-    Route::post('/beacons/admin/logout', 'destroy')->name('admin.logout')->middleware('auth');
+    Route::post('/beacons/admin/logout', 'destroy')->name('admin.logout')->middleware(['auth', 'admin']);
 });
 Route::controller(TwoFactorController::class)->group(function () {
     Route::get('/beacons/admin/login/verify', 'show')->name('admin.login.verify')->middleware('guest');
@@ -142,10 +150,10 @@ Route::controller(TwoFactorController::class)->group(function () {
 });
 Route::post('/beacons/admin/notifications/read-all', [AdminNotificationController::class, 'readAll'])
     ->name('admin.notifications.read-all')
-    ->middleware('auth');
+    ->middleware(['auth', 'admin']);
 Route::get('/beacons/admin/notifications/{notification}', [AdminNotificationController::class, 'show'])
     ->name('admin.notifications.show')
-    ->middleware('auth');
+    ->middleware(['auth', 'admin']);
 
 Route::get('/downloads/audio/{audio}', [ContentDownloadController::class, 'audio'])
     ->name('content.download.audio');
@@ -171,3 +179,5 @@ Route::post('/audios/{audio}/track', [PublicContentEngagementController::class, 
     ->name('content.audio.track');
 Route::post('/books/{book}/track', [PublicContentEngagementController::class, 'trackBook'])
     ->name('content.book.track');
+Route::post('/analytics/audience/track', [AudienceAnalyticsController::class, 'track'])
+    ->name('content.audience.track');

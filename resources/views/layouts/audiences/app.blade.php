@@ -510,9 +510,210 @@
     .animate-pulse-slow {
       animation: pulse-slow 3s ease-in-out infinite;
     }
+
+    .ambient-stage {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .ambient-orb {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(80px);
+      opacity: 0.18;
+      animation: orb-drift 24s ease-in-out infinite;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .ambient-orb--one {
+      width: 24rem;
+      height: 24rem;
+      top: 12%;
+      left: -6rem;
+      background: rgba(15, 43, 94, 0.65);
+    }
+
+    .ambient-orb--two {
+      width: 20rem;
+      height: 20rem;
+      top: 45%;
+      right: -5rem;
+      background: rgba(212, 175, 55, 0.45);
+      animation-delay: 3s;
+    }
+
+    .ambient-orb--three {
+      width: 16rem;
+      height: 16rem;
+      bottom: 6%;
+      left: 25%;
+      background: rgba(56, 189, 248, 0.35);
+      animation-delay: 6s;
+    }
+
+    @keyframes orb-drift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(0, -18px, 0) scale(1.04); }
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translate3d(0, 22px, 0);
+      transition:
+        opacity 720ms cubic-bezier(0.2, 0.7, 0.2, 1),
+        transform 720ms cubic-bezier(0.2, 0.7, 0.2, 1);
+      transition-delay: var(--reveal-delay, 0ms);
+      will-change: opacity, transform;
+    }
+
+    [data-reveal="left"] {
+      transform: translate3d(-20px, 0, 0);
+    }
+
+    [data-reveal="right"] {
+      transform: translate3d(20px, 0, 0);
+    }
+
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .interactive-card {
+      transition:
+        transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1),
+        box-shadow 320ms ease,
+        border-color 320ms ease;
+      transform-style: preserve-3d;
+    }
+
+    .interactive-card:hover {
+      transform: translate3d(0, -8px, 0);
+      box-shadow: 0 18px 36px rgba(15, 43, 94, 0.13);
+      border-color: rgba(15, 43, 94, 0.2);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, rgba(15, 43, 94, 0.2), rgba(248, 250, 252, 0.96) 45%);
+      transition: opacity 260ms ease, visibility 260ms ease;
+    }
+
+    .page-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loader-core {
+      width: 62px;
+      height: 62px;
+      border-radius: 9999px;
+      border: 3px solid rgba(15, 43, 94, 0.15);
+      border-top-color: rgba(15, 43, 94, 0.9);
+      animation: spin 1s linear infinite;
+    }
+
+    .route-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      z-index: 9998;
+      background: linear-gradient(90deg, #0f2b5e, #d4af37);
+      box-shadow: 0 0 12px rgba(15, 43, 94, 0.35);
+      transition: width 240ms ease;
+    }
+
+    .media-skeleton {
+      position: relative;
+      overflow: hidden;
+      background: #e2e8f0 !important;
+    }
+
+    .media-skeleton::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      transform: translateX(-100%);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.58), transparent);
+      animation: shimmer-slide 1.25s infinite;
+    }
+
+    @keyframes shimmer-slide {
+      100% { transform: translateX(100%); }
+    }
+
+    .toast-wrap {
+      position: fixed;
+      top: 5rem;
+      right: 1rem;
+      z-index: 9997;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      max-width: min(24rem, calc(100vw - 1.5rem));
+    }
+
+    .toast-item {
+      border-radius: 0.75rem;
+      border: 1px solid rgba(15, 43, 94, 0.12);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.15);
+      padding: 0.75rem 0.9rem;
+      font-size: 0.82rem;
+      color: #1e293b;
+      transform: translateY(-8px);
+      opacity: 0;
+      animation: toast-in 240ms ease forwards;
+    }
+
+    .toast-item.success { border-left: 4px solid #10b981; }
+    .toast-item.error { border-left: 4px solid #ef4444; }
+    .toast-item.info { border-left: 4px solid #3b82f6; }
+
+    @keyframes toast-in {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
   </style>
 </head>
-<body class="font-sans antialiased flex flex-col min-h-screen">
+<body class="font-sans antialiased flex flex-col min-h-screen relative">
+  <div id="routeProgress" class="route-progress" aria-hidden="true"></div>
+  <div id="pageLoader" class="page-loader" aria-live="polite" aria-label="Loading">
+    <div class="loader-core"></div>
+  </div>
+  <div id="toastWrap" class="toast-wrap" aria-live="polite" aria-atomic="true"></div>
+  <div class="ambient-stage" aria-hidden="true">
+    <div class="ambient-orb ambient-orb--one"></div>
+    <div class="ambient-orb ambient-orb--two"></div>
+    <div class="ambient-orb ambient-orb--three"></div>
+  </div>
 
 
   <!-- Header -->
@@ -714,33 +915,69 @@
 
   <!-- Scroll Animation Trigger Script -->
   <script>
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
+    (() => {
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealElements = [];
 
+      const pushReveal = (element, delayMs = 0, direction = 'up') => {
+        if (!element || element.dataset.revealPrepared === '1') return;
+        element.dataset.revealPrepared = '1';
+        element.setAttribute('data-reveal', direction);
+        element.style.setProperty('--reveal-delay', `${delayMs}ms`);
+        revealElements.push(element);
+      };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
+      document.querySelectorAll('.scroll-animate, [data-reveal]').forEach((element, index) => {
+        pushReveal(element, Math.min((index % 6) * 70, 350));
       });
-    }, observerOptions);
 
+      document.querySelectorAll('main section').forEach((section) => {
+        section.querySelectorAll('h1, h2').forEach((element, index) => {
+          pushReveal(element, index * 60, index % 2 === 0 ? 'left' : 'right');
+        });
+        section.querySelectorAll('.bg-white.rounded-2xl, .bg-white.rounded-xl, article.rounded-2xl').forEach((element, index) => {
+          pushReveal(element, Math.min((index % 6) * 80, 400), 'up');
+          element.classList.add('interactive-card');
+        });
+      });
 
-    // Observe all scroll-animate elements
-    document.querySelectorAll('.scroll-animate').forEach(el => {
-      observer.observe(el);
-    });
+      if (!reducedMotion) {
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
+        revealElements.forEach((element) => revealObserver.observe(element));
+      } else {
+        revealElements.forEach((element) => element.classList.add('is-visible'));
+      }
 
-    // Lucide icon initialization
-    if (typeof lucide !== 'undefined') {
-      lucide.createIcons();
-    }
+      // Ripple micro-interaction for CTA/button surfaces.
+      document.querySelectorAll('.ripple-container, button, a[class*="rounded"]').forEach((element) => {
+        element.addEventListener('click', (event) => {
+          if (reducedMotion) return;
+          const rect = element.getBoundingClientRect();
+          const ripple = document.createElement('span');
+          const size = Math.max(rect.width, rect.height);
+          ripple.className = 'ripple';
+          ripple.style.width = `${size}px`;
+          ripple.style.height = `${size}px`;
+          ripple.style.left = `${event.clientX - rect.left - size / 2}px`;
+          ripple.style.top = `${event.clientY - rect.top - size / 2}px`;
+          element.classList.add('ripple-container');
+          element.appendChild(ripple);
+          setTimeout(() => ripple.remove(), 620);
+        }, { passive: true });
+      });
+
+      // Lucide icon initialization
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    })();
   </script>
   <script>
     if ('serviceWorker' in navigator) {
@@ -823,6 +1060,246 @@
         hideInstallModal();
       });
     }
+  </script>
+  <script>
+    (() => {
+      const endpoint = @json(route('content.audience.track'));
+      const routeName = @json(optional(request()->route())->getName());
+      const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const sessionIdKey = 'bgm_audience_session_id';
+      const visitorIdKey = 'bgm_audience_visitor_id';
+      const sessionStartedKey = 'bgm_audience_session_started';
+      const scrollTrackedKey = 'bgm_audience_scroll_steps';
+      let engagedSeconds = 0;
+      let sessionEnded = false;
+
+      const makeId = (prefix) => `${prefix}_${Math.random().toString(36).slice(2)}_${Date.now()}`;
+      const getOrCreateStorage = (storage, key, prefix) => {
+        let value = storage.getItem(key);
+        if (!value) {
+          value = makeId(prefix);
+          storage.setItem(key, value);
+        }
+        return value;
+      };
+
+      const visitorId = getOrCreateStorage(localStorage, visitorIdKey, 'v');
+      const sessionId = getOrCreateStorage(sessionStorage, sessionIdKey, 's');
+      const url = new URL(window.location.href);
+      const metrics = () => {
+        const width = window.innerWidth || 0;
+        let deviceType = 'unknown';
+        if (width < 768) deviceType = 'mobile';
+        else if (width < 1024) deviceType = 'tablet';
+        else deviceType = 'desktop';
+
+        return {
+          visitor_id: visitorId,
+          session_id: sessionId,
+          route_name: routeName,
+          page_url: window.location.href,
+          referrer: document.referrer || null,
+          utm_source: url.searchParams.get('utm_source'),
+          utm_medium: url.searchParams.get('utm_medium'),
+          utm_campaign: url.searchParams.get('utm_campaign'),
+          utm_term: url.searchParams.get('utm_term'),
+          utm_content: url.searchParams.get('utm_content'),
+          screen_width: window.screen?.width || null,
+          screen_height: window.screen?.height || null,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          language: navigator.language || null,
+          platform: navigator.platform || null,
+          device_type: deviceType,
+        };
+      };
+
+      const send = (eventType, extra = {}, beacon = false) => {
+        const payload = { event_type: eventType, ...metrics(), ...extra };
+        if (beacon && navigator.sendBeacon) {
+          const form = new FormData();
+          form.append('_token', csrf);
+          Object.entries(payload).forEach(([key, value]) => {
+            if (value !== null && typeof value !== 'undefined') {
+              form.append(key, String(value));
+            }
+          });
+          navigator.sendBeacon(endpoint, form);
+          return;
+        }
+
+        fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrf,
+          },
+          body: JSON.stringify(payload),
+          keepalive: true,
+        }).catch(() => {});
+      };
+
+      const markSessionStart = () => {
+        if (sessionStorage.getItem(sessionStartedKey) === '1') return;
+        send('session_start');
+        sessionStorage.setItem(sessionStartedKey, '1');
+      };
+
+      const trackPageView = () => send('page_view');
+
+      const trackScrollDepth = () => {
+        const doc = document.documentElement;
+        const scrollable = Math.max(doc.scrollHeight - window.innerHeight, 1);
+        const progress = Math.round((window.scrollY / scrollable) * 100);
+        const steps = [25, 50, 75, 100];
+        const seen = new Set((sessionStorage.getItem(scrollTrackedKey) || '').split(',').filter(Boolean));
+
+        steps.forEach((step) => {
+          if (progress < step || seen.has(String(step))) return;
+          send('scroll_depth', { scroll_depth: step });
+          seen.add(String(step));
+        });
+
+        sessionStorage.setItem(scrollTrackedKey, Array.from(seen).join(','));
+      };
+
+      const endSession = () => {
+        if (sessionEnded) return;
+        sessionEnded = true;
+        send('session_end', { engaged_seconds: engagedSeconds }, true);
+      };
+
+      if (!reducedMotion) {
+        window.addEventListener('scroll', trackScrollDepth, { passive: true });
+      }
+
+      document.addEventListener('click', (event) => {
+        const target = event.target.closest('a, button');
+        if (!target) return;
+        const className = String(target.className || '');
+        const looksLikeCta = target.hasAttribute('data-cta') || /bg-|btn|rounded-full|rounded-lg/.test(className);
+        if (!looksLikeCta) return;
+        const label = (target.getAttribute('data-cta') || target.textContent || '').trim().slice(0, 180);
+        const href = target.getAttribute('href');
+        send('cta_click', {
+          cta_label: label || 'unknown',
+          cta_target: href || window.location.href,
+        });
+      }, { passive: true });
+
+      setInterval(() => {
+        if (document.visibilityState === 'visible') {
+          engagedSeconds += 5;
+        }
+      }, 5000);
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+          endSession();
+        }
+      });
+
+      window.addEventListener('beforeunload', endSession);
+      window.addEventListener('pagehide', endSession);
+
+      markSessionStart();
+      trackPageView();
+    })();
+  </script>
+  <script>
+    (() => {
+      const pageLoader = document.getElementById('pageLoader');
+      const progress = document.getElementById('routeProgress');
+      const toastWrap = document.getElementById('toastWrap');
+
+      const hideLoader = () => {
+        if (!pageLoader) return;
+        pageLoader.classList.add('hidden');
+      };
+
+      const startProgress = () => {
+        if (!progress) return;
+        progress.style.width = '18%';
+        requestAnimationFrame(() => {
+          progress.style.width = '78%';
+        });
+      };
+
+      const finishProgress = () => {
+        if (!progress) return;
+        progress.style.width = '100%';
+        setTimeout(() => { progress.style.width = '0%'; }, 280);
+      };
+
+      const showToast = (message, type = 'info', timeout = 3800) => {
+        if (!toastWrap || !message) return;
+        const node = document.createElement('div');
+        node.className = `toast-item ${type}`;
+        node.textContent = String(message);
+        toastWrap.appendChild(node);
+
+        setTimeout(() => {
+          node.style.opacity = '0';
+          node.style.transform = 'translateY(-6px)';
+          setTimeout(() => node.remove(), 220);
+        }, timeout);
+      };
+
+      window.appToast = showToast;
+
+      document.querySelectorAll('a[href]').forEach((link) => {
+        link.addEventListener('click', (event) => {
+          if (event.defaultPrevented) return;
+          const href = link.getAttribute('href') || '';
+          const target = link.getAttribute('target');
+          const isHash = href.startsWith('#');
+          const isJs = href.startsWith('javascript:');
+          const isExternal = /^https?:\/\//i.test(href) && !href.startsWith(window.location.origin);
+
+          if (target === '_blank' || isHash || isJs || isExternal) return;
+          startProgress();
+          if (pageLoader) pageLoader.classList.remove('hidden');
+        }, { passive: true });
+      });
+
+      const mediaSelector = 'img, iframe, audio, video';
+      document.querySelectorAll(mediaSelector).forEach((media) => {
+        const markDone = () => media.classList.remove('media-skeleton');
+        media.classList.add('media-skeleton');
+
+        if (media.tagName === 'IMG') {
+          if (media.complete) {
+            markDone();
+          } else {
+            media.addEventListener('load', markDone, { once: true });
+            media.addEventListener('error', markDone, { once: true });
+          }
+          return;
+        }
+
+        media.addEventListener('loadeddata', markDone, { once: true });
+        media.addEventListener('canplay', markDone, { once: true });
+        media.addEventListener('load', markDone, { once: true });
+        media.addEventListener('error', markDone, { once: true });
+      });
+
+      window.addEventListener('load', () => {
+        hideLoader();
+        finishProgress();
+      });
+
+      @if (session('status'))
+        showToast(@json(session('status')), 'success');
+      @endif
+
+      @if (session('error'))
+        showToast(@json(session('error')), 'error');
+      @endif
+
+      @if ($errors->any())
+        showToast(@json($errors->first()), 'error');
+      @endif
+    })();
   </script>
 
 

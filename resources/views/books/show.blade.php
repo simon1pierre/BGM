@@ -117,6 +117,44 @@
                             {{ __('messages.books.browse_library') }}
                         </a>
                     </div>
+                    @if (!empty($hasLinkedAudiobooks) && $hasLinkedAudiobooks)
+                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                            @php
+                                $bookPrayerBase = array_filter(
+                                    ['q' => request('q')],
+                                    static fn ($value) => !is_null($value) && $value !== ''
+                                );
+                            @endphp
+                            <div class="flex items-center justify-between gap-3 mb-3">
+                                <h3 class="text-lg font-serif font-bold text-blue-950">Audiobook Versions</h3>
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('books.show', ['book' => $book] + $bookPrayerBase) }}" class="px-2.5 py-1 rounded-full text-xs border {{ is_null($prayerFilter ?? null) ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-600' }}">All</a>
+                                    <a href="{{ route('books.show', ['book' => $book] + $bookPrayerBase + ['prayer' => '1']) }}" class="px-2.5 py-1 rounded-full text-xs border {{ ($prayerFilter ?? null) === true ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-600' }}">Prayer</a>
+                                    <a href="{{ route('books.show', ['book' => $book] + $bookPrayerBase + ['prayer' => '0']) }}" class="px-2.5 py-1 rounded-full text-xs border {{ ($prayerFilter ?? null) === false ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-600' }}">Non-Prayer</a>
+                                </div>
+                            </div>
+                            @if ($linkedAudiobooks->count())
+                                <div class="space-y-4">
+                                    @foreach ($linkedAudiobooks as $ab)
+                                        <div class="border border-slate-100 rounded-xl p-3">
+                                            <div class="flex items-center justify-between gap-2 mb-2">
+                                                <div class="text-sm font-semibold text-slate-800">{{ $ab->title }}</div>
+                                                @if ($ab->is_prayer_audio)
+                                                    <span class="inline-flex px-2 py-0.5 rounded-full text-[11px] bg-emerald-100 text-emerald-700">Prayer</span>
+                                                @endif
+                                            </div>
+                                            <audio controls class="w-full">
+                                                <source src="{{ asset('storage/'.$ab->audio_file) }}" type="audio/mpeg">
+                                            </audio>
+                                            <a href="{{ route('audiobooks.show', $ab) }}" class="inline-flex mt-2 text-xs text-blue-700 hover:text-blue-900">Open audiobook page</a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="text-xs text-slate-500">No audiobooks match this prayer filter.</div>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
             @if (!empty($relatedBooks) && $relatedBooks->count())
@@ -152,6 +190,12 @@
     function csrfToken() {
         const meta = document.querySelector('meta[name="csrf-token"]');
         return meta ? meta.getAttribute('content') : '';
+    }
+
+    function notify(message, type = 'info') {
+        if (window.appToast) {
+            window.appToast(message, type);
+        }
     }
 
     function collectClientMetrics() {
@@ -206,12 +250,15 @@
             navigator.share(shareData)
                 .then(() => {
                     trackBook('share', { share_channel: 'native' });
+                    notify('Shared successfully.', 'success');
                 })
                 .catch(() => {});
         } else {
             navigator.clipboard.writeText(shareData.url).then(() => {
                 trackBook('share', { share_channel: 'copy' });
-                alert(@json(__('messages.common.link_copied')));
+                notify(@json(__('messages.common.link_copied')), 'success');
+            }).catch(() => {
+                notify('Unable to copy link right now.', 'error');
             });
         }
     }
@@ -250,8 +297,11 @@
             }
             button.classList.toggle('text-rose-600', data.liked);
             button.classList.toggle('text-slate-600', !data.liked);
+            notify(data.liked ? 'Added to liked items.' : 'Removed from liked items.', 'success');
         })
-        .catch(() => {});
+        .catch(() => {
+            notify('Request failed. Please try again.', 'error');
+        });
     }
 
     function submitBookComment(form) {
@@ -287,8 +337,11 @@
                 countEl.textContent = data.comments_count;
             }
             form.reset();
+            notify('Comment submitted successfully.', 'success');
         })
-        .catch(() => {});
+        .catch(() => {
+            notify('Unable to post comment. Please try again.', 'error');
+        });
 
         return false;
     }

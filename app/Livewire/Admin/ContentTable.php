@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\audio;
 use App\Models\book;
+use App\Models\audiobook;
 use App\Models\ContentCategory;
 use App\Models\video;
 use Illuminate\Database\Eloquent\Builder;
@@ -18,6 +19,7 @@ class ContentTable extends Component
     public string $search = '';
     public string $status = 'all';
     public string $featured = 'all';
+    public string $prayer = 'all';
     public string $deleted = 'exclude';
     public string $categoryId = '';
     public int $perPage = 5;
@@ -28,6 +30,7 @@ class ContentTable extends Component
         'search' => ['except' => ''],
         'status' => ['except' => 'all'],
         'featured' => ['except' => 'all'],
+        'prayer' => ['except' => 'all'],
         'deleted' => ['except' => 'exclude'],
         'categoryId' => ['except' => ''],
         'perPage' => ['except' => 5],
@@ -49,6 +52,11 @@ class ContentTable extends Component
     }
 
     public function updatingDeleted(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingPrayer(): void
     {
         $this->resetPage();
     }
@@ -78,6 +86,7 @@ class ContentTable extends Component
     {
         return match ($this->type) {
             'audios' => audio::class,
+            'audiobooks' => audiobook::class,
             'documents' => book::class,
             default => video::class,
         };
@@ -87,6 +96,7 @@ class ContentTable extends Component
     {
         return match ($this->type) {
             'audios' => ['title', 'description', 'speaker', 'series'],
+            'audiobooks' => ['title', 'description', 'narrator', 'series'],
             'documents' => ['title', 'description', 'author'],
             default => ['title', 'description', 'speaker', 'series'],
         };
@@ -111,6 +121,10 @@ class ContentTable extends Component
             $query->where('featured', $this->featured === 'yes');
         }
 
+        if ($this->type === 'audiobooks' && $this->prayer !== 'all') {
+            $query->where('is_prayer_audio', $this->prayer === 'yes');
+        }
+
         if ($this->search !== '') {
             $query->where(function (Builder $builder): void {
                 foreach ($this->searchColumns() as $column) {
@@ -131,6 +145,7 @@ class ContentTable extends Component
         $categories = ContentCategory::query()
             ->whereIn('type', match ($this->type) {
                 'audios' => ['audio', 'all'],
+                'audiobooks' => ['audio', 'all'],
                 'documents' => ['document', 'all'],
                 default => ['video', 'all'],
             })

@@ -30,6 +30,16 @@
                         <option value="only">Only</option>
                     </select>
                 </div>
+                @if ($type === 'audiobooks')
+                    <div class="col-md-2">
+                        <label class="form-label fw-semibold">Prayer</label>
+                        <select wire:model="prayer" class="form-select">
+                            <option value="all">All</option>
+                            <option value="yes">Prayer</option>
+                            <option value="no">Non-prayer</option>
+                        </select>
+                    </div>
+                @endif
                 <div class="col-md-3">
                     <label class="form-label fw-semibold">Category</label>
                     <select wire:model="categoryId" class="form-select">
@@ -74,6 +84,8 @@
                             <th>
                                 @if ($type === 'documents')
                                     Author
+                                @elseif ($type === 'audiobooks')
+                                    Narrator
                                 @else
                                     Speaker
                                 @endif
@@ -108,7 +120,7 @@
                                     </div>
                                 </td>
                                 <td>{{ $item->category?->name ?? '-' }}</td>
-                                <td>{{ $item->speaker ?? $item->author ?? '-' }}</td>
+                                <td>{{ $item->speaker ?? $item->narrator ?? $item->author ?? '-' }}</td>
                                 <td>
                                     @if ($item->trashed())
                                         <span class="badge bg-soft-secondary text-muted">Deleted</span>
@@ -124,10 +136,15 @@
                                     @else
                                         <span class="badge bg-soft-secondary text-muted">No</span>
                                     @endif
+                                    @if ($type === 'audiobooks' && $item->is_prayer_audio)
+                                        <span class="badge bg-soft-info text-info">Prayer</span>
+                                    @endif
                                 </td>
                                 <td>
                                     @if ($type === 'videos')
                                         {{ $item->view_count ?? 0 }}
+                                    @elseif ($type === 'audiobooks')
+                                        {{ $item->play_count ?? 0 }}
                                     @else
                                         {{ $item->download_count ?? 0 }}
                                     @endif

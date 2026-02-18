@@ -226,6 +226,13 @@
         return meta ? meta.getAttribute('content') : '';
     }
 
+    function notify(message, type = 'info') {
+        if (window.appToast) {
+            window.appToast(message, type);
+            return;
+        }
+    }
+
     function collectClientMetrics() {
         const w = window.screen ? window.screen.width : null;
         const h = window.screen ? window.screen.height : null;
@@ -331,8 +338,11 @@
             }
             button.classList.toggle('text-rose-600', data.liked);
             button.classList.toggle('text-slate-600', !data.liked);
+            notify(data.liked ? 'Added to liked items.' : 'Removed from liked items.', 'success');
         })
-        .catch(() => {});
+        .catch(() => {
+            notify('Request failed. Please try again.', 'error');
+        });
     }
 
     function submitComment(form) {
@@ -372,8 +382,11 @@
                 countEl.textContent = data.comments_count;
             }
             form.reset();
+            notify('Comment submitted successfully.', 'success');
         })
-        .catch(() => {});
+        .catch(() => {
+            notify('Unable to post comment. Please try again.', 'error');
+        });
 
         return false;
     }
@@ -400,13 +413,16 @@
                 .then(() => {
                     trackEvent(activeVideoId, 'share', window.location.href);
                     trackShareChannel(activeVideoId, 'native');
+                    notify('Shared successfully.', 'success');
                 })
                 .catch(() => {});
         } else {
             navigator.clipboard.writeText(shareData.url).then(() => {
                 trackEvent(activeVideoId, 'share', window.location.href);
                 trackShareChannel(activeVideoId, 'copy');
-                alert(@json(__('messages.common.link_copied')));
+                notify(@json(__('messages.common.link_copied')), 'success');
+            }).catch(() => {
+                notify('Unable to copy link right now.', 'error');
             });
         }
     }
@@ -428,13 +444,16 @@
                 .then(() => {
                     trackEvent(videoId, 'share', window.location.href);
                     trackShareChannel(videoId, 'native');
+                    notify('Shared successfully.', 'success');
                 })
                 .catch(() => {});
         } else {
             navigator.clipboard.writeText(shareData.url).then(() => {
                 trackEvent(videoId, 'share', window.location.href);
                 trackShareChannel(videoId, 'copy');
-                alert(@json(__('messages.common.link_copied')));
+                notify(@json(__('messages.common.link_copied')), 'success');
+            }).catch(() => {
+                notify('Unable to copy link right now.', 'error');
             });
         }
     }

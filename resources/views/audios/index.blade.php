@@ -123,6 +123,12 @@
         return meta ? meta.getAttribute('content') : '';
     }
 
+    function notify(message, type = 'info') {
+        if (window.appToast) {
+            window.appToast(message, type);
+        }
+    }
+
     function collectClientMetrics() {
         const w = window.screen ? window.screen.width : null;
         const h = window.screen ? window.screen.height : null;
@@ -169,8 +175,11 @@
             }
             button.classList.toggle('text-rose-600', data.liked);
             button.classList.toggle('text-slate-600', !data.liked);
+            notify(data.liked ? 'Added to liked items.' : 'Removed from liked items.', 'success');
         })
-        .catch(() => {});
+        .catch(() => {
+            notify('Request failed. Please try again.', 'error');
+        });
     }
 
     function trackAudio(event, audioId, extra) {

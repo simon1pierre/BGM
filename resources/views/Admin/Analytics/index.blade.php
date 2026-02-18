@@ -12,18 +12,33 @@
                 </ul>
             </div>
             <div class="page-header-right ms-auto">
-                <a href="{{ route('admin.analytics.events') }}" class="btn btn-light">View Events</a>
+                <form method="GET" class="d-flex gap-2">
+                    <input type="date" name="from" value="{{ $from->toDateString() }}" class="form-control form-control-sm">
+                    <input type="date" name="to" value="{{ $to->toDateString() }}" class="form-control form-control-sm">
+                    <button class="btn btn-sm btn-primary">Apply</button>
+                </form>
             </div>
         </div>
 
         <div class="main-content">
+            @php
+                $deltaClass = static function (array $delta): string {
+                    return match ($delta['direction']) {
+                        'up' => 'text-success',
+                        'down' => 'text-danger',
+                        default => 'text-muted',
+                    };
+                };
+            @endphp
             <div class="row">
                 <div class="col-xxl-3 col-md-6">
                     <div class="card stretch stretch-full">
                         <div class="card-body">
-                            <div class="fs-12 text-muted">Video Views</div>
-                            <div class="fs-4 fw-bold text-dark">{{ $videoTotals['views'] }}</div>
-                            <div class="fs-12 text-muted mt-2">Plays: {{ $videoTotals['plays'] }} | Shares: {{ $videoTotals['shares'] }}</div>
+                            <div class="fs-12 text-muted">Video Plays (Period)</div>
+                            <div class="fs-4 fw-bold text-dark">{{ number_format($periodCurrent['video_plays']) }}</div>
+                            <div class="fs-12 mt-2 {{ $deltaClass($periodDelta['video_plays']) }}">
+                                {{ $periodDelta['video_plays']['value'] > 0 ? '+' : '' }}{{ number_format($periodDelta['video_plays']['value'], 1) }}% vs previous period
+                            </div>
                             <a href="{{ route('admin.analytics.events', ['type' => 'video']) }}" class="btn btn-sm btn-light mt-3">Details</a>
                         </div>
                     </div>
@@ -31,9 +46,11 @@
                 <div class="col-xxl-3 col-md-6">
                     <div class="card stretch stretch-full">
                         <div class="card-body">
-                            <div class="fs-12 text-muted">Audio Plays</div>
-                            <div class="fs-4 fw-bold text-dark">{{ $audioTotals['plays'] }}</div>
-                            <div class="fs-12 text-muted mt-2">Shares: {{ $audioTotals['shares'] }} | Downloads: {{ $audioTotals['downloads'] }}</div>
+                            <div class="fs-12 text-muted">Audio Plays (Period)</div>
+                            <div class="fs-4 fw-bold text-dark">{{ number_format($periodCurrent['audio_plays']) }}</div>
+                            <div class="fs-12 mt-2 {{ $deltaClass($periodDelta['audio_plays']) }}">
+                                {{ $periodDelta['audio_plays']['value'] > 0 ? '+' : '' }}{{ number_format($periodDelta['audio_plays']['value'], 1) }}% vs previous period
+                            </div>
                             <a href="{{ route('admin.analytics.events', ['type' => 'audio']) }}" class="btn btn-sm btn-light mt-3">Details</a>
                         </div>
                     </div>
@@ -41,9 +58,11 @@
                 <div class="col-xxl-3 col-md-6">
                     <div class="card stretch stretch-full">
                         <div class="card-body">
-                            <div class="fs-12 text-muted">Book Reads</div>
-                            <div class="fs-4 fw-bold text-dark">{{ $bookTotals['reads'] }}</div>
-                            <div class="fs-12 text-muted mt-2">Shares: {{ $bookTotals['shares'] }} | Downloads: {{ $bookTotals['downloads'] }}</div>
+                            <div class="fs-12 text-muted">Book Reads (Period)</div>
+                            <div class="fs-4 fw-bold text-dark">{{ number_format($periodCurrent['book_reads']) }}</div>
+                            <div class="fs-12 mt-2 {{ $deltaClass($periodDelta['book_reads']) }}">
+                                {{ $periodDelta['book_reads']['value'] > 0 ? '+' : '' }}{{ number_format($periodDelta['book_reads']['value'], 1) }}% vs previous period
+                            </div>
                             <a href="{{ route('admin.analytics.events', ['type' => 'book']) }}" class="btn btn-sm btn-light mt-3">Details</a>
                         </div>
                     </div>
@@ -51,16 +70,28 @@
                 <div class="col-xxl-3 col-md-6">
                     <div class="card stretch stretch-full">
                         <div class="card-body">
-                            <div class="fs-12 text-muted">Engagement</div>
-                            <div class="fs-4 fw-bold text-dark">{{ $engagementTotals['likes'] }}</div>
-                            <div class="fs-12 text-muted mt-2">Comments: {{ $engagementTotals['comments'] }}</div>
-                            <a href="{{ route('admin.analytics.content') }}" class="btn btn-sm btn-light mt-3">Details</a>
+                            <div class="fs-12 text-muted">Audience Page Views (Period)</div>
+                            <div class="fs-4 fw-bold text-dark">{{ number_format($periodCurrent['page_views']) }}</div>
+                            <div class="fs-12 mt-2 {{ $deltaClass($periodDelta['page_views']) }}">
+                                {{ $periodDelta['page_views']['value'] > 0 ? '+' : '' }}{{ number_format($periodDelta['page_views']['value'], 1) }}% vs previous period
+                            </div>
+                            <a href="{{ route('admin.analytics.audiences', ['from' => $from->toDateString(), 'to' => $to->toDateString()]) }}" class="btn btn-sm btn-light mt-3">Audience Details</a>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="row">
+                <div class="col-xxl-12">
+                    <div class="card stretch stretch-full mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title">Engagement Trends</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="analyticsTrendChart" style="height: 320px;"></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-xxl-6">
                     <div class="card stretch stretch-full mb-4">
                         <div class="card-header">
@@ -161,3 +192,31 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    (() => {
+        const trend = @json($trend);
+        const el = document.querySelector('#analyticsTrendChart');
+        if (!el || typeof ApexCharts === 'undefined') return;
+
+        const chart = new ApexCharts(el, {
+            chart: { type: 'line', height: 320, toolbar: { show: false } },
+            stroke: { width: 3, curve: 'smooth' },
+            markers: { size: 0 },
+            series: [
+                { name: 'Video Plays', data: trend.video_plays },
+                { name: 'Audio Plays', data: trend.audio_plays },
+                { name: 'Book Reads', data: trend.book_reads },
+                { name: 'Page Views', data: trend.page_views },
+            ],
+            xaxis: { categories: trend.labels },
+            yaxis: { labels: { formatter: (value) => Math.round(value) } },
+            legend: { position: 'top' },
+            colors: ['#3b82f6', '#22c55e', '#a855f7', '#f59e0b']
+        });
+
+        chart.render();
+    })();
+</script>
+@endpush

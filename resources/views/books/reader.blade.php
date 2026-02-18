@@ -46,6 +46,36 @@
                                 <div><span class="text-slate-500">Published:</span> {{ $book->published_at?->toDateString() ?? $book->created_at?->toDateString() }}</div>
                             </div>
                         </div>
+                        @if (!empty($linkedAudiobooks) && $linkedAudiobooks->count())
+                            <div class="p-5 border-t border-slate-100">
+                                <h3 class="font-serif text-base text-slate-900 font-bold">Audiobook While Reading</h3>
+                                <p class="mt-1 text-xs text-slate-500">Audiobook playback and TTS are independent; use one at a time for clarity.</p>
+                                <div class="mt-3">
+                                    <select id="linkedAudiobookSelect" class="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-700">
+                                        @foreach ($linkedAudiobooks as $ab)
+                                            <option value="{{ $ab->id }}" data-src="{{ asset('storage/'.$ab->audio_file) }}">{{ $ab->title }}@if($ab->is_prayer_audio) - Prayer @endif</option>
+                                        @endforeach
+                                    </select>
+                                    <audio id="linkedAudiobookPlayer" controls class="w-full mt-3">
+                                        <source id="linkedAudiobookSource" src="{{ asset('storage/'.$linkedAudiobooks->first()->audio_file) }}" type="audio/mpeg">
+                                    </audio>
+                                    <div id="linkedAudiobookError" class="hidden mt-2 text-xs text-rose-600">Unable to play this track.</div>
+                                </div>
+                                <div class="mt-3 space-y-2">
+                                    @foreach ($linkedAudiobooks as $ab)
+                                        <button type="button" data-track-id="{{ $ab->id }}" class="w-full text-left border border-slate-200 rounded-lg p-2 hover:bg-slate-50">
+                                            <div class="text-xs font-semibold text-slate-800">{{ $ab->title }}</div>
+                                            <div class="text-[11px] text-slate-500">
+                                                {{ $ab->narrator ?: 'Narrator not specified' }} @if($ab->duration) - {{ $ab->duration }} @endif
+                                                @if($ab->is_prayer_audio)
+                                                    - Prayer
+                                                @endif
+                                            </div>
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
                     <div id="readerPanel" class="lg:col-span-9 bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
@@ -575,6 +605,35 @@
             if (!window.speechSynthesis) return;
             window.speechSynthesis.cancel();
             setReaderStatus('Reading stopped');
+        });
+
+        const linkedSelect = document.getElementById('linkedAudiobookSelect');
+        const linkedPlayer = document.getElementById('linkedAudiobookPlayer');
+        const linkedSource = document.getElementById('linkedAudiobookSource');
+        const linkedError = document.getElementById('linkedAudiobookError');
+
+        function swapLinkedTrack(trackId) {
+            if (!linkedSelect || !linkedPlayer || !linkedSource) return;
+            const option = Array.from(linkedSelect.options).find((item) => item.value === String(trackId));
+            if (!option) return;
+            linkedSelect.value = option.value;
+            linkedSource.src = option.dataset.src || '';
+            linkedPlayer.load();
+            linkedError?.classList.add('hidden');
+        }
+
+        linkedSelect?.addEventListener('change', (event) => {
+            swapLinkedTrack(event.target.value);
+        });
+
+        document.querySelectorAll('[data-track-id]').forEach((button) => {
+            button.addEventListener('click', () => {
+                swapLinkedTrack(button.getAttribute('data-track-id'));
+            });
+        });
+
+        linkedPlayer?.addEventListener('error', () => {
+            linkedError?.classList.remove('hidden');
         });
 
         document.addEventListener('keydown', (event) => {

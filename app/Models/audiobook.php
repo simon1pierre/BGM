@@ -5,27 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\ContentCategory;
-use App\Models\ContentLike;
-use App\Models\ContentComment;
-use App\Models\audiobook;
+use App\Models\book;
 use App\Models\Concerns\HasTranslations;
 
-class book extends Model
+class audiobook extends Model
 {
     use SoftDeletes;
     use HasTranslations;
 
+    protected $table = 'audiobooks';
+
     protected $fillable = [
         'title',
         'description',
-        'file_path',
-        'cover_image',
-        'author',
+        'audio_file',
+        'thumbnail',
+        'duration',
         'category_id',
+        'book_id',
+        'narrator',
         'series',
         'published_at',
         'featured',
         'recommended',
+        'is_prayer_audio',
+        'play_count',
         'download_count',
         'is_published',
     ];
@@ -34,14 +38,20 @@ class book extends Model
         'published_at' => 'datetime',
         'featured' => 'boolean',
         'recommended' => 'boolean',
+        'is_prayer_audio' => 'boolean',
         'is_published' => 'boolean',
+        'play_count' => 'integer',
         'download_count' => 'integer',
     ];
-
 
     public function category()
     {
         return $this->belongsTo(ContentCategory::class, 'category_id');
+    }
+
+    public function linkedBook()
+    {
+        return $this->belongsTo(book::class, 'book_id');
     }
 
     public function getTitleAttribute($value)
@@ -56,25 +66,10 @@ class book extends Model
 
     public function getThumbnailUrlAttribute(): ?string
     {
-        if (!empty($this->cover_image)) {
-            return asset('storage/'.$this->cover_image);
+        if (!empty($this->thumbnail)) {
+            return asset('storage/'.$this->thumbnail);
         }
 
         return null;
-    }
-
-    public function likes()
-    {
-        return $this->morphMany(ContentLike::class, 'content');
-    }
-
-    public function comments()
-    {
-        return $this->morphMany(ContentComment::class, 'content');
-    }
-
-    public function audiobooks()
-    {
-        return $this->hasMany(audiobook::class, 'book_id');
     }
 }

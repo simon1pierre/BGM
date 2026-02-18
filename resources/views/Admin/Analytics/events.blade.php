@@ -25,6 +25,8 @@
                                 <option value="video" @selected($type === 'video')>Video</option>
                                 <option value="audio" @selected($type === 'audio')>Audio</option>
                                 <option value="book" @selected($type === 'book')>Book</option>
+                                <option value="audiobook" @selected($type === 'audiobook')>Audiobook</option>
+                                <option value="audience" @selected($type === 'audience')>Audience</option>
                             </select>
                         </div>
                         <div class="col-md-4">
