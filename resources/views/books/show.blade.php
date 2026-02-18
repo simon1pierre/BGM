@@ -18,11 +18,23 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100">
+                        <div class="p-3 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center gap-2">
+                            <button type="button" id="normalPrevPage" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">Prev</button>
+                            <button type="button" id="normalNextPage" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">Next</button>
+                            <div class="flex items-center gap-2 text-sm text-slate-700">
+                                <span>Page</span>
+                                <input id="normalPageNumber" type="number" min="1" value="1" class="w-16 px-2 py-1.5 border border-slate-200 rounded-lg text-sm">
+                            </div>
+                            <div class="ml-auto flex gap-2">
+                                <button type="button" id="normalFullscreen" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">Fullscreen</button>
+                            </div>
+                        </div>
                         <div class="aspect-[4/3] bg-slate-100">
                             @if ($book->file_path)
                                 <iframe
+                                    id="normalPdfFrame"
                                     class="w-full h-full"
-                                    src="{{ asset('storage/'.$book->file_path) }}#toolbar=1&view=FitH"
+                                    src="{{ asset('storage/'.$book->file_path) }}#toolbar=1&view=FitH&page=1"
                                     title="{{ $book->title }}"
                                     frameborder="0"
                                 ></iframe>
@@ -86,6 +98,15 @@
                         </div>
                     </div>
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-3">
+                        <a href="{{ route('books.reader', $book) }}" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
+                            Advanced Reader
+                        </a>
+                        <a href="{{ asset('storage/'.$book->file_path) }}" target="_blank" rel="noopener" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
+                            Browser Reader
+                        </a>
+                        <a href="https://docs.google.com/viewer?url={{ urlencode(asset('storage/'.$book->file_path)) }}" target="_blank" rel="noopener" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
+                            Compatibility Reader
+                        </a>
                         <a href="{{ route('content.download.document', $book) }}" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-white bg-blue-900 rounded-lg hover:bg-blue-800 transition-colors">
                             {{ __('messages.home.download_pdf') }}
                         </a>
@@ -280,5 +301,61 @@
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const frame = document.getElementById('normalPdfFrame');
+        const pageInput = document.getElementById('normalPageNumber');
+        const container = frame ? frame.parentElement : null;
+        let page = 1;
+
+        function updateFramePage() {
+            if (!frame) return;
+            const base = @json(asset('storage/'.$book->file_path));
+            frame.src = `${base}#toolbar=1&view=FitH&page=${page}`;
+            if (pageInput) {
+                pageInput.value = page;
+            }
+            trackBook('read', { watch_seconds: page * 5 });
+        }
+
+        document.getElementById('normalPrevPage')?.addEventListener('click', () => {
+            page = Math.max(1, page - 1);
+            updateFramePage();
+        });
+
+        document.getElementById('normalNextPage')?.addEventListener('click', () => {
+            page += 1;
+            updateFramePage();
+        });
+
+        pageInput?.addEventListener('change', () => {
+            const value = parseInt(pageInput.value, 10);
+            if (!Number.isFinite(value) || value < 1) {
+                pageInput.value = page;
+                return;
+            }
+            page = value;
+            updateFramePage();
+        });
+
+        document.getElementById('normalFullscreen')?.addEventListener('click', () => {
+            if (!container) return;
+            if (!document.fullscreenElement) {
+                container.requestFullscreen?.();
+            } else {
+                document.exitFullscreen?.();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') {
+                document.getElementById('normalNextPage')?.click();
+            } else if (event.key === 'ArrowLeft') {
+                document.getElementById('normalPrevPage')?.click();
+            } else if (event.key.toLowerCase() === 'f') {
+                document.getElementById('normalFullscreen')?.click();
+            }
+        });
+    });
 </script>
 @endsection

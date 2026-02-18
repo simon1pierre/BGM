@@ -58,11 +58,16 @@ class PublicContentEngagementController extends Controller
     public function trackBook(Request $request, book $book)
     {
         $event = $request->input('event');
-        if (!in_array($event, ['view', 'read', 'share', 'download'], true)) {
+        if (!in_array($event, ['view', 'read', 'share', 'download', 'open_reader', 'read_aloud'], true)) {
             return response()->json(['message' => 'Invalid event'], 422);
         }
 
         $deviceHash = $this->deviceHash($request);
+        $watchSeconds = $request->input('watch_seconds');
+        $watchSeconds = is_numeric($watchSeconds) ? (int) $watchSeconds : null;
+        if ($watchSeconds !== null && $watchSeconds < 0) {
+            $watchSeconds = null;
+        }
 
         $geo = $this->geoPayload($request);
 
@@ -82,6 +87,7 @@ class PublicContentEngagementController extends Controller
             'language' => $request->input('language'),
             'platform' => $request->input('platform'),
             'device_hash' => $deviceHash,
+            'watch_seconds' => $watchSeconds,
             'share_channel' => $request->input('share_channel'),
         ], $geo));
 

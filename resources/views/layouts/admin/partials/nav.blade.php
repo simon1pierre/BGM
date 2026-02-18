@@ -14,6 +14,8 @@
                 $isSettings = request()->routeIs('admin.settings.*');
                 $isCampaigns = request()->routeIs('admin.campaigns.*');
                 $isSubscribers = request()->routeIs('admin.subscribers.*');
+                $isContacts = request()->routeIs('admin.contacts.*');
+                $isEvents = request()->routeIs('admin.events.*');
                 $isVideos = request()->routeIs('admin.videos.*');
                 $isAudios = request()->routeIs('admin.audios.*');
                 $isDocuments = request()->routeIs('admin.documents.*');
@@ -68,6 +70,18 @@
                         <a href="{{ route('admin.subscribers.index') }}" class="nxl-link">
                             <span class="nxl-micon"><i style="color: white" class="feather-users"></i></span>
                             <span class="nxl-mtext" style="color: white">Subscribers</span>
+                        </a>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu {{ $isContacts ? 'active' : '' }}">
+                        <a href="{{ route('admin.contacts.index') }}" class="nxl-link">
+                            <span class="nxl-micon"><i style="color: white" class="feather-inbox"></i></span>
+                            <span class="nxl-mtext" style="color: white">Contact Inbox</span>
+                        </a>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu {{ $isEvents ? 'active' : '' }}">
+                        <a href="{{ route('admin.events.index') }}" class="nxl-link">
+                            <span class="nxl-micon"><i style="color: white" class="feather-calendar"></i></span>
+                            <span class="nxl-mtext" style="color: white">Events</span>
                         </a>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isAnalytics ? 'active' : '' }}">

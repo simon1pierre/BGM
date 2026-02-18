@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\EmailCampaigns\EmailCampaignController;
 use App\Http\Controllers\Admin\Notifications\AdminNotificationController;
 use App\Http\Controllers\Admin\Subscribers\SubscriberController;
+use App\Http\Controllers\Admin\Contacts\ContactMessageController;
+use App\Http\Controllers\Admin\Events\EventController as AdminEventController;
 use App\Http\Controllers\Admin\Settings\SettingsController;
 use App\Http\Controllers\Admin\Users\ManageController;
 use App\Http\Controllers\Admin\Users\UserController;
@@ -31,6 +33,7 @@ Route::controller(HomeController::class)->group(function(){
     Route::get('/videos', 'videos')->name('videos.index');
     Route::get('/books', 'books')->name('books.index');
     Route::get('/books/{book}', 'bookShow')->name('books.show');
+    Route::get('/books/{book}/reader', 'bookReader')->name('books.reader');
     Route::get('/audios', 'audios')->name('audios.index');
     Route::get('/audios/{audio}', 'audioShow')->name('audios.show');
     Route::get('/about', 'about')->name('about');
@@ -38,6 +41,7 @@ Route::controller(HomeController::class)->group(function(){
     Route::get('/contact', 'contact')->name('contact');
     Route::post('/contact', 'contactSubmit')->name('contact.submit');
     Route::get('/events', 'events')->name('events');
+    Route::get('/events/{event}', 'eventShow')->name('events.show');
     Route::get('/give', 'give')->name('give');
     Route::get('/privacy', 'privacy')->name('privacy');
     Route::get('/terms', 'terms')->name('terms');
@@ -103,6 +107,17 @@ Route::prefix('beacons/admin')->middleware('auth')->name('admin.subscribers.')->
     Route::post('/subscribers/{subscriber}/toggle', [SubscriberController::class, 'toggle'])->name('toggle');
     Route::delete('/subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('destroy');
     Route::post('/subscribers/{subscriber}/restore', [SubscriberController::class, 'restore'])->name('restore');
+});
+Route::prefix('beacons/admin')->middleware('auth')->name('admin.contacts.')->group(function () {
+    Route::get('/contacts', [ContactMessageController::class, 'index'])->name('index');
+    Route::get('/contacts/{contactMessage}', [ContactMessageController::class, 'show'])->name('show');
+    Route::post('/contacts/{contactMessage}/reply', [ContactMessageController::class, 'reply'])->name('reply');
+});
+Route::prefix('beacons/admin')->middleware('auth')->group(function () {
+    Route::resource('events', AdminEventController::class)->except(['show'])->names('admin.events');
+    Route::post('events/{event}/restore', [AdminEventController::class, 'restore'])->name('admin.events.restore');
+    Route::post('events/{event}/toggle-published', [AdminEventController::class, 'togglePublished'])->name('admin.events.toggle-published');
+    Route::post('events/{event}/toggle-featured', [AdminEventController::class, 'toggleFeatured'])->name('admin.events.toggle-featured');
 });
 Route::prefix('beacons/admin')->middleware('auth')->name('admin.users.')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('index');

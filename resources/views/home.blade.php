@@ -262,6 +262,58 @@
     </div>
   </div>
 </section>
+<section id="events" class="py-20 bg-white">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950">Upcoming Prayer Events</h2>
+        <p class="text-slate-600 mt-2">Join ministry prayer events on Zoom and YouTube Live.</p>
+      </div>
+      <a href="{{ route('events') }}" class="text-blue-700 font-semibold hover:text-blue-900">View all events</a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      @forelse ($upcomingEvents as $event)
+        <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col">
+          <div class="relative h-44 overflow-hidden bg-slate-100">
+            @if ($event->image_path)
+              <img src="{{ asset('storage/'.$event->image_path) }}" alt="{{ $event->title }}" class="w-full h-full object-cover">
+            @else
+              <div class="w-full h-full flex items-center justify-center text-slate-500 text-sm">Prayer Event</div>
+            @endif
+            @if ($event->is_featured)
+              <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">{{ __('messages.common.featured') }}</span>
+            @endif
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <div class="flex gap-2 mb-3">
+              <span class="text-[11px] uppercase tracking-widest px-2 py-1 rounded-full bg-blue-50 text-blue-700">{{ str_replace('_', ' ', $event->event_type) }}</span>
+              @if ($event->live_platform)
+                <span class="text-[11px] uppercase tracking-widest px-2 py-1 rounded-full bg-emerald-50 text-emerald-700">{{ $event->live_platform === 'youtube' ? 'YouTube Live' : ucfirst($event->live_platform) }}</span>
+              @endif
+            </div>
+            <h3 class="text-xl font-serif font-bold text-blue-950 mb-2">{{ $event->title }}</h3>
+            <p class="text-slate-600 mb-4 text-sm leading-relaxed">{{ \Illuminate\Support\Str::limit($event->description, 110) }}</p>
+            <div class="text-xs text-slate-500 mb-4">
+              {{ $event->starts_at?->format('M d, Y H:i') }} ({{ $event->timezone }})
+            </div>
+            <div class="mt-auto flex gap-2">
+              @if ($event->live_url)
+                <a href="{{ $event->live_url }}" target="_blank" rel="noopener" class="px-4 py-2 bg-blue-900 text-white text-xs font-semibold rounded-lg hover:bg-blue-800 transition-colors">
+                  {{ $event->live_platform === 'zoom' ? 'Join Zoom' : 'Watch Live' }}
+                </a>
+              @endif
+              <a href="{{ route('events.show', $event) }}" class="px-4 py-2 border border-blue-200 text-blue-900 text-xs font-semibold rounded-lg hover:bg-blue-50 transition-colors">
+                Details
+              </a>
+            </div>
+          </div>
+        </article>
+      @empty
+        <div class="col-span-3 text-center text-slate-500">No upcoming prayer events.</div>
+      @endforelse
+    </div>
+  </div>
+</section>
 <section id="sermons" class="py-6 bg-white text-slate-800">
   <div class="container mx-auto px-6 max-w-6xl text-center">
     <span class="block text-amber-600 font-semibold tracking-widest uppercase text-sm mb-3">{{ __('messages.home.latest_messages') }}</span>

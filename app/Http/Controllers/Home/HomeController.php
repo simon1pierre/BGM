@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
 use App\Models\ContactMessage;
+use App\Models\Event;
 use App\Models\Setting;
 use App\Models\Subscriber;
 use App\Models\UserActivityLog;
@@ -67,7 +68,21 @@ class HomeController extends Controller
             ->limit(6)
             ->get();
 
-        return view('home', compact('latestVideos', 'featuredVideo', 'featuredBook', 'featuredAudio', 'recommendedBooks', 'recommendedAudios'));
+        $upcomingEvents = Event::query()
+            ->where('is_published', true)
+            ->where(function ($query) {
+                $query->where('ends_at', '>=', now())
+                    ->orWhere(function ($sub) {
+                        $sub->whereNull('ends_at')
+                            ->where('starts_at', '>=', now());
+                    });
+            })
+            ->orderByDesc('is_featured')
+            ->orderBy('starts_at')
+            ->limit(3)
+            ->get();
+
+        return view('home', compact('latestVideos', 'featuredVideo', 'featuredBook', 'featuredAudio', 'recommendedBooks', 'recommendedAudios', 'upcomingEvents'));
     }
 
     public function videos(Request $request)
@@ -234,6 +249,19 @@ class HomeController extends Controller
             ->get();
 
         return view('books.show', compact('book', 'relatedBooks'));
+    }
+
+    public function bookReader(book $book)
+    {
+        if (!$book->is_published) {
+            abort(404);
+        }
+
+        $book->load('category');
+        $book->load('translations');
+        $book->category?->load('translations');
+
+        return view('books.reader', compact('book'));
     }
 
     public function audios(Request $request)
@@ -453,7 +481,76 @@ class HomeController extends Controller
 
     public function events()
     {
-        return view('pages.events');
+        $search = trim((string) request('q'));
+        $type = request('type');
+        $platform = request('platform');
+        $period = request('period', 'upcoming');
+
+        $query = Event::query()
+            ->where('is_published', true)
+            ->when($search, function ($q) use ($search) {
+                $q->where(function ($sub) use ($search) {
+                    $sub->where('title', 'like', '%'.$search.'%')
+                        ->orWhere('description', 'like', '%'.$search.'%')
+                        ->orWhere('venue', 'like', '%'.$search.'%')
+                        ->orWhere('location', 'like', '%'.$search.'%');
+                });
+            })
+            ->when($type, function ($q) use ($type) {
+                $q->where('event_type', $type);
+            })
+            ->when($platform, function ($q) use ($platform) {
+                if ($platform === 'none') {
+                    $q->whereNull('live_platform');
+                    return;
+                }
+                $q->where('live_platform', $platform);
+            });
+
+        if ($period === 'past') {
+            $query->where(function ($q) {
+                $q->where('ends_at', '<', now())
+                    ->orWhere(function ($sub) {
+                        $sub->whereNull('ends_at')
+                            ->where('starts_at', '<', now());
+                    });
+            })->orderByDesc('starts_at');
+        } else {
+            $query->where(function ($q) {
+                $q->where('ends_at', '>=', now())
+                    ->orWhere(function ($sub) {
+                        $sub->whereNull('ends_at')
+                            ->where('starts_at', '>=', now());
+                    });
+            })->orderBy('starts_at');
+        }
+
+        $upcomingEvents = $query
+            ->orderByDesc('is_featured')
+            ->paginate(9)
+            ->withQueryString();
+
+        return view('pages.events', compact('upcomingEvents'));
+    }
+
+    public function eventShow(Event $event)
+    {
+        if (!$event->is_published) {
+            abort(404);
+        }
+
+        $relatedEvents = Event::query()
+            ->where('is_published', true)
+            ->where('id', '!=', $event->id)
+            ->when($event->event_type, function ($query) use ($event) {
+                $query->where('event_type', $event->event_type);
+            })
+            ->orderByDesc('is_featured')
+            ->orderBy('starts_at')
+            ->limit(3)
+            ->get();
+
+        return view('pages.events-show', compact('event', 'relatedEvents'));
     }
 
     public function give()

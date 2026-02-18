@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class ContactMessage extends Model
 {
@@ -16,5 +17,22 @@ class ContactMessage extends Model
         'user_agent',
         'locale',
         'page_url',
+        'is_read',
+        'read_at',
+        'replied_at',
+        'replied_by',
+        'reply_subject',
+        'reply_body',
     ];
+
+    protected $casts = [
+        'is_read' => 'boolean',
+        'read_at' => 'datetime',
+        'replied_at' => 'datetime',
+    ];
+
+    public function repliedByUser()
+    {
+        return $this->belongsTo(User::class, 'replied_by');
+    }
 }

@@ -91,7 +91,10 @@
                             </div>
                             <div class="mt-auto flex items-center justify-between">
                                 <span class="text-xs text-slate-500">{{ $book->published_at?->toDateString() ?? $book->created_at?->toDateString() }}</span>
-                                <a href="{{ route('books.show', $book) }}" class="text-blue-700 font-medium text-sm hover:text-blue-900">{{ __('messages.home.read_online') }}</a>
+                                <div class="flex items-center gap-3">
+                                    <a href="{{ route('books.show', $book) }}" class="text-blue-700 font-medium text-sm hover:text-blue-900">{{ __('messages.home.read_online') }}</a>
+                                    <a href="{{ route('books.reader', $book) }}" class="text-slate-600 font-medium text-sm hover:text-slate-900">Reader</a>
+                                </div>
                             </div>
                         </div>
                     </div>

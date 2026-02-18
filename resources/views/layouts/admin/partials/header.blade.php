@@ -75,6 +75,10 @@
                   'playlist_updated',
                   'playlist_deleted',
                   'playlist_restored',
+                  'event_created',
+                  'event_updated',
+                  'event_deleted',
+                  'contact_message_replied',
                ];
                $currentAdminId = Auth::id();
                $unreadCount = 0;
@@ -144,6 +148,10 @@
                               'playlist_updated' => 'Playlist updated',
                               'playlist_deleted' => 'Playlist deleted',
                               'playlist_restored' => 'Playlist restored',
+                              'event_created' => 'Event added',
+                              'event_updated' => 'Event updated',
+                              'event_deleted' => 'Event deleted',
+                              'contact_message_replied' => 'Contact message replied',
                            ];
                            $title = $labels[$notification->action] ?? 'System update';
                            $actor = $notification->actorUser?->email ?? 'Guest';
