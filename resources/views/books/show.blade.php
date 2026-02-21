@@ -19,14 +19,14 @@
                 <div class="lg:col-span-2">
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100">
                         <div class="p-3 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center gap-2">
-                            <button type="button" id="normalPrevPage" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">Prev</button>
-                            <button type="button" id="normalNextPage" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">Next</button>
+                            <button type="button" id="normalPrevPage" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.prev') }}</button>
+                            <button type="button" id="normalNextPage" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.next') }}</button>
                             <div class="flex items-center gap-2 text-sm text-slate-700">
-                                <span>Page</span>
+                                <span>{{ __('messages.common.page') }}</span>
                                 <input id="normalPageNumber" type="number" min="1" value="1" class="w-16 px-2 py-1.5 border border-slate-200 rounded-lg text-sm">
                             </div>
                             <div class="ml-auto flex gap-2">
-                                <button type="button" id="normalFullscreen" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">Fullscreen</button>
+                                <button type="button" id="normalFullscreen" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.fullscreen') }}</button>
                             </div>
                         </div>
                         <div class="aspect-[4/3] bg-slate-100">
@@ -99,13 +99,10 @@
                     </div>
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-3">
                         <a href="{{ route('books.reader', $book) }}" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
-                            Advanced Reader
+                            {{ __('messages.books.advanced_reader') }}
                         </a>
                         <a href="{{ asset('storage/'.$book->file_path) }}" target="_blank" rel="noopener" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
-                            Browser Reader
-                        </a>
-                        <a href="https://docs.google.com/viewer?url={{ urlencode(asset('storage/'.$book->file_path)) }}" target="_blank" rel="noopener" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
-                            Compatibility Reader
+                            {{ __('messages.books.browser_reader') }}
                         </a>
                         <a href="{{ route('content.download.document', $book) }}" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-white bg-blue-900 rounded-lg hover:bg-blue-800 transition-colors">
                             {{ __('messages.home.download_pdf') }}
@@ -126,11 +123,11 @@
                                 );
                             @endphp
                             <div class="flex items-center justify-between gap-3 mb-3">
-                                <h3 class="text-lg font-serif font-bold text-blue-950">Audiobook Versions</h3>
+                                <h3 class="text-lg font-serif font-bold text-blue-950">{{ __('messages.books.audiobook_versions') }}</h3>
                                 <div class="flex items-center gap-2">
-                                    <a href="{{ route('books.show', ['book' => $book] + $bookPrayerBase) }}" class="px-2.5 py-1 rounded-full text-xs border {{ is_null($prayerFilter ?? null) ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-600' }}">All</a>
-                                    <a href="{{ route('books.show', ['book' => $book] + $bookPrayerBase + ['prayer' => '1']) }}" class="px-2.5 py-1 rounded-full text-xs border {{ ($prayerFilter ?? null) === true ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-600' }}">Prayer</a>
-                                    <a href="{{ route('books.show', ['book' => $book] + $bookPrayerBase + ['prayer' => '0']) }}" class="px-2.5 py-1 rounded-full text-xs border {{ ($prayerFilter ?? null) === false ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-600' }}">Non-Prayer</a>
+                                    <a href="{{ route('books.show', ['book' => $book] + $bookPrayerBase) }}" class="px-2.5 py-1 rounded-full text-xs border {{ is_null($prayerFilter ?? null) ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-600' }}">{{ __('messages.common.all') }}</a>
+                                    <a href="{{ route('books.show', ['book' => $book] + $bookPrayerBase + ['prayer' => '1']) }}" class="px-2.5 py-1 rounded-full text-xs border {{ ($prayerFilter ?? null) === true ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-600' }}">{{ __('messages.common.prayer') }}</a>
+                                    <a href="{{ route('books.show', ['book' => $book] + $bookPrayerBase + ['prayer' => '0']) }}" class="px-2.5 py-1 rounded-full text-xs border {{ ($prayerFilter ?? null) === false ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-200 text-slate-600' }}">{{ __('messages.common.non_prayer') }}</a>
                                 </div>
                             </div>
                             @if ($linkedAudiobooks->count())
@@ -140,18 +137,18 @@
                                             <div class="flex items-center justify-between gap-2 mb-2">
                                                 <div class="text-sm font-semibold text-slate-800">{{ $ab->title }}</div>
                                                 @if ($ab->is_prayer_audio)
-                                                    <span class="inline-flex px-2 py-0.5 rounded-full text-[11px] bg-emerald-100 text-emerald-700">Prayer</span>
+                                                    <span class="inline-flex px-2 py-0.5 rounded-full text-[11px] bg-emerald-100 text-emerald-700">{{ __('messages.common.prayer') }}</span>
                                                 @endif
                                             </div>
                                             <audio controls class="w-full">
                                                 <source src="{{ asset('storage/'.$ab->audio_file) }}" type="audio/mpeg">
                                             </audio>
-                                            <a href="{{ route('audiobooks.show', $ab) }}" class="inline-flex mt-2 text-xs text-blue-700 hover:text-blue-900">Open audiobook page</a>
+                                            <a href="{{ route('audiobooks.show', $ab) }}" class="inline-flex mt-2 text-xs text-blue-700 hover:text-blue-900">{{ __('messages.books.open_audiobook_page') }}</a>
                                         </div>
                                     @endforeach
                                 </div>
                             @else
-                                <div class="text-xs text-slate-500">No audiobooks match this prayer filter.</div>
+                                <div class="text-xs text-slate-500">{{ __('messages.books.no_audiobooks_filter') }}</div>
                             @endif
                         </div>
                     @endif
@@ -250,7 +247,7 @@
             navigator.share(shareData)
                 .then(() => {
                     trackBook('share', { share_channel: 'native' });
-                    notify('Shared successfully.', 'success');
+                    notify(@json(__('messages.common.shared_successfully')), 'success');
                 })
                 .catch(() => {});
         } else {
@@ -258,7 +255,7 @@
                 trackBook('share', { share_channel: 'copy' });
                 notify(@json(__('messages.common.link_copied')), 'success');
             }).catch(() => {
-                notify('Unable to copy link right now.', 'error');
+                notify(@json(__('messages.common.copy_link_failed')), 'error');
             });
         }
     }
@@ -297,10 +294,10 @@
             }
             button.classList.toggle('text-rose-600', data.liked);
             button.classList.toggle('text-slate-600', !data.liked);
-            notify(data.liked ? 'Added to liked items.' : 'Removed from liked items.', 'success');
+            notify(data.liked ? @json(__('messages.common.added_to_liked')) : @json(__('messages.common.removed_from_liked')), 'success');
         })
         .catch(() => {
-            notify('Request failed. Please try again.', 'error');
+            notify(@json(__('messages.common.request_failed')), 'error');
         });
     }
 
@@ -337,10 +334,10 @@
                 countEl.textContent = data.comments_count;
             }
             form.reset();
-            notify('Comment submitted successfully.', 'success');
+            notify(@json(__('messages.common.comment_submitted')), 'success');
         })
         .catch(() => {
-            notify('Unable to post comment. Please try again.', 'error');
+            notify(@json(__('messages.common.comment_failed')), 'error');
         });
 
         return false;

@@ -126,6 +126,33 @@
             </div>
 
             <div class="row">
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card stretch stretch-full mb-4">
+                        <div class="card-body">
+                            <div class="fs-12 text-muted">Readers Tracked (Books)</div>
+                            <div class="fs-3 fw-bold text-dark">{{ number_format($readingProgressSummary['tracked_readers']) }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card stretch stretch-full mb-4">
+                        <div class="card-body">
+                            <div class="fs-12 text-muted">Reader Sessions Tracked</div>
+                            <div class="fs-3 fw-bold text-dark">{{ number_format($readingProgressSummary['tracked_reader_sessions']) }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card stretch stretch-full mb-4">
+                        <div class="card-body">
+                            <div class="fs-12 text-muted">Avg Completion</div>
+                            <div class="fs-3 fw-bold text-dark">{{ number_format($readingProgressSummary['avg_completion_percent'], 1) }}%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-xxl-4">
                     <div class="card stretch stretch-full mb-4">
                         <div class="card-header"><h5 class="card-title">Top Pages</h5></div>
@@ -233,6 +260,50 @@
                     </div>
                     <div class="mt-3">
                         {{ $rows->links('pagination.admin') }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="card-title">Book Reading Progress by Visitor</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Visitor</th>
+                                    <th>Book</th>
+                                    <th>Progress</th>
+                                    <th>Page</th>
+                                    <th>Last Seen</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($readerBookProgress as $progress)
+                                    <tr>
+                                        <td class="text-muted fs-12">{{ $progress->visitor_key }}</td>
+                                        <td>{{ $progress->book_title ?: ('#'.$progress->book_id) }}</td>
+                                        <td>{{ number_format((float) ($progress->max_progress ?? 0), 1) }}%</td>
+                                        <td>
+                                            @if ($progress->max_page_number && $progress->total_pages)
+                                                {{ $progress->max_page_number }}/{{ $progress->total_pages }}
+                                            @elseif ($progress->max_page_number)
+                                                {{ $progress->max_page_number }}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td class="text-muted fs-12">{{ $progress->last_seen }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted">No reading progress data found.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

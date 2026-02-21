@@ -102,6 +102,7 @@ class ContentDownloadController extends Controller
             'referrer' => $request->headers->get('referer'),
             'page_url' => $request->input('page_url'),
             'session_id' => $request->session()->getId(),
+            'visitor_id' => $request->input('visitor_id'),
             'device_type' => $deviceType,
             'screen_width' => $screenWidth,
             'screen_height' => $screenHeight,
@@ -148,6 +149,7 @@ class ContentDownloadController extends Controller
             'referrer' => $request->headers->get('referer'),
             'page_url' => $request->fullUrl(),
             'session_id' => $request->session()->getId(),
+            'visitor_id' => $request->input('visitor_id'),
             'device_hash' => $this->deviceHash($request),
         ], $geo));
     }

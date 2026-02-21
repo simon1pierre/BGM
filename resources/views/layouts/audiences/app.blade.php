@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 @php
-  $siteName = $siteSettings?->translated('site_name') ?: config('app.name', 'Beacons of God Ministries');
-  $siteTagline = $siteSettings?->translated('site_tagline') ?: 'Light, Truth, and Guidance';
+  $siteName = $siteSettings?->translated('site_name') ?: __('messages.site.name');
+  $siteTagline = $siteSettings?->translated('site_tagline') ?: __('messages.site.tagline');
   $siteDescription = $siteSettings?->translated('site_description')
-    ?: 'Beacons of God Ministries: Shining God\'s light and truth. Watch sermons, explore biblical resources, and find spiritual guidance for your walk with Christ.';
+    ?: __('messages.site.description');
   $siteTitle = trim($siteName . ' | ' . $siteTagline, ' |');
   $logoPath = $siteSettings?->logo ? asset('storage/' . $siteSettings->logo) : asset('images/logo.png');
   $faviconPath = $siteSettings?->favicon ? asset('storage/' . $siteSettings->favicon) : asset('logo/favicon-32x32.png');
@@ -12,7 +12,7 @@
   $contactEmail = $siteSettings?->contact_email ?: 'contact@beaconsofgod.org';
   $contactAddress = $siteSettings?->contact_address ?: 'Global Online Ministry';
   $footerText = $siteSettings?->translated('footer_text')
-    ?: 'Shining the light of truth and biblical guidance to believers everywhere. Walking together in faith and grace.';
+    ?: __('messages.site.footer_text');
   $normalizeUrl = function (?string $value, string $fallback) {
     if (empty($value)) {
       return $fallback;
@@ -753,9 +753,9 @@
             class="px-3 py-2 rounded-full border border-slate-200 text-xs sm:text-sm text-slate-700 bg-white"
             aria-label="Language"
           >
+            <option value="{{ route('locale.switch', 'rw') }}" {{ $currentLocale === 'rw' ? 'selected' : '' }}>Kinyarwanda</option>
             <option value="{{ route('locale.switch', 'en') }}" {{ $currentLocale === 'en' ? 'selected' : '' }}>English</option>
             <option value="{{ route('locale.switch', 'fr') }}" {{ $currentLocale === 'fr' ? 'selected' : '' }}>Français</option>
-            <option value="{{ route('locale.switch', 'rw') }}" {{ $currentLocale === 'rw' ? 'selected' : '' }}>Kinyarwanda</option>
           </select>
         </div>
         <button
@@ -819,7 +819,7 @@
             @else
             <i data-lucide="flame" class="w-6 h-6 text-brand-gold"></i>
             @endif
-            <span class="font-serif text-xl font-bold">Beacons of God Ministries</span>
+            <span class="font-serif text-xl font-bold">{{ $siteName }}</span>
           </div>
           <p class="text-sm leading-relaxed text-blue-100 opacity-80">
             {{ $footerText }}
@@ -899,7 +899,7 @@
         </button>
       </div>
       <p class="text-sm text-slate-600 mb-6">
-        Install Beacons of God Ministries for quick access and an app-like experience.
+        {{ __('messages.site.install_prompt', ['name' => $siteName]) }}
       </p>
       <div class="flex items-center justify-end gap-2">
         <button id="pwa-install-later" class="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50" type="button">

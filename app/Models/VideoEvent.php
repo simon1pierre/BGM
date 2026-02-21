@@ -14,6 +14,7 @@ class VideoEvent extends Model
         'referrer',
         'page_url',
         'session_id',
+        'visitor_id',
         'device_type',
         'screen_width',
         'screen_height',

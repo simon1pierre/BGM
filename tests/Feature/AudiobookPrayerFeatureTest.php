@@ -126,10 +126,10 @@ test('book reader loads only published linked audiobooks and keeps tts controls'
 
     $this->get(route('books.reader', $book))
         ->assertOk()
-        ->assertSeeText('Audiobook While Reading')
+        ->assertSeeText(__('messages.books.audiobook_while_reading'))
         ->assertSeeText('Published Linked Audio')
         ->assertDontSeeText('Draft Linked Audio')
-        ->assertSeeText('Read Page');
+        ->assertSeeText(__('messages.common.fullscreen'));
 });
 
 test('book reader hides audiobook panel when there are no linked audiobooks', function () {
@@ -137,7 +137,7 @@ test('book reader hides audiobook panel when there are no linked audiobooks', fu
 
     $this->get(route('books.reader', $book))
         ->assertOk()
-        ->assertDontSeeText('Audiobook While Reading');
+        ->assertDontSeeText(__('messages.books.audiobook_while_reading'));
 });
 
 test('book details linked audiobook block respects prayer filter', function () {

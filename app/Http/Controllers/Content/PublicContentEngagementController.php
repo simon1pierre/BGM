@@ -18,17 +18,26 @@ class PublicContentEngagementController extends Controller
             return response()->json(['message' => 'Invalid event'], 422);
         }
 
+        $validated = $request->validate([
+            'visitor_id' => ['nullable', 'string', 'max:80'],
+            'page_url' => ['nullable', 'string', 'max:500'],
+            'timezone' => ['nullable', 'string', 'max:60'],
+            'language' => ['nullable', 'string', 'max:20'],
+            'platform' => ['nullable', 'string', 'max:60'],
+            'device_type' => ['nullable', 'in:mobile,desktop,tablet,unknown'],
+            'screen_width' => ['nullable', 'integer', 'min:0', 'max:10000'],
+            'screen_height' => ['nullable', 'integer', 'min:0', 'max:10000'],
+            'watch_seconds' => ['nullable', 'integer', 'min:0', 'max:86400'],
+            'share_channel' => ['nullable', 'string', 'max:30'],
+        ]);
+
         $deviceHash = $this->deviceHash($request);
 
         if ($event === 'play') {
             $audio->increment('play_count');
         }
 
-        $watchSeconds = $request->input('watch_seconds');
-        $watchSeconds = is_numeric($watchSeconds) ? (int) $watchSeconds : null;
-        if ($watchSeconds !== null && $watchSeconds < 0) {
-            $watchSeconds = null;
-        }
+        $watchSeconds = $validated['watch_seconds'] ?? null;
 
         $geo = $this->geoPayload($request);
 
@@ -39,17 +48,18 @@ class PublicContentEngagementController extends Controller
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
             'referrer' => $request->headers->get('referer'),
-            'page_url' => $request->input('page_url'),
+            'page_url' => $validated['page_url'] ?? null,
             'session_id' => $request->session()->getId(),
-            'device_type' => $this->deviceType($request),
-            'screen_width' => $this->intOrNull($request->input('screen_width')),
-            'screen_height' => $this->intOrNull($request->input('screen_height')),
-            'timezone' => $request->input('timezone'),
-            'language' => $request->input('language'),
-            'platform' => $request->input('platform'),
+            'visitor_id' => $validated['visitor_id'] ?? null,
+            'device_type' => $validated['device_type'] ?? $this->deviceType($request),
+            'screen_width' => $validated['screen_width'] ?? null,
+            'screen_height' => $validated['screen_height'] ?? null,
+            'timezone' => $validated['timezone'] ?? null,
+            'language' => $validated['language'] ?? null,
+            'platform' => $validated['platform'] ?? null,
             'device_hash' => $deviceHash,
             'watch_seconds' => $watchSeconds,
-            'share_channel' => $request->input('share_channel'),
+            'share_channel' => $validated['share_channel'] ?? null,
         ], $geo));
 
         return response()->noContent();
@@ -58,16 +68,29 @@ class PublicContentEngagementController extends Controller
     public function trackBook(Request $request, book $book)
     {
         $event = $request->input('event');
-        if (!in_array($event, ['view', 'read', 'share', 'download', 'open_reader', 'read_aloud'], true)) {
+        if (!in_array($event, ['view', 'read', 'share', 'download', 'open_reader', 'read_aloud', 'read_progress'], true)) {
             return response()->json(['message' => 'Invalid event'], 422);
         }
 
+        $validated = $request->validate([
+            'visitor_id' => ['nullable', 'string', 'max:80'],
+            'reader_session_id' => ['nullable', 'string', 'max:120'],
+            'page_url' => ['nullable', 'string', 'max:500'],
+            'timezone' => ['nullable', 'string', 'max:60'],
+            'language' => ['nullable', 'string', 'max:20'],
+            'platform' => ['nullable', 'string', 'max:60'],
+            'device_type' => ['nullable', 'in:mobile,desktop,tablet,unknown'],
+            'screen_width' => ['nullable', 'integer', 'min:0', 'max:10000'],
+            'screen_height' => ['nullable', 'integer', 'min:0', 'max:10000'],
+            'watch_seconds' => ['nullable', 'integer', 'min:0', 'max:86400'],
+            'share_channel' => ['nullable', 'string', 'max:30'],
+            'page_number' => ['nullable', 'integer', 'min:1', 'max:100000'],
+            'total_pages' => ['nullable', 'integer', 'min:1', 'max:100000'],
+            'progress_percent' => ['nullable', 'numeric', 'min:0', 'max:100'],
+        ]);
+
         $deviceHash = $this->deviceHash($request);
-        $watchSeconds = $request->input('watch_seconds');
-        $watchSeconds = is_numeric($watchSeconds) ? (int) $watchSeconds : null;
-        if ($watchSeconds !== null && $watchSeconds < 0) {
-            $watchSeconds = null;
-        }
+        $watchSeconds = $validated['watch_seconds'] ?? null;
 
         $geo = $this->geoPayload($request);
 
@@ -78,17 +101,22 @@ class PublicContentEngagementController extends Controller
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
             'referrer' => $request->headers->get('referer'),
-            'page_url' => $request->input('page_url'),
+            'page_url' => $validated['page_url'] ?? null,
             'session_id' => $request->session()->getId(),
-            'device_type' => $this->deviceType($request),
-            'screen_width' => $this->intOrNull($request->input('screen_width')),
-            'screen_height' => $this->intOrNull($request->input('screen_height')),
-            'timezone' => $request->input('timezone'),
-            'language' => $request->input('language'),
-            'platform' => $request->input('platform'),
+            'visitor_id' => $validated['visitor_id'] ?? null,
+            'reader_session_id' => $validated['reader_session_id'] ?? null,
+            'device_type' => $validated['device_type'] ?? $this->deviceType($request),
+            'screen_width' => $validated['screen_width'] ?? null,
+            'screen_height' => $validated['screen_height'] ?? null,
+            'timezone' => $validated['timezone'] ?? null,
+            'language' => $validated['language'] ?? null,
+            'platform' => $validated['platform'] ?? null,
             'device_hash' => $deviceHash,
             'watch_seconds' => $watchSeconds,
-            'share_channel' => $request->input('share_channel'),
+            'page_number' => $validated['page_number'] ?? null,
+            'total_pages' => $validated['total_pages'] ?? null,
+            'progress_percent' => isset($validated['progress_percent']) ? round((float) $validated['progress_percent'], 2) : null,
+            'share_channel' => $validated['share_channel'] ?? null,
         ], $geo));
 
         return response()->noContent();
@@ -107,11 +135,6 @@ class PublicContentEngagementController extends Controller
         ];
 
         return hash('sha256', implode('|', $parts));
-    }
-
-    private function intOrNull($value): ?int
-    {
-        return is_numeric($value) ? (int) $value : null;
     }
 
     private function deviceType(Request $request): string

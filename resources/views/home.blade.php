@@ -1,12 +1,12 @@
 @extends('layouts.audiences.app')
 @section('contents')
 @php
-  $siteName = $siteSettings?->translated('site_name') ?: config('app.name', 'Beacons of God Ministries');
-  $heroTitle = $siteSettings?->translated('hero_title') ?: "Shining God's Truth in a Darkened World";
-  $heroSubtitle = $siteSettings?->translated('hero_subtitle') ?: 'We are beacons of His light for this generation. Join us for biblical teaching, evangelism, and spiritual growth in the presence of the Lord.';
-  $heroPrimaryLabel = $siteSettings?->translated('hero_primary_label') ?: 'Watch Sermons';
+  $siteName = $siteSettings?->translated('site_name') ?: __('messages.site.name');
+  $heroTitle = $siteSettings?->translated('hero_title') ?: __('messages.home.hero_title_default');
+  $heroSubtitle = $siteSettings?->translated('hero_subtitle') ?: __('messages.home.hero_subtitle_default');
+  $heroPrimaryLabel = $siteSettings?->translated('hero_primary_label') ?: __('messages.home.hero_primary_label_default');
   $heroPrimaryUrl = $siteSettings?->hero_primary_url ?: route('videos.index');
-  $heroSecondaryLabel = $siteSettings?->translated('hero_secondary_label') ?: 'Explore Resources';
+  $heroSecondaryLabel = $siteSettings?->translated('hero_secondary_label') ?: __('messages.home.hero_secondary_label_default');
   $heroSecondaryUrl = $siteSettings?->hero_secondary_url ?: '#resources';
 @endphp
  <main class="grow">
@@ -266,7 +266,7 @@
   <div class="container mx-auto px-6">
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
       <div>
-        <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950">Upcoming Prayer Events</h2>
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950">{{ __('messages.home.upcoming_prayer_events') }}</h2>
         <p class="text-slate-600 mt-2">Join ministry prayer events on Zoom and YouTube Live.</p>
       </div>
       <a href="{{ route('events') }}" class="text-blue-700 font-semibold hover:text-blue-900">View all events</a>
@@ -278,7 +278,7 @@
             @if ($event->image_path)
               <img src="{{ asset('storage/'.$event->image_path) }}" alt="{{ $event->title }}" class="w-full h-full object-cover">
             @else
-              <div class="w-full h-full flex items-center justify-center text-slate-500 text-sm">Prayer Event</div>
+              <div class="w-full h-full flex items-center justify-center text-slate-500 text-sm">{{ __('messages.home.prayer_event') }}</div>
             @endif
             @if ($event->is_featured)
               <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">{{ __('messages.common.featured') }}</span>

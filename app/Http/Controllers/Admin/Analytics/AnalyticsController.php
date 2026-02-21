@@ -204,6 +204,9 @@ class AnalyticsController extends Controller
     {
         [$from, $to] = $this->resolveDateRange($request);
         [$prevFrom, $prevTo] = $this->previousRange($from, $to);
+        $bookType = (new book())->getMorphClass();
+        $visitorKeyExpr = "COALESCE(NULLIF(ce.visitor_id, ''), ce.device_hash)";
+        $readerSessionExpr = "COALESCE(NULLIF(ce.reader_session_id, ''), ce.session_id)";
 
         $basePageEvents = AudiencePageEvent::query()
             ->whereBetween('created_at', [$from, $to]);
@@ -315,6 +318,55 @@ class AnalyticsController extends Controller
 
         $audienceTrend = $this->audienceTrendSeries($from, $to);
 
+        $readingProgressBase = ContentEvent::query()
+            ->from('content_events as ce')
+            ->where('ce.content_type', $bookType)
+            ->where('ce.event_type', 'read_progress')
+            ->whereBetween('ce.created_at', [$from, $to]);
+
+        $trackedReaders = (int) ((clone $readingProgressBase)
+            ->select(DB::raw("COUNT(DISTINCT {$visitorKeyExpr}) as total"))
+            ->value('total') ?? 0);
+
+        $trackedReaderSessions = (int) ((clone $readingProgressBase)
+            ->select(DB::raw("COUNT(DISTINCT {$readerSessionExpr}) as total"))
+            ->value('total') ?? 0);
+
+        $sessionProgress = (clone $readingProgressBase)
+            ->whereNotNull('ce.progress_percent')
+            ->whereRaw("{$readerSessionExpr} IS NOT NULL")
+            ->select(
+                DB::raw("{$readerSessionExpr} as reader_session_key"),
+                DB::raw('MAX(ce.progress_percent) as max_progress')
+            )
+            ->groupBy('reader_session_key');
+
+        $avgReadCompletion = round((float) (DB::query()
+            ->fromSub($sessionProgress, 'reader_session_progress')
+            ->avg('max_progress') ?? 0), 1);
+
+        $readerBookProgress = (clone $readingProgressBase)
+            ->join('books as b', 'b.id', '=', 'ce.content_id')
+            ->select(
+                DB::raw("{$visitorKeyExpr} as visitor_key"),
+                'ce.content_id as book_id',
+                DB::raw('MAX(b.title) as book_title'),
+                DB::raw('MAX(ce.progress_percent) as max_progress'),
+                DB::raw('MAX(ce.page_number) as max_page_number'),
+                DB::raw('MAX(ce.total_pages) as total_pages'),
+                DB::raw('MAX(ce.created_at) as last_seen')
+            )
+            ->groupBy(DB::raw($visitorKeyExpr), 'ce.content_id')
+            ->orderByDesc('last_seen')
+            ->limit(20)
+            ->get();
+
+        $readingProgressSummary = [
+            'tracked_readers' => $trackedReaders,
+            'tracked_reader_sessions' => $trackedReaderSessions,
+            'avg_completion_percent' => $avgReadCompletion,
+        ];
+
         return view('Admin.Analytics.audiences', compact(
             'rows',
             'summary',
@@ -325,7 +377,9 @@ class AnalyticsController extends Controller
             'countries',
             'from',
             'to',
-            'audienceTrend'
+            'audienceTrend',
+            'readingProgressSummary',
+            'readerBookProgress'
         ));
     }
 
