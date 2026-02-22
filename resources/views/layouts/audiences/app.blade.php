@@ -705,7 +705,7 @@
 </head>
 <body class="font-sans antialiased flex flex-col min-h-screen relative">
   <div id="routeProgress" class="route-progress" aria-hidden="true"></div>
-  <div id="pageLoader" class="page-loader" aria-live="polite" aria-label="Loading">
+  <div id="pageLoader" class="page-loader" aria-live="polite" aria-label="{{ __('messages.site.loading') }}">
     <div class="loader-core"></div>
   </div>
   <div id="toastWrap" class="toast-wrap" aria-live="polite" aria-atomic="true"></div>
@@ -819,7 +819,7 @@
             @else
             <i data-lucide="flame" class="w-6 h-6 text-brand-gold"></i>
             @endif
-            <span class="font-serif text-xl font-bold">{{ $siteName }}</span>
+            <h4 class="text-white font-serif font-semibold mb-4">{{ $siteName }}</h4>
           </div>
           <p class="text-sm leading-relaxed text-blue-100 opacity-80">
             {{ $footerText }}
@@ -888,12 +888,12 @@
     class="hidden fixed bottom-6 right-6 z-50 px-5 py-3 bg-brand-blue text-white text-sm font-semibold rounded-full shadow-lg hover:bg-blue-800 transition-colors"
     type="button"
   >
-    Install App
+    {{ __('messages.site.install_app') }}
   </button>
   <div id="pwa-install-modal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/60 px-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl">
       <div class="flex items-center justify-between mb-3">
-        <h3 class="text-lg font-semibold text-slate-900">Install BGM App</h3>
+        <h3 class="text-lg font-semibold text-slate-900">{{ __('messages.site.install_title') }}</h3>
         <button id="pwa-install-close" class="text-slate-500 hover:text-slate-900" type="button" aria-label="Close">
           <svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true"><path fill="currentColor" d="M18.3 5.71L12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.71 2.88 18.3 9.17 12 2.88 5.71 4.29 4.29 10.59 10.6l6.3-6.31z"/></svg>
         </button>
@@ -903,10 +903,10 @@
       </p>
       <div class="flex items-center justify-end gap-2">
         <button id="pwa-install-later" class="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50" type="button">
-          Later
+          {{ __('messages.site.later') }}
         </button>
         <button id="pwa-install-now" class="px-4 py-2 text-sm rounded-lg bg-blue-900 text-white hover:bg-blue-800" type="button">
-          Install
+          {{ __('messages.site.install') }}
         </button>
       </div>
     </div>
@@ -1299,6 +1299,34 @@
       @if ($errors->any())
         showToast(@json($errors->first()), 'error');
       @endif
+    })();
+  </script>
+  <script>
+    (() => {
+      const getHeaderOffset = () => {
+        const header = document.querySelector('header.glass-nav');
+        return (header?.offsetHeight || 0) + 12;
+      };
+
+      const scrollToHash = (hash, smooth = true) => {
+        if (!hash || hash === '#') return;
+        const id = hash.replace('#', '');
+        const target = document.getElementById(id);
+        if (!target) return;
+
+        const top = target.getBoundingClientRect().top + window.pageYOffset - getHeaderOffset();
+        window.scrollTo({ top: Math.max(top, 0), behavior: smooth ? 'smooth' : 'auto' });
+      };
+
+      window.addEventListener('load', () => {
+        if (window.location.hash) {
+          scrollToHash(window.location.hash, false);
+        }
+      });
+
+      window.addEventListener('hashchange', () => {
+        scrollToHash(window.location.hash, true);
+      });
     })();
   </script>
 

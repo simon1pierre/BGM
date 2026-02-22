@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Concerns;
 
 use App\Models\ContentTranslation;
+use App\Services\Translation\ContentTranslationPipeline;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -36,9 +37,20 @@ trait HandlesTranslations
                     'content_id' => $model->id,
                     'locale' => $locale,
                 ],
-                $payload
+                array_merge($payload, [
+                    'source_locale' => $locale,
+                    'translation_status' => 'approved',
+                    'translated_by' => 'manual',
+                    'quality_score' => 100.0,
+                    'is_bible_locked' => false,
+                    'reviewed_by' => auth()->id(),
+                    'reviewed_at' => now(),
+                ])
             );
         }
+
+        app(ContentTranslationPipeline::class)
+            ->autoFillMissingTranslations($model, $fields, config('translation_pipeline.primary_locale', 'rw'));
     }
 
     protected function syncTranslationsMapped(Model $model, Request $request, array $fieldMap): void
@@ -67,8 +79,19 @@ trait HandlesTranslations
                     'content_id' => $model->id,
                     'locale' => $locale,
                 ],
-                $payload
+                array_merge($payload, [
+                    'source_locale' => $locale,
+                    'translation_status' => 'approved',
+                    'translated_by' => 'manual',
+                    'quality_score' => 100.0,
+                    'is_bible_locked' => false,
+                    'reviewed_by' => auth()->id(),
+                    'reviewed_at' => now(),
+                ])
             );
         }
+
+        app(ContentTranslationPipeline::class)
+            ->autoFillMissingTranslations($model, array_values($fieldMap), config('translation_pipeline.primary_locale', 'rw'));
     }
 }

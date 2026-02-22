@@ -16,6 +16,7 @@
                 $isSubscribers = request()->routeIs('admin.subscribers.*');
                 $isContacts = request()->routeIs('admin.contacts.*');
                 $isEvents = request()->routeIs('admin.events.*');
+                $isMinistryLeaders = request()->routeIs('admin.ministry-leaders.*');
                 $isVideos = request()->routeIs('admin.videos.*');
                 $isAudios = request()->routeIs('admin.audios.*');
                 $isAudiobooks = request()->routeIs('admin.audiobooks.*');
@@ -24,6 +25,13 @@
                 $isContentNotifications = request()->routeIs('admin.content-notifications.*');
                 $isPlaylists = request()->routeIs('admin.playlists.*');
                 $isAnalytics = request()->routeIs('admin.analytics.*');
+                $isTranslations = request()->routeIs('admin.translations.*');
+                $translationStatus = request()->query('status', 'needs_review');
+                $translationTranslatedBy = request()->query('translated_by', 'all');
+                $isTranslationQueue = $isTranslations && ($translationStatus === 'all' || $translationStatus === '');
+                $isTranslationNeedsReview = $isTranslations && $translationStatus === 'needs_review';
+                $isTranslationApproved = $isTranslations && $translationStatus === 'approved';
+                $isTranslationManual = $isTranslations && $translationTranslatedBy === 'manual';
                 $isContentMenu = $isVideos || $isAudios || $isAudiobooks || $isDocuments || $isCategories || $isContentNotifications || $isPlaylists;
             @endphp
             <div class="navbar-content" style="background-color: #10295E">
@@ -47,6 +55,18 @@
                             <li class="nxl-item {{ $isRegister ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.register')}}">Register</a></li>
                         </ul>
                     </li>
+                    <li class="nxl-item nxl-hasmenu {{ $isMinistryLeaders ? 'active' : '' }}">
+                        <a href="{{ route('admin.ministry-leaders.index') }}" class="nxl-link">
+                            <span class="nxl-micon"><i style="color: white" class="feather-user-check"></i></span>
+                            <span class="nxl-mtext" style="color: white">Ministry Team</span>
+                        </a>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu {{ $isSubscribers ? 'active' : '' }}">
+                        <a href="{{ route('admin.subscribers.index') }}" class="nxl-link">
+                            <span class="nxl-micon"><i style="color: white" class="feather-users"></i></span>
+                            <span class="nxl-mtext" style="color: white">Subscribers</span>
+                        </a>
+                    </li>
                     <li class="nxl-item nxl-hasmenu {{ $isCampaigns ? 'active' : '' }}">
                         <a href="{{ route('admin.campaigns.index') }}" class="nxl-link">
                             <span class="nxl-micon"><i style="color: white" class="feather-mail"></i></span>
@@ -68,12 +88,6 @@
                             <li class="nxl-item {{ $isContentNotifications ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.content-notifications.index') }}">Content Emails</a></li>
                         </ul>
                     </li>
-                    <li class="nxl-item nxl-hasmenu {{ $isSubscribers ? 'active' : '' }}">
-                        <a href="{{ route('admin.subscribers.index') }}" class="nxl-link">
-                            <span class="nxl-micon"><i style="color: white" class="feather-users"></i></span>
-                            <span class="nxl-mtext" style="color: white">Subscribers</span>
-                        </a>
-                    </li>
                     <li class="nxl-item nxl-hasmenu {{ $isContacts ? 'active' : '' }}">
                         <a href="{{ route('admin.contacts.index') }}" class="nxl-link">
                             <span class="nxl-micon"><i style="color: white" class="feather-inbox"></i></span>
@@ -91,6 +105,26 @@
                             <span class="nxl-micon"><i style="color: white" class="feather-activity"></i></span>
                             <span class="nxl-mtext" style="color: white">Analytics</span>
                         </a>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu {{ $isTranslations ? 'active' : '' }}">
+                        <a href="javascript:void(0);" class="nxl-link">
+                            <span class="nxl-micon"><i style="color: white" class="feather-check-square"></i></span>
+                            <span class="nxl-mtext" style="color: white">Translations</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+                        </a>
+                        <ul class="nxl-submenu">
+                            <li class="nxl-item {{ $isTranslationQueue ? 'active' : '' }}">
+                                <a class="nxl-link" style="color: white" href="{{ route('admin.translations.review', ['status' => 'all']) }}">Queue</a>
+                            </li>
+                            <li class="nxl-item {{ $isTranslationNeedsReview ? 'active' : '' }}">
+                                <a class="nxl-link" style="color: white" href="{{ route('admin.translations.review', ['status' => 'needs_review']) }}">Needs Review</a>
+                            </li>
+                            <li class="nxl-item {{ $isTranslationApproved ? 'active' : '' }}">
+                                <a class="nxl-link" style="color: white" href="{{ route('admin.translations.review', ['status' => 'approved']) }}">Approved</a>
+                            </li>
+                            <li class="nxl-item {{ $isTranslationManual ? 'active' : '' }}">
+                                <a class="nxl-link" style="color: white" href="{{ route('admin.translations.review', ['translated_by' => 'manual', 'status' => 'all']) }}">Manual</a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isSettings ? 'active' : '' }}">
                         <a href="{{ route('admin.settings.edit') }}" class="nxl-link">

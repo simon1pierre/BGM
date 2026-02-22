@@ -93,7 +93,7 @@
   </div>
 </section>
 <!-- About Section -->
-<section id="about" class="py-6 bg-slate-50 text-slate-800">
+<section id="about" class="py-6 bg-slate-50 text-slate-800 scroll-mt-28">
   <div class="container mx-auto px-6">
     <div class="text-center mb-8">
     <h2 class="text-4xl md:text-5xl font-serif font-bold text-brand-blue mb-4">
@@ -148,7 +148,71 @@
     </div>
   </div>
 </section>
-<section id="resources" class="py-24 bg-slate-50">
+<section id="leaders" class="py-20 bg-gradient-to-b from-slate-50 to-white">
+  <div class="container mx-auto px-6">
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950">{{ __('messages.home.leaders_title') }}</h2>
+        <p class="text-slate-600 mt-2">{{ __('messages.home.leaders_subtitle') }}</p>
+      </div>
+      <div class="hidden md:flex items-center gap-2">
+        <button type="button" data-slider-prev="leadersTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_prev') }}">
+          <span>&larr;</span>
+        </button>
+        <button type="button" data-slider-next="leadersTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_next') }}">
+          <span>&rarr;</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="leadersTrack" class="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-3 scroll-smooth">
+      @forelse ($ministryLeaders as $leader)
+        <article class="min-w-[280px] md:min-w-[320px] max-w-[340px] bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 snap-start interactive-card">
+          <div class="relative h-52 overflow-hidden rounded-t-2xl">
+            <img
+              src="{{ $leader->photo_path ? asset('storage/'.$leader->photo_path) : asset('images/logo.png') }}"
+              alt="{{ $leader->name }}"
+              class="w-full h-full object-cover"
+              loading="lazy"
+            >
+            <span class="absolute left-3 top-3 text-[11px] uppercase tracking-widest px-2 py-1 rounded-full {{ $leader->role_type === 'preacher' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800' }}">
+              {{ $leader->role_type === 'preacher' ? __('messages.home.preacher') : __('messages.home.leader') }}
+            </span>
+          </div>
+          <div class="p-5">
+            <h3 class="text-lg font-serif font-bold text-blue-950">{{ $leader->name }}</h3>
+            <p class="text-sm text-slate-600 mt-1">{{ $leader->position }}</p>
+            @if ($leader->country)
+              <p class="text-xs text-slate-500 mt-1">{{ $leader->country }}</p>
+            @endif
+
+            <div class="mt-4 space-y-2 text-sm">
+              <div class="flex items-center gap-2 text-slate-700">
+                <i data-lucide="mail" class="w-4 h-4 text-blue-700"></i>
+                @if ($leader->email)
+                  <a href="mailto:{{ $leader->email }}" class="hover:text-blue-900">{{ $leader->email }}</a>
+                @else
+                  <span class="text-slate-400">{{ __('messages.home.contact_not_available') }}</span>
+                @endif
+              </div>
+              <div class="flex items-center gap-2 text-slate-700">
+                <i data-lucide="phone" class="w-4 h-4 text-blue-700"></i>
+                @if ($leader->phone)
+                  <a href="tel:{{ preg_replace('/\s+/', '', $leader->phone) }}" class="hover:text-blue-900">{{ $leader->phone }}</a>
+                @else
+                  <span class="text-slate-400">{{ __('messages.home.contact_not_available') }}</span>
+                @endif
+              </div>
+            </div>
+          </div>
+        </article>
+      @empty
+        <div class="w-full text-center text-slate-500 py-10">{{ __('messages.home.no_leaders') }}</div>
+      @endforelse
+    </div>
+  </div>
+</section>
+<section id="resources" class="py-24 bg-slate-50 scroll-mt-28">
   <div class="container mx-auto px-6">
     <div class="text-center mb-16">
       <h2 class="text-3xl md:text-4xl font-serif text-blue-900 mb-4">{{ __('messages.home.resources_title') }}</h2>
@@ -234,7 +298,7 @@
             />
             <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent"></div>
             <div class="absolute bottom-4 left-4 right-4">
-              <div class="text-xs uppercase tracking-widest text-slate-200 mb-2">Listen Now</div>
+              <div class="text-xs uppercase tracking-widest text-slate-200 mb-2">{{ __('messages.home.listen_now') }}</div>
               <audio controls class="w-full">
                 <source src="{{ asset('storage/'.$featuredAudio->audio_file) }}" type="audio/mpeg">
               </audio>
@@ -262,18 +326,26 @@
     </div>
   </div>
 </section>
-<section id="events" class="py-20 bg-white">
+<section id="events" class="py-20 bg-white scroll-mt-28">
   <div class="container mx-auto px-6">
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
       <div>
         <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950">{{ __('messages.home.upcoming_prayer_events') }}</h2>
-        <p class="text-slate-600 mt-2">Join ministry prayer events on Zoom and YouTube Live.</p>
+        <p class="text-slate-600 mt-2">{{ __('messages.home.events_subtitle') }}</p>
       </div>
-      <a href="{{ route('events') }}" class="text-blue-700 font-semibold hover:text-blue-900">View all events</a>
+      <div class="flex items-center gap-3">
+        @if ($upcomingEvents->count() > 3)
+          <div class="hidden md:flex items-center gap-2">
+            <button type="button" data-slider-prev="eventsTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_prev') }}">&larr;</button>
+            <button type="button" data-slider-next="eventsTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_next') }}">&rarr;</button>
+          </div>
+        @endif
+        <a href="{{ route('events') }}" class="text-blue-700 font-semibold hover:text-blue-900">{{ __('messages.common.view_all') }}</a>
+      </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div id="eventsTrack" data-slider-track class="{{ $upcomingEvents->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-6 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-3 gap-8' }}">
       @forelse ($upcomingEvents as $event)
-        <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col">
+        <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col {{ $upcomingEvents->count() > 3 ? 'min-w-[300px] md:min-w-[340px] max-w-[340px] snap-start' : '' }}">
           <div class="relative h-44 overflow-hidden bg-slate-100">
             @if ($event->image_path)
               <img src="{{ asset('storage/'.$event->image_path) }}" alt="{{ $event->title }}" class="w-full h-full object-cover">
@@ -288,7 +360,7 @@
             <div class="flex gap-2 mb-3">
               <span class="text-[11px] uppercase tracking-widest px-2 py-1 rounded-full bg-blue-50 text-blue-700">{{ str_replace('_', ' ', $event->event_type) }}</span>
               @if ($event->live_platform)
-                <span class="text-[11px] uppercase tracking-widest px-2 py-1 rounded-full bg-emerald-50 text-emerald-700">{{ $event->live_platform === 'youtube' ? 'YouTube Live' : ucfirst($event->live_platform) }}</span>
+                <span class="text-[11px] uppercase tracking-widest px-2 py-1 rounded-full bg-emerald-50 text-emerald-700">{{ $event->live_platform === 'youtube' ? __('messages.events_page.youtube_live') : ($event->live_platform === 'zoom' ? __('messages.events_page.zoom') : ucfirst($event->live_platform)) }}</span>
               @endif
             </div>
             <h3 class="text-xl font-serif font-bold text-blue-950 mb-2">{{ $event->title }}</h3>
@@ -299,30 +371,36 @@
             <div class="mt-auto flex gap-2">
               @if ($event->live_url)
                 <a href="{{ $event->live_url }}" target="_blank" rel="noopener" class="px-4 py-2 bg-blue-900 text-white text-xs font-semibold rounded-lg hover:bg-blue-800 transition-colors">
-                  {{ $event->live_platform === 'zoom' ? 'Join Zoom' : 'Watch Live' }}
+                  {{ $event->live_platform === 'zoom' ? __('messages.events_page.join_zoom') : __('messages.events_page.watch_live') }}
                 </a>
               @endif
               <a href="{{ route('events.show', $event) }}" class="px-4 py-2 border border-blue-200 text-blue-900 text-xs font-semibold rounded-lg hover:bg-blue-50 transition-colors">
-                Details
+                {{ __('messages.common.details') }}
               </a>
             </div>
           </div>
         </article>
       @empty
-        <div class="col-span-3 text-center text-slate-500">No upcoming prayer events.</div>
+        <div class="col-span-3 text-center text-slate-500">{{ __('messages.home.no_upcoming_events') }}</div>
       @endforelse
     </div>
   </div>
 </section>
-<section id="sermons" class="py-6 bg-white text-slate-800">
+<section id="sermons" class="py-6 bg-white text-slate-800 scroll-mt-28">
   <div class="container mx-auto px-6 max-w-6xl text-center">
     <span class="block text-amber-600 font-semibold tracking-widest uppercase text-sm mb-3">{{ __('messages.home.latest_messages') }}</span>
     <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950 mb-4">{{ __('messages.home.walking_light') }}</h2>
     <p class="text-lg text-slate-600 mb-10 italic">"Your word is a lamp for my feet, a light on my path." — Psalm 119:105</p>
    
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    @if ($latestVideos->count() > 3)
+      <div class="hidden md:flex justify-end gap-2 mb-4">
+        <button type="button" data-slider-prev="sermonsTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_prev') }}">&larr;</button>
+        <button type="button" data-slider-next="sermonsTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_next') }}">&rarr;</button>
+      </div>
+    @endif
+    <div id="sermonsTrack" data-slider-track class="{{ $latestVideos->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-6 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-3 gap-8' }}">
       @forelse ($latestVideos as $video)
-        <div class="flex flex-col">
+        <div class="flex flex-col {{ $latestVideos->count() > 3 ? 'min-w-[320px] md:min-w-[360px] max-w-[360px] snap-start' : '' }}">
           <div class="relative w-full aspect-video bg-slate-100 rounded-xl overflow-hidden shadow-lg border border-slate-200 mb-4">
             @if ($video->youtube_id)
               <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/{{ $video->youtube_id }}" title="{{ $video->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -360,9 +438,15 @@
     <!-- PDF Downloads Section -->
     <div class="mb-16">
       <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">{{ __('messages.home.recommended_books') }}</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      @if ($recommendedBooks->count() > 3)
+        <div class="hidden md:flex justify-end gap-2 mb-4">
+          <button type="button" data-slider-prev="booksTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_prev') }}">&larr;</button>
+          <button type="button" data-slider-next="booksTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_next') }}">&rarr;</button>
+        </div>
+      @endif
+      <div id="booksTrack" data-slider-track class="{{ $recommendedBooks->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-6 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-3 gap-8' }}">
         @forelse ($recommendedBooks as $book)
-          <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense {{ $recommendedBooks->count() > 3 ? 'min-w-[300px] md:min-w-[340px] max-w-[340px] snap-start' : '' }}">
             <div class="relative h-48 overflow-hidden bg-slate-100">
               @if ($book->cover_image)
                 <img src="{{ asset('storage/'.$book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
@@ -399,9 +483,15 @@
     <!-- Audio Resources Section -->
     <div>
       <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">{{ __('messages.home.recommended_audios') }}</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      @if ($recommendedAudios->count() > 3)
+        <div class="hidden md:flex justify-end gap-2 mb-4">
+          <button type="button" data-slider-prev="audiosTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_prev') }}">&larr;</button>
+          <button type="button" data-slider-next="audiosTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_next') }}">&rarr;</button>
+        </div>
+      @endif
+      <div id="audiosTrack" data-slider-track class="{{ $recommendedAudios->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-6 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-3 gap-8' }}">
         @forelse ($recommendedAudios as $audio)
-          <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense">
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense {{ $recommendedAudios->count() > 3 ? 'min-w-[300px] md:min-w-[340px] max-w-[340px] snap-start' : '' }}">
             <div class="relative h-48 overflow-hidden bg-slate-100">
               @if ($audio->thumbnail)
                 <img src="{{ asset('storage/'.$audio->thumbnail) }}" alt="{{ $audio->title }}" class="w-full h-full object-cover">
@@ -434,10 +524,16 @@
       </div>
     </div>
     <div class="mt-16">
-      <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">Featured Audiobooks</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">{{ __('messages.home.featured_audiobooks') }}</h3>
+      @if ($featuredAudiobooks->count() > 3)
+        <div class="hidden md:flex justify-end gap-2 mb-4">
+          <button type="button" data-slider-prev="audiobooksTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_prev') }}">&larr;</button>
+          <button type="button" data-slider-next="audiobooksTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_next') }}">&rarr;</button>
+        </div>
+      @endif
+      <div id="audiobooksTrack" data-slider-track class="{{ $featuredAudiobooks->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-6 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6' }}">
         @forelse ($featuredAudiobooks as $audiobook)
-          <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col">
+          <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col {{ $featuredAudiobooks->count() > 3 ? 'min-w-[260px] md:min-w-[280px] max-w-[280px] snap-start' : '' }}">
             <div class="relative h-40 overflow-hidden bg-slate-100">
               @if ($audiobook->thumbnail)
                 <img src="{{ asset('storage/'.$audiobook->thumbnail) }}" alt="{{ $audiobook->title }}" class="w-full h-full object-cover">
@@ -449,12 +545,12 @@
               <h4 class="text-lg font-serif font-bold text-blue-950 mb-2">{{ $audiobook->title }}</h4>
               <p class="text-slate-600 text-sm mb-3">{{ \Illuminate\Support\Str::limit($audiobook->description, 90) }}</p>
               <div class="mt-auto">
-                <a href="{{ route('audiobooks.show', $audiobook) }}" class="text-blue-700 font-medium text-sm hover:text-blue-900">Listen</a>
+                <a href="{{ route('audiobooks.show', $audiobook) }}" class="text-blue-700 font-medium text-sm hover:text-blue-900">{{ __('messages.home.listen_now') }}</a>
               </div>
             </div>
           </div>
         @empty
-          <div class="col-span-4 text-center text-slate-500">No featured audiobooks yet.</div>
+          <div class="col-span-4 text-center text-slate-500">{{ __('messages.home.no_featured_audiobooks') }}</div>
         @endforelse
       </div>
     </div>
@@ -502,4 +598,75 @@
   </div>
 </section>
   </main>
+
+  <script>
+    (() => {
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const sliders = [];
+
+      const setupSlider = (trackId, intervalMs = 4600) => {
+        const track = document.getElementById(trackId);
+        if (!track) return;
+        if (!track.classList.contains('overflow-x-auto')) return;
+
+        const cardWidth = () => {
+          const first = track.querySelector('article, .flex.flex-col, .bg-white.rounded-2xl');
+          if (!first) return 320;
+          const style = window.getComputedStyle(track);
+          const gap = parseFloat(style.columnGap || style.gap || '0') || 0;
+          return first.getBoundingClientRect().width + gap;
+        };
+
+        const scrollByCard = (direction) => {
+          track.scrollBy({ left: cardWidth() * direction, behavior: 'smooth' });
+        };
+
+        document.querySelectorAll(`[data-slider-prev="${trackId}"]`).forEach((btn) => {
+          btn.addEventListener('click', () => scrollByCard(-1));
+        });
+        document.querySelectorAll(`[data-slider-next="${trackId}"]`).forEach((btn) => {
+          btn.addEventListener('click', () => scrollByCard(1));
+        });
+
+        let timer = null;
+        const startAuto = () => {
+          if (reducedMotion || timer) return;
+          timer = setInterval(() => {
+            const maxLeft = track.scrollWidth - track.clientWidth - 8;
+            if (track.scrollLeft >= maxLeft) {
+              track.scrollTo({ left: 0, behavior: 'smooth' });
+              return;
+            }
+            scrollByCard(1);
+          }, intervalMs);
+        };
+        const stopAuto = () => {
+          if (!timer) return;
+          clearInterval(timer);
+          timer = null;
+        };
+
+        track.addEventListener('mouseenter', stopAuto);
+        track.addEventListener('mouseleave', startAuto);
+        track.addEventListener('touchstart', stopAuto, { passive: true });
+        track.addEventListener('touchend', startAuto, { passive: true });
+        startAuto();
+
+        sliders.push({ stopAuto });
+      };
+
+      setupSlider('leadersTrack', 4200);
+      setupSlider('eventsTrack', 4600);
+      setupSlider('sermonsTrack', 4600);
+      setupSlider('booksTrack', 4800);
+      setupSlider('audiosTrack', 4800);
+      setupSlider('audiobooksTrack', 5000);
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+          sliders.forEach((slider) => slider.stopAuto());
+        }
+      });
+    })();
+  </script>
 @endsection

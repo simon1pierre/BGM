@@ -5,6 +5,9 @@ namespace App\Providers;
 use App\Models\Setting;
 use App\Models\UserActivityLog;
 use App\Notifications\SystemActivityNotification;
+use App\Services\Translation\LibreTranslateTranslator;
+use App\Services\Translation\NullTranslator;
+use App\Services\Translation\TranslatorInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +22,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(TranslatorInterface::class, function () {
+            $provider = (string) config('translation_pipeline.provider', 'null');
+
+            if ($provider === 'libretranslate') {
+                return new LibreTranslateTranslator();
+            }
+
+            return new NullTranslator();
+        });
     }
 
     /**

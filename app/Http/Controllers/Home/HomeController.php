@@ -8,6 +8,7 @@ use App\Models\ContactMessage;
 use App\Models\Event;
 use App\Models\Setting;
 use App\Models\Subscriber;
+use App\Models\MinistryLeader;
 use App\Models\UserActivityLog;
 use App\Models\video;
 use App\Models\book;
@@ -24,7 +25,7 @@ class HomeController extends Controller
             ->orderByDesc('featured')
             ->orderByDesc('published_at')
             ->orderByDesc('created_at')
-            ->limit(3)
+            ->limit(8)
             ->get();
 
         $featuredVideo = video::query()
@@ -75,7 +76,7 @@ class HomeController extends Controller
             ->where('featured', true)
             ->orderByDesc('published_at')
             ->orderByDesc('created_at')
-            ->limit(4)
+            ->limit(8)
             ->get();
 
         $upcomingEvents = Event::query()
@@ -89,10 +90,17 @@ class HomeController extends Controller
             })
             ->orderByDesc('is_featured')
             ->orderBy('starts_at')
-            ->limit(3)
+            ->limit(8)
             ->get();
 
-        return view('home', compact('latestVideos', 'featuredVideo', 'featuredBook', 'featuredAudio', 'recommendedBooks', 'recommendedAudios', 'featuredAudiobooks', 'upcomingEvents'));
+        $ministryLeaders = MinistryLeader::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->limit(12)
+            ->get();
+
+        return view('home', compact('latestVideos', 'featuredVideo', 'featuredBook', 'featuredAudio', 'recommendedBooks', 'recommendedAudios', 'featuredAudiobooks', 'upcomingEvents', 'ministryLeaders'));
     }
 
     public function videos(Request $request)

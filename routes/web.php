@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\Subscribers\SubscriberController;
 use App\Http\Controllers\Admin\Contacts\ContactMessageController;
 use App\Http\Controllers\Admin\Events\EventController as AdminEventController;
 use App\Http\Controllers\Admin\Settings\SettingsController;
+use App\Http\Controllers\Admin\Ministry\MinistryLeaderController;
+use App\Http\Controllers\Admin\Translations\TranslationReviewController;
 use App\Http\Controllers\Admin\Users\ManageController;
 use App\Http\Controllers\Admin\Users\UserController;
 use App\Http\Controllers\Admin\Content\VideoController;
@@ -66,6 +68,12 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.analy
     Route::get('/analytics/audiences', [AnalyticsController::class, 'audiences'])->name('audiences');
     Route::get('/analytics/content', [AnalyticsController::class, 'content'])->name('content');
 });
+Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.translations.')->group(function () {
+    Route::get('/translations/review', [TranslationReviewController::class, 'index'])->name('review');
+    Route::post('/translations/{translation}/approve', [TranslationReviewController::class, 'approve'])->name('approve');
+    Route::post('/translations/{translation}/reject', [TranslationReviewController::class, 'reject'])->name('reject');
+    Route::post('/translations/{translation}/manual-save', [TranslationReviewController::class, 'saveManual'])->name('manual-save');
+});
 Route::controller(ManageController::class)->group(function(){
     Route::get('/beacons/admin/register','index')->name('admin.register')->middleware(['auth', 'admin']);
     Route::post('/beacons/admin/register','store')->name('admin.register.store')->middleware(['auth', 'admin']);
@@ -109,6 +117,10 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->group(function ()
 
     Route::resource('playlists', PlaylistController::class)->names('admin.playlists');
     Route::post('playlists/{playlist}/restore', [PlaylistController::class, 'restore'])->name('admin.playlists.restore');
+
+    Route::resource('ministry-leaders', MinistryLeaderController::class)->except(['show'])->names('admin.ministry-leaders');
+    Route::post('ministry-leaders/{ministry_leader}/restore', [MinistryLeaderController::class, 'restore'])->name('admin.ministry-leaders.restore');
+    Route::post('ministry-leaders/{ministry_leader}/toggle-active', [MinistryLeaderController::class, 'toggleActive'])->name('admin.ministry-leaders.toggle-active');
 });
 Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.subscribers.')->group(function () {
     Route::get('/subscribers', [SubscriberController::class, 'index'])->name('index');
