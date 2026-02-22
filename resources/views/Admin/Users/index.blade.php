@@ -11,6 +11,12 @@
                 <li class="breadcrumb-item">Users</li>
             </ul>
         </div>
+        <div class="page-header-right ms-auto">
+            <button type="button" class="btn btn-light no-print" onclick="printAdminReport('Users Report')">
+                <i class="feather-printer me-2"></i>
+                Print Report
+            </button>
+        </div>
     </div>
 
     <div class="main-content">
@@ -112,6 +118,11 @@
                                             <form action="{{ route('admin.users.restore', $user->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 <button class="btn btn-sm btn-success">Restore</button>
+                                            </form>
+                                            <form action="{{ route('admin.users.force-delete', $user->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Permanently delete this user? This cannot be undone.');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>
                                             </form>
                                         @else
                                             <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="d-inline">

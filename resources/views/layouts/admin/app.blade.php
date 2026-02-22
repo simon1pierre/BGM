@@ -49,6 +49,55 @@
         @keyframes adminToastIn {
             to { opacity: 1; transform: translateY(0); }
         }
+
+        .print-toolbar .btn {
+            min-width: 9.5rem;
+        }
+
+        @media print {
+            body {
+                background: #fff !important;
+            }
+
+            .nxl-navigation,
+            .nxl-header,
+            .footer,
+            .admin-toast-wrap,
+            .no-print,
+            .page-header-right,
+            .pagination,
+            .btn,
+            form,
+            .nxl-search,
+            .theme-customizer {
+                display: none !important;
+            }
+
+            .nxl-content,
+            .main-content,
+            .card,
+            .card-body {
+                box-shadow: none !important;
+                border: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            table {
+                width: 100% !important;
+                font-size: 12px !important;
+            }
+
+            .print-report-title {
+                display: block !important;
+                margin-bottom: 12px;
+                padding-bottom: 8px;
+                border-bottom: 2px solid #10295E;
+                font-weight: 700;
+                font-size: 18px;
+                color: #10295E;
+            }
+        }
     </style>
     @livewireStyles
 </head>
@@ -128,6 +177,24 @@
                 else window.adminNotify(message, 'info');
                 alert.remove();
             });
+        })();
+    </script>
+    <script>
+        (() => {
+            window.printAdminReport = function (title) {
+                const existing = document.querySelector('.print-report-title');
+                if (existing) existing.remove();
+
+                const node = document.createElement('div');
+                node.className = 'print-report-title';
+                node.textContent = `${title} - ${new Date().toLocaleDateString()}`;
+
+                const target = document.querySelector('.main-content') || document.querySelector('.nxl-content') || document.body;
+                target.prepend(node);
+
+                window.print();
+                setTimeout(() => node.remove(), 300);
+            };
         })();
     </script>
     @livewireScripts

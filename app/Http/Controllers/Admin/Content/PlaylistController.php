@@ -189,6 +189,24 @@ class PlaylistController extends Controller
         return redirect()->route('admin.playlists.index')->with('status', 'Playlist restored.');
     }
 
+    public function forceDelete(Request $request, int $playlist)
+    {
+        $record = Playlist::withTrashed()->findOrFail($playlist);
+        $title = $record->title;
+        $record->forceDelete();
+
+        UserActivityLog::create([
+            'actor_user_id' => $request->user()->id ?? null,
+            'action' => 'playlist_force_deleted',
+            'meta' => [
+                'id' => $playlist,
+                'title' => $title,
+            ],
+        ]);
+
+        return redirect()->route('admin.playlists.index')->with('status', 'Playlist permanently deleted.');
+    }
+
     private function syncItems(Playlist $playlist, array $items, array $orders): void
     {
         $items = array_values(array_unique(array_map('intval', $items)));

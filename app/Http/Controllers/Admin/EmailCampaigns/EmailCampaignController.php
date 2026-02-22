@@ -6,19 +6,45 @@ use App\Http\Controllers\Controller;
 use App\Jobs\SendEmailCampaignJob;
 use App\Models\EmailCampaign;
 use App\Models\Subscriber;
+use App\Models\UserActivityLog;
 use App\Models\video;
 use App\Models\audio;
 use App\Models\book;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class EmailCampaignController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $campaigns = EmailCampaign::query()
+        $campaignsQuery = EmailCampaign::query();
+
+        if ($request->filled('status')) {
+            $campaignsQuery->where('status', (string) $request->query('status'));
+        }
+
+        if ($request->filled('search')) {
+            $search = trim((string) $request->query('search'));
+            $campaignsQuery->where(function ($q) use ($search) {
+                $q->where('subject', 'like', '%'.$search.'%')
+                    ->orWhere('message', 'like', '%'.$search.'%');
+            });
+        }
+
+        if ($request->filled('deleted')) {
+            $deleted = (string) $request->query('deleted');
+            if ($deleted === 'with') {
+                $campaignsQuery->withTrashed();
+            } elseif ($deleted === 'only') {
+                $campaignsQuery->onlyTrashed();
+            }
+        }
+
+        $campaigns = $campaignsQuery
             ->orderByDesc('created_at')
-            ->paginate(15);
+            ->paginate(15)
+            ->withQueryString();
 
         return view('Admin.EmailCampaigns.index', compact('campaigns'));
     }
@@ -243,6 +269,57 @@ class EmailCampaignController extends Controller
     public function previewRaw(EmailCampaign $campaign)
     {
         return view('emails.campaign', ['campaign' => $campaign]);
+    }
+
+    public function destroy(EmailCampaign $campaign)
+    {
+        $campaign->delete();
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'action' => 'campaign_deleted',
+            'meta' => [
+                'campaign_id' => $campaign->id,
+                'subject' => $campaign->subject,
+            ],
+        ]);
+
+        return redirect()->route('admin.campaigns.index')->with('status', 'Campaign deleted.');
+    }
+
+    public function restore(int $campaign)
+    {
+        $record = EmailCampaign::withTrashed()->findOrFail($campaign);
+        $record->restore();
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'action' => 'campaign_restored',
+            'meta' => [
+                'campaign_id' => $record->id,
+                'subject' => $record->subject,
+            ],
+        ]);
+
+        return redirect()->route('admin.campaigns.index')->with('status', 'Campaign restored.');
+    }
+
+    public function forceDelete(int $campaign)
+    {
+        $record = EmailCampaign::withTrashed()->findOrFail($campaign);
+        $subject = $record->subject;
+        $record->forceDelete();
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'action' => 'campaign_force_deleted',
+            'meta' => [
+                'campaign_id' => $campaign,
+                'subject' => $subject,
+            ],
+        ]);
+
+        return redirect()->route('admin.campaigns.index')->with('status', 'Campaign permanently deleted.');
     }
 
     private function resolveTargets(string $targetType, array $subscriberIds, ?string $targetEmails): array

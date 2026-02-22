@@ -236,6 +236,24 @@ class DocumentController extends Controller
         return redirect()->route('admin.documents.index')->with('status', 'Document restored.');
     }
 
+    public function forceDelete(Request $request, int $document)
+    {
+        $record = book::withTrashed()->findOrFail($document);
+        $title = $record->title;
+        $record->forceDelete();
+
+        UserActivityLog::create([
+            'actor_user_id' => $request->user()->id ?? null,
+            'action' => 'document_force_deleted',
+            'meta' => [
+                'id' => $document,
+                'title' => $title,
+            ],
+        ]);
+
+        return redirect()->route('admin.documents.index')->with('status', 'Document permanently deleted.');
+    }
+
     private function maybeNotifySubscribers(Request $request, array $payload): void
     {
         if (!$request->boolean('notify_subscribers')) {

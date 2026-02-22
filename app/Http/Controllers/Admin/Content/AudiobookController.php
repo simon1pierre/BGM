@@ -220,4 +220,22 @@ class AudiobookController extends Controller
 
         return redirect()->route('admin.audiobooks.index')->with('status', 'Audiobook restored.');
     }
+
+    public function forceDelete(Request $request, int $audiobook)
+    {
+        $record = audiobook::withTrashed()->findOrFail($audiobook);
+        $title = $record->title;
+        $record->forceDelete();
+
+        UserActivityLog::create([
+            'actor_user_id' => $request->user()->id ?? null,
+            'action' => 'audiobook_force_deleted',
+            'meta' => [
+                'id' => $audiobook,
+                'title' => $title,
+            ],
+        ]);
+
+        return redirect()->route('admin.audiobooks.index')->with('status', 'Audiobook permanently deleted.');
+    }
 }

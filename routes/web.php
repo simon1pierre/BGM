@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Contacts\ContactMessageController;
 use App\Http\Controllers\Admin\Events\EventController as AdminEventController;
 use App\Http\Controllers\Admin\Settings\SettingsController;
 use App\Http\Controllers\Admin\Ministry\MinistryLeaderController;
+use App\Http\Controllers\Admin\Trash\TrashController;
 use App\Http\Controllers\Admin\Translations\TranslationReviewController;
 use App\Http\Controllers\Admin\Users\ManageController;
 use App\Http\Controllers\Admin\Users\UserController;
@@ -68,6 +69,9 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.analy
     Route::get('/analytics/audiences', [AnalyticsController::class, 'audiences'])->name('audiences');
     Route::get('/analytics/content', [AnalyticsController::class, 'content'])->name('content');
 });
+Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.trash.')->group(function () {
+    Route::get('/trash', [TrashController::class, 'index'])->name('index');
+});
 Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.translations.')->group(function () {
     Route::get('/translations/review', [TranslationReviewController::class, 'index'])->name('review');
     Route::post('/translations/{translation}/approve', [TranslationReviewController::class, 'approve'])->name('approve');
@@ -89,6 +93,9 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.campa
     Route::post('/campaigns', [EmailCampaignController::class, 'store'])->name('store');
     Route::get('/campaigns/{campaign}/edit', [EmailCampaignController::class, 'edit'])->name('edit');
     Route::put('/campaigns/{campaign}', [EmailCampaignController::class, 'update'])->name('update');
+    Route::delete('/campaigns/{campaign}', [EmailCampaignController::class, 'destroy'])->name('destroy');
+    Route::post('/campaigns/{campaign}/restore', [EmailCampaignController::class, 'restore'])->name('restore');
+    Route::delete('/campaigns/{campaign}/force-delete', [EmailCampaignController::class, 'forceDelete'])->name('force-delete');
     Route::get('/campaigns/{campaign}/preview', [EmailCampaignController::class, 'preview'])->name('preview');
     Route::get('/campaigns/{campaign}/preview/raw', [EmailCampaignController::class, 'previewRaw'])->name('preview.raw');
 });
@@ -96,48 +103,60 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->group(function ()
     Route::resource('videos', VideoController::class)->except(['show'])->names('admin.videos');
     Route::get('videos/{video}/preview', [VideoController::class, 'preview'])->name('admin.videos.preview');
     Route::post('videos/{video}/restore', [VideoController::class, 'restore'])->name('admin.videos.restore');
+    Route::delete('videos/{video}/force-delete', [VideoController::class, 'forceDelete'])->name('admin.videos.force-delete');
 
     Route::resource('audios', AudioController::class)->except(['show'])->names('admin.audios');
     Route::get('audios/{audio}/preview', [AudioController::class, 'preview'])->name('admin.audios.preview');
     Route::post('audios/{audio}/restore', [AudioController::class, 'restore'])->name('admin.audios.restore');
+    Route::delete('audios/{audio}/force-delete', [AudioController::class, 'forceDelete'])->name('admin.audios.force-delete');
 
     Route::resource('audiobooks', AudiobookController::class)->except(['show'])->names('admin.audiobooks');
     Route::get('audiobooks/{audiobook}/preview', [AudiobookController::class, 'preview'])->name('admin.audiobooks.preview');
     Route::post('audiobooks/{audiobook}/restore', [AudiobookController::class, 'restore'])->name('admin.audiobooks.restore');
+    Route::delete('audiobooks/{audiobook}/force-delete', [AudiobookController::class, 'forceDelete'])->name('admin.audiobooks.force-delete');
 
     Route::resource('documents', DocumentController::class)->except(['show'])->names('admin.documents');
     Route::get('documents/{document}/preview', [DocumentController::class, 'preview'])->name('admin.documents.preview');
     Route::post('documents/{document}/restore', [DocumentController::class, 'restore'])->name('admin.documents.restore');
+    Route::delete('documents/{document}/force-delete', [DocumentController::class, 'forceDelete'])->name('admin.documents.force-delete');
 
     Route::resource('categories', CategoryController::class)->names('admin.categories');
     Route::post('categories/{category}/restore', [CategoryController::class, 'restore'])->name('admin.categories.restore');
+    Route::delete('categories/{category}/force-delete', [CategoryController::class, 'forceDelete'])->name('admin.categories.force-delete');
 
     Route::get('content-notifications', [ContentNotificationController::class, 'index'])->name('admin.content-notifications.index');
     Route::post('content-notifications/{notification}/resend', [ContentNotificationController::class, 'resend'])->name('admin.content-notifications.resend');
 
     Route::resource('playlists', PlaylistController::class)->names('admin.playlists');
     Route::post('playlists/{playlist}/restore', [PlaylistController::class, 'restore'])->name('admin.playlists.restore');
+    Route::delete('playlists/{playlist}/force-delete', [PlaylistController::class, 'forceDelete'])->name('admin.playlists.force-delete');
 
     Route::resource('ministry-leaders', MinistryLeaderController::class)->except(['show'])->names('admin.ministry-leaders');
     Route::post('ministry-leaders/{ministry_leader}/restore', [MinistryLeaderController::class, 'restore'])->name('admin.ministry-leaders.restore');
     Route::post('ministry-leaders/{ministry_leader}/toggle-active', [MinistryLeaderController::class, 'toggleActive'])->name('admin.ministry-leaders.toggle-active');
+    Route::delete('ministry-leaders/{ministry_leader}/force-delete', [MinistryLeaderController::class, 'forceDelete'])->name('admin.ministry-leaders.force-delete');
 });
 Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.subscribers.')->group(function () {
     Route::get('/subscribers', [SubscriberController::class, 'index'])->name('index');
     Route::post('/subscribers/{subscriber}/toggle', [SubscriberController::class, 'toggle'])->name('toggle');
     Route::delete('/subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('destroy');
     Route::post('/subscribers/{subscriber}/restore', [SubscriberController::class, 'restore'])->name('restore');
+    Route::delete('/subscribers/{subscriber}/force-delete', [SubscriberController::class, 'forceDelete'])->name('force-delete');
 });
 Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.contacts.')->group(function () {
     Route::get('/contacts', [ContactMessageController::class, 'index'])->name('index');
     Route::get('/contacts/{contactMessage}', [ContactMessageController::class, 'show'])->name('show');
     Route::post('/contacts/{contactMessage}/reply', [ContactMessageController::class, 'reply'])->name('reply');
+    Route::delete('/contacts/{contactMessage}', [ContactMessageController::class, 'destroy'])->name('destroy');
+    Route::post('/contacts/{contactMessage}/restore', [ContactMessageController::class, 'restore'])->name('restore');
+    Route::delete('/contacts/{contactMessage}/force-delete', [ContactMessageController::class, 'forceDelete'])->name('force-delete');
 });
 Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('events', AdminEventController::class)->except(['show'])->names('admin.events');
     Route::post('events/{event}/restore', [AdminEventController::class, 'restore'])->name('admin.events.restore');
     Route::post('events/{event}/toggle-published', [AdminEventController::class, 'togglePublished'])->name('admin.events.toggle-published');
     Route::post('events/{event}/toggle-featured', [AdminEventController::class, 'toggleFeatured'])->name('admin.events.toggle-featured');
+    Route::delete('events/{event}/force-delete', [AdminEventController::class, 'forceDelete'])->name('admin.events.force-delete');
 });
 Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.users.')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('index');
@@ -149,6 +168,7 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.users
     Route::post('/users/{user}/force-logout', [UserController::class, 'forceLogout'])->name('force-logout');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('destroy');
     Route::post('/users/{user}/restore', [UserController::class, 'restore'])->name('restore');
+    Route::delete('/users/{user}/force-delete', [UserController::class, 'forceDelete'])->name('force-delete');
 });
 Route::controller(LoginController::class)->group(function () {
     Route::get('/beacons/admin/login', 'create')->name('admin.login')->middleware('guest');

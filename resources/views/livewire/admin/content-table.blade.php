@@ -65,6 +65,12 @@
                         Filter
                     </button>
                 </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-semibold d-block">&nbsp;</label>
+                    <button type="button" class="btn btn-light w-100 no-print" onclick="printAdminReport('{{ ucfirst($type) }} Report')">
+                        Print Report
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -155,6 +161,11 @@
                                         <form method="POST" action="{{ route('admin.'.$type.'.restore', $item->id) }}" class="d-inline">
                                             @csrf
                                             <button class="btn btn-sm btn-success">Restore</button>
+                                        </form>
+                                        <form method="POST" action="{{ route('admin.'.$type.'.force-delete', $item->id) }}" class="d-inline" onsubmit="return confirm('Permanently delete this item? This cannot be undone.');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>
                                         </form>
                                     @else
                                         <a href="{{ route('admin.'.$type.'.preview', $item->id) }}" class="btn btn-sm btn-light">Preview</a>

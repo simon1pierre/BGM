@@ -292,6 +292,24 @@ class AudioController extends Controller
         return redirect()->route('admin.audios.index')->with('status', 'Audio restored.');
     }
 
+    public function forceDelete(Request $request, int $audio)
+    {
+        $record = audio::withTrashed()->findOrFail($audio);
+        $title = $record->title;
+        $record->forceDelete();
+
+        UserActivityLog::create([
+            'actor_user_id' => $request->user()->id ?? null,
+            'action' => 'audio_force_deleted',
+            'meta' => [
+                'id' => $audio,
+                'title' => $title,
+            ],
+        ]);
+
+        return redirect()->route('admin.audios.index')->with('status', 'Audio permanently deleted.');
+    }
+
     private function maybeNotifySubscribers(Request $request, array $payload): void
     {
         if (!$request->boolean('notify_subscribers')) {

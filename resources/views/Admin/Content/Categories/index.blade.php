@@ -11,7 +11,11 @@
                     <li class="breadcrumb-item">Categories</li>
                 </ul>
             </div>
-            <div class="page-header-right ms-auto">
+            <div class="page-header-right ms-auto d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-light no-print" onclick="printAdminReport('Categories Report')">
+                    <i class="feather-printer me-2"></i>
+                    Print Report
+                </button>
                 <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">
                     <i class="feather-plus me-2"></i>
                     Add Category
@@ -116,6 +120,11 @@
                                                 <form action="{{ route('admin.categories.restore', $category->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     <button class="btn btn-sm btn-success">Restore</button>
+                                                </form>
+                                                <form action="{{ route('admin.categories.force-delete', $category->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Permanently delete this category? This cannot be undone.');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>
                                                 </form>
                                             @else
                                                 <a href="{{ route('admin.categories.edit', $category) }}" class="btn btn-sm btn-primary">Edit</a>

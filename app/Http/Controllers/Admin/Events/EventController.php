@@ -175,6 +175,24 @@ class EventController extends Controller
         return redirect()->route('admin.events.index')->with('status', 'Event restored.');
     }
 
+    public function forceDelete(int $event)
+    {
+        $record = Event::withTrashed()->findOrFail($event);
+        $title = $record->title;
+        $record->forceDelete();
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'action' => 'event_force_deleted',
+            'meta' => [
+                'event_id' => $event,
+                'title' => $title,
+            ],
+        ]);
+
+        return redirect()->route('admin.events.index')->with('status', 'Event permanently deleted.');
+    }
+
     public function togglePublished(Event $event)
     {
         $event->update(['is_published' => !$event->is_published]);

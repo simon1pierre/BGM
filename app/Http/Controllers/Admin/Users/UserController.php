@@ -226,4 +226,23 @@ class UserController extends Controller
 
         return redirect()->route('admin.users.index')->with('status', 'User restored.');
     }
+
+    public function forceDelete(int $userId)
+    {
+        $user = User::withTrashed()->findOrFail($userId);
+        $email = $user->email;
+        $targetId = $user->id;
+        $user->forceDelete();
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'target_user_id' => $targetId,
+            'action' => 'user_force_deleted',
+            'meta' => [
+                'email' => $email,
+            ],
+        ]);
+
+        return redirect()->route('admin.users.index')->with('status', 'User permanently deleted.');
+    }
 }

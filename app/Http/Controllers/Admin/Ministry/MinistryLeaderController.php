@@ -150,6 +150,24 @@ class MinistryLeaderController extends Controller
         return redirect()->route('admin.ministry-leaders.index')->with('status', 'Ministry profile restored.');
     }
 
+    public function forceDelete(int $ministry_leader)
+    {
+        $record = MinistryLeader::withTrashed()->findOrFail($ministry_leader);
+        $name = $record->name;
+        $record->forceDelete();
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'action' => 'ministry_leader_force_deleted',
+            'meta' => [
+                'ministry_leader_id' => $ministry_leader,
+                'name' => $name,
+            ],
+        ]);
+
+        return redirect()->route('admin.ministry-leaders.index')->with('status', 'Ministry profile permanently deleted.');
+    }
+
     public function toggleActive(MinistryLeader $ministryLeader)
     {
         $ministryLeader->update(['is_active' => !$ministryLeader->is_active]);

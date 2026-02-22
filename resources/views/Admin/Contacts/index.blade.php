@@ -12,6 +12,10 @@
                 </ul>
             </div>
             <div class="page-header-right ms-auto">
+                <button type="button" class="btn btn-light me-2 no-print" onclick="printAdminReport('Contact Inbox Report')">
+                    <i class="feather-printer me-2"></i>
+                    Print Report
+                </button>
                 <span class="badge bg-soft-primary text-primary">Unread: {{ $unreadCount }}</span>
             </div>
         </div>
@@ -35,6 +39,14 @@
                                 <option value="unread" @selected(request('status') === 'unread')>Unread</option>
                                 <option value="read" @selected(request('status') === 'read')>Read</option>
                                 <option value="replied" @selected(request('status') === 'replied')>Replied</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-semibold">Deleted</label>
+                            <select name="deleted" class="form-select">
+                                <option value="">Exclude</option>
+                                <option value="with" @selected(request('deleted') === 'with')>Include</option>
+                                <option value="only" @selected(request('deleted') === 'only')>Only</option>
                             </select>
                         </div>
                         <div class="col-md-2 d-flex align-items-end">
@@ -65,7 +77,9 @@
                                         <td>{{ $message->email }}</td>
                                         <td>{{ $message->subject ?: 'No subject' }}</td>
                                         <td>
-                                            @if (!$message->is_read)
+                                            @if ($message->trashed())
+                                                <span class="badge bg-soft-secondary text-muted">Deleted</span>
+                                            @elseif (!$message->is_read)
                                                 <span class="badge bg-soft-warning text-warning">Unread</span>
                                             @elseif ($message->replied_at)
                                                 <span class="badge bg-soft-success text-success">Replied</span>
@@ -75,7 +89,24 @@
                                         </td>
                                         <td>{{ $message->created_at?->diffForHumans() }}</td>
                                         <td class="text-end">
-                                            <a href="{{ route('admin.contacts.show', $message) }}" class="btn btn-sm btn-primary">Open</a>
+                                            @if ($message->trashed())
+                                                <form action="{{ route('admin.contacts.restore', $message->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    <button class="btn btn-sm btn-success">Restore</button>
+                                                </form>
+                                                <form action="{{ route('admin.contacts.force-delete', $message->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Permanently delete this message? This cannot be undone.');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>
+                                                </form>
+                                            @else
+                                                <a href="{{ route('admin.contacts.show', $message) }}" class="btn btn-sm btn-primary">Open</a>
+                                                <form action="{{ route('admin.contacts.destroy', $message) }}" method="POST" class="d-inline" onsubmit="return confirm('Move this message to trash?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                                </form>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty

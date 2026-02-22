@@ -37,6 +37,15 @@ class ContactMessageController extends Controller
             }
         }
 
+        if ($request->filled('deleted')) {
+            $deleted = (string) $request->query('deleted');
+            if ($deleted === 'with') {
+                $query->withTrashed();
+            } elseif ($deleted === 'only') {
+                $query->onlyTrashed();
+            }
+        }
+
         $messages = $query->orderByDesc('created_at')->paginate(20)->withQueryString();
         $unreadCount = ContactMessage::query()->where('is_read', false)->count();
 
@@ -94,5 +103,56 @@ class ContactMessageController extends Controller
         return redirect()
             ->route('admin.contacts.show', $contactMessage)
             ->with('status', 'Reply sent successfully.');
+    }
+
+    public function destroy(ContactMessage $contactMessage)
+    {
+        $contactMessage->delete();
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'action' => 'contact_message_deleted',
+            'meta' => [
+                'contact_message_id' => $contactMessage->id,
+                'email' => $contactMessage->email,
+            ],
+        ]);
+
+        return redirect()->route('admin.contacts.index')->with('status', 'Message moved to trash.');
+    }
+
+    public function restore(int $contactMessage)
+    {
+        $record = ContactMessage::withTrashed()->findOrFail($contactMessage);
+        $record->restore();
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'action' => 'contact_message_restored',
+            'meta' => [
+                'contact_message_id' => $record->id,
+                'email' => $record->email,
+            ],
+        ]);
+
+        return redirect()->route('admin.contacts.index')->with('status', 'Message restored.');
+    }
+
+    public function forceDelete(int $contactMessage)
+    {
+        $record = ContactMessage::withTrashed()->findOrFail($contactMessage);
+        $email = $record->email;
+        $record->forceDelete();
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'action' => 'contact_message_force_deleted',
+            'meta' => [
+                'contact_message_id' => $contactMessage,
+                'email' => $email,
+            ],
+        ]);
+
+        return redirect()->route('admin.contacts.index')->with('status', 'Message permanently deleted.');
     }
 }

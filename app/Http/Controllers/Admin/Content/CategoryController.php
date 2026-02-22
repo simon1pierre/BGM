@@ -223,4 +223,22 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.categories.index')->with('status', 'Category restored.');
     }
+
+    public function forceDelete(Request $request, int $category)
+    {
+        $record = ContentCategory::withTrashed()->findOrFail($category);
+        $name = $record->name;
+        $record->forceDelete();
+
+        UserActivityLog::create([
+            'actor_user_id' => $request->user()->id ?? null,
+            'action' => 'category_force_deleted',
+            'meta' => [
+                'id' => $category,
+                'name' => $name,
+            ],
+        ]);
+
+        return redirect()->route('admin.categories.index')->with('status', 'Category permanently deleted.');
+    }
 }

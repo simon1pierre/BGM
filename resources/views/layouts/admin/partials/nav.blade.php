@@ -25,6 +25,7 @@
                 $isContentNotifications = request()->routeIs('admin.content-notifications.*');
                 $isPlaylists = request()->routeIs('admin.playlists.*');
                 $isAnalytics = request()->routeIs('admin.analytics.*');
+                $isTrash = request()->routeIs('admin.trash.*');
                 $isTranslations = request()->routeIs('admin.translations.*');
                 $translationStatus = request()->query('status', 'needs_review');
                 $translationTranslatedBy = request()->query('translated_by', 'all');
@@ -104,6 +105,12 @@
                         <a href="{{ route('admin.analytics.index') }}" class="nxl-link">
                             <span class="nxl-micon"><i style="color: white" class="feather-activity"></i></span>
                             <span class="nxl-mtext" style="color: white">Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nxl-item nxl-hasmenu {{ $isTrash ? 'active' : '' }}">
+                        <a href="{{ route('admin.trash.index') }}" class="nxl-link">
+                            <span class="nxl-micon"><i style="color: white" class="feather-trash-2"></i></span>
+                            <span class="nxl-mtext" style="color: white">Trash</span>
                         </a>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isTranslations ? 'active' : '' }}">

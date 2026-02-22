@@ -12,7 +12,10 @@
                     <li class="breadcrumb-item">Ministry Leaders</li>
                 </ul>
             </div>
-            <div class="page-header-right ms-auto">
+            <div class="page-header-right ms-auto d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-light no-print" onclick="printAdminReport('Ministry Team Report')">
+                    <i class="feather-printer me-2"></i>Print Report
+                </button>
                 <a href="{{ route('admin.ministry-leaders.create') }}" class="btn btn-primary">
                     <i class="feather-plus me-2"></i>Add Profile
                 </a>
@@ -130,6 +133,11 @@
                                                 <form action="{{ route('admin.ministry-leaders.restore', $leader->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     <button class="btn btn-sm btn-success">Restore</button>
+                                                </form>
+                                                <form action="{{ route('admin.ministry-leaders.force-delete', $leader->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Permanently delete this profile? This cannot be undone.');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>
                                                 </form>
                                             @endif
                                         </td>

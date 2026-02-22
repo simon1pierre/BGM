@@ -11,7 +11,11 @@
                     <li class="breadcrumb-item">Playlists</li>
                 </ul>
             </div>
-            <div class="page-header-right ms-auto">
+            <div class="page-header-right ms-auto d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-light no-print" onclick="printAdminReport('Playlists Report')">
+                    <i class="feather-printer me-2"></i>
+                    Print Report
+                </button>
                 <a href="{{ route('admin.playlists.create') }}" class="btn btn-primary">
                     <i class="feather-plus me-2"></i>
                     Add Playlist
@@ -63,6 +67,11 @@
                                                 <form action="{{ route('admin.playlists.restore', $playlist->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     <button class="btn btn-sm btn-success">Restore</button>
+                                                </form>
+                                                <form action="{{ route('admin.playlists.force-delete', $playlist->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Permanently delete this playlist? This cannot be undone.');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>
                                                 </form>
                                             @else
                                                 <a href="{{ route('admin.playlists.edit', $playlist) }}" class="btn btn-sm btn-primary">Edit</a>

@@ -90,4 +90,21 @@ class SubscriberController extends Controller
 
         return redirect()->back()->with('status', 'Subscriber restored.');
     }
+
+    public function forceDelete(int $subscriberId)
+    {
+        $subscriber = Subscriber::withTrashed()->findOrFail($subscriberId);
+        $email = $subscriber->email;
+        $subscriber->forceDelete();
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'action' => 'subscriber_force_deleted',
+            'meta' => [
+                'email' => $email,
+            ],
+        ]);
+
+        return redirect()->back()->with('status', 'Subscriber permanently deleted.');
+    }
 }

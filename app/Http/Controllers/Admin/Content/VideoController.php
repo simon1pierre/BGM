@@ -268,6 +268,24 @@ class VideoController extends Controller
         return redirect()->route('admin.videos.index')->with('status', 'Video restored.');
     }
 
+    public function forceDelete(Request $request, int $video)
+    {
+        $record = video::withTrashed()->findOrFail($video);
+        $title = $record->title;
+        $record->forceDelete();
+
+        UserActivityLog::create([
+            'actor_user_id' => $request->user()->id ?? null,
+            'action' => 'video_force_deleted',
+            'meta' => [
+                'id' => $video,
+                'title' => $title,
+            ],
+        ]);
+
+        return redirect()->route('admin.videos.index')->with('status', 'Video permanently deleted.');
+    }
+
     private function extractYoutubeId(string $url): ?string
     {
         $parts = parse_url($url);
