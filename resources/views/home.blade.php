@@ -545,7 +545,7 @@
               <h4 class="text-lg font-serif font-bold text-blue-950 mb-2">{{ $audiobook->title }}</h4>
               <p class="text-slate-600 text-sm mb-3">{{ \Illuminate\Support\Str::limit($audiobook->description, 90) }}</p>
               <div class="mt-auto">
-                <a href="{{ route('audiobooks.show', $audiobook) }}" class="text-blue-700 font-medium text-sm hover:text-blue-900">{{ __('messages.home.listen_now') }}</a>
+                <a href="{{ $audiobook->linkedBook ? route('books.show', $audiobook->linkedBook) : route('books.index') }}" class="text-blue-700 font-medium text-sm hover:text-blue-900">{{ __('messages.home.listen_now') }}</a>
               </div>
             </div>
           </div>

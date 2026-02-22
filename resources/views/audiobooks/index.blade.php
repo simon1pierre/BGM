@@ -72,6 +72,9 @@
                             @if ($audiobook->is_prayer_audio)
                                 <span class="absolute top-3 right-3 bg-emerald-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">Prayer</span>
                             @endif
+                            @if (($audiobook->parts_count ?? 0) > 0)
+                                <span class="absolute bottom-3 left-3 bg-slate-900/80 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">{{ $audiobook->parts_count }} parts</span>
+                            @endif
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
                             <h3 class="text-xl font-serif font-bold text-blue-950 mb-2">{{ $audiobook->title }}</h3>

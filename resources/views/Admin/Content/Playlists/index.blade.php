@@ -28,6 +28,50 @@
                 <div class="alert alert-success mb-4">{{ session('status') }}</div>
             @endif
 
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="GET" class="row g-3 align-items-end">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Search</label>
+                            <input
+                                type="text"
+                                name="search"
+                                value="{{ request('search') }}"
+                                class="form-control"
+                                placeholder="Title or description"
+                            >
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-semibold">Type</label>
+                            <select name="type" class="form-select">
+                                <option value="">All</option>
+                                <option value="video" @selected(request('type') === 'video')>Video</option>
+                                <option value="audio" @selected(request('type') === 'audio')>Audio</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-semibold">Status</label>
+                            <select name="status" class="form-select">
+                                <option value="">All</option>
+                                <option value="published" @selected(request('status') === 'published')>Published</option>
+                                <option value="draft" @selected(request('status') === 'draft')>Draft</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-semibold">Deleted</label>
+                            <select name="deleted" class="form-select">
+                                <option value="">Exclude</option>
+                                <option value="with" @selected(request('deleted') === 'with')>Include</option>
+                                <option value="only" @selected(request('deleted') === 'only')>Only</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-grid">
+                            <button class="btn btn-primary">Filter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -68,7 +112,7 @@
                                                     @csrf
                                                     <button class="btn btn-sm btn-success">Restore</button>
                                                 </form>
-                                                <form action="{{ route('admin.playlists.force-delete', $playlist->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Permanently delete this playlist? This cannot be undone.');">
+                                                <form action="{{ route('admin.playlists.force-delete', $playlist->id) }}" method="POST" class="d-inline" data-confirm="Permanently delete this playlist? This cannot be undone." data-confirm-action="Permanent Delete">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>

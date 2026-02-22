@@ -7,10 +7,12 @@
                 </a>
             </div>
             @php
+                $adminNavCounts = $adminNavCounts ?? [];
+                $count = function (string $key) use ($adminNavCounts): int {
+                    return (int) ($adminNavCounts[$key] ?? 0);
+                };
                 $isDashboard = request()->routeIs('admin.dashboard');
                 $isUsers = request()->routeIs('admin.users.*');
-                $isRegister = request()->routeIs('admin.register*');
-                $isUsersMenu = $isUsers || $isRegister;
                 $isSettings = request()->routeIs('admin.settings.*');
                 $isCampaigns = request()->routeIs('admin.campaigns.*');
                 $isSubscribers = request()->routeIs('admin.subscribers.*');
@@ -46,32 +48,48 @@
                             <span class="nxl-mtext" style="color: white">Dashboard</span>
                         </a>
                     </li>
-                    <li class="nxl-item nxl-hasmenu {{ $isUsersMenu ? 'active' : '' }}">
-                        <a href="javascript:void(0);" class="nxl-link">
-                            <span class="nxl-micon"><i style="color: white" class="feather-cast"></i></span>
-                            <span class="nxl-mtext" style="color: white">Users</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+                    <li class="nxl-item nxl-hasmenu {{ $isUsers ? 'active' : '' }}">
+                        <a href="{{ route('admin.users.index') }}" class="nxl-link">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <div class="d-flex align-items-center">
+                                    <span class="nxl-micon"><i style="color: white" class="feather-cast"></i></span>
+                                    <span class="nxl-mtext" style="color: white">Users</span>
+                                </div>
+                                <span class="badge bg-light text-dark ms-2">{{ $count('users') }}</span>
+                            </div>
                         </a>
-                        <ul class="nxl-submenu">
-                            <li class="nxl-item {{ $isUsers ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.users.index') }}">View</a></li>
-                            <li class="nxl-item {{ $isRegister ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.register')}}">Register</a></li>
-                        </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isMinistryLeaders ? 'active' : '' }}">
                         <a href="{{ route('admin.ministry-leaders.index') }}" class="nxl-link">
-                            <span class="nxl-micon"><i style="color: white" class="feather-user-check"></i></span>
-                            <span class="nxl-mtext" style="color: white">Ministry Team</span>
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <div class="d-flex align-items-center">
+                                    <span class="nxl-micon"><i style="color: white" class="feather-user-check"></i></span>
+                                    <span class="nxl-mtext" style="color: white">Ministry Team</span>
+                                </div>
+                                <span class="badge bg-light text-dark ms-2">{{ $count('ministry') }}</span>
+                            </div>
                         </a>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isSubscribers ? 'active' : '' }}">
                         <a href="{{ route('admin.subscribers.index') }}" class="nxl-link">
-                            <span class="nxl-micon"><i style="color: white" class="feather-users"></i></span>
-                            <span class="nxl-mtext" style="color: white">Subscribers</span>
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <div class="d-flex align-items-center">
+                                    <span class="nxl-micon"><i style="color: white" class="feather-users"></i></span>
+                                    <span class="nxl-mtext" style="color: white">Subscribers</span>
+                                </div>
+                                <span class="badge bg-light text-dark ms-2">{{ $count('subscribers') }}</span>
+                            </div>
                         </a>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isCampaigns ? 'active' : '' }}">
                         <a href="{{ route('admin.campaigns.index') }}" class="nxl-link">
-                            <span class="nxl-micon"><i style="color: white" class="feather-mail"></i></span>
-                            <span class="nxl-mtext" style="color: white">Campaigns</span>
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <div class="d-flex align-items-center">
+                                    <span class="nxl-micon"><i style="color: white" class="feather-mail"></i></span>
+                                    <span class="nxl-mtext" style="color: white">Campaigns</span>
+                                </div>
+                                <span class="badge bg-light text-dark ms-2">{{ $count('campaigns') }}</span>
+                            </div>
                         </a>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isContentMenu ? 'active' : '' }}">
@@ -80,25 +98,35 @@
                             <span class="nxl-mtext" style="color: white">Content</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
                         </a>
                         <ul class="nxl-submenu">
-                            <li class="nxl-item {{ $isCategories ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.categories.index') }}">Categories</a></li>
-                            <li class="nxl-item {{ $isPlaylists ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.playlists.index') }}">Playlists</a></li>
-                            <li class="nxl-item {{ $isVideos ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.videos.index') }}">Videos</a></li>
-                            <li class="nxl-item {{ $isAudios ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.audios.index') }}">Audios</a></li>
-                            <li class="nxl-item {{ $isAudiobooks ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.audiobooks.index') }}">Audiobooks</a></li>
-                            <li class="nxl-item {{ $isDocuments ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.documents.index') }}">Documents</a></li>
+                            <li class="nxl-item {{ $isCategories ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.categories.index') }}"><span>Categories</span><span class="badge bg-light text-dark">{{ $count('categories') }}</span></a></li>
+                            <li class="nxl-item {{ $isPlaylists ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.playlists.index') }}"><span>Playlists</span><span class="badge bg-light text-dark">{{ $count('playlists') }}</span></a></li>
+                            <li class="nxl-item {{ $isVideos ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.videos.index') }}"><span>Videos</span><span class="badge bg-light text-dark">{{ $count('videos') }}</span></a></li>
+                            <li class="nxl-item {{ $isAudios ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.audios.index') }}"><span>Audios</span><span class="badge bg-light text-dark">{{ $count('audios') }}</span></a></li>
+                            <li class="nxl-item {{ $isAudiobooks ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.audiobooks.index') }}"><span>Audiobooks</span><span class="badge bg-light text-dark">{{ $count('audiobooks') }}</span></a></li>
+                            <li class="nxl-item {{ $isDocuments ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.documents.index') }}"><span>Documents</span><span class="badge bg-light text-dark">{{ $count('documents') }}</span></a></li>
                             <li class="nxl-item {{ $isContentNotifications ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.content-notifications.index') }}">Content Emails</a></li>
                         </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isContacts ? 'active' : '' }}">
                         <a href="{{ route('admin.contacts.index') }}" class="nxl-link">
-                            <span class="nxl-micon"><i style="color: white" class="feather-inbox"></i></span>
-                            <span class="nxl-mtext" style="color: white">Contact Inbox</span>
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <div class="d-flex align-items-center">
+                                    <span class="nxl-micon"><i style="color: white" class="feather-inbox"></i></span>
+                                    <span class="nxl-mtext" style="color: white">Contact Inbox</span>
+                                </div>
+                                <span class="badge bg-warning text-dark ms-2">{{ $count('contacts_unread') }}</span>
+                            </div>
                         </a>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isEvents ? 'active' : '' }}">
                         <a href="{{ route('admin.events.index') }}" class="nxl-link">
-                            <span class="nxl-micon"><i style="color: white" class="feather-calendar"></i></span>
-                            <span class="nxl-mtext" style="color: white">Events</span>
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <div class="d-flex align-items-center">
+                                    <span class="nxl-micon"><i style="color: white" class="feather-calendar"></i></span>
+                                    <span class="nxl-mtext" style="color: white">Events</span>
+                                </div>
+                                <span class="badge bg-light text-dark ms-2">{{ $count('events') }}</span>
+                            </div>
                         </a>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isAnalytics ? 'active' : '' }}">
@@ -109,8 +137,13 @@
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isTrash ? 'active' : '' }}">
                         <a href="{{ route('admin.trash.index') }}" class="nxl-link">
-                            <span class="nxl-micon"><i style="color: white" class="feather-trash-2"></i></span>
-                            <span class="nxl-mtext" style="color: white">Trash</span>
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <div class="d-flex align-items-center">
+                                    <span class="nxl-micon"><i style="color: white" class="feather-trash-2"></i></span>
+                                    <span class="nxl-mtext" style="color: white">Trash</span>
+                                </div>
+                                <span class="badge bg-danger text-white ms-2">{{ $count('trash') }}</span>
+                            </div>
                         </a>
                     </li>
                     <li class="nxl-item nxl-hasmenu {{ $isTranslations ? 'active' : '' }}">

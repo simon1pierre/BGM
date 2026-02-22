@@ -118,7 +118,7 @@ class ContactMessageController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.contacts.index')->with('status', 'Message moved to trash.');
+        return redirect()->back()->with('status', 'Message moved to trash.');
     }
 
     public function restore(int $contactMessage)
@@ -135,7 +135,7 @@ class ContactMessageController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.contacts.index')->with('status', 'Message restored.');
+        return redirect()->back()->with('status', 'Message restored.');
     }
 
     public function forceDelete(int $contactMessage)
@@ -153,6 +153,6 @@ class ContactMessageController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.contacts.index')->with('status', 'Message permanently deleted.');
+        return redirect()->back()->with('status', 'Message permanently deleted.');
     }
 }

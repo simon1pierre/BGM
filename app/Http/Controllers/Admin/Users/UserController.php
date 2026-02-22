@@ -197,7 +197,7 @@ class UserController extends Controller
             'action' => 'user_deleted',
         ]);
 
-        return redirect()->route('admin.users.index')->with('status', 'User deleted.');
+        return redirect()->back()->with('status', 'User deleted.');
     }
 
     public function forceLogout(User $user)
@@ -224,7 +224,7 @@ class UserController extends Controller
             'action' => 'user_restored',
         ]);
 
-        return redirect()->route('admin.users.index')->with('status', 'User restored.');
+        return redirect()->back()->with('status', 'User restored.');
     }
 
     public function forceDelete(int $userId)
@@ -243,6 +243,8 @@ class UserController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.users.index')->with('status', 'User permanently deleted.');
+        return redirect()->back()->with('status', 'User permanently deleted.');
     }
 }
+
+

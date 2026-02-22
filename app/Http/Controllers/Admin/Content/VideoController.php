@@ -248,7 +248,7 @@ class VideoController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.videos.index')->with('status', 'Video deleted.');
+        return redirect()->back()->with('status', 'Video deleted.');
     }
 
     public function restore(Request $request, int $video)
@@ -265,7 +265,7 @@ class VideoController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.videos.index')->with('status', 'Video restored.');
+        return redirect()->back()->with('status', 'Video restored.');
     }
 
     public function forceDelete(Request $request, int $video)
@@ -283,7 +283,7 @@ class VideoController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.videos.index')->with('status', 'Video permanently deleted.');
+        return redirect()->back()->with('status', 'Video permanently deleted.');
     }
 
     private function extractYoutubeId(string $url): ?string
@@ -401,3 +401,5 @@ class VideoController extends Controller
         }
     }
 }
+
+

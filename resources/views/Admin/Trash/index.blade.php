@@ -62,31 +62,81 @@
 
         <div class="card">
             <div class="card-body">
+                <div class="d-flex flex-wrap justify-content-end gap-2 mb-3 no-print">
+                    <button type="button" class="btn btn-success btn-sm" onclick="document.getElementById('trashBulkRestoreForm').requestSubmit();">
+                        Restore Selected
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-outline-danger btn-sm"
+                        data-confirm-trigger
+                        data-confirm-target="trashBulkDeleteForm"
+                        data-confirm-message="Permanently delete selected items? This cannot be undone."
+                        data-confirm-action="Permanent Delete"
+                    >
+                        Permanent Delete Selected
+                    </button>
+                </div>
+
+                <form id="trashBulkRestoreForm" method="POST" action="{{ route('admin.trash.bulk-restore') }}" class="d-none">
+                    @csrf
+                    <input type="hidden" name="module_filter" value="{{ $module }}">
+                    <input type="hidden" name="search_query" value="{{ $search }}">
+                    <div id="bulkRestoreInputs"></div>
+                </form>
+
+                <form id="trashBulkDeleteForm" method="POST" action="{{ route('admin.trash.bulk-force-delete') }}" class="d-none">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" name="module_filter" value="{{ $module }}">
+                    <input type="hidden" name="search_query" value="{{ $search }}">
+                    <div id="bulkDeleteInputs"></div>
+                </form>
+
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
+                                <th style="width:42px;">
+                                    <input type="checkbox" id="trashCheckAll" class="form-check-input">
+                                </th>
                                 <th>Module</th>
                                 <th>Record</th>
                                 <th>Details</th>
                                 <th>Deleted At</th>
-                                <th class="text-end">Manage</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                                <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                             @forelse ($items as $item)
                                 <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input trash-row-check" value="{{ $item['module_key'] }}:{{ $item['id'] }}">
+                                    </td>
                                     <td><span class="badge bg-soft-secondary text-muted">{{ $item['module_label'] }}</span></td>
                                     <td class="fw-semibold">{{ $item['title'] }}</td>
                                     <td class="text-muted fs-12">{{ $item['subtitle'] ?: '—' }}</td>
                                     <td class="text-muted fs-12">{{ $item['deleted_at']?->diffForHumans() }}</td>
                                     <td class="text-end">
-                                        <a href="{{ $item['manage_url'] }}" class="btn btn-sm btn-primary">Open Trash</a>
+                                        <form method="POST" action="{{ route('admin.trash.restore', ['module' => $item['module_key'], 'id' => $item['id']]) }}" class="d-inline">
+                                            @csrf
+                                            <input type="hidden" name="module_filter" value="{{ $module }}">
+                                            <input type="hidden" name="search_query" value="{{ $search }}">
+                                            <button class="btn btn-sm btn-success">Restore</button>
+                                        </form>
+                                        <form method="POST" action="{{ route('admin.trash.force-delete', ['module' => $item['module_key'], 'id' => $item['id']]) }}" class="d-inline" data-confirm="Permanently delete this item? This cannot be undone." data-confirm-action="Permanent Delete">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="module_filter" value="{{ $module }}">
+                                            <input type="hidden" name="search_query" value="{{ $search }}">
+                                            <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>
+                                        </form>
+                                        <a href="{{ $item['manage_url'] }}" class="btn btn-sm btn-primary">Open Module</a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center text-muted">No deleted records found.</td>
+                                    <td colspan="6" class="text-center text-muted">No deleted records found.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -96,5 +146,37 @@
         </div>
     </div>
 </div>
-@endsection
 
+<script>
+    (() => {
+        const checkAll = document.getElementById('trashCheckAll');
+        const rowChecks = () => Array.from(document.querySelectorAll('.trash-row-check'));
+        const restoreContainer = document.getElementById('bulkRestoreInputs');
+        const deleteContainer = document.getElementById('bulkDeleteInputs');
+
+        const selected = () => rowChecks().filter((el) => el.checked).map((el) => el.value);
+        const syncHiddenInputs = () => {
+            if (!restoreContainer || !deleteContainer) return;
+            const values = selected();
+            const html = values.map((value) => `<input type="hidden" name="items[]" value="${value}">`).join('');
+            restoreContainer.innerHTML = html;
+            deleteContainer.innerHTML = html;
+        };
+
+        checkAll?.addEventListener('change', () => {
+            rowChecks().forEach((el) => { el.checked = checkAll.checked; });
+            syncHiddenInputs();
+        });
+
+        rowChecks().forEach((el) => {
+            el.addEventListener('change', () => {
+                if (checkAll) {
+                    const checks = rowChecks();
+                    checkAll.checked = checks.length > 0 && checks.every((item) => item.checked);
+                }
+                syncHiddenInputs();
+            });
+        });
+    })();
+</script>
+@endsection

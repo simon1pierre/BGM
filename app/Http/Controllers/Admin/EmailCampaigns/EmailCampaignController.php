@@ -284,7 +284,7 @@ class EmailCampaignController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.campaigns.index')->with('status', 'Campaign deleted.');
+        return redirect()->back()->with('status', 'Campaign deleted.');
     }
 
     public function restore(int $campaign)
@@ -301,7 +301,7 @@ class EmailCampaignController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.campaigns.index')->with('status', 'Campaign restored.');
+        return redirect()->back()->with('status', 'Campaign restored.');
     }
 
     public function forceDelete(int $campaign)
@@ -319,7 +319,7 @@ class EmailCampaignController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.campaigns.index')->with('status', 'Campaign permanently deleted.');
+        return redirect()->back()->with('status', 'Campaign permanently deleted.');
     }
 
     private function resolveTargets(string $targetType, array $subscriberIds, ?string $targetEmails): array
@@ -367,3 +367,5 @@ class EmailCampaignController extends Controller
     }
 
 }
+
+

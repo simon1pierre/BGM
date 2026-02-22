@@ -17,12 +17,45 @@ class PlaylistController extends Controller
 {
     use HandlesTranslations;
 
-    public function index()
+    public function index(Request $request)
     {
         $playlists = Playlist::query()
-            ->withCount('items')
+            ->withCount('items');
+
+        if ($request->filled('search')) {
+            $search = trim((string) $request->query('search'));
+            $playlists->where(function ($query) use ($search): void {
+                $query->where('title', 'like', '%'.$search.'%')
+                    ->orWhere('description', 'like', '%'.$search.'%');
+            });
+        }
+
+        if ($request->filled('type')) {
+            $playlists->where('type', (string) $request->query('type'));
+        }
+
+        if ($request->filled('status')) {
+            $status = (string) $request->query('status');
+            if ($status === 'published') {
+                $playlists->where('is_published', true);
+            } elseif ($status === 'draft') {
+                $playlists->where('is_published', false);
+            }
+        }
+
+        if ($request->filled('deleted')) {
+            $deleted = (string) $request->query('deleted');
+            if ($deleted === 'with') {
+                $playlists->withTrashed();
+            } elseif ($deleted === 'only') {
+                $playlists->onlyTrashed();
+            }
+        }
+
+        $playlists = $playlists
             ->orderByDesc('created_at')
-            ->paginate(15);
+            ->paginate(15)
+            ->withQueryString();
 
         return view('Admin.Content.Playlists.index', compact('playlists'));
     }
@@ -169,7 +202,7 @@ class PlaylistController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.playlists.index')->with('status', 'Playlist deleted.');
+        return redirect()->back()->with('status', 'Playlist deleted.');
     }
 
     public function restore(Request $request, int $playlist)
@@ -186,7 +219,7 @@ class PlaylistController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.playlists.index')->with('status', 'Playlist restored.');
+        return redirect()->back()->with('status', 'Playlist restored.');
     }
 
     public function forceDelete(Request $request, int $playlist)
@@ -204,7 +237,7 @@ class PlaylistController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.playlists.index')->with('status', 'Playlist permanently deleted.');
+        return redirect()->back()->with('status', 'Playlist permanently deleted.');
     }
 
     private function syncItems(Playlist $playlist, array $items, array $orders): void

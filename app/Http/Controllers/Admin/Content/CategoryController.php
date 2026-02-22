@@ -204,7 +204,7 @@ class CategoryController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.categories.index')->with('status', 'Category deleted.');
+        return redirect()->back()->with('status', 'Category deleted.');
     }
 
     public function restore(Request $request, int $category)
@@ -221,7 +221,7 @@ class CategoryController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.categories.index')->with('status', 'Category restored.');
+        return redirect()->back()->with('status', 'Category restored.');
     }
 
     public function forceDelete(Request $request, int $category)
@@ -239,6 +239,8 @@ class CategoryController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.categories.index')->with('status', 'Category permanently deleted.');
+        return redirect()->back()->with('status', 'Category permanently deleted.');
     }
 }
+
+

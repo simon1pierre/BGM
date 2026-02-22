@@ -272,7 +272,7 @@ class AudioController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.audios.index')->with('status', 'Audio deleted.');
+        return redirect()->back()->with('status', 'Audio deleted.');
     }
 
     public function restore(Request $request, int $audio)
@@ -289,7 +289,7 @@ class AudioController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.audios.index')->with('status', 'Audio restored.');
+        return redirect()->back()->with('status', 'Audio restored.');
     }
 
     public function forceDelete(Request $request, int $audio)
@@ -307,7 +307,7 @@ class AudioController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.audios.index')->with('status', 'Audio permanently deleted.');
+        return redirect()->back()->with('status', 'Audio permanently deleted.');
     }
 
     private function maybeNotifySubscribers(Request $request, array $payload): void
@@ -394,3 +394,5 @@ class AudioController extends Controller
         }
     }
 }
+
+

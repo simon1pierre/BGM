@@ -29,8 +29,9 @@
                                 <input type="date" name="published_at" value="{{ old('published_at') }}" class="form-control">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold">Audiobook File</label>
-                                <input type="file" name="audio_file" class="form-control" accept="audio/*" required>
+                                <label class="form-label fw-semibold">Primary Audiobook File (optional)</label>
+                                <input type="file" name="audio_file" class="form-control" accept="audio/*">
+                                <div class="fs-12 text-muted mt-1">You can skip this if you upload audiobook parts below.</div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Thumbnail (optional)</label>
@@ -46,13 +47,13 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold">Linked Book (optional)</label>
-                                <select name="book_id" class="form-select">
-                                    <option value="">None</option>
+                                <label class="form-label fw-semibold">Linked Book</label>
+                                <select name="book_id" class="form-select" required>
                                     @foreach ($books as $book)
                                         <option value="{{ $book->id }}" @selected(old('book_id') == $book->id)>{{ $book->title }}</option>
                                     @endforeach
                                 </select>
+                                <div class="fs-12 text-muted mt-1">Each audiobook must belong to one book.</div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Narrator</label>
@@ -69,6 +70,32 @@
                             <div class="col-md-12">
                                 <label class="form-label fw-semibold">Description</label>
                                 <textarea name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="border rounded-3 p-3 bg-light">
+                                    <h6 class="mb-3">Multi-Part Audio (Optional)</h6>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-semibold">Upload Many Parts</label>
+                                            <input type="file" name="part_files[]" class="form-control" accept="audio/*" multiple>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label fw-semibold">Part Title Prefix</label>
+                                            <input type="text" name="part_title_prefix" value="{{ old('part_title_prefix', 'Part') }}" class="form-control" placeholder="Part">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label fw-semibold">Start Number</label>
+                                            <input type="number" name="part_order_start" value="{{ old('part_order_start', 1) }}" min="1" class="form-control">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label fw-semibold">Duration (optional)</label>
+                                            <input type="text" name="part_duration" value="{{ old('part_duration') }}" class="form-control" placeholder="e.g. 12:30">
+                                        </div>
+                                    </div>
+                                    <div class="fs-12 text-muted mt-2">
+                                        Example: "Part" + start 1 creates Part 1, Part 2, ... for all uploaded files.
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="row g-3">

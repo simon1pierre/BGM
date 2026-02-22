@@ -54,6 +54,16 @@
             min-width: 9.5rem;
         }
 
+        .admin-confirm-modal .modal-content {
+            border-radius: .9rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .admin-confirm-modal .modal-body {
+            font-size: .95rem;
+            color: #334155;
+        }
+
         @media print {
             body {
                 background: #fff !important;
@@ -104,6 +114,23 @@
 
 <body>
     <div id="adminToastWrap" class="admin-toast-wrap" aria-live="polite" aria-atomic="true"></div>
+    <div class="modal fade admin-confirm-modal" id="adminConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header py-2">
+                    <h6 class="modal-title mb-0">Confirm Action</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-3" id="adminConfirmMessage">
+                    Are you sure?
+                </div>
+                <div class="modal-footer py-2">
+                    <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger btn-sm" id="adminConfirmAccept">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
     @include('layouts.admin.partials.nav')
     @include('layouts.admin.partials.header')
     <main class="nxl-container">
@@ -136,6 +163,122 @@
     <script src="{{ asset('admin/assets/js/theme-customizer-init.min.js')}}"></script>
     <script>
         (() => {
+            const modalElement = document.getElementById('adminConfirmModal');
+            const messageElement = document.getElementById('adminConfirmMessage');
+            const acceptElement = document.getElementById('adminConfirmAccept');
+            const confirmModal = (window.bootstrap && modalElement) ? new window.bootstrap.Modal(modalElement) : null;
+            let manualBackdrop = null;
+            let onConfirm = null;
+
+            const showConfirm = () => {
+                if (!modalElement) return;
+                if (confirmModal) {
+                    confirmModal.show();
+                    return;
+                }
+
+                modalElement.style.display = 'block';
+                modalElement.classList.add('show');
+                modalElement.removeAttribute('aria-hidden');
+                document.body.classList.add('modal-open');
+
+                manualBackdrop = document.createElement('div');
+                manualBackdrop.className = 'modal-backdrop fade show';
+                document.body.appendChild(manualBackdrop);
+            };
+
+            const hideConfirm = () => {
+                if (!modalElement) return;
+                if (confirmModal) {
+                    confirmModal.hide();
+                    return;
+                }
+
+                modalElement.style.display = 'none';
+                modalElement.classList.remove('show');
+                modalElement.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('modal-open');
+                manualBackdrop?.remove();
+                manualBackdrop = null;
+            };
+
+            const openConfirmModal = (message, callback, actionLabel = 'Confirm') => {
+                if (!modalElement || !messageElement || !acceptElement) {
+                    return;
+                }
+
+                onConfirm = callback;
+                messageElement.textContent = String(message || 'Are you sure?');
+                acceptElement.textContent = String(actionLabel || 'Confirm');
+                showConfirm();
+            };
+
+            acceptElement?.addEventListener('click', () => {
+                const callback = onConfirm;
+                onConfirm = null;
+                hideConfirm();
+                if (typeof callback === 'function') callback();
+            });
+
+            modalElement?.addEventListener('hidden.bs.modal', () => {
+                onConfirm = null;
+            });
+
+            modalElement?.querySelectorAll('[data-bs-dismiss="modal"]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    onConfirm = null;
+                    hideConfirm();
+                });
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key !== 'Escape') return;
+                if (!modalElement?.classList.contains('show')) return;
+                onConfirm = null;
+                hideConfirm();
+            });
+
+            document.addEventListener('submit', (event) => {
+                const form = event.target;
+                if (!(form instanceof HTMLFormElement)) return;
+                if (!form.dataset.confirm) return;
+                if (form.dataset.confirmed === '1') {
+                    form.dataset.confirmed = '';
+                    return;
+                }
+
+                event.preventDefault();
+
+                openConfirmModal(
+                    form.dataset.confirm,
+                    () => {
+                        form.dataset.confirmed = '1';
+                        if (typeof form.requestSubmit === 'function') form.requestSubmit();
+                        else form.submit();
+                    },
+                    form.dataset.confirmAction || 'Confirm'
+                );
+            }, true);
+
+            document.addEventListener('click', (event) => {
+                const trigger = event.target.closest('[data-confirm-trigger]');
+                if (!trigger) return;
+
+                event.preventDefault();
+                const targetId = trigger.getAttribute('data-confirm-target');
+                const target = targetId ? document.getElementById(targetId) : null;
+                if (!target || !(target instanceof HTMLFormElement)) return;
+
+                openConfirmModal(
+                    trigger.getAttribute('data-confirm-message') || 'Are you sure?',
+                    () => {
+                        if (typeof target.requestSubmit === 'function') target.requestSubmit();
+                        else target.submit();
+                    },
+                    trigger.getAttribute('data-confirm-action') || 'Confirm'
+                );
+            });
+
             const wrap = document.getElementById('adminToastWrap');
 
             window.adminNotify = function (message, type = 'info', timeout = 4200) {

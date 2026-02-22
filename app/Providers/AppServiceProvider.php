@@ -3,6 +3,18 @@
 namespace App\Providers;
 
 use App\Models\Setting;
+use App\Models\Subscriber;
+use App\Models\ContactMessage;
+use App\Models\Event;
+use App\Models\EmailCampaign;
+use App\Models\MinistryLeader;
+use App\Models\User;
+use App\Models\video;
+use App\Models\audio;
+use App\Models\audiobook;
+use App\Models\book;
+use App\Models\ContentCategory;
+use App\Models\Playlist;
 use App\Models\UserActivityLog;
 use App\Notifications\SystemActivityNotification;
 use App\Services\Translation\LibreTranslateTranslator;
@@ -11,6 +23,7 @@ use App\Services\Translation\TranslatorInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
@@ -93,6 +106,78 @@ class AppServiceProvider extends ServiceProvider
         }
 
         view()->share('siteSettings', $settings);
+
+        View::composer('layouts.admin.partials.nav', function ($view): void {
+            $counts = [
+                'users' => 0,
+                'campaigns' => 0,
+                'videos' => 0,
+                'audios' => 0,
+                'audiobooks' => 0,
+                'documents' => 0,
+                'categories' => 0,
+                'playlists' => 0,
+                'subscribers' => 0,
+                'contacts_unread' => 0,
+                'events' => 0,
+                'ministry' => 0,
+                'trash' => 0,
+            ];
+
+            if (Schema::hasTable('users')) {
+                $counts['users'] = User::query()->count();
+            }
+            if (Schema::hasTable('email_campaigns')) {
+                $counts['campaigns'] = EmailCampaign::query()->count();
+            }
+            if (Schema::hasTable('videos')) {
+                $counts['videos'] = video::query()->count();
+            }
+            if (Schema::hasTable('audios')) {
+                $counts['audios'] = audio::query()->count();
+            }
+            if (Schema::hasTable('audiobooks')) {
+                $counts['audiobooks'] = audiobook::query()->count();
+            }
+            if (Schema::hasTable('books')) {
+                $counts['documents'] = book::query()->count();
+            }
+            if (Schema::hasTable('content_categories')) {
+                $counts['categories'] = ContentCategory::query()->count();
+            }
+            if (Schema::hasTable('playlists')) {
+                $counts['playlists'] = Playlist::query()->count();
+            }
+            if (Schema::hasTable('subscribers')) {
+                $counts['subscribers'] = Subscriber::query()->count();
+            }
+            if (Schema::hasTable('contact_messages')) {
+                $counts['contacts_unread'] = ContactMessage::query()->where('is_read', false)->count();
+            }
+            if (Schema::hasTable('events')) {
+                $counts['events'] = Event::query()->count();
+            }
+            if (Schema::hasTable('ministry_leaders')) {
+                $counts['ministry'] = MinistryLeader::query()->count();
+            }
+
+            $trashTotal = 0;
+            if (Schema::hasTable('users') && Schema::hasColumn('users', 'deleted_at')) $trashTotal += User::onlyTrashed()->count();
+            if (Schema::hasTable('videos') && Schema::hasColumn('videos', 'deleted_at')) $trashTotal += video::onlyTrashed()->count();
+            if (Schema::hasTable('audios') && Schema::hasColumn('audios', 'deleted_at')) $trashTotal += audio::onlyTrashed()->count();
+            if (Schema::hasTable('audiobooks') && Schema::hasColumn('audiobooks', 'deleted_at')) $trashTotal += audiobook::onlyTrashed()->count();
+            if (Schema::hasTable('books') && Schema::hasColumn('books', 'deleted_at')) $trashTotal += book::onlyTrashed()->count();
+            if (Schema::hasTable('content_categories') && Schema::hasColumn('content_categories', 'deleted_at')) $trashTotal += ContentCategory::onlyTrashed()->count();
+            if (Schema::hasTable('playlists') && Schema::hasColumn('playlists', 'deleted_at')) $trashTotal += Playlist::onlyTrashed()->count();
+            if (Schema::hasTable('subscribers') && Schema::hasColumn('subscribers', 'deleted_at')) $trashTotal += Subscriber::onlyTrashed()->count();
+            if (Schema::hasTable('events') && Schema::hasColumn('events', 'deleted_at')) $trashTotal += Event::onlyTrashed()->count();
+            if (Schema::hasTable('contact_messages') && Schema::hasColumn('contact_messages', 'deleted_at')) $trashTotal += ContactMessage::onlyTrashed()->count();
+            if (Schema::hasTable('email_campaigns') && Schema::hasColumn('email_campaigns', 'deleted_at')) $trashTotal += EmailCampaign::onlyTrashed()->count();
+            if (Schema::hasTable('ministry_leaders') && Schema::hasColumn('ministry_leaders', 'deleted_at')) $trashTotal += MinistryLeader::onlyTrashed()->count();
+            $counts['trash'] = $trashTotal;
+
+            $view->with('adminNavCounts', $counts);
+        });
 
         if (Schema::hasTable('user_activity_logs')) {
             UserActivityLog::created(function (UserActivityLog $activity): void {

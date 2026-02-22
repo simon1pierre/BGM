@@ -94,14 +94,14 @@
                                                     @csrf
                                                     <button class="btn btn-sm btn-success">Restore</button>
                                                 </form>
-                                                <form action="{{ route('admin.contacts.force-delete', $message->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Permanently delete this message? This cannot be undone.');">
+                                                <form action="{{ route('admin.contacts.force-delete', $message->id) }}" method="POST" class="d-inline" data-confirm="Permanently delete this message? This cannot be undone." data-confirm-action="Permanent Delete">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>
                                                 </form>
                                             @else
                                                 <a href="{{ route('admin.contacts.show', $message) }}" class="btn btn-sm btn-primary">Open</a>
-                                                <form action="{{ route('admin.contacts.destroy', $message) }}" method="POST" class="d-inline" onsubmit="return confirm('Move this message to trash?');">
+                                                <form action="{{ route('admin.contacts.destroy', $message) }}" method="POST" class="d-inline" data-confirm="Move this message to trash?" data-confirm-action="Move to Trash">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-sm btn-danger">Delete</button>

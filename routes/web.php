@@ -71,6 +71,10 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.analy
 });
 Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.trash.')->group(function () {
     Route::get('/trash', [TrashController::class, 'index'])->name('index');
+    Route::post('/trash/{module}/{id}/restore', [TrashController::class, 'restore'])->name('restore');
+    Route::delete('/trash/{module}/{id}/force-delete', [TrashController::class, 'forceDelete'])->name('force-delete');
+    Route::post('/trash/bulk/restore', [TrashController::class, 'bulkRestore'])->name('bulk-restore');
+    Route::delete('/trash/bulk/force-delete', [TrashController::class, 'bulkForceDelete'])->name('bulk-force-delete');
 });
 Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.translations.')->group(function () {
     Route::get('/translations/review', [TranslationReviewController::class, 'index'])->name('review');
@@ -112,11 +116,16 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->group(function ()
 
     Route::resource('audiobooks', AudiobookController::class)->except(['show'])->names('admin.audiobooks');
     Route::get('audiobooks/{audiobook}/preview', [AudiobookController::class, 'preview'])->name('admin.audiobooks.preview');
+    Route::post('audiobooks/{audiobook}/parts', [AudiobookController::class, 'addPart'])->name('admin.audiobooks.parts.store');
+    Route::post('audiobooks/{audiobook}/parts/reorder', [AudiobookController::class, 'reorderParts'])->name('admin.audiobooks.parts.reorder');
+    Route::delete('audiobooks/{audiobook}/parts/{part}', [AudiobookController::class, 'destroyPart'])->name('admin.audiobooks.parts.destroy');
     Route::post('audiobooks/{audiobook}/restore', [AudiobookController::class, 'restore'])->name('admin.audiobooks.restore');
     Route::delete('audiobooks/{audiobook}/force-delete', [AudiobookController::class, 'forceDelete'])->name('admin.audiobooks.force-delete');
 
     Route::resource('documents', DocumentController::class)->except(['show'])->names('admin.documents');
     Route::get('documents/{document}/preview', [DocumentController::class, 'preview'])->name('admin.documents.preview');
+    Route::post('documents/{document}/audiobooks', [AudiobookController::class, 'storeForBook'])->name('admin.documents.audiobooks.store');
+    Route::post('documents/{document}/audiobook-parts', [AudiobookController::class, 'storePartsForBook'])->name('admin.documents.audiobook-parts.store');
     Route::post('documents/{document}/restore', [DocumentController::class, 'restore'])->name('admin.documents.restore');
     Route::delete('documents/{document}/force-delete', [DocumentController::class, 'forceDelete'])->name('admin.documents.force-delete');
 

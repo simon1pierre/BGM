@@ -162,7 +162,7 @@
                                             @csrf
                                             <button class="btn btn-sm btn-success">Restore</button>
                                         </form>
-                                        <form method="POST" action="{{ route('admin.'.$type.'.force-delete', $item->id) }}" class="d-inline" onsubmit="return confirm('Permanently delete this item? This cannot be undone.');">
+                                        <form method="POST" action="{{ route('admin.'.$type.'.force-delete', $item->id) }}" class="d-inline" data-confirm="Permanently delete this item? This cannot be undone." data-confirm-action="Permanent Delete">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>

@@ -155,7 +155,7 @@ class EventController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.events.index')->with('status', 'Event deleted.');
+        return redirect()->back()->with('status', 'Event deleted.');
     }
 
     public function restore(int $event)
@@ -172,7 +172,7 @@ class EventController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.events.index')->with('status', 'Event restored.');
+        return redirect()->back()->with('status', 'Event restored.');
     }
 
     public function forceDelete(int $event)
@@ -190,7 +190,7 @@ class EventController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.events.index')->with('status', 'Event permanently deleted.');
+        return redirect()->back()->with('status', 'Event permanently deleted.');
     }
 
     public function togglePublished(Event $event)
@@ -247,3 +247,5 @@ class EventController extends Controller
         ]);
     }
 }
+
+

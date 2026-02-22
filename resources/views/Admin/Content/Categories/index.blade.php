@@ -121,7 +121,7 @@
                                                     @csrf
                                                     <button class="btn btn-sm btn-success">Restore</button>
                                                 </form>
-                                                <form action="{{ route('admin.categories.force-delete', $category->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Permanently delete this category? This cannot be undone.');">
+                                                <form action="{{ route('admin.categories.force-delete', $category->id) }}" method="POST" class="d-inline" data-confirm="Permanently delete this category? This cannot be undone." data-confirm-action="Permanent Delete">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>

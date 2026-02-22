@@ -130,7 +130,7 @@ class MinistryLeaderController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.ministry-leaders.index')->with('status', 'Ministry profile deleted.');
+        return redirect()->back()->with('status', 'Ministry profile deleted.');
     }
 
     public function restore(int $ministry_leader)
@@ -147,7 +147,7 @@ class MinistryLeaderController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.ministry-leaders.index')->with('status', 'Ministry profile restored.');
+        return redirect()->back()->with('status', 'Ministry profile restored.');
     }
 
     public function forceDelete(int $ministry_leader)
@@ -165,7 +165,7 @@ class MinistryLeaderController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.ministry-leaders.index')->with('status', 'Ministry profile permanently deleted.');
+        return redirect()->back()->with('status', 'Ministry profile permanently deleted.');
     }
 
     public function toggleActive(MinistryLeader $ministryLeader)
@@ -200,3 +200,5 @@ class MinistryLeaderController extends Controller
         ]);
     }
 }
+
+

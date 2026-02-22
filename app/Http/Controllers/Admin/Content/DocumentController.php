@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
 use App\Models\UserActivityLog;
 use App\Models\book;
+use App\Models\audiobook;
 use App\Jobs\SendContentNotificationJob;
 use App\Models\ContentNotification;
 use App\Http\Controllers\Concerns\HandlesTranslations;
@@ -116,7 +117,19 @@ class DocumentController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('Admin.Content.Documents.edit', compact('document', 'categories'));
+        $audioCategories = ContentCategory::query()
+            ->whereIn('type', ['audio', 'all'])
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
+        $linkedAudiobooks = audiobook::query()
+            ->withCount('publishedParts')
+            ->where('book_id', $document->id)
+            ->orderByDesc('created_at')
+            ->get();
+
+        return view('Admin.Content.Documents.edit', compact('document', 'categories', 'audioCategories', 'linkedAudiobooks'));
     }
 
     public function preview(book $document)
@@ -216,7 +229,7 @@ class DocumentController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.documents.index')->with('status', 'Document deleted.');
+        return redirect()->back()->with('status', 'Document deleted.');
     }
 
     public function restore(Request $request, int $document)
@@ -233,7 +246,7 @@ class DocumentController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.documents.index')->with('status', 'Document restored.');
+        return redirect()->back()->with('status', 'Document restored.');
     }
 
     public function forceDelete(Request $request, int $document)
@@ -251,7 +264,7 @@ class DocumentController extends Controller
             ],
         ]);
 
-        return redirect()->route('admin.documents.index')->with('status', 'Document permanently deleted.');
+        return redirect()->back()->with('status', 'Document permanently deleted.');
     }
 
     private function maybeNotifySubscribers(Request $request, array $payload): void
@@ -303,3 +316,5 @@ class DocumentController extends Controller
             ->all();
     }
 }
+
+

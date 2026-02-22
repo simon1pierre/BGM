@@ -87,7 +87,7 @@
                                                 @csrf
                                                 <button class="btn btn-sm btn-success">Restore</button>
                                             </form>
-                                            <form method="POST" action="{{ route('admin.campaigns.force-delete', $campaign->id) }}" class="d-inline" onsubmit="return confirm('Permanently delete this campaign? This cannot be undone.');">
+                                            <form method="POST" action="{{ route('admin.campaigns.force-delete', $campaign->id) }}" class="d-inline" data-confirm="Permanently delete this campaign? This cannot be undone." data-confirm-action="Permanent Delete">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>
@@ -95,7 +95,7 @@
                                         @else
                                             <a href="{{ route('admin.campaigns.preview', $campaign) }}" class="btn btn-sm btn-outline-primary">Preview</a>
                                             <a href="{{ route('admin.campaigns.edit', $campaign) }}" class="btn btn-sm btn-light">Edit</a>
-                                            <form method="POST" action="{{ route('admin.campaigns.destroy', $campaign) }}" class="d-inline" onsubmit="return confirm('Move this campaign to trash?');">
+                                            <form method="POST" action="{{ route('admin.campaigns.destroy', $campaign) }}" class="d-inline" data-confirm="Move this campaign to trash?" data-confirm-action="Move to Trash">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-sm btn-danger">Delete</button>
@@ -119,4 +119,3 @@
     </div>
 </div>
 @endsection
-

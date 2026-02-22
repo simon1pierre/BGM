@@ -131,22 +131,182 @@
                                 </div>
                             </div>
                             @if ($linkedAudiobooks->count())
-                                <div class="space-y-4">
-                                    @foreach ($linkedAudiobooks as $ab)
-                                        <div class="border border-slate-100 rounded-xl p-3">
-                                            <div class="flex items-center justify-between gap-2 mb-2">
-                                                <div class="text-sm font-semibold text-slate-800">{{ $ab->title }}</div>
-                                                @if ($ab->is_prayer_audio)
-                                                    <span class="inline-flex px-2 py-0.5 rounded-full text-[11px] bg-emerald-100 text-emerald-700">{{ __('messages.common.prayer') }}</span>
-                                                @endif
-                                            </div>
-                                            <audio controls class="w-full">
-                                                <source src="{{ asset('storage/'.$ab->audio_file) }}" type="audio/mpeg">
-                                            </audio>
-                                            <a href="{{ route('audiobooks.show', $ab) }}" class="inline-flex mt-2 text-xs text-blue-700 hover:text-blue-900">{{ __('messages.books.open_audiobook_page') }}</a>
+                                @php
+                                    $bookQueue = [];
+                                    foreach ($linkedAudiobooks as $ab) {
+                                        if ($ab->publishedParts->count() > 0) {
+                                            foreach ($ab->publishedParts as $part) {
+                                                $bookQueue[] = [
+                                                    'key' => 'part_'.$part->id,
+                                                    'label' => $ab->title.' - '.$part->title,
+                                                    'audio' => asset('storage/'.$part->audio_file),
+                                                    'source_url' => route('books.show', $book),
+                                                    'source_name' => $ab->title,
+                                                ];
+                                            }
+                                        } else {
+                                            $playable = $ab->resolvePlayableAudioFile();
+                                            if (!empty($playable)) {
+                                                $bookQueue[] = [
+                                                    'key' => 'ab_'.$ab->id,
+                                                    'label' => $ab->title,
+                                                    'audio' => asset('storage/'.$playable),
+                                                    'source_url' => route('books.show', $book),
+                                                    'source_name' => $ab->title,
+                                                ];
+                                            }
+                                        }
+                                    }
+                                @endphp
+                                @if (count($bookQueue) > 0)
+                                    <style>
+                                        .book-track-row.book-track-active {
+                                            background-color: #343743;
+                                            color: #ffffff;
+                                        }
+                                    </style>
+                                    <div class="mb-4 rounded-2xl overflow-hidden border border-slate-700 bg-[#1b1c22] text-slate-100 shadow-sm">
+                                        <div class="px-3 py-2 border-b border-slate-700 bg-[#22242c]">
+                                            <div class="text-[11px] uppercase tracking-wide text-slate-300">{{ __('messages.books.audiobook_while_reading') }}</div>
+                                            <div id="bookLinkedNowPlaying" class="text-sm font-semibold mt-1 truncate">{{ $bookQueue[0]['label'] }}</div>
                                         </div>
-                                    @endforeach
+                                        <div class="p-3 border-b border-slate-700">
+                                            <audio id="bookLinkedPlayer" class="hidden">
+                                                <source id="bookLinkedSource" src="{{ $bookQueue[0]['audio'] }}" type="audio/mpeg">
+                                            </audio>
+                                            <div class="flex items-center gap-2 mb-3">
+                                                <button type="button" id="bookLinkedPrev" class="px-3 py-2 rounded bg-[#2b2d36] hover:bg-[#373a45] text-sm" aria-label="Previous">⏮</button>
+                                                <button type="button" id="bookLinkedPlayPause" class="px-4 py-2 rounded bg-[#ff006e] hover:bg-[#e00062] text-sm font-semibold min-w-[72px]">Play</button>
+                                                <button type="button" id="bookLinkedNext" class="px-3 py-2 rounded bg-[#2b2d36] hover:bg-[#373a45] text-sm" aria-label="Next">⏭</button>
+                                                <div class="flex items-center gap-2 ml-auto">
+                                                    <span class="text-xs text-slate-300">Vol</span>
+                                                    <input id="bookLinkedVolume" type="range" min="0" max="1" step="0.05" value="1" class="accent-pink-500 w-24">
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center justify-between text-xs text-slate-300">
+                                                <span id="bookLinkedCurrentTime">00:00</span>
+                                                <label class="inline-flex items-center gap-2">
+                                                    <input id="bookLinkedAutoNext" type="checkbox" class="rounded border-slate-500 bg-[#2b2d36]" checked>
+                                                    Auto next
+                                                </label>
+                                                <span id="bookLinkedDuration">00:00</span>
+                                            </div>
+                                        </div>
+                                        <div id="bookLinkedQueue" class="max-h-80 overflow-y-auto">
+                                            @foreach ($bookQueue as $index => $track)
+                                                <button
+                                                    type="button"
+                                                    class="book-track-row w-full text-left px-3 py-3 border-b border-slate-700/80 hover:bg-[#2a2c35] transition-colors"
+                                                    data-book-track
+                                                    data-track-index="{{ $index }}"
+                                                    data-track-key="{{ $track['key'] }}"
+                                                    data-track-title="{{ $track['label'] }}"
+                                                    data-track-src="{{ $track['audio'] }}"
+                                                    data-track-source="{{ $track['source_url'] }}"
+                                                >
+                                                    <div class="flex items-center justify-between gap-3">
+                                                        <div class="min-w-0">
+                                                            <div class="text-sm font-semibold truncate">{{ $loop->iteration }}. {{ $track['label'] }}</div>
+                                                        </div>
+                                                        <div class="text-slate-300 text-sm">🎧</div>
+                                                    </div>
+                                                </button>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="space-y-2 text-xs text-slate-500">
+                                    <div>{{ __('messages.books.audiobook_while_reading') }}</div>
                                 </div>
+                                <script>
+                                    (() => {
+                                        const player = document.getElementById('bookLinkedPlayer');
+                                        const source = document.getElementById('bookLinkedSource');
+                                        const nowNode = document.getElementById('bookLinkedNowPlaying');
+                                        const autoNext = document.getElementById('bookLinkedAutoNext');
+                                        const prevButton = document.getElementById('bookLinkedPrev');
+                                        const nextButton = document.getElementById('bookLinkedNext');
+                                        const playPauseButton = document.getElementById('bookLinkedPlayPause');
+                                        const volumeSlider = document.getElementById('bookLinkedVolume');
+                                        const currentTimeNode = document.getElementById('bookLinkedCurrentTime');
+                                        const durationNode = document.getElementById('bookLinkedDuration');
+                                        const buttons = Array.from(document.querySelectorAll('[data-book-track]'));
+                                        if (!player || !source || buttons.length === 0) return;
+
+                                        let activeIndex = 0;
+                                        const formatTime = (seconds) => {
+                                            if (!Number.isFinite(seconds)) return '00:00';
+                                            const total = Math.max(0, Math.floor(seconds));
+                                            const m = String(Math.floor(total / 60)).padStart(2, '0');
+                                            const s = String(total % 60).padStart(2, '0');
+                                            return `${m}:${s}`;
+                                        };
+
+                                        const syncPlayState = () => {
+                                            if (!playPauseButton) return;
+                                            playPauseButton.textContent = player.paused ? 'Play' : 'Pause';
+                                        };
+
+                                        const selectTrack = (index, play = true) => {
+                                            if (index < 0 || index >= buttons.length) return;
+                                            activeIndex = index;
+                                            const button = buttons[index];
+                                            source.src = button.getAttribute('data-track-src') || '';
+                                            player.load();
+                                            if (play) player.play().catch(() => {});
+                                            if (nowNode) nowNode.textContent = button.getAttribute('data-track-title') || '';
+                                            buttons.forEach((item) => item.classList.remove('book-track-active'));
+                                            button.classList.add('book-track-active');
+                                            syncPlayState();
+                                        };
+
+                                        buttons.forEach((button, index) => {
+                                            button.addEventListener('click', () => selectTrack(index, true));
+                                        });
+
+                                        prevButton?.addEventListener('click', () => {
+                                            if (activeIndex > 0) selectTrack(activeIndex - 1, true);
+                                        });
+
+                                        nextButton?.addEventListener('click', () => {
+                                            if (activeIndex + 1 < buttons.length) selectTrack(activeIndex + 1, true);
+                                        });
+
+                                        playPauseButton?.addEventListener('click', () => {
+                                            if (player.paused) {
+                                                player.play().catch(() => {});
+                                            } else {
+                                                player.pause();
+                                            }
+                                        });
+
+                                        volumeSlider?.addEventListener('input', () => {
+                                            player.volume = Number(volumeSlider.value || 1);
+                                        });
+
+                                        player.addEventListener('timeupdate', () => {
+                                            if (currentTimeNode) currentTimeNode.textContent = formatTime(player.currentTime);
+                                            if (durationNode) durationNode.textContent = formatTime(player.duration);
+                                        });
+
+                                        player.addEventListener('loadedmetadata', () => {
+                                            if (durationNode) durationNode.textContent = formatTime(player.duration);
+                                        });
+
+                                        player.addEventListener('play', syncPlayState);
+                                        player.addEventListener('pause', syncPlayState);
+
+                                        player.addEventListener('ended', () => {
+                                            if (!autoNext || !autoNext.checked) return;
+                                            if (activeIndex + 1 < buttons.length) {
+                                                selectTrack(activeIndex + 1, true);
+                                            }
+                                        });
+
+                                        selectTrack(0, false);
+                                        syncPlayState();
+                                    })();
+                                </script>
                             @else
                                 <div class="text-xs text-slate-500">{{ __('messages.books.no_audiobooks_filter') }}</div>
                             @endif

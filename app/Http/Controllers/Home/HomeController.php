@@ -72,7 +72,12 @@ class HomeController extends Controller
 
         $featuredAudiobooks = audiobook::query()
             ->with(['category.translations', 'translations', 'linkedBook.translations'])
+            ->withCount(['publishedParts as parts_count'])
             ->where('is_published', true)
+            ->whereNotNull('book_id')
+            ->whereHas('linkedBook', function ($query) {
+                $query->where('is_published', true);
+            })
             ->where('featured', true)
             ->orderByDesc('published_at')
             ->orderByDesc('created_at')
@@ -272,6 +277,13 @@ class HomeController extends Controller
             ->exists();
 
         $linkedAudiobooks = audiobook::query()
+            ->with(['publishedParts' => function ($query) {
+                $query->select('id', 'audiobook_id', 'title', 'audio_file', 'duration', 'sort_order')
+                    ->where('is_published', true)
+                    ->orderBy('sort_order')
+                    ->orderBy('id');
+            }])
+            ->withCount(['publishedParts as parts_count'])
             ->where('is_published', true)
             ->where('book_id', $book->id)
             ->when(!is_null($prayerFilter), function ($query) use ($prayerFilter) {
@@ -280,7 +292,6 @@ class HomeController extends Controller
             ->orderByDesc('is_prayer_audio')
             ->orderByDesc('featured')
             ->orderByDesc('published_at')
-            ->limit(3)
             ->get();
 
         return view('books.show', compact('book', 'relatedBooks', 'linkedAudiobooks', 'prayerFilter', 'hasLinkedAudiobooks'));
@@ -297,6 +308,12 @@ class HomeController extends Controller
         $book->category?->load('translations');
 
         $linkedAudiobooks = audiobook::query()
+            ->with(['publishedParts' => function ($query) {
+                $query->select('id', 'audiobook_id', 'title', 'audio_file', 'duration', 'sort_order')
+                    ->where('is_published', true)
+                    ->orderBy('sort_order')
+                    ->orderBy('id');
+            }])
             ->where('is_published', true)
             ->where('book_id', $book->id)
             ->orderByDesc('is_prayer_audio')
@@ -398,81 +415,17 @@ class HomeController extends Controller
 
     public function audiobooks(Request $request)
     {
-        $categories = ContentCategory::query()
-            ->whereIn('type', ['audio', 'all'])
-            ->where('is_active', true)
-            ->with('translations')
-            ->withCount(['audiobooks as audiobooks_count' => function ($query) {
-                $query->where('is_published', true);
-            }])
-            ->orderBy('name')
-            ->get();
-
-        $activeCategory = $request->query('category');
-        $search = trim((string) $request->query('q'));
-        $prayerFilter = $this->resolvePrayerFilter($request->query('prayer'));
-        $locale = app()->getLocale();
-
-        $audiobooksQuery = audiobook::query()
-            ->with(['category.translations', 'translations', 'linkedBook.translations'])
-            ->where('is_published', true)
-            ->when($search, function ($query) use ($search, $locale) {
-                $query->where(function ($inner) use ($search, $locale) {
-                    $inner->where('title', 'like', '%'.$search.'%')
-                        ->orWhere('description', 'like', '%'.$search.'%')
-                        ->orWhere('narrator', 'like', '%'.$search.'%')
-                        ->orWhere('series', 'like', '%'.$search.'%')
-                        ->orWhereHas('translations', function ($translation) use ($search, $locale) {
-                            $translation->where('locale', $locale)
-                                ->where(function ($sub) use ($search) {
-                                    $sub->where('title', 'like', '%'.$search.'%')
-                                        ->orWhere('description', 'like', '%'.$search.'%');
-                                });
-                        });
-                });
-            })
-            ->when(!is_null($prayerFilter), function ($query) use ($prayerFilter) {
-                $query->where('is_prayer_audio', $prayerFilter);
-            })
-            ->when($activeCategory, function ($query) use ($activeCategory) {
-                $query->where('category_id', $activeCategory);
-            })
-            ->orderByDesc('featured')
-            ->orderByDesc('published_at')
-            ->orderByDesc('created_at');
-
-        $allCount = audiobook::query()
-            ->where('is_published', true)
-            ->count();
-
-        $audiobooks = $audiobooksQuery
-            ->paginate(9)
-            ->withQueryString();
-
-        return view('audiobooks.index', compact('audiobooks', 'categories', 'activeCategory', 'allCount', 'search', 'prayerFilter'));
+        return redirect()->route('books.index');
     }
 
     public function audiobookShow(audiobook $audiobook)
     {
-        if (!$audiobook->is_published) {
-            abort(404);
+        $audiobook->load('linkedBook');
+        if (!$audiobook->linkedBook || !$audiobook->linkedBook->is_published) {
+            return redirect()->route('books.index');
         }
 
-        $audiobook->load(['category.translations', 'translations', 'linkedBook.translations']);
-
-        $relatedAudiobooks = audiobook::query()
-            ->with(['category.translations', 'translations', 'linkedBook.translations'])
-            ->where('is_published', true)
-            ->where('id', '!=', $audiobook->id)
-            ->when($audiobook->category_id, function ($query) use ($audiobook) {
-                $query->where('category_id', $audiobook->category_id);
-            })
-            ->orderByDesc('featured')
-            ->orderByDesc('published_at')
-            ->limit(3)
-            ->get();
-
-        return view('audiobooks.show', compact('audiobook', 'relatedAudiobooks'));
+        return redirect()->route('books.show', $audiobook->linkedBook);
     }
 
     public function subscribe(Request $request)

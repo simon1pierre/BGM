@@ -14,10 +14,13 @@ use App\Models\MinistryLeader;
 use App\Models\Playlist;
 use App\Models\Subscriber;
 use App\Models\User;
+use App\Models\UserActivityLog;
 use App\Models\video;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class TrashController extends Controller
 {
@@ -51,6 +54,100 @@ class TrashController extends Controller
         }
 
         return view('Admin.Trash.index', compact('modules', 'counts', 'items', 'module', 'search'));
+    }
+
+    public function restore(Request $request, string $module, int $id)
+    {
+        $record = $this->resolveTrashedRecord($module, $id);
+        $record->restore();
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'action' => 'trash_restored',
+            'meta' => [
+                'module' => $module,
+                'item_id' => $id,
+            ],
+        ]);
+
+        return redirect()->route('admin.trash.index', [
+            'module' => $request->input('module_filter', 'all'),
+            'q' => $request->input('search_query', ''),
+        ])->with('status', 'Item restored from trash.');
+    }
+
+    public function forceDelete(Request $request, string $module, int $id)
+    {
+        $record = $this->resolveTrashedRecord($module, $id);
+        $record->forceDelete();
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'action' => 'trash_force_deleted',
+            'meta' => [
+                'module' => $module,
+                'item_id' => $id,
+            ],
+        ]);
+
+        return redirect()->route('admin.trash.index', [
+            'module' => $request->input('module_filter', 'all'),
+            'q' => $request->input('search_query', ''),
+        ])->with('status', 'Item permanently deleted.');
+    }
+
+    public function bulkRestore(Request $request)
+    {
+        $items = $this->validatedBulkItems($request);
+        $restored = 0;
+
+        foreach ($items as $item) {
+            [$module, $id] = explode(':', $item, 2);
+            $record = $this->resolveTrashedRecord($module, (int) $id);
+            if ($record->trashed()) {
+                $record->restore();
+                $restored++;
+            }
+        }
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'action' => 'trash_bulk_restored',
+            'meta' => [
+                'count' => $restored,
+            ],
+        ]);
+
+        return redirect()->route('admin.trash.index', [
+            'module' => $request->input('module_filter', 'all'),
+            'q' => $request->input('search_query', ''),
+        ])->with('status', $restored > 0 ? "{$restored} item(s) restored." : 'No items restored.');
+    }
+
+    public function bulkForceDelete(Request $request)
+    {
+        $items = $this->validatedBulkItems($request);
+        $deleted = 0;
+
+        foreach ($items as $item) {
+            [$module, $id] = explode(':', $item, 2);
+            $record = $this->resolveTrashedRecord($module, (int) $id);
+            $record->forceDelete();
+            $deleted++;
+        }
+
+        UserActivityLog::create([
+            'actor_user_id' => Auth::id(),
+            'action' => 'trash_bulk_force_deleted',
+            'meta' => [
+                'count' => $deleted,
+            ],
+        ]);
+
+        return redirect()->route('admin.trash.index', [
+            'module' => $request->input('module_filter', 'all'),
+            'q' => $request->input('search_query', ''),
+        ])->with('status', $deleted > 0 ? "{$deleted} item(s) permanently deleted." : 'No items deleted.');
     }
 
     private function modules(): array
@@ -115,6 +212,7 @@ class TrashController extends Controller
 
         return $rows->map(function ($row) use ($module, $modules) {
             return [
+                'id' => $row->id,
                 'module_key' => $module,
                 'module_label' => $modules[$module]['label'],
                 'title' => $this->resolveTitle($module, $row),
@@ -123,6 +221,37 @@ class TrashController extends Controller
                 'manage_url' => $modules[$module]['route'],
             ];
         });
+    }
+
+    private function resolveTrashedRecord(string $module, int $id): Model
+    {
+        return match ($module) {
+            'videos' => video::withTrashed()->findOrFail($id),
+            'audios' => audio::withTrashed()->findOrFail($id),
+            'audiobooks' => audiobook::withTrashed()->findOrFail($id),
+            'documents' => book::withTrashed()->findOrFail($id),
+            'categories' => ContentCategory::withTrashed()->findOrFail($id),
+            'playlists' => Playlist::withTrashed()->findOrFail($id),
+            'events' => Event::withTrashed()->findOrFail($id),
+            'users' => User::withTrashed()->findOrFail($id),
+            'subscribers' => Subscriber::withTrashed()->findOrFail($id),
+            'contacts' => ContactMessage::withTrashed()->findOrFail($id),
+            'campaigns' => EmailCampaign::withTrashed()->findOrFail($id),
+            'ministry' => MinistryLeader::withTrashed()->findOrFail($id),
+            default => abort(404),
+        };
+    }
+
+    private function validatedBulkItems(Request $request): array
+    {
+        $validated = $request->validate([
+            'items' => ['required', 'array', 'min:1'],
+            'items.*' => ['required', 'string', 'regex:/^[a-z_]+:\d+$/'],
+            'module_filter' => ['nullable', 'string'],
+            'search_query' => ['nullable', 'string'],
+        ]);
+
+        return array_values(array_unique($validated['items']));
     }
 
     private function resolveTitle(string $module, mixed $row): string
@@ -154,4 +283,3 @@ class TrashController extends Controller
         };
     }
 }
-

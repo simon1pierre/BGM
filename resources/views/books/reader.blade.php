@@ -50,30 +50,76 @@
                             <div class="p-5 border-t border-slate-100">
                                 <h3 class="font-serif text-base text-slate-900 font-bold">{{ __('messages.books.audiobook_while_reading') }}</h3>
                                 <p class="mt-1 text-xs text-slate-500">{{ __('messages.books.audio_tts_note') }}</p>
-                                <div class="mt-3">
-                                    <select id="linkedAudiobookSelect" class="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-700">
-                                        @foreach ($linkedAudiobooks as $ab)
-                                            <option value="{{ $ab->id }}" data-src="{{ asset('storage/'.$ab->audio_file) }}">{{ $ab->title }}@if($ab->is_prayer_audio) - {{ __('messages.common.prayer') }} @endif</option>
-                                        @endforeach
-                                    </select>
-                                    <audio id="linkedAudiobookPlayer" controls class="w-full mt-3">
-                                        <source id="linkedAudiobookSource" src="{{ asset('storage/'.$linkedAudiobooks->first()->audio_file) }}" type="audio/mpeg">
-                                    </audio>
-                                    <div id="linkedAudiobookError" class="hidden mt-2 text-xs text-rose-600">{{ __('messages.books.unable_play_track') }}</div>
-                                </div>
-                                <div class="mt-3 space-y-2">
-                                    @foreach ($linkedAudiobooks as $ab)
-                                        <button type="button" data-track-id="{{ $ab->id }}" class="w-full text-left border border-slate-200 rounded-lg p-2 hover:bg-slate-50">
-                                            <div class="text-xs font-semibold text-slate-800">{{ $ab->title }}</div>
-                                            <div class="text-[11px] text-slate-500">
-                                                {{ $ab->narrator ?: __('messages.books.narrator_not_specified') }} @if($ab->duration) - {{ $ab->duration }} @endif
-                                                @if($ab->is_prayer_audio)
-                                                    - {{ __('messages.common.prayer') }}
-                                                @endif
+                                @php
+                                    $readerQueue = [];
+                                    foreach ($linkedAudiobooks as $ab) {
+                                        if ($ab->publishedParts->count() > 0) {
+                                            foreach ($ab->publishedParts as $part) {
+                                                $readerQueue[] = [
+                                                    'key' => 'part_'.$part->id,
+                                                    'label' => $ab->title.' - '.$part->title,
+                                                    'audio' => asset('storage/'.$part->audio_file),
+                                                ];
+                                            }
+                                        } else {
+                                            $playable = $ab->resolvePlayableAudioFile();
+                                            if (!empty($playable)) {
+                                                $readerQueue[] = [
+                                                    'key' => 'ab_'.$ab->id,
+                                                    'label' => $ab->title,
+                                                    'audio' => asset('storage/'.$playable),
+                                                ];
+                                            }
+                                        }
+                                    }
+                                @endphp
+                                @if (count($readerQueue) > 0)
+                                <style>
+                                    .reader-track-row.reader-track-active { background-color: #343743; color: #ffffff; }
+                                </style>
+                                <div class="mt-3 rounded-2xl overflow-hidden border border-slate-700 bg-[#1b1c22] text-slate-100">
+                                    <div class="px-3 py-2 border-b border-slate-700 bg-[#22242c]">
+                                        <div id="linkedNowPlaying" class="text-xs font-semibold truncate">{{ $readerQueue[0]['label'] }}</div>
+                                    </div>
+                                    <div class="p-3 border-b border-slate-700">
+                                        <audio id="linkedAudiobookPlayer" class="hidden">
+                                            <source id="linkedAudiobookSource" src="{{ $readerQueue[0]['audio'] }}" type="audio/mpeg">
+                                        </audio>
+                                        <div class="flex items-center gap-2 mb-3">
+                                            <button type="button" id="linkedPrev" class="px-2.5 py-1.5 rounded bg-[#2b2d36] hover:bg-[#373a45] text-xs">⏮</button>
+                                            <button type="button" id="linkedPlayPause" class="px-3 py-1.5 rounded bg-[#ff006e] hover:bg-[#e00062] text-xs font-semibold min-w-[64px]">Play</button>
+                                            <button type="button" id="linkedNext" class="px-2.5 py-1.5 rounded bg-[#2b2d36] hover:bg-[#373a45] text-xs">⏭</button>
+                                            <div class="ml-auto flex items-center gap-2">
+                                                <span class="text-[11px] text-slate-300">Vol</span>
+                                                <input id="linkedVolume" type="range" min="0" max="1" step="0.05" value="1" class="accent-pink-500 w-20">
                                             </div>
-                                        </button>
-                                    @endforeach
+                                        </div>
+                                        <div class="flex items-center justify-between text-[11px] text-slate-300">
+                                            <span id="linkedCurrentTime">00:00</span>
+                                            <label class="inline-flex items-center gap-1.5">
+                                                <input id="linkedAudiobookAutoNext" type="checkbox" class="rounded border-slate-500 bg-[#2b2d36]" checked>
+                                                Auto next
+                                            </label>
+                                            <span id="linkedDuration">00:00</span>
+                                        </div>
+                                        <div id="linkedAudiobookError" class="hidden mt-2 text-[11px] text-rose-400">{{ __('messages.books.unable_play_track') }}</div>
+                                    </div>
+                                    <div id="linkedQueue" class="max-h-80 overflow-y-auto">
+                                        @foreach ($readerQueue as $index => $track)
+                                            <button
+                                                type="button"
+                                                class="reader-track-row w-full text-left px-3 py-2.5 border-b border-slate-700/80 hover:bg-[#2a2c35] transition-colors"
+                                                data-linked-track
+                                                data-track-index="{{ $index }}"
+                                                data-track-title="{{ $track['label'] }}"
+                                                data-track-src="{{ $track['audio'] }}"
+                                            >
+                                                <div class="text-xs font-semibold truncate">{{ $loop->iteration }}. {{ $track['label'] }}</div>
+                                            </button>
+                                        @endforeach
+                                    </div>
                                 </div>
+                                @endif
                             </div>
                         @endif
                     </div>
@@ -96,6 +142,7 @@
                             <button type="button" id="fitWidth" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.books.fit_width') }}</button>
                             <button type="button" id="rotate" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.books.rotate') }}</button>
                             <button type="button" id="toggleAbout" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.books.about_this_book') }}</button>
+                            <button type="button" id="toggleDearFlip" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">DearFlip</button>
                             <div class="ml-auto flex gap-2">
                                 <button type="button" id="toggleFullscreen" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.fullscreen') }}</button>
                             </div>
@@ -112,6 +159,9 @@
 
                         <div id="readerContainer" class="bg-slate-200 overflow-auto" style="height: 75vh;">
                             <canvas id="pdfCanvas" class="mx-auto my-4 shadow-md bg-white"></canvas>
+                        </div>
+                        <div id="dearFlipContainer" class="hidden bg-slate-200 overflow-auto p-4" style="height: 75vh;">
+                            <div id="dearFlipHost" class="w-full h-full bg-white rounded-lg border border-slate-200"></div>
                         </div>
                     </div>
                 </div>
@@ -588,6 +638,89 @@
             panel?.classList.toggle('hidden');
         });
 
+        const readerContainer = document.getElementById('readerContainer');
+        const dearFlipContainer = document.getElementById('dearFlipContainer');
+        const dearFlipHost = document.getElementById('dearFlipHost');
+        let dearFlipEnabled = false;
+        let dearFlipLoaded = false;
+
+        const loadScript = (src) => new Promise((resolve, reject) => {
+            if (document.querySelector(`script[data-src="${src}"]`)) {
+                resolve();
+                return;
+            }
+            const script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            script.dataset.src = src;
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+            document.head.appendChild(script);
+        });
+
+        const loadStyle = (href) => {
+            if (document.querySelector(`link[data-href="${href}"]`)) return;
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = href;
+            link.dataset.href = href;
+            document.head.appendChild(link);
+        };
+
+        async function ensureDearFlip() {
+            if (dearFlipLoaded && window.jQuery && window.jQuery.fn && typeof window.jQuery.fn.flipBook === 'function') {
+                return true;
+            }
+
+            loadStyle('https://cdn.jsdelivr.net/npm/dflip@1.7.0/css/dflip.min.css');
+            await loadScript('https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js');
+            await loadScript('https://cdn.jsdelivr.net/npm/dflip@1.7.0/js/dflip.min.js');
+
+            dearFlipLoaded = !!(window.jQuery && window.jQuery.fn && typeof window.jQuery.fn.flipBook === 'function');
+            return dearFlipLoaded;
+        }
+
+        async function openDearFlip() {
+            if (!dearFlipContainer || !dearFlipHost || !readerContainer) return;
+            try {
+                const ready = await ensureDearFlip();
+                if (!ready) {
+                    setReaderStatus('DearFlip is not available in this environment.');
+                    return;
+                }
+
+                dearFlipHost.innerHTML = '<div id="dearFlipBook" class="w-full h-full"></div>';
+                window.jQuery('#dearFlipBook').flipBook(PDF_URL, {
+                    webgl: true,
+                    height: '100%',
+                    autoEnableOutline: true,
+                    enableDownload: false,
+                });
+
+                readerContainer.classList.add('hidden');
+                dearFlipContainer.classList.remove('hidden');
+                dearFlipEnabled = true;
+                setReaderStatus('DearFlip mode enabled.');
+            } catch (error) {
+                setReaderStatus('Could not load DearFlip. Using standard reader.');
+            }
+        }
+
+        function closeDearFlip() {
+            if (!dearFlipContainer || !readerContainer) return;
+            dearFlipContainer.classList.add('hidden');
+            readerContainer.classList.remove('hidden');
+            dearFlipEnabled = false;
+        }
+
+        document.getElementById('toggleDearFlip')?.addEventListener('click', () => {
+            if (dearFlipEnabled) {
+                closeDearFlip();
+                return;
+            }
+            openDearFlip();
+        });
+
         document.getElementById('readPage')?.addEventListener('click', speakCurrentPage);
         document.getElementById('pauseRead')?.addEventListener('click', () => {
             if (!window.speechSynthesis) return;
@@ -603,34 +736,98 @@
             setReaderStatus(@json(__('messages.books.reading_stopped')));
         });
 
-        const linkedSelect = document.getElementById('linkedAudiobookSelect');
         const linkedPlayer = document.getElementById('linkedAudiobookPlayer');
         const linkedSource = document.getElementById('linkedAudiobookSource');
+        const linkedNowPlaying = document.getElementById('linkedNowPlaying');
+        const linkedAutoNext = document.getElementById('linkedAudiobookAutoNext');
         const linkedError = document.getElementById('linkedAudiobookError');
+        const linkedPrev = document.getElementById('linkedPrev');
+        const linkedNext = document.getElementById('linkedNext');
+        const linkedPlayPause = document.getElementById('linkedPlayPause');
+        const linkedVolume = document.getElementById('linkedVolume');
+        const linkedCurrentTime = document.getElementById('linkedCurrentTime');
+        const linkedDuration = document.getElementById('linkedDuration');
+        const linkedRows = Array.from(document.querySelectorAll('[data-linked-track]'));
+        let linkedIndex = 0;
 
-        function swapLinkedTrack(trackId) {
-            if (!linkedSelect || !linkedPlayer || !linkedSource) return;
-            const option = Array.from(linkedSelect.options).find((item) => item.value === String(trackId));
-            if (!option) return;
-            linkedSelect.value = option.value;
-            linkedSource.src = option.dataset.src || '';
+        const formatTime = (seconds) => {
+            if (!Number.isFinite(seconds)) return '00:00';
+            const total = Math.max(0, Math.floor(seconds));
+            const m = String(Math.floor(total / 60)).padStart(2, '0');
+            const s = String(total % 60).padStart(2, '0');
+            return `${m}:${s}`;
+        };
+
+        const syncLinkedPlayState = () => {
+            if (!linkedPlayPause || !linkedPlayer) return;
+            linkedPlayPause.textContent = linkedPlayer.paused ? 'Play' : 'Pause';
+        };
+
+        const selectLinkedTrack = (index, play = true) => {
+            if (!linkedPlayer || !linkedSource) return;
+            if (index < 0 || index >= linkedRows.length) return;
+            linkedIndex = index;
+            const row = linkedRows[index];
+            const src = row.getAttribute('data-track-src') || '';
+            const title = row.getAttribute('data-track-title') || '';
+            linkedSource.src = src;
             linkedPlayer.load();
+            linkedRows.forEach((item) => item.classList.remove('reader-track-active'));
+            row.classList.add('reader-track-active');
+            if (linkedNowPlaying) linkedNowPlaying.textContent = title;
             linkedError?.classList.add('hidden');
-        }
+            if (play) linkedPlayer.play().catch(() => {});
+            syncLinkedPlayState();
+        };
 
-        linkedSelect?.addEventListener('change', (event) => {
-            swapLinkedTrack(event.target.value);
+        linkedRows.forEach((row, index) => {
+            row.addEventListener('click', () => selectLinkedTrack(index, true));
         });
 
-        document.querySelectorAll('[data-track-id]').forEach((button) => {
-            button.addEventListener('click', () => {
-                swapLinkedTrack(button.getAttribute('data-track-id'));
-            });
+        linkedPrev?.addEventListener('click', () => {
+            if (linkedIndex > 0) selectLinkedTrack(linkedIndex - 1, true);
         });
+
+        linkedNext?.addEventListener('click', () => {
+            if (linkedIndex + 1 < linkedRows.length) selectLinkedTrack(linkedIndex + 1, true);
+        });
+
+        linkedPlayPause?.addEventListener('click', () => {
+            if (!linkedPlayer) return;
+            if (linkedPlayer.paused) linkedPlayer.play().catch(() => {});
+            else linkedPlayer.pause();
+        });
+
+        linkedVolume?.addEventListener('input', () => {
+            if (!linkedPlayer) return;
+            linkedPlayer.volume = Number(linkedVolume.value || 1);
+        });
+
+        linkedPlayer?.addEventListener('timeupdate', () => {
+            if (linkedCurrentTime) linkedCurrentTime.textContent = formatTime(linkedPlayer.currentTime);
+            if (linkedDuration) linkedDuration.textContent = formatTime(linkedPlayer.duration);
+        });
+
+        linkedPlayer?.addEventListener('loadedmetadata', () => {
+            if (linkedDuration) linkedDuration.textContent = formatTime(linkedPlayer.duration);
+        });
+
+        linkedPlayer?.addEventListener('play', syncLinkedPlayState);
+        linkedPlayer?.addEventListener('pause', syncLinkedPlayState);
 
         linkedPlayer?.addEventListener('error', () => {
             linkedError?.classList.remove('hidden');
         });
+
+        linkedPlayer?.addEventListener('ended', () => {
+            if (!linkedAutoNext || !linkedAutoNext.checked) return;
+            if (linkedIndex + 1 < linkedRows.length) selectLinkedTrack(linkedIndex + 1, true);
+        });
+
+        if (linkedRows.length > 0) {
+            selectLinkedTrack(0, false);
+            syncLinkedPlayState();
+        }
 
         document.addEventListener('keydown', (event) => {
             if (event.key === 'ArrowRight') {
