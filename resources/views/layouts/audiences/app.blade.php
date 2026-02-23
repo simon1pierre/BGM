@@ -617,7 +617,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at top, rgba(15, 43, 94, 0.2), rgba(248, 250, 252, 0.96) 45%);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(15, 43, 94, 0.24), transparent 45%),
+        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.2), transparent 40%),
+        rgba(248, 250, 252, 0.95);
       transition: opacity 260ms ease, visibility 260ms ease;
     }
 
@@ -627,13 +630,51 @@
       pointer-events: none;
     }
 
+    .loader-card {
+      min-width: 230px;
+      max-width: 86vw;
+      border-radius: 1rem;
+      border: 1px solid rgba(15, 43, 94, 0.12);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.14);
+      padding: 1rem 1.1rem;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+
     .loader-core {
-      width: 62px;
-      height: 62px;
+      width: 56px;
+      height: 56px;
+      margin: 0 auto .7rem auto;
       border-radius: 9999px;
-      border: 3px solid rgba(15, 43, 94, 0.15);
-      border-top-color: rgba(15, 43, 94, 0.9);
-      animation: spin 1s linear infinite;
+      border: 3px solid rgba(15, 43, 94, 0.14);
+      border-top-color: rgba(15, 43, 94, 0.95);
+      animation: spin .9s linear infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loader-logo {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      border-radius: 9999px;
+      background: #fff;
+      padding: 1px;
+    }
+
+    .loader-text {
+      font-size: .83rem;
+      color: #0f2b5e;
+      font-weight: 600;
+      letter-spacing: .01em;
+    }
+
+    .loader-subtext {
+      margin-top: .2rem;
+      font-size: .72rem;
+      color: #64748b;
     }
 
     .route-progress {
@@ -706,7 +747,13 @@
 <body class="font-sans antialiased flex flex-col min-h-screen relative">
   <div id="routeProgress" class="route-progress" aria-hidden="true"></div>
   <div id="pageLoader" class="page-loader" aria-live="polite" aria-label="{{ __('messages.site.loading') }}">
-    <div class="loader-core"></div>
+    <div class="loader-card">
+      <div class="loader-core">
+        <img src="{{ $logoPath }}" alt="{{ $siteName }}" class="loader-logo">
+      </div>
+      <div class="loader-text">{{ __('messages.site.loading') }}</div>
+      <div id="pageLoaderHint" class="loader-subtext">Preparing an engaging experience...</div>
+    </div>
   </div>
   <div id="toastWrap" class="toast-wrap" aria-live="polite" aria-atomic="true"></div>
   <div class="ambient-stage" aria-hidden="true">
@@ -1209,12 +1256,32 @@
   <script>
     (() => {
       const pageLoader = document.getElementById('pageLoader');
+      const pageLoaderHint = document.getElementById('pageLoaderHint');
       const progress = document.getElementById('routeProgress');
       const toastWrap = document.getElementById('toastWrap');
+      let loaderHintTimer = null;
+
+      const hintMessages = [
+        'Preparing an engaging experience...',
+        'Loading content and media...',
+        'Almost ready...'
+      ];
+      let hintIndex = 0;
+
+      if (pageLoaderHint) {
+        loaderHintTimer = setInterval(() => {
+          hintIndex = (hintIndex + 1) % hintMessages.length;
+          pageLoaderHint.textContent = hintMessages[hintIndex];
+        }, 1900);
+      }
 
       const hideLoader = () => {
         if (!pageLoader) return;
         pageLoader.classList.add('hidden');
+        if (loaderHintTimer) {
+          clearInterval(loaderHintTimer);
+          loaderHintTimer = null;
+        }
       };
 
       const startProgress = () => {

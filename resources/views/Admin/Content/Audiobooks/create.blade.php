@@ -20,31 +20,14 @@
                     <form method="POST" action="{{ route('admin.audiobooks.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row g-4">
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <label class="form-label fw-semibold">Title</label>
                                 <input type="text" name="title" value="{{ old('title') }}" class="form-control" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label fw-semibold">Publish Date</label>
-                                <input type="date" name="published_at" value="{{ old('published_at') }}" class="form-control">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Primary Audiobook File (optional)</label>
                                 <input type="file" name="audio_file" class="form-control" accept="audio/*">
                                 <div class="fs-12 text-muted mt-1">You can skip this if you upload audiobook parts below.</div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Thumbnail (optional)</label>
-                                <input type="file" name="thumbnail" class="form-control" accept="image/*">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Category (optional)</label>
-                                <select name="category_id" class="form-select">
-                                    <option value="">None</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Linked Book</label>
@@ -55,45 +38,87 @@
                                 </select>
                                 <div class="fs-12 text-muted mt-1">Each audiobook must belong to one book.</div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Narrator</label>
-                                <input type="text" name="narrator" value="{{ old('narrator') }}" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Series</label>
-                                <input type="text" name="series" value="{{ old('series') }}" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Duration</label>
-                                <input type="text" name="duration" value="{{ old('duration') }}" class="form-control" placeholder="e.g. 45:30">
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label fw-semibold">Description</label>
-                                <textarea name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
-                            </div>
                             <div class="col-md-12">
                                 <div class="border rounded-3 p-3 bg-light">
-                                    <h6 class="mb-3">Multi-Part Audio (Optional)</h6>
-                                    <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <label class="form-label fw-semibold">Upload Many Parts</label>
-                                            <input type="file" name="part_files[]" class="form-control" accept="audio/*" multiple>
+                                    <h6 class="mb-2">Multi-Part Audio (Optional)</h6>
+                                    <p class="text-muted fs-12 mb-3">Upload by language. Part titles are automatically taken from each file name.</p>
+                                    <ul class="nav nav-pills mb-3" role="tablist">
+                                        <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#createPartLangRw" type="button">Kinyarwanda</button></li>
+                                        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#createPartLangEn" type="button">English</button></li>
+                                        <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#createPartLangFr" type="button">French</button></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="createPartLangRw">
+                                            <label class="form-label fw-semibold">Kinyarwanda Parts</label>
+                                            <input type="file" name="part_files_rw[]" class="form-control" accept="audio/*" multiple data-upload-monitor data-upload-max-files="300" data-upload-warn-mb="1500" data-upload-summary-target="#createPartsSummaryRw">
+                                            <div id="createPartsSummaryRw" class="fs-12 text-muted mt-1">No files selected.</div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <label class="form-label fw-semibold">Part Title Prefix</label>
-                                            <input type="text" name="part_title_prefix" value="{{ old('part_title_prefix', 'Part') }}" class="form-control" placeholder="Part">
+                                        <div class="tab-pane fade" id="createPartLangEn">
+                                            <label class="form-label fw-semibold">English Parts</label>
+                                            <input type="file" name="part_files_en[]" class="form-control" accept="audio/*" multiple data-upload-monitor data-upload-max-files="300" data-upload-warn-mb="1500" data-upload-summary-target="#createPartsSummaryEn">
+                                            <div id="createPartsSummaryEn" class="fs-12 text-muted mt-1">No files selected.</div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="tab-pane fade" id="createPartLangFr">
+                                            <label class="form-label fw-semibold">French Parts</label>
+                                            <input type="file" name="part_files_fr[]" class="form-control" accept="audio/*" multiple data-upload-monitor data-upload-max-files="300" data-upload-warn-mb="1500" data-upload-summary-target="#createPartsSummaryFr">
+                                            <div id="createPartsSummaryFr" class="fs-12 text-muted mt-1">No files selected.</div>
+                                        </div>
+                                    </div>
+                                    <div class="row g-3 mt-1">
+                                        <div class="col-md-2">
                                             <label class="form-label fw-semibold">Start Number</label>
                                             <input type="number" name="part_order_start" value="{{ old('part_order_start', 1) }}" min="1" class="form-control">
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label class="form-label fw-semibold">Duration (optional)</label>
                                             <input type="text" name="part_duration" value="{{ old('part_duration') }}" class="form-control" placeholder="e.g. 12:30">
                                         </div>
                                     </div>
-                                    <div class="fs-12 text-muted mt-2">
-                                        Example: "Part" + start 1 creates Part 1, Part 2, ... for all uploaded files.
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn btn-light btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#audiobookCreateAdvanced" aria-expanded="false" aria-controls="audiobookCreateAdvanced">
+                                    Advanced Options
+                                </button>
+                            </div>
+                            <div class="col-md-12 collapse" id="audiobookCreateAdvanced">
+                                <div class="card border border-dashed">
+                                    <div class="card-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Publish Date</label>
+                                                <input type="date" name="published_at" value="{{ old('published_at') }}" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Category (optional)</label>
+                                                <select name="category_id" class="form-select">
+                                                    <option value="">None</option>
+                                                    @foreach ($categories as $category)
+                                                        <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>{{ $category->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Thumbnail (optional)</label>
+                                                <input type="file" name="thumbnail" class="form-control" accept="image/*">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Narrator</label>
+                                                <input type="text" name="narrator" value="{{ old('narrator') }}" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Series</label>
+                                                <input type="text" name="series" value="{{ old('series') }}" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Duration</label>
+                                                <input type="text" name="duration" value="{{ old('duration') }}" class="form-control" placeholder="e.g. 45:30">
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label fw-semibold">Description</label>
+                                                <textarea name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -138,13 +163,6 @@
                                     <div class="form-check mt-4">
                                         <input class="form-check-input" type="checkbox" name="featured" value="1">
                                         <label class="form-check-label">Featured</label>
-                                    </div>
-                                </div>
-                                <div>
-                                    <input type="hidden" name="recommended" value="0">
-                                    <div class="form-check mt-4">
-                                        <input class="form-check-input" type="checkbox" name="recommended" value="1">
-                                        <label class="form-check-label">Recommended</label>
                                     </div>
                                 </div>
                                 <div>

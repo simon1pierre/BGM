@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
 use App\Models\UserActivityLog;
 use App\Models\audio;
+use App\Models\audiobook;
 use App\Models\book;
 use App\Models\video;
 use App\Http\Controllers\Concerns\HandlesTranslations;
@@ -36,6 +37,12 @@ class CategoryController extends Controller
                     ->selectRaw('count(*)')
                     ->whereColumn('category_id', 'content_categories.id'),
                 'audio_count'
+            )
+            ->selectSub(
+                audiobook::query()
+                    ->selectRaw('count(*)')
+                    ->whereColumn('category_id', 'content_categories.id'),
+                'audiobook_count'
             )
             ->selectSub(
                 book::query()

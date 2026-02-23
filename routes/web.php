@@ -116,6 +116,7 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->group(function ()
 
     Route::resource('audiobooks', AudiobookController::class)->except(['show'])->names('admin.audiobooks');
     Route::get('audiobooks/{audiobook}/preview', [AudiobookController::class, 'preview'])->name('admin.audiobooks.preview');
+    Route::get('audiobooks/{audiobook}/parts', [AudiobookController::class, 'parts'])->name('admin.audiobooks.parts');
     Route::post('audiobooks/{audiobook}/parts', [AudiobookController::class, 'addPart'])->name('admin.audiobooks.parts.store');
     Route::post('audiobooks/{audiobook}/parts/reorder', [AudiobookController::class, 'reorderParts'])->name('admin.audiobooks.parts.reorder');
     Route::delete('audiobooks/{audiobook}/parts/{part}', [AudiobookController::class, 'destroyPart'])->name('admin.audiobooks.parts.destroy');
@@ -200,6 +201,8 @@ Route::get('/downloads/audio/{audio}', [ContentDownloadController::class, 'audio
     ->name('content.download.audio');
 Route::get('/downloads/document/{document}', [ContentDownloadController::class, 'document'])
     ->name('content.download.document');
+Route::get('/downloads/audiobook-part/{part}', [ContentDownloadController::class, 'audiobookPart'])
+    ->name('content.download.audiobook-part');
 Route::post('/videos/{video}/view', [ContentDownloadController::class, 'videoView'])
     ->name('content.video.view');
 Route::post('/videos/{video}/track', [ContentDownloadController::class, 'trackVideo'])

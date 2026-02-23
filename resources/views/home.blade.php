@@ -446,30 +446,55 @@
       @endif
       <div id="booksTrack" data-slider-track class="{{ $recommendedBooks->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-6 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-3 gap-8' }}">
         @forelse ($recommendedBooks as $book)
-          <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense {{ $recommendedBooks->count() > 3 ? 'min-w-[300px] md:min-w-[340px] max-w-[340px] snap-start' : '' }}">
-            <div class="relative h-48 overflow-hidden bg-slate-100">
+          <article class="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-100 scroll-animate hover-lift hover-glow-intense {{ $recommendedBooks->count() > 3 ? 'min-w-[300px] md:min-w-[340px] max-w-[340px] snap-start' : '' }}">
+            <div class="relative h-[430px] overflow-hidden bg-slate-100">
               @if ($book->cover_image)
                 <img src="{{ asset('storage/'.$book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
               @else
                 <img src="{{ asset('landingpage/download-book.webp') }}" alt="{{ __('messages.home.downloadable_books') }}" class="w-full h-full object-cover">
               @endif
-              <div class="absolute bottom-3 left-3 text-white text-xs font-semibold drop-shadow">
-                {{ $book->category?->name ?? __('messages.common.book') }}
+
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/55 to-slate-900/10 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300"></div>
+
+              <div class="absolute inset-x-0 bottom-0 p-5 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-300">
+                <h4 class="text-white text-base font-semibold mb-3 line-clamp-2">{{ $book->title }}</h4>
+                <div class="grid grid-cols-3 gap-2">
+                  <a href="{{ route('books.show', $book) }}" class="inline-flex items-center justify-center gap-1 py-2 px-2 rounded-md bg-blue-600 text-white text-xs font-semibold hover:bg-blue-500">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i> {{ __('messages.home.read_online') }}
+                  </a>
+                  <a href="{{ route('content.download.document', $book) }}" class="inline-flex items-center justify-center gap-1 py-2 px-2 rounded-md bg-white/95 text-slate-900 text-xs font-semibold hover:bg-white">
+                    <i data-lucide="download" class="w-3.5 h-3.5"></i> {{ __('messages.home.download_pdf') }}
+                  </a>
+                  <button type="button" data-book-about-open="book-about-{{ $book->id }}" class="inline-flex items-center justify-center gap-1 py-2 px-2 rounded-md bg-amber-500 text-white text-xs font-semibold hover:bg-amber-400">
+                    <i data-lucide="info" class="w-3.5 h-3.5"></i> {{ __('messages.common.details') }}
+                  </button>
+                </div>
               </div>
-              @if ($book->featured)
-                <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">{{ __('messages.common.featured') }}</span>
-              @endif
             </div>
-            <div class="p-8 flex-1 flex flex-col">
-              <h3 class="text-xl font-serif font-bold text-blue-950 mb-3">{{ $book->title }}</h3>
-              <p class="text-slate-600 mb-6 flex-1 leading-relaxed">{{ \Illuminate\Support\Str::limit($book->description, 120) }}</p>
-              <div class="space-y-2">
-                <a href="{{ route('books.show', $book) }}" class="w-full py-3 px-6 bg-blue-50 text-blue-900 font-medium rounded-lg hover:bg-blue-100 transition-colors flex items-center justify-center gap-2 hover:scale-105 transform">
-                  <i data-lucide="book-open" class="w-4 h-4"></i> {{ __('messages.home.read_online') }}
-                </a>
-                <a href="{{ route('content.download.document', $book) }}" class="w-full py-2 px-6 bg-white text-blue-900 font-medium rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center gap-2 text-sm border border-blue-100">
-                  <i data-lucide="download" class="w-4 h-4"></i> {{ __('messages.home.download_pdf') }}
-                </a>
+          </article>
+
+          <div id="book-about-{{ $book->id }}" class="fixed inset-0 z-[90] hidden" aria-hidden="true">
+            <div class="absolute inset-0 bg-slate-950/70" data-book-about-close></div>
+            <div class="relative h-full w-full p-4 md:p-8 overflow-y-auto">
+              <div class="mx-auto max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-200">
+                <div class="flex items-start justify-between p-5 border-b border-slate-100">
+                  <h4 class="text-xl font-serif font-bold text-blue-950">{{ $book->title }}</h4>
+                  <button type="button" class="w-9 h-9 inline-flex items-center justify-center rounded-full hover:bg-slate-100 text-slate-600" data-book-about-close aria-label="Close">&times;</button>
+                </div>
+                <div class="p-5">
+                  @if ($book->cover_image)
+                    <img src="{{ asset('storage/'.$book->cover_image) }}" alt="{{ $book->title }}" class="w-full max-h-80 object-cover rounded-xl mb-4">
+                  @endif
+                  <p class="text-slate-700 leading-relaxed">{{ $book->description ?: __('messages.home.downloadable_books_body') }}</p>
+                </div>
+                <div class="p-5 border-t border-slate-100 flex flex-wrap gap-2">
+                  <a href="{{ route('books.show', $book) }}" class="inline-flex items-center gap-2 py-2.5 px-4 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-500">
+                    <i data-lucide="book-open" class="w-4 h-4"></i> {{ __('messages.home.read_online') }}
+                  </a>
+                  <a href="{{ route('content.download.document', $book) }}" class="inline-flex items-center gap-2 py-2.5 px-4 rounded-lg border border-slate-300 text-slate-800 text-sm font-semibold hover:bg-slate-50">
+                    <i data-lucide="download" class="w-4 h-4"></i> {{ __('messages.home.download_pdf') }}
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -661,6 +686,41 @@
       setupSlider('booksTrack', 4800);
       setupSlider('audiosTrack', 4800);
       setupSlider('audiobooksTrack', 5000);
+
+      const openAboutModal = (modal) => {
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('overflow-hidden');
+      };
+
+      const closeAboutModal = (modal) => {
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+        if (!document.querySelector('[id^="book-about-"]:not(.hidden)')) {
+          document.body.classList.remove('overflow-hidden');
+        }
+      };
+
+      document.querySelectorAll('[data-book-about-open]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          openAboutModal(document.getElementById(btn.dataset.bookAboutOpen));
+        });
+      });
+
+      document.querySelectorAll('[data-book-about-close]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          closeAboutModal(btn.closest('[id^="book-about-"]'));
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll('[id^="book-about-"]:not(.hidden)').forEach((modal) => {
+          closeAboutModal(modal);
+        });
+      });
 
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') {

@@ -31,12 +31,14 @@
                     {{ __('messages.books.no_pdf') }}
                 </div>
             @else
-                <div id="readerShell" class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-                    <div id="aboutPanel" class="lg:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-sm h-fit">
-                        <div class="p-5 border-b border-slate-100">
+                <div id="readerShell" class="grid grid-cols-1 gap-5">
+                    <div id="aboutPanel" class="hidden fixed inset-0 z-[80] bg-slate-950/70 p-4 md:p-8 overflow-y-auto">
+                        <div class="mx-auto w-full max-w-4xl bg-white rounded-2xl border border-slate-200 shadow-2xl">
+                        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
                             <h2 class="font-serif text-lg text-slate-900 font-bold">{{ __('messages.books.about_this_book') }}</h2>
+                            <button type="button" id="closeAboutModal" class="px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 hover:bg-slate-50">Close</button>
                         </div>
-                        <div class="p-5 space-y-4 text-sm text-slate-700">
+                        <div class="p-5 border-b border-slate-100 space-y-4 text-sm text-slate-700">
                             <div class="text-slate-600 leading-relaxed">
                                 {{ $book->description ?: __('messages.books.no_description') }}
                             </div>
@@ -47,28 +49,37 @@
                             </div>
                         </div>
                         @if (!empty($linkedAudiobooks) && $linkedAudiobooks->count())
-                            <div class="p-5 border-t border-slate-100">
+                            <div class="p-5">
                                 <h3 class="font-serif text-base text-slate-900 font-bold">{{ __('messages.books.audiobook_while_reading') }}</h3>
                                 <p class="mt-1 text-xs text-slate-500">{{ __('messages.books.audio_tts_note') }}</p>
                                 @php
                                     $readerQueue = [];
+                                    $readerQueueByLang = ['rw' => [], 'en' => [], 'fr' => []];
                                     foreach ($linkedAudiobooks as $ab) {
                                         if ($ab->publishedParts->count() > 0) {
                                             foreach ($ab->publishedParts as $part) {
-                                                $readerQueue[] = [
+                                                $track = [
                                                     'key' => 'part_'.$part->id,
                                                     'label' => $ab->title.' - '.$part->title,
                                                     'audio' => asset('storage/'.$part->audio_file),
+                                                    'download' => route('content.download.audiobook-part', $part),
+                                                    'lang' => in_array($part->language, ['rw', 'en', 'fr'], true) ? $part->language : 'rw',
                                                 ];
+                                                $readerQueue[] = $track;
+                                                $readerQueueByLang[$track['lang']][] = $track;
                                             }
                                         } else {
                                             $playable = $ab->resolvePlayableAudioFile();
                                             if (!empty($playable)) {
-                                                $readerQueue[] = [
+                                                $track = [
                                                     'key' => 'ab_'.$ab->id,
                                                     'label' => $ab->title,
                                                     'audio' => asset('storage/'.$playable),
+                                                    'download' => asset('storage/'.$playable),
+                                                    'lang' => 'rw',
                                                 ];
+                                                $readerQueue[] = $track;
+                                                $readerQueueByLang['rw'][] = $track;
                                             }
                                         }
                                     }
@@ -85,10 +96,15 @@
                                         <audio id="linkedAudiobookPlayer" class="hidden">
                                             <source id="linkedAudiobookSource" src="{{ $readerQueue[0]['audio'] }}" type="audio/mpeg">
                                         </audio>
+                                        <div class="mb-3 flex flex-wrap gap-2">
+                                            <button type="button" class="reader-lang-tab px-2.5 py-1 rounded border border-slate-500 text-[11px] bg-[#343743] text-white" data-linked-lang="rw">Kinyarwanda ({{ count($readerQueueByLang['rw']) }})</button>
+                                            <button type="button" class="reader-lang-tab px-2.5 py-1 rounded border border-slate-500 text-[11px]" data-linked-lang="en">English ({{ count($readerQueueByLang['en']) }})</button>
+                                            <button type="button" class="reader-lang-tab px-2.5 py-1 rounded border border-slate-500 text-[11px]" data-linked-lang="fr">French ({{ count($readerQueueByLang['fr']) }})</button>
+                                        </div>
                                         <div class="flex items-center gap-2 mb-3">
-                                            <button type="button" id="linkedPrev" class="px-2.5 py-1.5 rounded bg-[#2b2d36] hover:bg-[#373a45] text-xs">⏮</button>
+                                            <button type="button" id="linkedPrev" class="px-2.5 py-1.5 rounded bg-[#2b2d36] hover:bg-[#373a45] text-xs">Prev</button>
                                             <button type="button" id="linkedPlayPause" class="px-3 py-1.5 rounded bg-[#ff006e] hover:bg-[#e00062] text-xs font-semibold min-w-[64px]">Play</button>
-                                            <button type="button" id="linkedNext" class="px-2.5 py-1.5 rounded bg-[#2b2d36] hover:bg-[#373a45] text-xs">⏭</button>
+                                            <button type="button" id="linkedNext" class="px-2.5 py-1.5 rounded bg-[#2b2d36] hover:bg-[#373a45] text-xs">Next</button>
                                             <div class="ml-auto flex items-center gap-2">
                                                 <span class="text-[11px] text-slate-300">Vol</span>
                                                 <input id="linkedVolume" type="range" min="0" max="1" step="0.05" value="1" class="accent-pink-500 w-20">
@@ -113,8 +129,12 @@
                                                 data-track-index="{{ $index }}"
                                                 data-track-title="{{ $track['label'] }}"
                                                 data-track-src="{{ $track['audio'] }}"
+                                                data-track-lang="{{ $track['lang'] }}"
                                             >
-                                                <div class="text-xs font-semibold truncate">{{ $loop->iteration }}. {{ $track['label'] }}</div>
+                                                <div class="flex items-center justify-between gap-2">
+                                                    <div class="text-xs font-semibold truncate">{{ $loop->iteration }}. {{ $track['label'] }}</div>
+                                                    <a href="{{ $track['download'] }}" download class="text-[11px] underline text-slate-300 hover:text-white" data-track-download>{{ __('messages.common.download') }}</a>
+                                                </div>
                                             </button>
                                         @endforeach
                                     </div>
@@ -122,9 +142,10 @@
                                 @endif
                             </div>
                         @endif
+                        </div>
                     </div>
 
-                    <div id="readerPanel" class="lg:col-span-9 bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                    <div id="readerPanel" class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
                         <div class="p-4 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center gap-2">
                             <button type="button" id="prevPage" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">&larr; {{ __('messages.common.prev') }}</button>
                             <button type="button" id="nextPage" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.next') }} &rarr;</button>
@@ -141,8 +162,7 @@
                             <button type="button" id="zoomIn" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">+</button>
                             <button type="button" id="fitWidth" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.books.fit_width') }}</button>
                             <button type="button" id="rotate" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.books.rotate') }}</button>
-                            <button type="button" id="toggleAbout" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.books.about_this_book') }}</button>
-                            <button type="button" id="toggleDearFlip" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">DearFlip</button>
+                            <button type="button" id="toggleAbout" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.books.about_this_book') }} & {{ __('messages.books.audiobook_while_reading') }}</button>
                             <div class="ml-auto flex gap-2">
                                 <button type="button" id="toggleFullscreen" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.fullscreen') }}</button>
                             </div>
@@ -159,9 +179,6 @@
 
                         <div id="readerContainer" class="bg-slate-200 overflow-auto" style="height: 75vh;">
                             <canvas id="pdfCanvas" class="mx-auto my-4 shadow-md bg-white"></canvas>
-                        </div>
-                        <div id="dearFlipContainer" class="hidden bg-slate-200 overflow-auto p-4" style="height: 75vh;">
-                            <div id="dearFlipHost" class="w-full h-full bg-white rounded-lg border border-slate-200"></div>
                         </div>
                     </div>
                 </div>
@@ -633,92 +650,17 @@
             }
         });
 
+        const aboutPanel = document.getElementById('aboutPanel');
         document.getElementById('toggleAbout').addEventListener('click', () => {
-            const panel = document.getElementById('aboutPanel');
-            panel?.classList.toggle('hidden');
+            aboutPanel?.classList.remove('hidden');
         });
-
-        const readerContainer = document.getElementById('readerContainer');
-        const dearFlipContainer = document.getElementById('dearFlipContainer');
-        const dearFlipHost = document.getElementById('dearFlipHost');
-        let dearFlipEnabled = false;
-        let dearFlipLoaded = false;
-
-        const loadScript = (src) => new Promise((resolve, reject) => {
-            if (document.querySelector(`script[data-src="${src}"]`)) {
-                resolve();
-                return;
-            }
-            const script = document.createElement('script');
-            script.src = src;
-            script.async = true;
-            script.dataset.src = src;
-            script.onload = () => resolve();
-            script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
-            document.head.appendChild(script);
+        document.getElementById('closeAboutModal')?.addEventListener('click', () => {
+            aboutPanel?.classList.add('hidden');
         });
-
-        const loadStyle = (href) => {
-            if (document.querySelector(`link[data-href="${href}"]`)) return;
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = href;
-            link.dataset.href = href;
-            document.head.appendChild(link);
-        };
-
-        async function ensureDearFlip() {
-            if (dearFlipLoaded && window.jQuery && window.jQuery.fn && typeof window.jQuery.fn.flipBook === 'function') {
-                return true;
+        aboutPanel?.addEventListener('click', (event) => {
+            if (event.target === aboutPanel) {
+                aboutPanel.classList.add('hidden');
             }
-
-            loadStyle('https://cdn.jsdelivr.net/npm/dflip@1.7.0/css/dflip.min.css');
-            await loadScript('https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js');
-            await loadScript('https://cdn.jsdelivr.net/npm/dflip@1.7.0/js/dflip.min.js');
-
-            dearFlipLoaded = !!(window.jQuery && window.jQuery.fn && typeof window.jQuery.fn.flipBook === 'function');
-            return dearFlipLoaded;
-        }
-
-        async function openDearFlip() {
-            if (!dearFlipContainer || !dearFlipHost || !readerContainer) return;
-            try {
-                const ready = await ensureDearFlip();
-                if (!ready) {
-                    setReaderStatus('DearFlip is not available in this environment.');
-                    return;
-                }
-
-                dearFlipHost.innerHTML = '<div id="dearFlipBook" class="w-full h-full"></div>';
-                window.jQuery('#dearFlipBook').flipBook(PDF_URL, {
-                    webgl: true,
-                    height: '100%',
-                    autoEnableOutline: true,
-                    enableDownload: false,
-                });
-
-                readerContainer.classList.add('hidden');
-                dearFlipContainer.classList.remove('hidden');
-                dearFlipEnabled = true;
-                setReaderStatus('DearFlip mode enabled.');
-            } catch (error) {
-                setReaderStatus('Could not load DearFlip. Using standard reader.');
-            }
-        }
-
-        function closeDearFlip() {
-            if (!dearFlipContainer || !readerContainer) return;
-            dearFlipContainer.classList.add('hidden');
-            readerContainer.classList.remove('hidden');
-            dearFlipEnabled = false;
-        }
-
-        document.getElementById('toggleDearFlip')?.addEventListener('click', () => {
-            if (dearFlipEnabled) {
-                closeDearFlip();
-                return;
-            }
-            openDearFlip();
         });
 
         document.getElementById('readPage')?.addEventListener('click', speakCurrentPage);
@@ -748,7 +690,9 @@
         const linkedCurrentTime = document.getElementById('linkedCurrentTime');
         const linkedDuration = document.getElementById('linkedDuration');
         const linkedRows = Array.from(document.querySelectorAll('[data-linked-track]'));
+        const linkedLangTabs = Array.from(document.querySelectorAll('[data-linked-lang]'));
         let linkedIndex = 0;
+        let activeLinkedLanguage = 'rw';
 
         const formatTime = (seconds) => {
             if (!Number.isFinite(seconds)) return '00:00';
@@ -780,16 +724,61 @@
             syncLinkedPlayState();
         };
 
+        const visibleLinkedRows = () => linkedRows.filter((row) => !row.classList.contains('hidden'));
+
+        const applyLinkedLanguageFilter = (lang) => {
+            activeLinkedLanguage = lang;
+            linkedLangTabs.forEach((tab) => {
+                const isActive = tab.getAttribute('data-linked-lang') === lang;
+                tab.classList.toggle('bg-[#343743]', isActive);
+                tab.classList.toggle('text-white', isActive);
+            });
+            linkedRows.forEach((row) => {
+                const rowLang = row.getAttribute('data-track-lang') || 'rw';
+                row.classList.toggle('hidden', rowLang !== lang);
+            });
+            const visible = visibleLinkedRows();
+            if (visible.length === 0) return;
+            const currentRow = linkedRows[linkedIndex];
+            if (!currentRow || currentRow.classList.contains('hidden')) {
+                const nextIndex = Number(visible[0].getAttribute('data-track-index') || 0);
+                selectLinkedTrack(nextIndex, false);
+            }
+        };
+
         linkedRows.forEach((row, index) => {
             row.addEventListener('click', () => selectLinkedTrack(index, true));
         });
+        linkedRows.forEach((row) => {
+            row.querySelector('[data-track-download]')?.addEventListener('click', (event) => {
+                event.stopPropagation();
+            });
+        });
+        linkedLangTabs.forEach((tab) => {
+            tab.addEventListener('click', () => {
+                const lang = tab.getAttribute('data-linked-lang') || 'rw';
+                applyLinkedLanguageFilter(lang);
+            });
+        });
 
         linkedPrev?.addEventListener('click', () => {
-            if (linkedIndex > 0) selectLinkedTrack(linkedIndex - 1, true);
+            const visible = visibleLinkedRows();
+            if (visible.length === 0) return;
+            const currentPos = visible.findIndex((row) => Number(row.getAttribute('data-track-index')) === linkedIndex);
+            if (currentPos > 0) {
+                const nextIndex = Number(visible[currentPos - 1].getAttribute('data-track-index') || 0);
+                selectLinkedTrack(nextIndex, true);
+            }
         });
 
         linkedNext?.addEventListener('click', () => {
-            if (linkedIndex + 1 < linkedRows.length) selectLinkedTrack(linkedIndex + 1, true);
+            const visible = visibleLinkedRows();
+            if (visible.length === 0) return;
+            const currentPos = visible.findIndex((row) => Number(row.getAttribute('data-track-index')) === linkedIndex);
+            if (currentPos >= 0 && currentPos + 1 < visible.length) {
+                const nextIndex = Number(visible[currentPos + 1].getAttribute('data-track-index') || 0);
+                selectLinkedTrack(nextIndex, true);
+            }
         });
 
         linkedPlayPause?.addEventListener('click', () => {
@@ -821,11 +810,24 @@
 
         linkedPlayer?.addEventListener('ended', () => {
             if (!linkedAutoNext || !linkedAutoNext.checked) return;
-            if (linkedIndex + 1 < linkedRows.length) selectLinkedTrack(linkedIndex + 1, true);
+            const visible = visibleLinkedRows();
+            const currentPos = visible.findIndex((row) => Number(row.getAttribute('data-track-index')) === linkedIndex);
+            if (currentPos >= 0 && currentPos + 1 < visible.length) {
+                const nextIndex = Number(visible[currentPos + 1].getAttribute('data-track-index') || 0);
+                selectLinkedTrack(nextIndex, true);
+            }
         });
 
         if (linkedRows.length > 0) {
-            selectLinkedTrack(0, false);
+            if (!linkedRows.some((row) => (row.getAttribute('data-track-lang') || 'rw') === activeLinkedLanguage)) {
+                activeLinkedLanguage = linkedRows[0].getAttribute('data-track-lang') || 'rw';
+            }
+            applyLinkedLanguageFilter(activeLinkedLanguage);
+            const firstVisible = visibleLinkedRows()[0];
+            if (firstVisible) {
+                const firstIndex = Number(firstVisible.getAttribute('data-track-index') || 0);
+                selectLinkedTrack(firstIndex, false);
+            }
             syncLinkedPlayState();
         }
 
@@ -847,3 +849,4 @@
 </script>
 @endif
 @endsection
+

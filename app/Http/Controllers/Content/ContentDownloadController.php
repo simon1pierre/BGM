@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Content;
 
 use App\Http\Controllers\Controller;
 use App\Models\DownloadsLog;
+use App\Models\AudiobookPart;
 use App\Models\audio;
 use App\Models\book;
 use App\Models\video;
@@ -44,6 +45,30 @@ class ContentDownloadController extends Controller
         return Storage::disk('public')->download(
             $document->file_path,
             $this->sanitizeDownloadName($document->title, 'pdf')
+        );
+    }
+
+    public function audiobookPart(Request $request, AudiobookPart $part): StreamedResponse
+    {
+        if (!$part->is_published || empty($part->audio_file) || !Storage::disk('public')->exists($part->audio_file)) {
+            abort(404);
+        }
+
+        $extension = pathinfo((string) $part->audio_file, PATHINFO_EXTENSION);
+        if ($extension === '') {
+            $extension = 'mp3';
+        }
+
+        $this->recordDownload('audiobook_part', $part->id, $request->ip());
+        $this->recordContentEvent($request, $part->getMorphClass(), $part->id, 'download');
+
+        if ($part->audiobook) {
+            $part->audiobook->increment('download_count');
+        }
+
+        return Storage::disk('public')->download(
+            $part->audio_file,
+            $this->sanitizeDownloadName($part->title, $extension)
         );
     }
 

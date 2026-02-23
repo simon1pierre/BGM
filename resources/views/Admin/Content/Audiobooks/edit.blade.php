@@ -8,7 +8,7 @@
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('admin.audiobooks.index') }}">Audiobooks</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.documents.index') }}">Books</a></li>
                     <li class="breadcrumb-item">Edit</li>
                 </ul>
             </div>
@@ -33,8 +33,11 @@
                                 <input type="text" name="title" value="{{ old('title', $audiobook->title) }}" class="form-control" required>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label fw-semibold">Publish Date</label>
-                                <input type="date" name="published_at" value="{{ old('published_at', optional($audiobook->published_at)->toDateString()) }}" class="form-control">
+                                <label class="form-label fw-semibold">Linked Book</label>
+                                <input type="hidden" name="book_id" value="{{ $audiobook->book_id }}">
+                                <div class="form-control bg-light">
+                                    {{ $books->firstWhere('id', $audiobook->book_id)?->title ?? 'Book not found' }}
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Primary Audiobook File</label>
@@ -49,45 +52,53 @@
                                 <div class="fs-12 text-muted mt-1">Used as default playback if no part is selected.</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold">Thumbnail (optional)</label>
-                                <input type="file" name="thumbnail" class="form-control" accept="image/*">
-                                @if ($audiobook->thumbnail)
-                                    <div class="mt-2 text-muted fs-12">Current: {{ $audiobook->thumbnail }}</div>
-                                @endif
+                                <button class="btn btn-light btn-sm mt-4" type="button" data-bs-toggle="collapse" data-bs-target="#audiobookEditAdvanced" aria-expanded="false" aria-controls="audiobookEditAdvanced">
+                                    Advanced Options
+                                </button>
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Category (optional)</label>
-                                <select name="category_id" class="form-select">
-                                    <option value="">None</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" @selected(old('category_id', $audiobook->category_id) == $category->id)>{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Linked Book</label>
-                                <select name="book_id" class="form-select" required>
-                                    @foreach ($books as $book)
-                                        <option value="{{ $book->id }}" @selected(old('book_id', $audiobook->book_id) == $book->id)>{{ $book->title }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="fs-12 text-muted mt-1">Each audiobook must belong to one book.</div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Narrator</label>
-                                <input type="text" name="narrator" value="{{ old('narrator', $audiobook->narrator) }}" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Series</label>
-                                <input type="text" name="series" value="{{ old('series', $audiobook->series) }}" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Duration</label>
-                                <input type="text" name="duration" value="{{ old('duration', $audiobook->duration) }}" class="form-control">
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label fw-semibold">Description</label>
-                                <textarea name="description" class="form-control" rows="4">{{ old('description', $audiobook->description) }}</textarea>
+                            <div class="col-md-12 collapse" id="audiobookEditAdvanced">
+                                <div class="card border border-dashed">
+                                    <div class="card-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Publish Date</label>
+                                                <input type="date" name="published_at" value="{{ old('published_at', optional($audiobook->published_at)->toDateString()) }}" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Category (optional)</label>
+                                                <select name="category_id" class="form-select">
+                                                    <option value="">None</option>
+                                                    @foreach ($categories as $category)
+                                                        <option value="{{ $category->id }}" @selected(old('category_id', $audiobook->category_id) == $category->id)>{{ $category->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Thumbnail (optional)</label>
+                                                <input type="file" name="thumbnail" class="form-control" accept="image/*">
+                                                @if ($audiobook->thumbnail)
+                                                    <div class="mt-2 text-muted fs-12">Current: {{ $audiobook->thumbnail }}</div>
+                                                @endif
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Narrator</label>
+                                                <input type="text" name="narrator" value="{{ old('narrator', $audiobook->narrator) }}" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Series</label>
+                                                <input type="text" name="series" value="{{ old('series', $audiobook->series) }}" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label fw-semibold">Duration</label>
+                                                <input type="text" name="duration" value="{{ old('duration', $audiobook->duration) }}" class="form-control">
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label fw-semibold">Description</label>
+                                                <textarea name="description" class="form-control" rows="4">{{ old('description', $audiobook->description) }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="row g-3">
@@ -133,13 +144,6 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <input type="hidden" name="recommended" value="0">
-                                    <div class="form-check mt-4">
-                                        <input class="form-check-input" type="checkbox" name="recommended" value="1" @checked(old('recommended', $audiobook->recommended))>
-                                        <label class="form-check-label">Recommended</label>
-                                    </div>
-                                </div>
-                                <div>
                                     <input type="hidden" name="is_prayer_audio" value="0">
                                     <div class="form-check mt-4">
                                         <input class="form-check-input" type="checkbox" name="is_prayer_audio" value="1" @checked(old('is_prayer_audio', $audiobook->is_prayer_audio))>
@@ -151,7 +155,7 @@
 
                         <div class="mt-4 d-flex gap-2">
                             <button class="btn btn-primary">Update Audiobook</button>
-                            <a href="{{ route('admin.audiobooks.index') }}" class="btn btn-light">Cancel</a>
+                            <a href="{{ route('admin.documents.edit', $audiobook->book_id) }}" class="btn btn-light">Back to Book</a>
                         </div>
                     </form>
 
@@ -176,6 +180,7 @@
                                 <tr>
                                     <th style="width: 80px;">Order</th>
                                     <th>Title</th>
+                                    <th>Language</th>
                                     <th>Duration</th>
                                     <th style="width: 220px;">Preview</th>
                                     <th style="width: 90px;">Status</th>
@@ -187,6 +192,7 @@
                                     <tr data-part-id="{{ $part->id }}">
                                         <td><span class="part-order">{{ $part->sort_order }}</span></td>
                                         <td>{{ $part->title }}</td>
+                                        <td><span class="badge bg-soft-info text-info">{{ $part->language_label }}</span></td>
                                         <td>{{ $part->duration ?: '-' }}</td>
                                         <td>
                                             <audio controls class="w-100">
@@ -212,7 +218,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-muted text-center">No parts yet. Add parts below.</td>
+                                        <td colspan="7" class="text-muted text-center">No parts yet. Add parts below.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -222,21 +228,37 @@
                     <form method="POST" action="{{ route('admin.audiobooks.parts.store', $audiobook) }}" enctype="multipart/form-data" class="border rounded-3 p-3 bg-light">
                         @csrf
                         <h6 class="mb-2">Quick Multi-Part Upload</h6>
-                        <p class="text-muted fs-12 mb-3">Fast way: choose many files and click upload.</p>
+                        <p class="text-muted fs-12 mb-3">Fast way: choose files by language and upload. Each part title is taken from the original file name.</p>
                         <div class="row g-3">
-                            <div class="col-md-7">
-                                <label class="form-label fw-semibold">Audio Files (many)</label>
-                                <input type="file" name="part_files[]" class="form-control" accept="audio/*" multiple required>
+                            <div class="col-md-12">
+                                <ul class="nav nav-pills mb-3" role="tablist">
+                                    <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#editPartLangRw" type="button">Kinyarwanda</button></li>
+                                    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#editPartLangEn" type="button">English</button></li>
+                                    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#editPartLangFr" type="button">French</button></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="editPartLangRw">
+                                        <label class="form-label fw-semibold">Kinyarwanda Parts</label>
+                                        <input type="file" name="part_files_rw[]" class="form-control" accept="audio/*" multiple data-upload-monitor data-upload-max-files="300" data-upload-warn-mb="1500" data-upload-summary-target="#editPartsSummaryRw">
+                                        <div id="editPartsSummaryRw" class="fs-12 text-muted mt-1">No files selected.</div>
+                                    </div>
+                                    <div class="tab-pane fade" id="editPartLangEn">
+                                        <label class="form-label fw-semibold">English Parts</label>
+                                        <input type="file" name="part_files_en[]" class="form-control" accept="audio/*" multiple data-upload-monitor data-upload-max-files="300" data-upload-warn-mb="1500" data-upload-summary-target="#editPartsSummaryEn">
+                                        <div id="editPartsSummaryEn" class="fs-12 text-muted mt-1">No files selected.</div>
+                                    </div>
+                                    <div class="tab-pane fade" id="editPartLangFr">
+                                        <label class="form-label fw-semibold">French Parts</label>
+                                        <input type="file" name="part_files_fr[]" class="form-control" accept="audio/*" multiple data-upload-monitor data-upload-max-files="300" data-upload-warn-mb="1500" data-upload-summary-target="#editPartsSummaryFr">
+                                        <div id="editPartsSummaryFr" class="fs-12 text-muted mt-1">No files selected.</div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-2">
-                                <label class="form-label fw-semibold">Prefix</label>
-                                <input type="text" name="part_title_prefix" class="form-control" value="Part">
-                            </div>
-                            <div class="col-md-3">
                                 <label class="form-label fw-semibold">Start Number</label>
                                 <input type="number" name="part_order_start" min="1" class="form-control" value="{{ ($audiobook->parts->max('sort_order') ?? 0) + 1 }}">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="form-label fw-semibold">Duration (optional)</label>
                                 <input type="text" name="duration" class="form-control" placeholder="e.g. 11:48">
                             </div>
@@ -264,6 +286,7 @@
                                     <div class="col-md-4">
                                         <label class="form-label fw-semibold">Part Title</label>
                                         <input type="text" name="title" class="form-control" placeholder="e.g. Part 12 - The Conflict">
+                                        <div class="fs-12 text-muted mt-1">Leave empty to use the uploaded file name.</div>
                                     </div>
                                     <div class="col-md-2">
                                         <label class="form-label fw-semibold">Order</label>
@@ -284,7 +307,15 @@
                                         <label class="form-label fw-semibold">Audio File</label>
                                         <input type="file" name="audio_file" class="form-control" accept="audio/*" required>
                                     </div>
-                                    <div class="col-md-4 d-flex align-items-end">
+                                    <div class="col-md-2">
+                                        <label class="form-label fw-semibold">Language</label>
+                                        <select name="part_language" class="form-select">
+                                            <option value="rw">Kinyarwanda</option>
+                                            <option value="en">English</option>
+                                            <option value="fr">French</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 d-flex align-items-end">
                                         <button class="btn btn-outline-primary w-100">Add Single Part</button>
                                     </div>
                                 </div>

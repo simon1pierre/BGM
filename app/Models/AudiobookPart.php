@@ -11,6 +11,7 @@ class AudiobookPart extends Model
         'audiobook_id',
         'title',
         'audio_file',
+        'language',
         'duration',
         'sort_order',
         'is_published',
@@ -20,6 +21,15 @@ class AudiobookPart extends Model
         'sort_order' => 'integer',
         'is_published' => 'boolean',
     ];
+
+    public function getLanguageLabelAttribute(): string
+    {
+        return match ($this->language) {
+            'en' => 'English',
+            'fr' => 'French',
+            default => 'Kinyarwanda',
+        };
+    }
 
     public function audiobook(): BelongsTo
     {

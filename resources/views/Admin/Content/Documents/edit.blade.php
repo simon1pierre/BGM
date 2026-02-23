@@ -225,56 +225,89 @@
                     </div>
 
                     <div class="border rounded-3 p-3 bg-light mb-4">
-                        <h6 class="mb-2">Quick Upload Audiobook Parts</h6>
-                        <p class="text-muted fs-12 mb-3">Upload one or many parts directly for this book. Choose existing audiobook or create a new one.</p>
+                        <h6 class="mb-2">Upload Audiobook Parts (Simple)</h6>
+                        <p class="text-muted fs-12 mb-3">Upload files directly. If no audiobook is selected, the system creates one automatically for this book.</p>
                         <form method="POST" action="{{ route('admin.documents.audiobook-parts.store', $document) }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Target Audiobook</label>
+                                    <label class="form-label fw-semibold">Target Audiobook (optional)</label>
                                     <select name="audiobook_id" class="form-select">
-                                        <option value="">Create New Audiobook</option>
+                                        <option value="">Auto create for this book</option>
                                         @foreach ($linkedAudiobooks as $linkedAudiobook)
                                             <option value="{{ $linkedAudiobook->id }}">{{ $linkedAudiobook->title }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label fw-semibold">New Audiobook Title (if creating)</label>
-                                    <input type="text" name="title" class="form-control" placeholder="e.g. IGICE CYA 1-40">
+                                    <label class="form-label fw-semibold">New Audiobook Title (optional)</label>
+                                    <input type="text" name="title" class="form-control" placeholder="Leave empty to auto-generate">
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label fw-semibold">Upload Many Parts</label>
-                                    <input type="file" name="part_files[]" class="form-control" accept="audio/*" multiple>
+                                    <label class="form-label fw-semibold d-block">Upload Many Parts</label>
+                                    <ul class="nav nav-pills mb-2" role="tablist">
+                                        <li class="nav-item"><button class="nav-link active px-2 py-1" data-bs-toggle="pill" data-bs-target="#quickLangRw" type="button">RW</button></li>
+                                        <li class="nav-item"><button class="nav-link px-2 py-1" data-bs-toggle="pill" data-bs-target="#quickLangEn" type="button">EN</button></li>
+                                        <li class="nav-item"><button class="nav-link px-2 py-1" data-bs-toggle="pill" data-bs-target="#quickLangFr" type="button">FR</button></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="quickLangRw">
+                                            <input type="file" name="part_files_rw[]" class="form-control" accept="audio/*" multiple data-upload-monitor data-upload-max-files="300" data-upload-warn-mb="1500" data-upload-summary-target="#quickPartsSummaryRw">
+                                            <div id="quickPartsSummaryRw" class="fs-12 text-muted mt-1">No files selected.</div>
+                                        </div>
+                                        <div class="tab-pane fade" id="quickLangEn">
+                                            <input type="file" name="part_files_en[]" class="form-control" accept="audio/*" multiple data-upload-monitor data-upload-max-files="300" data-upload-warn-mb="1500" data-upload-summary-target="#quickPartsSummaryEn">
+                                            <div id="quickPartsSummaryEn" class="fs-12 text-muted mt-1">No files selected.</div>
+                                        </div>
+                                        <div class="tab-pane fade" id="quickLangFr">
+                                            <input type="file" name="part_files_fr[]" class="form-control" accept="audio/*" multiple data-upload-monitor data-upload-max-files="300" data-upload-warn-mb="1500" data-upload-summary-target="#quickPartsSummaryFr">
+                                            <div id="quickPartsSummaryFr" class="fs-12 text-muted mt-1">No files selected.</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label fw-semibold">Or Upload One Part</label>
-                                    <input type="file" name="single_part_file" class="form-control" accept="audio/*">
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label fw-semibold">Prefix</label>
-                                    <input type="text" name="part_title_prefix" class="form-control" value="Part">
+                                    <input type="file" name="single_part_file" class="form-control" accept="audio/*" data-upload-monitor data-upload-max-files="1" data-upload-warn-mb="256" data-upload-summary-target="#quickSinglePartSummary">
+                                    <div id="quickSinglePartSummary" class="fs-12 text-muted mt-1">No file selected.</div>
+                                    <select name="single_part_language" class="form-select mt-2">
+                                        <option value="rw">Kinyarwanda</option>
+                                        <option value="en">English</option>
+                                        <option value="fr">French</option>
+                                    </select>
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label fw-semibold">Start</label>
                                     <input type="number" name="part_order_start" min="1" class="form-control" value="1">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-label fw-semibold">Duration</label>
                                     <input type="text" name="part_duration" class="form-control" placeholder="e.g. 11:48">
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="form-label fw-semibold">Narrator (new only)</label>
-                                    <input type="text" name="narrator" class="form-control">
+                                <div class="col-md-12">
+                                    <button class="btn btn-light btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#quickPartsAdvanced" aria-expanded="false" aria-controls="quickPartsAdvanced">
+                                        Advanced Options (new audiobook only)
+                                    </button>
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="form-label fw-semibold">Category (new only)</label>
-                                    <select name="category_id" class="form-select">
-                                        <option value="">None</option>
-                                        @foreach ($audioCategories as $audioCategory)
-                                            <option value="{{ $audioCategory->id }}">{{ $audioCategory->name }}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="col-md-12 collapse" id="quickPartsAdvanced">
+                                    <div class="card border border-dashed">
+                                        <div class="card-body">
+                                            <div class="row g-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label fw-semibold">Narrator (new only)</label>
+                                                    <input type="text" name="narrator" class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label fw-semibold">Category (new only)</label>
+                                                    <select name="category_id" class="form-select">
+                                                        <option value="">None</option>
+                                                        @foreach ($audioCategories as $audioCategory)
+                                                            <option value="{{ $audioCategory->id }}">{{ $audioCategory->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-3 d-flex align-items-end">
                                     <div class="form-check">
@@ -290,7 +323,7 @@
                         </form>
                     </div>
 
-                    <div class="border rounded-3 p-3 bg-light">
+                    <div class="border rounded-3 p-3 bg-light d-none">
                         <h6 class="mb-2">Add Audiobook To This Book</h6>
                         <p class="text-muted fs-12 mb-3">This upload is automatically assigned to: <strong>{{ $document->title }}</strong>.</p>
                         <form method="POST" action="{{ route('admin.documents.audiobooks.store', $document) }}" enctype="multipart/form-data">
@@ -326,44 +359,71 @@
                                     <input type="file" name="thumbnail" class="form-control" accept="image/*">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Upload Many Parts</label>
-                                    <input type="file" name="part_files[]" class="form-control" accept="audio/*" multiple>
+                                    <label class="form-label fw-semibold d-block">Upload Many Parts</label>
+                                    <ul class="nav nav-pills mb-2" role="tablist">
+                                        <li class="nav-item"><button class="nav-link active px-2 py-1" data-bs-toggle="pill" data-bs-target="#addLangRw" type="button">RW</button></li>
+                                        <li class="nav-item"><button class="nav-link px-2 py-1" data-bs-toggle="pill" data-bs-target="#addLangEn" type="button">EN</button></li>
+                                        <li class="nav-item"><button class="nav-link px-2 py-1" data-bs-toggle="pill" data-bs-target="#addLangFr" type="button">FR</button></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="addLangRw">
+                                            <input type="file" name="part_files_rw[]" class="form-control" accept="audio/*" multiple data-upload-monitor data-upload-max-files="300" data-upload-warn-mb="1500" data-upload-summary-target="#addAudiobookPartsSummaryRw">
+                                            <div id="addAudiobookPartsSummaryRw" class="fs-12 text-muted mt-1">No files selected.</div>
+                                        </div>
+                                        <div class="tab-pane fade" id="addLangEn">
+                                            <input type="file" name="part_files_en[]" class="form-control" accept="audio/*" multiple data-upload-monitor data-upload-max-files="300" data-upload-warn-mb="1500" data-upload-summary-target="#addAudiobookPartsSummaryEn">
+                                            <div id="addAudiobookPartsSummaryEn" class="fs-12 text-muted mt-1">No files selected.</div>
+                                        </div>
+                                        <div class="tab-pane fade" id="addLangFr">
+                                            <input type="file" name="part_files_fr[]" class="form-control" accept="audio/*" multiple data-upload-monitor data-upload-max-files="300" data-upload-warn-mb="1500" data-upload-summary-target="#addAudiobookPartsSummaryFr">
+                                            <div id="addAudiobookPartsSummaryFr" class="fs-12 text-muted mt-1">No files selected.</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <label class="form-label fw-semibold">Prefix</label>
-                                    <input type="text" name="part_title_prefix" class="form-control" value="Part">
-                                </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label class="form-label fw-semibold">Start</label>
                                     <input type="number" name="part_order_start" min="1" class="form-control" value="1">
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label class="form-label fw-semibold">Duration</label>
                                     <input type="text" name="part_duration" class="form-control" placeholder="11:48">
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label fw-semibold">Series</label>
-                                    <input type="text" name="series" class="form-control">
+                                    <button class="btn btn-light btn-sm mt-4" type="button" data-bs-toggle="collapse" data-bs-target="#addBookAudiobookAdvanced" aria-expanded="false" aria-controls="addBookAudiobookAdvanced">
+                                        Advanced Options
+                                    </button>
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="form-label fw-semibold">Published At</label>
-                                    <input type="date" name="published_at" class="form-control">
-                                </div>
-                                <div class="col-md-6 d-flex align-items-end gap-3">
-                                    <div class="form-check">
-                                        <input type="hidden" name="is_published" value="0">
-                                        <input class="form-check-input" type="checkbox" id="bookAudiobookPublished" name="is_published" value="1" checked>
-                                        <label class="form-check-label" for="bookAudiobookPublished">Published</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="hidden" name="featured" value="0">
-                                        <input class="form-check-input" type="checkbox" id="bookAudiobookFeatured" name="featured" value="1">
-                                        <label class="form-check-label" for="bookAudiobookFeatured">Featured</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="hidden" name="is_prayer_audio" value="0">
-                                        <input class="form-check-input" type="checkbox" id="bookAudiobookPrayer" name="is_prayer_audio" value="1">
-                                        <label class="form-check-label" for="bookAudiobookPrayer">Prayer Audio</label>
+                                <div class="col-md-12 collapse" id="addBookAudiobookAdvanced">
+                                    <div class="card border border-dashed">
+                                        <div class="card-body">
+                                            <div class="row g-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label fw-semibold">Series</label>
+                                                    <input type="text" name="series" class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label fw-semibold">Published At</label>
+                                                    <input type="date" name="published_at" class="form-control">
+                                                </div>
+                                                <div class="col-md-12 d-flex align-items-end gap-3">
+                                                    <div class="form-check">
+                                                        <input type="hidden" name="is_published" value="0">
+                                                        <input class="form-check-input" type="checkbox" id="bookAudiobookPublished" name="is_published" value="1" checked>
+                                                        <label class="form-check-label" for="bookAudiobookPublished">Published</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input type="hidden" name="featured" value="0">
+                                                        <input class="form-check-input" type="checkbox" id="bookAudiobookFeatured" name="featured" value="1">
+                                                        <label class="form-check-label" for="bookAudiobookFeatured">Featured</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input type="hidden" name="is_prayer_audio" value="0">
+                                                        <input class="form-check-input" type="checkbox" id="bookAudiobookPrayer" name="is_prayer_audio" value="1">
+                                                        <label class="form-check-label" for="bookAudiobookPrayer">Prayer Audio</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 d-flex align-items-end">

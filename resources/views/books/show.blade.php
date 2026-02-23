@@ -1,7 +1,26 @@
 @extends('layouts.audiences.app')
 @section('contents')
-<main class="grow bg-slate-50">
-    <section class="pt-16 pb-10 bg-gradient-to-b from-blue-950 to-slate-900 text-white">
+<style>
+    .reader-loading-spinner {
+        width: 42px;
+        height: 42px;
+        margin: 0 auto;
+        border-radius: 9999px;
+        border: 3px solid #cbd5e1;
+        border-top-color: #1d4ed8;
+        animation: readerSpin 0.85s linear infinite;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @keyframes readerSpin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+</style>
+<main id="bookShowMain" class="grow bg-slate-50 min-h-screen">
+    <section class="pt-6 pb-4 bg-gradient-to-b from-blue-950 to-slate-900 text-white">
         <div class="container mx-auto px-6">
             <div class="max-w-4xl">
                 <span class="inline-block py-1 px-3 rounded-full bg-blue-500/20 border border-blue-300/30 text-blue-100 text-xs font-medium tracking-widest uppercase mb-4">
@@ -13,12 +32,12 @@
         </div>
     </section>
 
-    <section class="py-10">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2">
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100">
-                        <div class="p-3 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center gap-2">
+    <section class="py-0">
+        <div class="w-full px-0 md:px-3">
+            <div class="grid grid-cols-1 gap-8">
+                <div>
+                    <div id="bookReaderCard" class="bg-white md:rounded-2xl overflow-hidden shadow-sm border border-slate-100">
+                        <div id="normalReaderToolbar" class="p-3 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center gap-2 sticky top-0 z-20">
                             <button type="button" id="normalPrevPage" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.prev') }}</button>
                             <button type="button" id="normalNextPage" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.next') }}</button>
                             <div class="flex items-center gap-2 text-sm text-slate-700">
@@ -29,7 +48,15 @@
                                 <button type="button" id="normalFullscreen" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.fullscreen') }}</button>
                             </div>
                         </div>
-                        <div class="aspect-[4/3] bg-slate-100">
+                        <div id="normalReaderContainer" class="relative bg-slate-100 h-[calc(100vh-4rem)] md:h-[calc(100vh-4.5rem)]">
+                            <div id="normalReaderLoading" class="absolute inset-0 z-10 flex items-center justify-center bg-slate-100">
+                                <div class="text-center">
+                                    <div class="reader-loading-spinner">
+                                        <img src="{{ asset('images/logo.png') }}" alt="Ministry Logo" class="w-4 h-4 object-contain rounded-full bg-white p-[1px]">
+                                    </div>
+                                    <p class="mt-2 text-xs text-slate-600">Loading book pages...</p>
+                                </div>
+                            </div>
                             @if ($book->file_path)
                                 <iframe
                                     id="normalPdfFrame"
@@ -89,8 +116,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="space-y-6">
-                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                <div id="readerToolsSection" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="hidden bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
                         <h2 class="text-xl font-serif font-bold text-blue-950 mb-3">{{ __('messages.books.about_book') }}</h2>
                         <p class="text-slate-600 text-sm leading-relaxed">{{ $book->description }}</p>
                         <div class="mt-4 text-xs text-slate-500">
@@ -98,6 +125,14 @@
                         </div>
                     </div>
                     <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-3">
+                        @if ($book->file_path)
+                            <button type="button" id="openReadModal" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-white bg-blue-900 rounded-lg hover:bg-blue-800 transition-colors">
+                                Read Book (Modal)
+                            </button>
+                        @endif
+                        <button type="button" id="openBookAboutModal" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
+                            {{ __('messages.books.about_book') }}
+                        </button>
                         <a href="{{ route('books.reader', $book) }}" class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-semibold text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
                             {{ __('messages.books.advanced_reader') }}
                         </a>
@@ -133,27 +168,36 @@
                             @if ($linkedAudiobooks->count())
                                 @php
                                     $bookQueue = [];
+                                    $bookQueueByLang = ['rw' => [], 'en' => [], 'fr' => []];
                                     foreach ($linkedAudiobooks as $ab) {
                                         if ($ab->publishedParts->count() > 0) {
                                             foreach ($ab->publishedParts as $part) {
-                                                $bookQueue[] = [
+                                                $track = [
                                                     'key' => 'part_'.$part->id,
                                                     'label' => $ab->title.' - '.$part->title,
                                                     'audio' => asset('storage/'.$part->audio_file),
+                                                    'download' => route('content.download.audiobook-part', $part),
+                                                    'lang' => in_array($part->language, ['rw', 'en', 'fr'], true) ? $part->language : 'rw',
                                                     'source_url' => route('books.show', $book),
                                                     'source_name' => $ab->title,
                                                 ];
+                                                $bookQueue[] = $track;
+                                                $bookQueueByLang[$track['lang']][] = $track;
                                             }
                                         } else {
                                             $playable = $ab->resolvePlayableAudioFile();
                                             if (!empty($playable)) {
-                                                $bookQueue[] = [
+                                                $track = [
                                                     'key' => 'ab_'.$ab->id,
                                                     'label' => $ab->title,
                                                     'audio' => asset('storage/'.$playable),
+                                                    'download' => asset('storage/'.$playable),
+                                                    'lang' => 'rw',
                                                     'source_url' => route('books.show', $book),
                                                     'source_name' => $ab->title,
                                                 ];
+                                                $bookQueue[] = $track;
+                                                $bookQueueByLang['rw'][] = $track;
                                             }
                                         }
                                     }
@@ -174,10 +218,15 @@
                                             <audio id="bookLinkedPlayer" class="hidden">
                                                 <source id="bookLinkedSource" src="{{ $bookQueue[0]['audio'] }}" type="audio/mpeg">
                                             </audio>
+                                            <div class="mb-3 flex flex-wrap gap-2">
+                                                <button type="button" class="book-lang-tab px-2.5 py-1 rounded border border-slate-500 text-[11px] bg-[#343743] text-white" data-book-lang="rw">Kinyarwanda ({{ count($bookQueueByLang['rw']) }})</button>
+                                                <button type="button" class="book-lang-tab px-2.5 py-1 rounded border border-slate-500 text-[11px]" data-book-lang="en">English ({{ count($bookQueueByLang['en']) }})</button>
+                                                <button type="button" class="book-lang-tab px-2.5 py-1 rounded border border-slate-500 text-[11px]" data-book-lang="fr">French ({{ count($bookQueueByLang['fr']) }})</button>
+                                            </div>
                                             <div class="flex items-center gap-2 mb-3">
-                                                <button type="button" id="bookLinkedPrev" class="px-3 py-2 rounded bg-[#2b2d36] hover:bg-[#373a45] text-sm" aria-label="Previous">⏮</button>
+                                                <button type="button" id="bookLinkedPrev" class="px-3 py-2 rounded bg-[#2b2d36] hover:bg-[#373a45] text-sm" aria-label="Previous">Prev</button>
                                                 <button type="button" id="bookLinkedPlayPause" class="px-4 py-2 rounded bg-[#ff006e] hover:bg-[#e00062] text-sm font-semibold min-w-[72px]">Play</button>
-                                                <button type="button" id="bookLinkedNext" class="px-3 py-2 rounded bg-[#2b2d36] hover:bg-[#373a45] text-sm" aria-label="Next">⏭</button>
+                                                <button type="button" id="bookLinkedNext" class="px-3 py-2 rounded bg-[#2b2d36] hover:bg-[#373a45] text-sm" aria-label="Next">Next</button>
                                                 <div class="flex items-center gap-2 ml-auto">
                                                     <span class="text-xs text-slate-300">Vol</span>
                                                     <input id="bookLinkedVolume" type="range" min="0" max="1" step="0.05" value="1" class="accent-pink-500 w-24">
@@ -202,13 +251,18 @@
                                                     data-track-key="{{ $track['key'] }}"
                                                     data-track-title="{{ $track['label'] }}"
                                                     data-track-src="{{ $track['audio'] }}"
+                                                    data-track-lang="{{ $track['lang'] }}"
                                                     data-track-source="{{ $track['source_url'] }}"
                                                 >
                                                     <div class="flex items-center justify-between gap-3">
                                                         <div class="min-w-0">
                                                             <div class="text-sm font-semibold truncate">{{ $loop->iteration }}. {{ $track['label'] }}</div>
                                                         </div>
-                                                        <div class="text-slate-300 text-sm">🎧</div>
+                                                        <a href="{{ $track['download'] }}" download class="text-slate-200 hover:text-white" title="{{ __('messages.common.download') }}" data-book-track-download>
+                                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                                <path d="M12 3v11m0 0l4-4m-4 4l-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            </svg>
+                                                        </a>
                                                     </div>
                                                 </button>
                                             @endforeach
@@ -231,9 +285,11 @@
                                         const currentTimeNode = document.getElementById('bookLinkedCurrentTime');
                                         const durationNode = document.getElementById('bookLinkedDuration');
                                         const buttons = Array.from(document.querySelectorAll('[data-book-track]'));
+                                        const langTabs = Array.from(document.querySelectorAll('[data-book-lang]'));
                                         if (!player || !source || buttons.length === 0) return;
 
                                         let activeIndex = 0;
+                                        let activeLanguage = 'rw';
                                         const formatTime = (seconds) => {
                                             if (!Number.isFinite(seconds)) return '00:00';
                                             const total = Math.max(0, Math.floor(seconds));
@@ -260,16 +316,55 @@
                                             syncPlayState();
                                         };
 
+                                        const visibleButtons = () => buttons.filter((button) => !button.classList.contains('hidden'));
+
+                                        const applyLanguageFilter = (lang) => {
+                                            activeLanguage = lang;
+                                            langTabs.forEach((tab) => {
+                                                const isActive = tab.getAttribute('data-book-lang') === lang;
+                                                tab.classList.toggle('bg-[#343743]', isActive);
+                                                tab.classList.toggle('text-white', isActive);
+                                            });
+                                            buttons.forEach((button) => {
+                                                const rowLang = button.getAttribute('data-track-lang') || 'rw';
+                                                button.classList.toggle('hidden', rowLang !== lang);
+                                            });
+                                        };
+
                                         buttons.forEach((button, index) => {
                                             button.addEventListener('click', () => selectTrack(index, true));
+                                            button.querySelector('[data-book-track-download]')?.addEventListener('click', (event) => {
+                                                event.stopPropagation();
+                                            });
+                                        });
+
+                                        langTabs.forEach((tab) => {
+                                            tab.addEventListener('click', () => {
+                                                const lang = tab.getAttribute('data-book-lang') || 'rw';
+                                                applyLanguageFilter(lang);
+                                                const visible = visibleButtons();
+                                                if (visible.length === 0) return;
+                                                const nextIndex = Number(visible[0].getAttribute('data-track-index') || 0);
+                                                selectTrack(nextIndex, false);
+                                            });
                                         });
 
                                         prevButton?.addEventListener('click', () => {
-                                            if (activeIndex > 0) selectTrack(activeIndex - 1, true);
+                                            const visible = visibleButtons();
+                                            const pos = visible.findIndex((button) => Number(button.getAttribute('data-track-index')) === activeIndex);
+                                            if (pos > 0) {
+                                                const nextIndex = Number(visible[pos - 1].getAttribute('data-track-index') || 0);
+                                                selectTrack(nextIndex, true);
+                                            }
                                         });
 
                                         nextButton?.addEventListener('click', () => {
-                                            if (activeIndex + 1 < buttons.length) selectTrack(activeIndex + 1, true);
+                                            const visible = visibleButtons();
+                                            const pos = visible.findIndex((button) => Number(button.getAttribute('data-track-index')) === activeIndex);
+                                            if (pos >= 0 && pos + 1 < visible.length) {
+                                                const nextIndex = Number(visible[pos + 1].getAttribute('data-track-index') || 0);
+                                                selectTrack(nextIndex, true);
+                                            }
                                         });
 
                                         playPauseButton?.addEventListener('click', () => {
@@ -298,12 +393,23 @@
 
                                         player.addEventListener('ended', () => {
                                             if (!autoNext || !autoNext.checked) return;
-                                            if (activeIndex + 1 < buttons.length) {
-                                                selectTrack(activeIndex + 1, true);
+                                            const visible = visibleButtons();
+                                            const pos = visible.findIndex((button) => Number(button.getAttribute('data-track-index')) === activeIndex);
+                                            if (pos >= 0 && pos + 1 < visible.length) {
+                                                const nextIndex = Number(visible[pos + 1].getAttribute('data-track-index') || 0);
+                                                selectTrack(nextIndex, true);
                                             }
                                         });
 
-                                        selectTrack(0, false);
+                                        if (!buttons.some((button) => (button.getAttribute('data-track-lang') || 'rw') === activeLanguage)) {
+                                            activeLanguage = buttons[0].getAttribute('data-track-lang') || 'rw';
+                                        }
+                                        applyLanguageFilter(activeLanguage);
+                                        const visible = visibleButtons();
+                                        if (visible.length > 0) {
+                                            const firstIndex = Number(visible[0].getAttribute('data-track-index') || 0);
+                                            selectTrack(firstIndex, false);
+                                        }
                                         syncPlayState();
                                     })();
                                 </script>
@@ -314,6 +420,132 @@
                     @endif
                 </div>
             </div>
+            <div id="bookAboutModal" class="hidden fixed inset-0 z-[80] bg-slate-950/70 p-4 md:p-8 overflow-y-auto">
+                <div class="mx-auto w-full max-w-3xl bg-white rounded-2xl border border-slate-200 shadow-2xl">
+                    <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                        <h2 class="text-xl font-serif font-bold text-blue-950">{{ __('messages.books.about_book') }}</h2>
+                        <button type="button" id="closeBookAboutModal" class="px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 hover:bg-slate-50">Close</button>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-slate-600 text-sm leading-relaxed">{{ $book->description ?: __('messages.books.no_description') }}</p>
+                        <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-500">
+                            <div><span class="text-slate-700 font-semibold">{{ __('messages.books.author') }}:</span> {{ $book->author ?: '-' }}</div>
+                            <div><span class="text-slate-700 font-semibold">{{ __('messages.books.series') }}:</span> {{ $book->series ?: '-' }}</div>
+                            <div><span class="text-slate-700 font-semibold">{{ __('messages.common.published') }}:</span> {{ $book->published_at?->toDateString() ?? $book->created_at?->toDateString() }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if ($book->file_path)
+                <div id="bookReadModal" class="hidden fixed inset-0 z-[90] bg-slate-950/80 p-2 md:p-4">
+                    <div class="w-full h-full bg-white rounded-xl overflow-hidden shadow-2xl flex flex-col">
+                        <div class="px-3 py-2 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center gap-2">
+                            <button type="button" id="modalPrevPage" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.prev') }}</button>
+                            <button type="button" id="modalNextPage" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.next') }}</button>
+                            <div class="flex items-center gap-2 text-sm text-slate-700">
+                                <span>{{ __('messages.common.page') }}</span>
+                                <input id="modalPageNumber" type="number" min="1" value="1" class="w-16 px-2 py-1.5 border border-slate-200 rounded-lg text-sm">
+                            </div>
+                            <div class="ml-auto flex items-center gap-2">
+                                <button type="button" id="modalReaderFullscreen" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.fullscreen') }}</button>
+                                <button type="button" id="closeReadModal" class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">Close</button>
+                            </div>
+                        </div>
+                        <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 min-h-0">
+                            <div class="lg:col-span-8 relative bg-slate-100 min-h-0" id="modalReaderViewport">
+                                <div id="modalReaderLoading" class="absolute inset-0 z-10 flex items-center justify-center bg-slate-100">
+                                    <div class="text-center">
+                                        <div class="reader-loading-spinner">
+                                            <img src="{{ asset('images/logo.png') }}" alt="Ministry Logo" class="w-4 h-4 object-contain rounded-full bg-white p-[1px]">
+                                        </div>
+                                        <p class="mt-2 text-xs text-slate-600">Opening reader...</p>
+                                    </div>
+                                </div>
+                                <iframe
+                                    id="modalPdfFrame"
+                                    class="w-full h-full"
+                                    src="{{ asset('storage/'.$book->file_path) }}#toolbar=0&view=FitH&page=1"
+                                    title="{{ $book->title }} - Modal Reader"
+                                    frameborder="0"
+                                ></iframe>
+                            </div>
+                            <div class="lg:col-span-4 border-l border-slate-200 bg-white min-h-0 overflow-hidden flex flex-col">
+                                <div class="px-4 py-3 border-b border-slate-100">
+                                    <h3 class="font-serif text-lg text-slate-900 font-bold">{{ __('messages.books.audiobook_while_reading') }}</h3>
+                                </div>
+                                @php
+                                    $modalBookQueue = [];
+                                    foreach ($linkedAudiobooks as $ab) {
+                                        if ($ab->publishedParts->count() > 0) {
+                                            foreach ($ab->publishedParts as $part) {
+                                                $modalBookQueue[] = [
+                                                    'label' => $ab->title.' - '.$part->title,
+                                                    'audio' => asset('storage/'.$part->audio_file),
+                                                    'download' => route('content.download.audiobook-part', $part),
+                                                    'lang' => in_array($part->language, ['rw', 'en', 'fr'], true) ? $part->language : 'rw',
+                                                ];
+                                            }
+                                        } else {
+                                            $playable = $ab->resolvePlayableAudioFile();
+                                            if (!empty($playable)) {
+                                                $modalBookQueue[] = [
+                                                    'label' => $ab->title,
+                                                    'audio' => asset('storage/'.$playable),
+                                                    'download' => asset('storage/'.$playable),
+                                                    'lang' => 'rw',
+                                                ];
+                                            }
+                                        }
+                                    }
+                                @endphp
+                                @if (count($modalBookQueue) > 0)
+                                    <div class="px-4 py-3 border-b border-slate-100">
+                                        <audio id="modalBookAudioPlayer" class="hidden">
+                                            <source id="modalBookAudioSource" src="{{ $modalBookQueue[0]['audio'] }}" type="audio/mpeg">
+                                        </audio>
+                                        <div id="modalBookNowPlaying" class="text-sm font-semibold text-slate-800 truncate mb-2">{{ $modalBookQueue[0]['label'] }}</div>
+                                        <div class="flex items-center gap-2">
+                                            <button type="button" id="modalBookPlayPause" class="px-3 py-1.5 rounded bg-slate-900 text-white text-xs">Play</button>
+                                            <button type="button" id="modalBookPrev" class="px-2.5 py-1.5 rounded border border-slate-200 text-xs">Prev</button>
+                                            <button type="button" id="modalBookNext" class="px-2.5 py-1.5 rounded border border-slate-200 text-xs">Next</button>
+                                            <select id="modalBookLang" class="ml-auto text-xs border border-slate-200 rounded px-2 py-1">
+                                                <option value="all">All</option>
+                                                <option value="rw">RW</option>
+                                                <option value="en">EN</option>
+                                                <option value="fr">FR</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="modalBookQueue" class="overflow-y-auto flex-1">
+                                        @foreach ($modalBookQueue as $index => $track)
+                                            <button
+                                                type="button"
+                                                class="w-full text-left px-4 py-3 border-b border-slate-100 hover:bg-slate-50 transition-colors modal-book-track"
+                                                data-modal-track
+                                                data-track-index="{{ $index }}"
+                                                data-track-title="{{ $track['label'] }}"
+                                                data-track-src="{{ $track['audio'] }}"
+                                                data-track-lang="{{ $track['lang'] }}"
+                                            >
+                                                <div class="flex items-center justify-between gap-2">
+                                                    <div class="text-xs font-semibold text-slate-700 truncate">{{ $loop->iteration }}. {{ $track['label'] }}</div>
+                                                    <a href="{{ $track['download'] }}" download class="text-blue-700 hover:text-blue-900" data-modal-track-download title="{{ __('messages.common.download') }}" aria-label="{{ __('messages.common.download') }}">
+                                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                            <path d="M12 3v11m0 0l4-4m-4 4l-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            </button>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <div class="p-4 text-sm text-slate-500">{{ __('messages.books.no_audiobooks_filter') }}</div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
             @if (!empty($relatedBooks) && $relatedBooks->count())
                 <div class="mt-12">
                     <div class="flex items-center justify-between mb-4">
@@ -516,11 +748,168 @@
         const frame = document.getElementById('normalPdfFrame');
         const pageInput = document.getElementById('normalPageNumber');
         const container = frame ? frame.parentElement : null;
+        const aboutModal = document.getElementById('bookAboutModal');
+        const readModal = document.getElementById('bookReadModal');
+        const modalPdfFrame = document.getElementById('modalPdfFrame');
+        const modalPageInput = document.getElementById('modalPageNumber');
+        const modalReaderViewport = document.getElementById('modalReaderViewport');
+        const normalReaderLoading = document.getElementById('normalReaderLoading');
+        const modalReaderLoading = document.getElementById('modalReaderLoading');
         let page = 1;
+        let modalPage = 1;
+
+        frame?.addEventListener('load', () => {
+            normalReaderLoading?.classList.add('hidden');
+        });
+        modalPdfFrame?.addEventListener('load', () => {
+            modalReaderLoading?.classList.add('hidden');
+        });
+
+        document.getElementById('openBookAboutModal')?.addEventListener('click', () => {
+            aboutModal?.classList.remove('hidden');
+        });
+        document.getElementById('closeBookAboutModal')?.addEventListener('click', () => {
+            aboutModal?.classList.add('hidden');
+        });
+        aboutModal?.addEventListener('click', (event) => {
+            if (event.target === aboutModal) {
+                aboutModal.classList.add('hidden');
+            }
+        });
+
+        const updateModalFramePage = () => {
+            if (!modalPdfFrame) return;
+            const base = @json(asset('storage/'.$book->file_path));
+            modalPdfFrame.src = `${base}#toolbar=0&view=FitH&page=${modalPage}`;
+            if (modalPageInput) modalPageInput.value = modalPage;
+            modalReaderLoading?.classList.remove('hidden');
+        };
+
+        document.getElementById('openReadModal')?.addEventListener('click', () => {
+            if (!readModal) return;
+            modalPage = page;
+            updateModalFramePage();
+            readModal.classList.remove('hidden');
+        });
+        document.getElementById('closeReadModal')?.addEventListener('click', () => {
+            readModal?.classList.add('hidden');
+        });
+        readModal?.addEventListener('click', (event) => {
+            if (event.target === readModal) {
+                readModal.classList.add('hidden');
+            }
+        });
+        document.getElementById('modalPrevPage')?.addEventListener('click', () => {
+            modalPage = Math.max(1, modalPage - 1);
+            updateModalFramePage();
+        });
+        document.getElementById('modalNextPage')?.addEventListener('click', () => {
+            modalPage += 1;
+            updateModalFramePage();
+        });
+        modalPageInput?.addEventListener('change', () => {
+            const value = parseInt(modalPageInput.value, 10);
+            if (!Number.isFinite(value) || value < 1) {
+                modalPageInput.value = String(modalPage);
+                return;
+            }
+            modalPage = value;
+            updateModalFramePage();
+        });
+        document.getElementById('modalReaderFullscreen')?.addEventListener('click', () => {
+            if (!modalReaderViewport) return;
+            if (!document.fullscreenElement) {
+                modalReaderViewport.requestFullscreen?.();
+            } else {
+                document.exitFullscreen?.();
+            }
+        });
+
+        const modalAudioPlayer = document.getElementById('modalBookAudioPlayer');
+        const modalAudioSource = document.getElementById('modalBookAudioSource');
+        const modalNowPlaying = document.getElementById('modalBookNowPlaying');
+        const modalAudioRows = Array.from(document.querySelectorAll('[data-modal-track]'));
+        const modalPlayPause = document.getElementById('modalBookPlayPause');
+        const modalPrev = document.getElementById('modalBookPrev');
+        const modalNext = document.getElementById('modalBookNext');
+        const modalLang = document.getElementById('modalBookLang');
+        let modalTrackIndex = 0;
+
+        const visibleModalRows = () => modalAudioRows.filter((row) => !row.classList.contains('hidden'));
+
+        const selectModalTrack = (index, play = true) => {
+            if (!modalAudioPlayer || !modalAudioSource) return;
+            if (index < 0 || index >= modalAudioRows.length) return;
+            modalTrackIndex = index;
+            const row = modalAudioRows[index];
+            modalAudioSource.src = row.getAttribute('data-track-src') || '';
+            modalAudioPlayer.load();
+            modalAudioRows.forEach((item) => item.classList.remove('bg-slate-100'));
+            row.classList.add('bg-slate-100');
+            if (modalNowPlaying) modalNowPlaying.textContent = row.getAttribute('data-track-title') || '';
+            if (play) modalAudioPlayer.play().catch(() => {});
+        };
+
+        modalAudioRows.forEach((row, index) => {
+            row.addEventListener('click', () => selectModalTrack(index, true));
+            row.querySelector('[data-modal-track-download]')?.addEventListener('click', (event) => event.stopPropagation());
+        });
+
+        modalLang?.addEventListener('change', () => {
+            const selected = modalLang.value || 'all';
+            modalAudioRows.forEach((row) => {
+                const lang = row.getAttribute('data-track-lang') || 'rw';
+                row.classList.toggle('hidden', selected !== 'all' && lang !== selected);
+            });
+            const visible = visibleModalRows();
+            if (visible.length > 0) {
+                const first = Number(visible[0].getAttribute('data-track-index') || 0);
+                selectModalTrack(first, false);
+            }
+        });
+        modalPlayPause?.addEventListener('click', () => {
+            if (!modalAudioPlayer) return;
+            if (modalAudioPlayer.paused) modalAudioPlayer.play().catch(() => {});
+            else modalAudioPlayer.pause();
+        });
+        modalPrev?.addEventListener('click', () => {
+            const visible = visibleModalRows();
+            const pos = visible.findIndex((row) => Number(row.getAttribute('data-track-index') || 0) === modalTrackIndex);
+            if (pos > 0) {
+                const nextIndex = Number(visible[pos - 1].getAttribute('data-track-index') || 0);
+                selectModalTrack(nextIndex, true);
+            }
+        });
+        modalNext?.addEventListener('click', () => {
+            const visible = visibleModalRows();
+            const pos = visible.findIndex((row) => Number(row.getAttribute('data-track-index') || 0) === modalTrackIndex);
+            if (pos >= 0 && pos + 1 < visible.length) {
+                const nextIndex = Number(visible[pos + 1].getAttribute('data-track-index') || 0);
+                selectModalTrack(nextIndex, true);
+            }
+        });
+        modalAudioPlayer?.addEventListener('play', () => {
+            if (modalPlayPause) modalPlayPause.textContent = 'Pause';
+        });
+        modalAudioPlayer?.addEventListener('pause', () => {
+            if (modalPlayPause) modalPlayPause.textContent = 'Play';
+        });
+        modalAudioPlayer?.addEventListener('ended', () => {
+            const visible = visibleModalRows();
+            const pos = visible.findIndex((row) => Number(row.getAttribute('data-track-index') || 0) === modalTrackIndex);
+            if (pos >= 0 && pos + 1 < visible.length) {
+                const nextIndex = Number(visible[pos + 1].getAttribute('data-track-index') || 0);
+                selectModalTrack(nextIndex, true);
+            }
+        });
+        if (modalAudioRows.length > 0) {
+            selectModalTrack(0, false);
+        }
 
         function updateFramePage() {
             if (!frame) return;
             const base = @json(asset('storage/'.$book->file_path));
+            normalReaderLoading?.classList.remove('hidden');
             frame.src = `${base}#toolbar=1&view=FitH&page=${page}`;
             if (pageInput) {
                 pageInput.value = page;
@@ -569,3 +958,4 @@
     });
 </script>
 @endsection
+

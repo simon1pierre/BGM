@@ -320,6 +320,53 @@
                 else window.adminNotify(message, 'info');
                 alert.remove();
             });
+
+            const prettySize = (bytes) => {
+                if (!Number.isFinite(bytes) || bytes <= 0) return '0 MB';
+                const mb = bytes / (1024 * 1024);
+                if (mb >= 1024) return `${(mb / 1024).toFixed(2)} GB`;
+                return `${mb.toFixed(1)} MB`;
+            };
+
+            const updateUploadSummary = (input) => {
+                if (!(input instanceof HTMLInputElement)) return;
+                const selector = input.dataset.uploadSummaryTarget;
+                if (!selector) return;
+                const target = document.querySelector(selector);
+                if (!target) return;
+
+                const files = Array.from(input.files || []);
+                if (files.length === 0) {
+                    target.textContent = input.multiple ? 'No files selected.' : 'No file selected.';
+                    target.classList.remove('text-danger');
+                    target.classList.add('text-muted');
+                    return;
+                }
+
+                const totalBytes = files.reduce((sum, file) => sum + (file?.size || 0), 0);
+                target.textContent = `${files.length} file(s), total ${prettySize(totalBytes)}.`;
+                target.classList.remove('text-muted');
+                target.classList.add('text-dark');
+
+                const warnMb = Number(input.dataset.uploadWarnMb || '0');
+                const maxFiles = Number(input.dataset.uploadMaxFiles || '0');
+                const tooManyFiles = maxFiles > 0 && files.length > maxFiles;
+                const tooLarge = warnMb > 0 && totalBytes > (warnMb * 1024 * 1024);
+
+                if (tooManyFiles || tooLarge) {
+                    target.classList.remove('text-dark');
+                    target.classList.add('text-warning');
+                    const parts = [];
+                    if (tooManyFiles) parts.push(`more than ${maxFiles} files`);
+                    if (tooLarge) parts.push(`over ${warnMb} MB total`);
+                    window.adminNotify(`Large upload selected (${parts.join(', ')}). Upload will still continue, but may take longer.`, 'info', 6000);
+                }
+            };
+
+            document.querySelectorAll('input[data-upload-monitor]').forEach((input) => {
+                input.addEventListener('change', () => updateUploadSummary(input));
+                updateUploadSummary(input);
+            });
         })();
     </script>
     <script>

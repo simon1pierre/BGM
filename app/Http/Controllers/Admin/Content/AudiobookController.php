@@ -18,24 +18,16 @@ class AudiobookController extends Controller
 
     public function index()
     {
-        return view('Admin.Content.Audiobooks.index');
+        return redirect()
+            ->route('admin.documents.index')
+            ->with('warning', 'Audiobooks are managed from the related book. Open a book to manage its audiobook parts.');
     }
 
     public function create()
     {
-        $categories = ContentCategory::query()
-            ->whereIn('type', ['audio', 'all'])
-            ->where('is_active', true)
-            ->orderBy('name')
-            ->get();
-
-        $books = book::query()
-            ->where('is_published', true)
-            ->orderByDesc('published_at')
-            ->orderByDesc('created_at')
-            ->get();
-
-        return view('Admin.Content.Audiobooks.create', compact('categories', 'books'));
+        return redirect()
+            ->route('admin.documents.index')
+            ->with('warning', 'Create audiobooks from the related book page.');
     }
 
     public function store(Request $request)
@@ -49,7 +41,7 @@ class AudiobookController extends Controller
             'description_en' => ['nullable', 'string'],
             'description_fr' => ['nullable', 'string'],
             'description_rw' => ['nullable', 'string'],
-            'audio_file' => ['nullable', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:20480'],
+            'audio_file' => ['nullable', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
             'thumbnail' => ['nullable', 'image', 'max:4096'],
             'duration' => ['nullable', 'string', 'max:50'],
             'category_id' => ['nullable', Rule::exists('content_categories', 'id')->whereIn('type', ['audio', 'all'])],
@@ -58,28 +50,43 @@ class AudiobookController extends Controller
             'series' => ['nullable', 'string', 'max:255'],
             'published_at' => ['nullable', 'date'],
             'featured' => ['nullable', 'boolean'],
-            'recommended' => ['nullable', 'boolean'],
             'is_prayer_audio' => ['nullable', 'boolean'],
             'is_published' => ['nullable', 'boolean'],
             'part_files' => ['nullable', 'array'],
-            'part_files.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:20480'],
-            'part_title_prefix' => ['nullable', 'string', 'max:80'],
+            'part_files.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'part_files_rw' => ['nullable', 'array'],
+            'part_files_rw.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'part_files_en' => ['nullable', 'array'],
+            'part_files_en.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'part_files_fr' => ['nullable', 'array'],
+            'part_files_fr.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
             'part_order_start' => ['nullable', 'integer', 'min:1'],
             'part_duration' => ['nullable', 'string', 'max:50'],
         ]);
 
-        if (!$request->hasFile('audio_file') && !$request->hasFile('part_files')) {
+        $languageFileMap = $this->collectPartFilesByLanguage($request);
+        $hasAnyPartFiles = collect($languageFileMap)->flatten(1)->isNotEmpty();
+
+        if (!$request->hasFile('audio_file') && !$hasAnyPartFiles) {
             return back()
                 ->withErrors(['audio_file' => 'Upload a main audiobook file or at least one audiobook part.'])
                 ->withInput();
         }
 
-        $uploadedParts = $this->storeUploadedParts(
-            $request,
-            (string) ($validated['part_title_prefix'] ?? 'Part'),
-            (int) ($validated['part_order_start'] ?? 1),
-            (string) ($validated['part_duration'] ?? '')
-        );
+        $uploadedParts = [];
+        $nextOrder = (int) ($validated['part_order_start'] ?? 1);
+        foreach ($languageFileMap as $lang => $files) {
+            $rows = $this->storeUploadedParts(
+                $files,
+                $nextOrder,
+                (string) ($validated['part_duration'] ?? ''),
+                $lang
+            );
+            if (count($rows) > 0) {
+                $uploadedParts = array_merge($uploadedParts, $rows);
+                $nextOrder += count($rows);
+            }
+        }
 
         $audioPath = null;
         if ($request->hasFile('audio_file')) {
@@ -105,7 +112,7 @@ class AudiobookController extends Controller
             'series' => $validated['series'] ?? null,
             'published_at' => $validated['published_at'] ?? null,
             'featured' => $request->boolean('featured'),
-            'recommended' => $request->boolean('recommended'),
+            'recommended' => false,
             'is_prayer_audio' => $request->boolean('is_prayer_audio'),
             'is_published' => $request->boolean('is_published'),
         ]);
@@ -125,7 +132,9 @@ class AudiobookController extends Controller
 
         $this->syncTranslations($audiobook, $request, ['title', 'description']);
 
-        return redirect()->route('admin.audiobooks.index')->with('status', 'Audiobook created.');
+        return redirect()
+            ->route('admin.documents.edit', $audiobook->book_id)
+            ->with('status', 'Audiobook created.');
     }
 
     public function edit(audiobook $audiobook)
@@ -155,6 +164,13 @@ class AudiobookController extends Controller
         return view('Admin.Content.Audiobooks.preview', compact('audiobook'));
     }
 
+    public function parts(audiobook $audiobook)
+    {
+        return redirect()
+            ->route('admin.audiobooks.edit', $audiobook)
+            ->with('warning', 'Use the form on the edit page to upload audiobook parts.');
+    }
+
     public function update(Request $request, audiobook $audiobook)
     {
         $validated = $request->validate([
@@ -166,7 +182,7 @@ class AudiobookController extends Controller
             'description_en' => ['nullable', 'string'],
             'description_fr' => ['nullable', 'string'],
             'description_rw' => ['nullable', 'string'],
-            'audio_file' => ['nullable', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:20480'],
+            'audio_file' => ['nullable', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
             'thumbnail' => ['nullable', 'image', 'max:4096'],
             'duration' => ['nullable', 'string', 'max:50'],
             'category_id' => ['nullable', Rule::exists('content_categories', 'id')->whereIn('type', ['audio', 'all'])],
@@ -175,7 +191,6 @@ class AudiobookController extends Controller
             'series' => ['nullable', 'string', 'max:255'],
             'published_at' => ['nullable', 'date'],
             'featured' => ['nullable', 'boolean'],
-            'recommended' => ['nullable', 'boolean'],
             'is_prayer_audio' => ['nullable', 'boolean'],
             'is_published' => ['nullable', 'boolean'],
         ]);
@@ -202,7 +217,7 @@ class AudiobookController extends Controller
             'series' => $validated['series'] ?? null,
             'published_at' => $validated['published_at'] ?? null,
             'featured' => $request->boolean('featured'),
-            'recommended' => $request->boolean('recommended'),
+            'recommended' => false,
             'is_prayer_audio' => $request->boolean('is_prayer_audio'),
             'is_published' => $request->boolean('is_published'),
         ]);
@@ -218,35 +233,51 @@ class AudiobookController extends Controller
 
         $this->syncTranslations($audiobook, $request, ['title', 'description']);
 
-        return redirect()->route('admin.audiobooks.index')->with('status', 'Audiobook updated.');
+        return $this->redirectToBookEdit($audiobook, 'Audiobook updated.');
     }
 
     public function addPart(Request $request, audiobook $audiobook)
     {
         $validated = $request->validate([
             'title' => ['nullable', 'string', 'max:255'],
-            'audio_file' => ['nullable', 'file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:20480'],
+            'audio_file' => ['nullable', 'file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
             'part_files' => ['nullable', 'array'],
-            'part_files.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:20480'],
-            'part_title_prefix' => ['nullable', 'string', 'max:80'],
+            'part_files.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'part_files_rw' => ['nullable', 'array'],
+            'part_files_rw.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'part_files_en' => ['nullable', 'array'],
+            'part_files_en.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'part_files_fr' => ['nullable', 'array'],
+            'part_files_fr.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'part_language' => ['nullable', 'in:rw,en,fr'],
             'part_order_start' => ['nullable', 'integer', 'min:1'],
             'duration' => ['nullable', 'string', 'max:50'],
             'sort_order' => ['nullable', 'integer', 'min:1'],
             'is_published' => ['nullable', 'boolean'],
         ]);
 
-        if (!$request->hasFile('audio_file') && !$request->hasFile('part_files')) {
+        $languageFileMap = $this->collectPartFilesByLanguage($request);
+        $hasAnyPartFiles = collect($languageFileMap)->flatten(1)->isNotEmpty();
+        if (!$request->hasFile('audio_file') && !$hasAnyPartFiles) {
             return back()->withErrors(['audio_file' => 'Select one part file or upload many part files.'])->withInput();
         }
 
-        if ($request->hasFile('part_files')) {
+        if ($hasAnyPartFiles) {
             $startOrder = (int) ($validated['part_order_start'] ?? (($audiobook->parts()->max('sort_order') ?? 0) + 1));
-            $rows = $this->storeUploadedParts(
-                $request,
-                (string) ($validated['part_title_prefix'] ?? 'Part'),
-                $startOrder,
-                (string) ($validated['duration'] ?? '')
-            );
+            $rows = [];
+            $nextOrder = $startOrder;
+            foreach ($languageFileMap as $lang => $files) {
+                $currentRows = $this->storeUploadedParts(
+                    $files,
+                    $nextOrder,
+                    (string) ($validated['duration'] ?? ''),
+                    $lang
+                );
+                if (count($currentRows) > 0) {
+                    $rows = array_merge($rows, $currentRows);
+                    $nextOrder += count($currentRows);
+                }
+            }
 
             if (count($rows) > 0) {
                 $audiobook->parts()->createMany($rows);
@@ -261,9 +292,13 @@ class AudiobookController extends Controller
         $nextOrder = (int) ($validated['sort_order'] ?? (($audiobook->parts()->max('sort_order') ?? 0) + 1));
         $filePath = $request->file('audio_file')->store('content/audiobooks/parts', 'public');
 
+        $originalName = pathinfo((string) $request->file('audio_file')->getClientOriginalName(), PATHINFO_FILENAME);
+        $defaultTitle = trim($originalName) !== '' ? trim($originalName) : 'Part '.$nextOrder;
+
         $part = $audiobook->parts()->create([
-            'title' => trim((string) ($validated['title'] ?? '')) ?: 'Part '.$nextOrder,
+            'title' => trim((string) ($validated['title'] ?? '')) ?: $defaultTitle,
             'audio_file' => $filePath,
+            'language' => $this->normalizePartLanguage((string) ($validated['part_language'] ?? 'rw')),
             'duration' => $validated['duration'] ?? null,
             'sort_order' => $nextOrder,
             'is_published' => $request->boolean('is_published', true),
@@ -287,7 +322,7 @@ class AudiobookController extends Controller
             'description_en' => ['nullable', 'string'],
             'description_fr' => ['nullable', 'string'],
             'description_rw' => ['nullable', 'string'],
-            'audio_file' => ['nullable', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:20480'],
+            'audio_file' => ['nullable', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
             'thumbnail' => ['nullable', 'image', 'max:4096'],
             'duration' => ['nullable', 'string', 'max:50'],
             'category_id' => ['nullable', Rule::exists('content_categories', 'id')->whereIn('type', ['audio', 'all'])],
@@ -295,28 +330,43 @@ class AudiobookController extends Controller
             'series' => ['nullable', 'string', 'max:255'],
             'published_at' => ['nullable', 'date'],
             'featured' => ['nullable', 'boolean'],
-            'recommended' => ['nullable', 'boolean'],
             'is_prayer_audio' => ['nullable', 'boolean'],
             'is_published' => ['nullable', 'boolean'],
             'part_files' => ['nullable', 'array'],
-            'part_files.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:20480'],
-            'part_title_prefix' => ['nullable', 'string', 'max:80'],
+            'part_files.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'part_files_rw' => ['nullable', 'array'],
+            'part_files_rw.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'part_files_en' => ['nullable', 'array'],
+            'part_files_en.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'part_files_fr' => ['nullable', 'array'],
+            'part_files_fr.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
             'part_order_start' => ['nullable', 'integer', 'min:1'],
             'part_duration' => ['nullable', 'string', 'max:50'],
         ]);
 
-        if (!$request->hasFile('audio_file') && !$request->hasFile('part_files')) {
+        $languageFileMap = $this->collectPartFilesByLanguage($request);
+        $hasAnyPartFiles = collect($languageFileMap)->flatten(1)->isNotEmpty();
+
+        if (!$request->hasFile('audio_file') && !$hasAnyPartFiles) {
             return back()
                 ->withErrors(['audio_file' => 'Upload a main audiobook file or at least one audiobook part.'])
                 ->withInput();
         }
 
-        $uploadedParts = $this->storeUploadedParts(
-            $request,
-            (string) ($validated['part_title_prefix'] ?? 'Part'),
-            (int) ($validated['part_order_start'] ?? 1),
-            (string) ($validated['part_duration'] ?? '')
-        );
+        $uploadedParts = [];
+        $nextOrder = (int) ($validated['part_order_start'] ?? 1);
+        foreach ($languageFileMap as $lang => $files) {
+            $rows = $this->storeUploadedParts(
+                $files,
+                $nextOrder,
+                (string) ($validated['part_duration'] ?? ''),
+                $lang
+            );
+            if (count($rows) > 0) {
+                $uploadedParts = array_merge($uploadedParts, $rows);
+                $nextOrder += count($rows);
+            }
+        }
 
         $audioPath = null;
         if ($request->hasFile('audio_file')) {
@@ -342,7 +392,7 @@ class AudiobookController extends Controller
             'series' => $validated['series'] ?? null,
             'published_at' => $validated['published_at'] ?? null,
             'featured' => $request->boolean('featured'),
-            'recommended' => $request->boolean('recommended'),
+            'recommended' => false,
             'is_prayer_audio' => $request->boolean('is_prayer_audio'),
             'is_published' => $request->boolean('is_published', true),
         ]);
@@ -386,14 +436,21 @@ class AudiobookController extends Controller
             'is_published' => ['nullable', 'boolean'],
             'is_prayer_audio' => ['nullable', 'boolean'],
             'part_files' => ['nullable', 'array'],
-            'part_files.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:20480'],
-            'single_part_file' => ['nullable', 'file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:20480'],
-            'part_title_prefix' => ['nullable', 'string', 'max:80'],
+            'part_files.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'part_files_rw' => ['nullable', 'array'],
+            'part_files_rw.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'part_files_en' => ['nullable', 'array'],
+            'part_files_en.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'part_files_fr' => ['nullable', 'array'],
+            'part_files_fr.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'single_part_file' => ['nullable', 'file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'single_part_language' => ['nullable', 'in:rw,en,fr'],
             'part_order_start' => ['nullable', 'integer', 'min:1'],
             'part_duration' => ['nullable', 'string', 'max:50'],
         ]);
 
-        $hasMultiParts = $request->hasFile('part_files') && count((array) $request->file('part_files')) > 0;
+        $languageFileMap = $this->collectPartFilesByLanguage($request);
+        $hasMultiParts = collect($languageFileMap)->flatten(1)->isNotEmpty();
         $hasSinglePart = $request->hasFile('single_part_file');
         if (!$hasMultiParts && !$hasSinglePart) {
             return back()->withErrors(['part_files' => 'Upload at least one audiobook part.'])->withInput();
@@ -407,7 +464,7 @@ class AudiobookController extends Controller
         } else {
             $title = trim((string) ($validated['title'] ?? ''));
             if ($title === '') {
-                return back()->withErrors(['title' => 'Provide audiobook title or choose existing audiobook.'])->withInput();
+                $title = trim((string) $document->title).' - Audiobook';
             }
 
             $targetAudiobook = audiobook::create([
@@ -440,24 +497,33 @@ class AudiobookController extends Controller
             ?? (($targetAudiobook->parts()->max('sort_order') ?? 0) + 1)
         );
 
-        $partUploadRequest = $request->duplicate();
-        $files = [];
-        foreach ((array) $request->file('part_files', []) as $file) {
-            if ($file) {
-                $files[] = $file;
+        $parts = [];
+        $nextOrder = $startOrder;
+        foreach ($languageFileMap as $lang => $files) {
+            $rows = $this->storeUploadedParts(
+                $files,
+                $nextOrder,
+                (string) ($validated['part_duration'] ?? ''),
+                $lang
+            );
+            if (count($rows) > 0) {
+                $parts = array_merge($parts, $rows);
+                $nextOrder += count($rows);
             }
         }
         if ($request->hasFile('single_part_file')) {
-            $files[] = $request->file('single_part_file');
+            $singleFile = $request->file('single_part_file');
+            $language = $this->normalizePartLanguage((string) ($validated['single_part_language'] ?? 'rw'));
+            $singleRows = $this->storeUploadedParts(
+                [$singleFile],
+                $nextOrder,
+                (string) ($validated['part_duration'] ?? ''),
+                $language
+            );
+            if (count($singleRows) > 0) {
+                $parts = array_merge($parts, $singleRows);
+            }
         }
-        $partUploadRequest->files->set('part_files', $files);
-
-        $parts = $this->storeUploadedParts(
-            $partUploadRequest,
-            (string) ($validated['part_title_prefix'] ?? 'Part'),
-            $startOrder,
-            (string) ($validated['part_duration'] ?? '')
-        );
 
         if (count($parts) > 0) {
             $targetAudiobook->parts()->createMany($parts);
@@ -520,6 +586,7 @@ class AudiobookController extends Controller
 
     public function destroy(Request $request, audiobook $audiobook)
     {
+        $bookId = $audiobook->book_id;
         $audiobook->delete();
 
         UserActivityLog::create([
@@ -531,7 +598,11 @@ class AudiobookController extends Controller
             ],
         ]);
 
-        return redirect()->back()->with('status', 'Audiobook deleted.');
+        if ($bookId) {
+            return redirect()->route('admin.documents.edit', $bookId)->with('status', 'Audiobook deleted.');
+        }
+
+        return redirect()->route('admin.documents.index')->with('status', 'Audiobook deleted.');
     }
 
     public function restore(Request $request, int $audiobook)
@@ -548,13 +619,18 @@ class AudiobookController extends Controller
             ],
         ]);
 
-        return redirect()->back()->with('status', 'Audiobook restored.');
+        if ($record->book_id) {
+            return redirect()->route('admin.documents.edit', $record->book_id)->with('status', 'Audiobook restored.');
+        }
+
+        return redirect()->route('admin.documents.index')->with('status', 'Audiobook restored.');
     }
 
     public function forceDelete(Request $request, int $audiobook)
     {
         $record = audiobook::withTrashed()->findOrFail($audiobook);
         $title = $record->title;
+        $bookId = $record->book_id;
         $record->forceDelete();
 
         UserActivityLog::create([
@@ -566,27 +642,35 @@ class AudiobookController extends Controller
             ],
         ]);
 
-        return redirect()->back()->with('status', 'Audiobook permanently deleted.');
+        if ($bookId) {
+            return redirect()->route('admin.documents.edit', $bookId)->with('status', 'Audiobook permanently deleted.');
+        }
+
+        return redirect()->route('admin.documents.index')->with('status', 'Audiobook permanently deleted.');
     }
 
-    private function storeUploadedParts(Request $request, string $titlePrefix, int $startOrder, string $duration): array
+    private function storeUploadedParts(array $files, int $startOrder, string $duration, string $language): array
     {
-        $files = $request->file('part_files', []);
-        if (!is_array($files) || count($files) === 0) {
+        if (count($files) === 0) {
             return [];
         }
 
         $rows = [];
         $order = max(1, $startOrder);
+        $normalizedLanguage = $this->normalizePartLanguage($language);
         foreach ($files as $file) {
             if (!$file) {
                 continue;
             }
 
             $audioPath = $file->store('content/audiobooks/parts', 'public');
+            $originalName = pathinfo((string) $file->getClientOriginalName(), PATHINFO_FILENAME);
+            $defaultTitle = trim($originalName) !== '' ? trim($originalName) : 'Part '.$order;
+
             $rows[] = [
-                'title' => trim($titlePrefix).' '.$order,
+                'title' => $defaultTitle,
                 'audio_file' => $audioPath,
+                'language' => $normalizedLanguage,
                 'duration' => $duration !== '' ? $duration : null,
                 'sort_order' => $order,
                 'is_published' => true,
@@ -595,5 +679,54 @@ class AudiobookController extends Controller
         }
 
         return $rows;
+    }
+
+    private function redirectToBookEdit(audiobook $audiobook, string $statusMessage)
+    {
+        if ($audiobook->book_id) {
+            return redirect()->route('admin.documents.edit', $audiobook->book_id)->with('status', $statusMessage);
+        }
+
+        return redirect()->route('admin.documents.index')->with('status', $statusMessage);
+    }
+
+    private function normalizePartLanguage(string $language): string
+    {
+        $language = strtolower(trim($language));
+        return in_array($language, ['rw', 'en', 'fr'], true) ? $language : 'rw';
+    }
+
+    private function collectPartFilesByLanguage(Request $request): array
+    {
+        $result = [
+            'rw' => [],
+            'en' => [],
+            'fr' => [],
+        ];
+
+        foreach ((array) $request->file('part_files_rw', []) as $file) {
+            if ($file) {
+                $result['rw'][] = $file;
+            }
+        }
+        foreach ((array) $request->file('part_files_en', []) as $file) {
+            if ($file) {
+                $result['en'][] = $file;
+            }
+        }
+        foreach ((array) $request->file('part_files_fr', []) as $file) {
+            if ($file) {
+                $result['fr'][] = $file;
+            }
+        }
+
+        // Backward compatibility for existing "part_files[]" forms.
+        foreach ((array) $request->file('part_files', []) as $file) {
+            if ($file) {
+                $result['rw'][] = $file;
+            }
+        }
+
+        return $result;
     }
 }

@@ -5,6 +5,11 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+// Guard against large multi-file uploads (e.g., audiobook parts) exhausting defaults.
+ini_set('memory_limit', '1024M');
+ini_set('max_execution_time', '600');
+ini_set('max_input_time', '600');
+
 // Determine if the application is in maintenance mode...
 if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
     require $maintenance;

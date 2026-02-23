@@ -8,7 +8,7 @@
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('admin.audiobooks.index') }}">Audiobooks</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.documents.index') }}">Books</a></li>
                     <li class="breadcrumb-item">Preview</li>
                 </ul>
             </div>
@@ -30,6 +30,9 @@
                     @endif
                     @if($audiobook->linkedBook)
                         <div class="mt-3">Linked Book: <strong>{{ $audiobook->linkedBook->title }}</strong></div>
+                        <div class="mt-3">
+                            <a href="{{ route('admin.documents.edit', $audiobook->linkedBook->id) }}" class="btn btn-light btn-sm">Back to Book</a>
+                        </div>
                     @endif
                 </div>
             </div>
