@@ -33,7 +33,7 @@
 
                     <div class="row g-3">
                         <div class="col-md-3">
-                            <div class="fw-semibold">Speaker</div>
+                            <div class="fw-semibold">Preacher</div>
                             <div class="text-muted">{{ $video->speaker ?? '—' }}</div>
                         </div>
                         <div class="col-md-3">

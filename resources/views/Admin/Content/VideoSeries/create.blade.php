@@ -4,34 +4,30 @@
         <div class="page-header">
             <div class="page-header-left d-flex align-items-center">
                 <div class="page-header-title">
-                    <h5 class="m-b-10">Add Playlist</h5>
+                    <h5 class="m-b-10">Add Video Series</h5>
                 </div>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('admin.playlists.index') }}">Playlists</a></li>
-                    <li class="breadcrumb-item">Create</li>
-                </ul>
             </div>
         </div>
 
         <div class="main-content">
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.playlists.store') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('admin.video-series.store') }}">
                         @csrf
                         <div class="row g-4">
                             <div class="col-md-8">
                                 <label class="form-label fw-semibold">Title</label>
-                                <input type="text" name="title" value="{{ old('title') }}" class="form-control" required>
+                                <input type="text" name="title" class="form-control" value="{{ old('title') }}" required>
                                 @error('title') <div class="text-danger fs-12">{{ $message }}</div> @enderror
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label fw-semibold">Type</label>
-                                <input type="text" class="form-control" value="Audio Playlist" disabled>
+                                <label class="form-label fw-semibold">Order</label>
+                                <input type="number" min="0" name="sort_order" class="form-control" value="{{ old('sort_order', 0) }}">
+                                @error('sort_order') <div class="text-danger fs-12">{{ $message }}</div> @enderror
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label fw-semibold">Description</label>
-                                <textarea name="description" class="form-control" rows="3">{{ old('description') }}</textarea>
+                                <textarea name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
                             </div>
                             <div class="col-md-12">
                                 <div class="card border border-dashed">
@@ -63,56 +59,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Cover Image</label>
-                                <input type="file" name="cover_image" class="form-control" accept="image/*">
-                            </div>
-                            <div class="col-md-6 d-flex align-items-center gap-4">
-                                <div>
-                                    <input type="hidden" name="is_published" value="0">
-                                    <div class="form-check mt-4">
-                                        <input class="form-check-input" type="checkbox" name="is_published" value="1" checked>
-                                        <label class="form-check-label">Published</label>
-                                    </div>
-                                </div>
-                                <div>
-                                    <input type="hidden" name="featured" value="0">
-                                    <div class="form-check mt-4">
-                                        <input class="form-check-input" type="checkbox" name="featured" value="1">
-                                        <label class="form-check-label">Featured</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4">
-                            <h6 class="fw-semibold">Select Items</h6>
-                            @error('items') <div class="text-danger fs-12">{{ $message }}</div> @enderror
-                            <div class="border rounded p-3" style="max-height: 360px; overflow-y: auto;">
-                                <div id="audioItems">
-                                    <div class="row">
-                                        @foreach ($audios as $audio)
-                                            <div class="col-md-6">
-                                                <label class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="items[]" value="{{ $audio->id }}">
-                                                    <span class="form-check-label">{{ $audio->title }}</span>
-                                                </label>
-                                                <input type="number" class="form-control form-control-sm mt-1" name="orders[{{ $audio->id }}]" placeholder="Order">
-                                            </div>
-                                        @endforeach
-                                    </div>
+                            <div class="col-md-12">
+                                <input type="hidden" name="is_active" value="0">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="is_active" value="1" id="seriesActive" checked>
+                                    <label class="form-check-label" for="seriesActive">Active</label>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mt-4 d-flex gap-2">
-                            <button class="btn btn-primary">Save Playlist</button>
-                            <a href="{{ route('admin.playlists.index') }}" class="btn btn-light">Cancel</a>
+                            <button class="btn btn-primary">Save Series</button>
+                            <a href="{{ route('admin.video-series.index') }}" class="btn btn-light">Cancel</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
 @endsection

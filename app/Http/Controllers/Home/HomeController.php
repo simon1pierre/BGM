@@ -123,8 +123,21 @@ class HomeController extends Controller
         $activeCategory = $request->query('category');
         $onlyFeatured = $request->boolean('featured');
         $search = trim((string) $request->query('q'));
+        $activePreacher = trim((string) $request->query('preacher'));
+        if ($activePreacher === '') {
+            $activePreacher = null;
+        }
 
         $locale = app()->getLocale();
+
+        $matchingPreacherNames = collect();
+        if ($activePreacher) {
+            $matchingPreacherNames = MinistryLeader::query()
+                ->where('role_type', 'preacher')
+                ->where('is_active', true)
+                ->where('name', 'like', '%'.$activePreacher.'%')
+                ->pluck('name');
+        }
 
         $videosQuery = video::query()
             ->with(['category.translations', 'translations'])
@@ -158,6 +171,9 @@ class HomeController extends Controller
             ->when($activeCategory, function ($query) use ($activeCategory) {
                 $query->where('category_id', $activeCategory);
             })
+            ->when($activePreacher, function ($query) use ($matchingPreacherNames) {
+                $query->whereIn('speaker', $matchingPreacherNames->all());
+            })
             ->orderByDesc('published_at')
             ->orderByDesc('created_at');
 
@@ -168,7 +184,6 @@ class HomeController extends Controller
             ->where('is_published', true)
             ->where('featured', true)
             ->count();
-
         $videos = $videosQuery
             ->paginate(9)
             ->withQueryString();
@@ -183,7 +198,7 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
 
-        return view('videos.index', compact('videos', 'categories', 'activeCategory', 'onlyFeatured', 'allCount', 'featuredCount', 'search', 'recommendedVideos'));
+        return view('videos.index', compact('videos', 'categories', 'activeCategory', 'activePreacher', 'onlyFeatured', 'allCount', 'featuredCount', 'search', 'recommendedVideos'));
     }
 
     public function books(Request $request)

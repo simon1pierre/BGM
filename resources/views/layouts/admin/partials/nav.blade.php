@@ -25,6 +25,7 @@
                 $isCategories = request()->routeIs('admin.categories.*');
                 $isContentNotifications = request()->routeIs('admin.content-notifications.*');
                 $isPlaylists = request()->routeIs('admin.playlists.*');
+                $isVideoSeries = request()->routeIs('admin.video-series.*');
                 $isAnalytics = request()->routeIs('admin.analytics.*');
                 $isTrash = request()->routeIs('admin.trash.*');
                 $isTranslations = request()->routeIs('admin.translations.*');
@@ -34,7 +35,7 @@
                 $isTranslationNeedsReview = $isTranslations && $translationStatus === 'needs_review';
                 $isTranslationApproved = $isTranslations && $translationStatus === 'approved';
                 $isTranslationManual = $isTranslations && $translationTranslatedBy === 'manual';
-                $isContentMenu = $isVideos || $isAudios || $isDocuments || $isCategories || $isContentNotifications || $isPlaylists;
+                $isContentMenu = $isVideos || $isAudios || $isDocuments || $isCategories || $isContentNotifications || $isPlaylists || $isVideoSeries;
             @endphp
             <div class="navbar-content" style="background-color: #10295E">
                 <ul class="nxl-navbar">
@@ -98,7 +99,8 @@
                         </a>
                         <ul class="nxl-submenu">
                             <li class="nxl-item {{ $isCategories ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.categories.index') }}"><span>Categories</span><span class="badge bg-light text-dark">{{ $count('categories') }}</span></a></li>
-                            <li class="nxl-item {{ $isPlaylists ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.playlists.index') }}"><span>Playlists</span><span class="badge bg-light text-dark">{{ $count('playlists') }}</span></a></li>
+                            <li class="nxl-item {{ $isVideoSeries ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.video-series.index') }}"><span>Video Series</span><span class="badge bg-light text-dark">{{ $count('video_series') }}</span></a></li>
+                            <li class="nxl-item {{ $isPlaylists ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.playlists.index') }}"><span>Audio Playlists</span><span class="badge bg-light text-dark">{{ $count('playlists') }}</span></a></li>
                             <li class="nxl-item {{ $isVideos ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.videos.index') }}"><span>Videos</span><span class="badge bg-light text-dark">{{ $count('videos') }}</span></a></li>
                             <li class="nxl-item {{ $isAudios ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.audios.index') }}"><span>Audios</span><span class="badge bg-light text-dark">{{ $count('audios') }}</span></a></li>
                             <li class="nxl-item {{ $isDocuments ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.documents.index') }}"><span>Books</span><span class="badge bg-light text-dark">{{ $count('documents') }}</span></a></li>

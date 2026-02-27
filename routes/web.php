@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\Content\AudiobookController;
 use App\Http\Controllers\Admin\Content\CategoryController;
 use App\Http\Controllers\Admin\Content\ContentNotificationController;
 use App\Http\Controllers\Admin\Content\PlaylistController;
+use App\Http\Controllers\Admin\Content\VideoSeriesController;
 use App\Http\Controllers\Admin\Auth\TwoFactorController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Content\ContentDownloadController;
@@ -140,6 +141,10 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->group(function ()
     Route::resource('playlists', PlaylistController::class)->names('admin.playlists');
     Route::post('playlists/{playlist}/restore', [PlaylistController::class, 'restore'])->name('admin.playlists.restore');
     Route::delete('playlists/{playlist}/force-delete', [PlaylistController::class, 'forceDelete'])->name('admin.playlists.force-delete');
+
+    Route::resource('video-series', VideoSeriesController::class)->except(['show'])->names('admin.video-series');
+    Route::post('video-series/{videoSeries}/restore', [VideoSeriesController::class, 'restore'])->name('admin.video-series.restore');
+    Route::delete('video-series/{videoSeries}/force-delete', [VideoSeriesController::class, 'forceDelete'])->name('admin.video-series.force-delete');
 
     Route::resource('ministry-leaders', MinistryLeaderController::class)->except(['show'])->names('admin.ministry-leaders');
     Route::post('ministry-leaders/{ministry_leader}/restore', [MinistryLeaderController::class, 'restore'])->name('admin.ministry-leaders.restore');

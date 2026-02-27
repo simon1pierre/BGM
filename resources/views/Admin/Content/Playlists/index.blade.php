@@ -4,11 +4,11 @@
         <div class="page-header">
             <div class="page-header-left d-flex align-items-center">
                 <div class="page-header-title">
-                    <h5 class="m-b-10">Playlists</h5>
+                    <h5 class="m-b-10">Audio Playlists</h5>
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item">Playlists</li>
+                    <li class="breadcrumb-item">Audio Playlists</li>
                 </ul>
             </div>
             <div class="page-header-right ms-auto d-flex align-items-center gap-2">
@@ -42,14 +42,6 @@
                             >
                         </div>
                         <div class="col-md-2">
-                            <label class="form-label fw-semibold">Type</label>
-                            <select name="type" class="form-select">
-                                <option value="">All</option>
-                                <option value="video" @selected(request('type') === 'video')>Video</option>
-                                <option value="audio" @selected(request('type') === 'audio')>Audio</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
                             <label class="form-label fw-semibold">Status</label>
                             <select name="status" class="form-select">
                                 <option value="">All</option>
@@ -79,7 +71,6 @@
                             <thead>
                                 <tr>
                                     <th>Title</th>
-                                    <th>Type</th>
                                     <th>Status</th>
                                     <th>Items</th>
                                     <th>Created</th>
@@ -94,7 +85,6 @@
                                                 {{ $playlist->title }}
                                             </a>
                                         </td>
-                                        <td class="text-capitalize">{{ $playlist->type }}</td>
                                         <td>
                                             @if ($playlist->trashed())
                                                 <span class="badge bg-soft-secondary text-muted">Deleted</span>
@@ -129,7 +119,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center text-muted">No playlists found.</td>
+                                        <td colspan="5" class="text-center text-muted">No playlists found.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

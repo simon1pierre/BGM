@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin\Content;
 use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
 use App\Models\UserActivityLog;
+use App\Models\MinistryLeader;
 use App\Models\video;
 use App\Jobs\SendContentNotificationJob;
 use App\Models\ContentNotification;
-use App\Models\Playlist;
-use App\Models\PlaylistItem;
+use App\Models\VideoSeries;
 use App\Http\Controllers\Concerns\HandlesTranslations;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -32,13 +32,20 @@ class VideoController extends Controller
             ->orderBy('name')
             ->get();
 
-        $playlists = Playlist::query()
-            ->where('type', 'video')
-            ->where('is_published', true)
+        $videoSeries = VideoSeries::query()
+            ->with('translations')
+            ->where('is_active', true)
+            ->orderBy('sort_order')
             ->orderBy('title')
             ->get();
 
-        return view('Admin.Content.Videos.create', compact('categories', 'playlists'));
+        $preachers = MinistryLeader::query()
+            ->where('role_type', 'preacher')
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get(['id', 'name']);
+
+        return view('Admin.Content.Videos.create', compact('categories', 'videoSeries', 'preachers'));
     }
 
     public function store(Request $request)
@@ -58,8 +65,15 @@ class VideoController extends Controller
                 'required',
                 Rule::exists('content_categories', 'id')->whereIn('type', ['video', 'all']),
             ],
-            'speaker' => ['nullable', 'string', 'max:255'],
-            'series' => ['nullable', 'string', 'max:255'],
+            'speaker' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::exists('ministry_leaders', 'name')->where(function ($query) {
+                    $query->where('role_type', 'preacher')->where('is_active', true);
+                }),
+            ],
+            'video_series_id' => ['nullable', Rule::exists('video_series', 'id')],
             'published_at' => ['nullable', 'date'],
             'featured' => ['nullable', 'boolean'],
             'is_published' => ['nullable', 'boolean'],
@@ -67,9 +81,6 @@ class VideoController extends Controller
             'notify_target' => ['nullable', 'in:all,custom'],
             'notify_emails' => ['nullable', 'string'],
             'notify_message' => ['nullable', 'string'],
-            'playlist_ids' => ['nullable', 'array'],
-            'playlist_ids.*' => ['integer', Rule::exists('playlists', 'id')->where('type', 'video')],
-            'new_playlist_title' => ['nullable', 'string', 'max:255'],
         ]);
 
         $youtubeId = $this->extractYoutubeId($validated['youtube_url']);
@@ -82,6 +93,11 @@ class VideoController extends Controller
             $thumbnailPath = $request->file('thumbnail')->store('content/videos/thumbnails', 'public');
         }
 
+        $selectedSeries = null;
+        if (!empty($validated['video_series_id'])) {
+            $selectedSeries = VideoSeries::query()->find($validated['video_series_id']);
+        }
+
         $video = video::create([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
@@ -90,7 +106,8 @@ class VideoController extends Controller
             'thumbnail' => $thumbnailPath,
             'category_id' => $validated['category_id'],
             'speaker' => $validated['speaker'] ?? null,
-            'series' => $validated['series'] ?? null,
+            'series' => $selectedSeries?->title,
+            'video_series_id' => $selectedSeries?->id,
             'published_at' => $validated['published_at'] ?? null,
             'featured' => $request->boolean('featured'),
             'is_published' => $request->boolean('is_published'),
@@ -106,8 +123,6 @@ class VideoController extends Controller
         ]);
 
         $this->syncTranslations($video, $request, ['title', 'description']);
-
-        $this->syncPlaylists($request, $video->id, 'video');
 
         $this->maybeNotifySubscribers($request, [
             'type' => 'video',
@@ -132,19 +147,20 @@ class VideoController extends Controller
             ->orderBy('name')
             ->get();
 
-        $playlists = Playlist::query()
-            ->where('type', 'video')
-            ->where('is_published', true)
+        $videoSeries = VideoSeries::query()
+            ->with('translations')
+            ->where('is_active', true)
+            ->orderBy('sort_order')
             ->orderBy('title')
             ->get();
 
-        $selectedPlaylists = PlaylistItem::query()
-            ->where('item_type', 'video')
-            ->where('item_id', $video->id)
-            ->pluck('playlist_id')
-            ->all();
+        $preachers = MinistryLeader::query()
+            ->where('role_type', 'preacher')
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get(['id', 'name']);
 
-        return view('Admin.Content.Videos.edit', compact('video', 'categories', 'playlists', 'selectedPlaylists'));
+        return view('Admin.Content.Videos.edit', compact('video', 'categories', 'videoSeries', 'preachers'));
     }
 
     public function preview(video $video)
@@ -169,8 +185,15 @@ class VideoController extends Controller
                 'required',
                 Rule::exists('content_categories', 'id')->whereIn('type', ['video', 'all']),
             ],
-            'speaker' => ['nullable', 'string', 'max:255'],
-            'series' => ['nullable', 'string', 'max:255'],
+            'speaker' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::exists('ministry_leaders', 'name')->where(function ($query) {
+                    $query->where('role_type', 'preacher')->where('is_active', true);
+                }),
+            ],
+            'video_series_id' => ['nullable', Rule::exists('video_series', 'id')],
             'published_at' => ['nullable', 'date'],
             'featured' => ['nullable', 'boolean'],
             'is_published' => ['nullable', 'boolean'],
@@ -178,9 +201,6 @@ class VideoController extends Controller
             'notify_target' => ['nullable', 'in:all,custom'],
             'notify_emails' => ['nullable', 'string'],
             'notify_message' => ['nullable', 'string'],
-            'playlist_ids' => ['nullable', 'array'],
-            'playlist_ids.*' => ['integer', Rule::exists('playlists', 'id')->where('type', 'video')],
-            'new_playlist_title' => ['nullable', 'string', 'max:255'],
         ]);
 
         $youtubeId = $this->extractYoutubeId($validated['youtube_url']);
@@ -193,6 +213,11 @@ class VideoController extends Controller
             $thumbnailPath = $request->file('thumbnail')->store('content/videos/thumbnails', 'public');
         }
 
+        $selectedSeries = null;
+        if (!empty($validated['video_series_id'])) {
+            $selectedSeries = VideoSeries::query()->find($validated['video_series_id']);
+        }
+
         $video->update([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
@@ -201,7 +226,8 @@ class VideoController extends Controller
             'thumbnail' => $thumbnailPath,
             'category_id' => $validated['category_id'],
             'speaker' => $validated['speaker'] ?? null,
-            'series' => $validated['series'] ?? null,
+            'series' => $selectedSeries?->title,
+            'video_series_id' => $selectedSeries?->id,
             'published_at' => $validated['published_at'] ?? null,
             'featured' => $request->boolean('featured'),
             'is_published' => $request->boolean('is_published'),
@@ -217,8 +243,6 @@ class VideoController extends Controller
         ]);
 
         $this->syncTranslations($video, $request, ['title', 'description']);
-
-        $this->syncPlaylists($request, $video->id, 'video');
 
         $this->maybeNotifySubscribers($request, [
             'type' => 'video',
@@ -366,40 +390,6 @@ class VideoController extends Controller
         return $emails;
     }
 
-    private function syncPlaylists(Request $request, int $itemId, string $type): void
-    {
-        $playlistIds = array_map('intval', $request->input('playlist_ids', []));
-        $newTitle = trim((string) $request->input('new_playlist_title'));
-
-        if ($newTitle !== '') {
-            $playlist = Playlist::create([
-                'title' => $newTitle,
-                'type' => $type,
-                'is_published' => true,
-                'featured' => false,
-                'created_by' => $request->user()?->id,
-            ]);
-            $playlistIds[] = $playlist->id;
-        }
-
-        $playlistIds = array_values(array_unique(array_filter($playlistIds)));
-
-        PlaylistItem::query()
-            ->where('item_type', $type)
-            ->where('item_id', $itemId)
-            ->delete();
-
-        $sort = 1;
-        foreach ($playlistIds as $playlistId) {
-            PlaylistItem::create([
-                'playlist_id' => $playlistId,
-                'item_type' => $type,
-                'item_id' => $itemId,
-                'sort_order' => $sort,
-            ]);
-            $sort++;
-        }
-    }
 }
 
 

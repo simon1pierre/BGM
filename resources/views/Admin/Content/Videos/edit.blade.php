@@ -54,14 +54,29 @@
                                 @error('category_id') <div class="text-danger fs-12">{{ $message }}</div> @enderror
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold">Speaker</label>
-                                <input type="text" name="speaker" value="{{ old('speaker', $video->speaker) }}" class="form-control">
+                                <label class="form-label fw-semibold">Preacher</label>
+                                <input type="text" name="speaker" value="{{ old('speaker', $video->speaker) }}" class="form-control" list="preachersList" placeholder="Start typing preacher name..." autocomplete="off">
+                                <datalist id="preachersList">
+                                    @foreach ($preachers as $preacher)
+                                        <option value="{{ $preacher->name }}"></option>
+                                    @endforeach
+                                </datalist>
+                                <div class="fs-12 text-muted mt-2">Choose from registered preachers.</div>
                                 @error('speaker') <div class="text-danger fs-12">{{ $message }}</div> @enderror
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold">Series</label>
-                                <input type="text" name="series" value="{{ old('series', $video->series) }}" class="form-control">
-                                @error('series') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                                <div class="d-flex gap-2">
+                                    <select name="video_series_id" class="form-select">
+                                        <option value="">No series</option>
+                                        @foreach ($videoSeries as $seriesOption)
+                                            <option value="{{ $seriesOption->id }}" @selected(old('video_series_id', $video->video_series_id) == $seriesOption->id)>{{ $seriesOption->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    <a href="{{ route('admin.video-series.create') }}" class="btn btn-outline-primary">Add</a>
+                                </div>
+                                <div class="fs-12 text-muted mt-2">Series are managed centrally from Video Series.</div>
+                                @error('video_series_id') <div class="text-danger fs-12">{{ $message }}</div> @enderror
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label fw-semibold">Description</label>
@@ -148,34 +163,6 @@
                                             <div class="col-md-12">
                                                 <label class="form-label fw-semibold">Extra Message</label>
                                                 <textarea name="notify_message" class="form-control" rows="3" placeholder="Add a short encouraging note...">{{ old('notify_message') }}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="card border border-dashed">
-                                    <div class="card-body">
-                                        <div class="fw-semibold mb-2">Playlist (Videos)</div>
-                                        <div class="row g-3">
-                                            <div class="col-md-8">
-                                                <label class="form-label fw-semibold">Add to Existing Playlists</label>
-                                                <div class="border rounded p-2" style="max-height: 200px; overflow-y: auto;">
-                                                    @forelse ($playlists as $playlist)
-                                                        <label class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="playlist_ids[]" value="{{ $playlist->id }}"
-                                                                @checked(in_array($playlist->id, $selectedPlaylists ?? []))>
-                                                            <span class="form-check-label">{{ $playlist->title }}</span>
-                                                        </label>
-                                                    @empty
-                                                        <div class="text-muted fs-12">No video playlists yet.</div>
-                                                    @endforelse
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-semibold">Or Create New Playlist</label>
-                                                <input type="text" name="new_playlist_title" class="form-control" placeholder="New playlist title">
-                                                @error('new_playlist_title') <div class="text-danger fs-12">{{ $message }}</div> @enderror
                                             </div>
                                         </div>
                                     </div>

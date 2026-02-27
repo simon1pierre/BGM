@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Playlist;
 use App\Models\PlaylistItem;
 use App\Models\UserActivityLog;
-use App\Models\video;
 use App\Models\audio;
 use App\Http\Controllers\Concerns\HandlesTranslations;
 use Illuminate\Http\Request;
@@ -30,9 +29,7 @@ class PlaylistController extends Controller
             });
         }
 
-        if ($request->filled('type')) {
-            $playlists->where('type', (string) $request->query('type'));
-        }
+        $playlists->where('type', 'audio');
 
         if ($request->filled('status')) {
             $status = (string) $request->query('status');
@@ -62,10 +59,9 @@ class PlaylistController extends Controller
 
     public function create()
     {
-        $videos = video::query()->orderByDesc('created_at')->get();
         $audios = audio::query()->orderByDesc('created_at')->get();
 
-        return view('Admin.Content.Playlists.create', compact('videos', 'audios'));
+        return view('Admin.Content.Playlists.create', compact('audios'));
     }
 
     public function store(Request $request)
@@ -79,7 +75,6 @@ class PlaylistController extends Controller
             'description_en' => ['nullable', 'string'],
             'description_fr' => ['nullable', 'string'],
             'description_rw' => ['nullable', 'string'],
-            'type' => ['required', 'in:video,audio'],
             'cover_image' => ['nullable', 'image', 'max:4096'],
             'is_published' => ['nullable', 'boolean'],
             'featured' => ['nullable', 'boolean'],
@@ -96,7 +91,7 @@ class PlaylistController extends Controller
         $playlist = Playlist::create([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
-            'type' => $validated['type'],
+            'type' => 'audio',
             'cover_image' => $coverPath,
             'is_published' => $request->boolean('is_published'),
             'featured' => $request->boolean('featured'),
@@ -121,12 +116,11 @@ class PlaylistController extends Controller
 
     public function edit(Playlist $playlist)
     {
-        $videos = video::query()->orderByDesc('created_at')->get();
         $audios = audio::query()->orderByDesc('created_at')->get();
         $selected = $playlist->items->pluck('item_id')->all();
         $orders = $playlist->items->pluck('sort_order', 'item_id')->all();
 
-        return view('Admin.Content.Playlists.edit', compact('playlist', 'videos', 'audios', 'selected', 'orders'));
+        return view('Admin.Content.Playlists.edit', compact('playlist', 'audios', 'selected', 'orders'));
     }
 
     public function show(Playlist $playlist)
@@ -150,7 +144,6 @@ class PlaylistController extends Controller
             'description_en' => ['nullable', 'string'],
             'description_fr' => ['nullable', 'string'],
             'description_rw' => ['nullable', 'string'],
-            'type' => ['required', 'in:video,audio'],
             'cover_image' => ['nullable', 'image', 'max:4096'],
             'is_published' => ['nullable', 'boolean'],
             'featured' => ['nullable', 'boolean'],
@@ -167,7 +160,7 @@ class PlaylistController extends Controller
         $playlist->update([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
-            'type' => $validated['type'],
+            'type' => 'audio',
             'cover_image' => $coverPath,
             'is_published' => $request->boolean('is_published'),
             'featured' => $request->boolean('featured'),
@@ -244,11 +237,10 @@ class PlaylistController extends Controller
     {
         $items = array_values(array_unique(array_map('intval', $items)));
         if (count($items) > 0) {
-            $table = $playlist->type === 'video' ? 'videos' : 'audios';
-            $validCount = DB::table($table)->whereIn('id', $items)->count();
+            $validCount = DB::table('audios')->whereIn('id', $items)->count();
             if ($validCount !== count($items)) {
                 throw ValidationException::withMessages([
-                    'items' => 'One or more selected items are invalid for this playlist type.',
+                    'items' => 'One or more selected audio items are invalid.',
                 ]);
             }
         }
@@ -260,7 +252,7 @@ class PlaylistController extends Controller
             $order = isset($orders[$itemId]) ? (int) $orders[$itemId] : $sort;
             PlaylistItem::create([
                 'playlist_id' => $playlist->id,
-                'item_type' => $playlist->type,
+                'item_type' => 'audio',
                 'item_id' => $itemId,
                 'sort_order' => $order,
             ]);

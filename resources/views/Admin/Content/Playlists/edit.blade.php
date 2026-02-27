@@ -35,11 +35,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-semibold">Type</label>
-                                <select name="type" id="playlistType" class="form-select" required>
-                                    <option value="video" @selected(old('type', $playlist->type) === 'video')>Video</option>
-                                    <option value="audio" @selected(old('type', $playlist->type) === 'audio')>Audio</option>
-                                </select>
-                                @error('type') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                                <input type="text" class="form-control" value="Audio Playlist" disabled>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label fw-semibold">Description</label>
@@ -104,22 +100,7 @@
                             <h6 class="fw-semibold">Select Items</h6>
                             @error('items') <div class="text-danger fs-12">{{ $message }}</div> @enderror
                             <div class="border rounded p-3" style="max-height: 360px; overflow-y: auto;">
-                                <div id="videoItems">
-                                    <div class="row">
-                                        @foreach ($videos as $video)
-                                            <div class="col-md-6">
-                                                <label class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="items[]" value="{{ $video->id }}"
-                                                        @checked(in_array($video->id, $selected))>
-                                                    <span class="form-check-label">{{ $video->title }}</span>
-                                                </label>
-                                                <input type="number" class="form-control form-control-sm mt-1" name="orders[{{ $video->id }}]" placeholder="Order"
-                                                    value="{{ $orders[$video->id] ?? '' }}">
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <div id="audioItems" style="display:none;">
+                                <div id="audioItems">
                                     <div class="row">
                                         @foreach ($audios as $audio)
                                             <div class="col-md-6">
@@ -147,16 +128,4 @@
         </div>
     </div>
 
-    <script>
-        const typeSelect = document.getElementById('playlistType');
-        const videoItems = document.getElementById('videoItems');
-        const audioItems = document.getElementById('audioItems');
-        function toggleItems() {
-            const type = typeSelect.value;
-            videoItems.style.display = type === 'video' ? 'block' : 'none';
-            audioItems.style.display = type === 'audio' ? 'block' : 'none';
-        }
-        typeSelect.addEventListener('change', toggleItems);
-        toggleItems();
-    </script>
 @endsection

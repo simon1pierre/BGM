@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\ContentCategory;
 use App\Models\Playlist;
+use App\Models\VideoSeries;
 use App\Models\ContentLike;
 use App\Models\ContentComment;
 use App\Models\Concerns\HasTranslations;
@@ -24,6 +25,7 @@ class video extends Model
         'category_id',
         'speaker',
         'series',
+        'video_series_id',
         'published_at',
         'featured',
         'view_count',
@@ -35,6 +37,7 @@ class video extends Model
         'featured' => 'boolean',
         'is_published' => 'boolean',
         'view_count' => 'integer',
+        'video_series_id' => 'integer',
     ];
 
     protected $appends = [
@@ -75,6 +78,11 @@ class video extends Model
             ->wherePivot('item_type', 'video')
             ->withPivot('sort_order')
             ->orderByPivot('sort_order');
+    }
+
+    public function seriesRecord()
+    {
+        return $this->belongsTo(VideoSeries::class, 'video_series_id');
     }
 
     public function likes()

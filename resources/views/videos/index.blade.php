@@ -34,24 +34,50 @@
                         @if (!empty($onlyFeatured))
                             <input type="hidden" name="featured" value="1">
                         @endif
+                        @if (!empty($activePreacher))
+                            <input type="hidden" name="preacher" value="{{ $activePreacher }}">
+                        @endif
+                    </div>
+                </form>
+                <form method="GET" action="{{ route('videos.index') }}" class="w-full lg:max-w-xs">
+                    @if (!empty($search))
+                        <input type="hidden" name="q" value="{{ $search }}">
+                    @endif
+                    @if (!empty($activeCategory))
+                        <input type="hidden" name="category" value="{{ $activeCategory }}">
+                    @endif
+                    @if (!empty($onlyFeatured))
+                        <input type="hidden" name="featured" value="1">
+                    @endif
+                    <div class="flex items-center gap-2 bg-white border border-slate-200 rounded-full px-3 py-1.5 shadow-sm">
+                        <input
+                            type="text"
+                            name="preacher"
+                            value="{{ $activePreacher ?? '' }}"
+                            placeholder="{{ __('messages.home.preacher') }}"
+                            class="w-full bg-transparent px-2 py-1 text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none"
+                        >
+                        <button type="submit" class="px-3 py-1.5 text-xs font-semibold rounded-full bg-blue-900 text-white hover:bg-blue-800">
+                            {{ __('messages.common.go') }}
+                        </button>
                     </div>
                 </form>
                 <div class="flex items-center gap-3 overflow-x-auto">
                 @php
                     $allActive = empty($activeCategory);
                 @endphp
-                <a href="{{ route('videos.index') }}"
+                <a href="{{ route('videos.index', ['preacher' => $activePreacher]) }}"
                    class="whitespace-nowrap px-4 py-2 rounded-full border text-sm font-medium inline-flex items-center gap-2 {{ $allActive && !$onlyFeatured ? 'bg-blue-900 text-white border-blue-900' : 'bg-white text-slate-700 border-slate-200' }}">
                     {{ __('messages.common.all') }}
                     <span class="text-[11px] px-2 py-0.5 rounded-full {{ $allActive && !$onlyFeatured ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-700' }}">{{ $allCount ?? 0 }}</span>
                 </a>
-                <a href="{{ route('videos.index', ['featured' => 1]) }}"
+                <a href="{{ route('videos.index', ['featured' => 1, 'preacher' => $activePreacher]) }}"
                    class="whitespace-nowrap px-4 py-2 rounded-full border text-sm font-medium inline-flex items-center gap-2 {{ $onlyFeatured ? 'bg-amber-500 text-white border-amber-500' : 'bg-white text-slate-700 border-slate-200' }}">
                     {{ __('messages.common.featured') }}
                     <span class="text-[11px] px-2 py-0.5 rounded-full {{ $onlyFeatured ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-700' }}">{{ $featuredCount ?? 0 }}</span>
                 </a>
                 @foreach ($categories as $category)
-                    <a href="{{ route('videos.index', ['category' => $category->id, 'featured' => $onlyFeatured ? 1 : null]) }}"
+                    <a href="{{ route('videos.index', ['category' => $category->id, 'featured' => $onlyFeatured ? 1 : null, 'preacher' => $activePreacher]) }}"
                        class="whitespace-nowrap px-4 py-2 rounded-full border text-sm font-medium inline-flex items-center gap-2 {{ (string) $activeCategory === (string) $category->id ? 'bg-blue-900 text-white border-blue-900' : 'bg-white text-slate-700 border-slate-200' }}">
                         {{ $category->name }}
                         <span class="text-[11px] px-2 py-0.5 rounded-full {{ (string) $activeCategory === (string) $category->id ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-700' }}">{{ $category->videos_count ?? 0 }}</span>
@@ -94,6 +120,9 @@
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
                             <h3 class="text-xl font-serif font-bold text-blue-950 mb-2">{{ $video->title }}</h3>
+                            @if ($video->speaker)
+                                <p class="text-xs font-medium text-blue-700 mb-2">{{ __('messages.home.preacher') }}: {{ $video->speaker }}</p>
+                            @endif
                             <p class="text-slate-600 text-sm mb-4">{{ \Illuminate\Support\Str::limit($video->description, 140) }}</p>
                             <div class="flex items-center gap-4 text-xs text-slate-500 mb-4">
                                 <button
