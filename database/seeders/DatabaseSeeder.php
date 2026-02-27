@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ContentCategorySeeder::class,
             VideoSeriesSeeder::class,
+            VideoSeeder::class,
         ]);
     }
 }

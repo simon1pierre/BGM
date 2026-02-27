@@ -15,6 +15,8 @@ class ContentTable extends Component
 {
     use WithPagination;
 
+    protected string $paginationTheme = 'bootstrap';
+
     public string $type = 'videos';
     public string $search = '';
     public string $status = 'all';
@@ -105,7 +107,7 @@ class ContentTable extends Component
     private function buildQuery(): Builder
     {
         $model = $this->modelClass();
-        $query = $model::query();
+        $query = $model::query()->with('category');
 
         if ($this->deleted === 'with') {
             $query->withTrashed();

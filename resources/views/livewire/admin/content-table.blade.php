@@ -188,7 +188,7 @@
             </div>
 
             <div class="mt-3">
-                {{ $items->links('pagination.admin') }}
+                {{ $items->links() }}
             </div>
         </div>
     </div>
