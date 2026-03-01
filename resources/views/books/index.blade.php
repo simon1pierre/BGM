@@ -52,54 +52,52 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
                 @forelse ($books as $book)
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col">
-                        <div class="relative aspect-[3/2] overflow-hidden bg-slate-100">
+                    <article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100">
+                        <div class="relative aspect-[2/3] overflow-hidden bg-slate-100">
                             @if ($book->cover_image)
                                 <img src="{{ asset('storage/'.$book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
                             @else
                                 <img src="{{ asset('landingpage/download-book.webp') }}" alt="{{ __('messages.home.downloadable_books') }}" class="w-full h-full object-cover">
                             @endif
-                            <div class="absolute bottom-3 left-3 text-white text-sm font-medium drop-shadow">
-                                {{ $book->category?->name ?? __('messages.common.book') }}
-                            </div>
+
                             @if ($book->featured)
                                 <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">{{ __('messages.common.featured') }}</span>
                             @endif
-                        </div>
-                        <div class="p-6 flex-1 flex flex-col">
-                            <h3 class="text-xl font-serif font-bold text-blue-950 mb-2">{{ $book->title }}</h3>
-                            <p class="text-slate-600 text-sm mb-4">{{ \Illuminate\Support\Str::limit($book->description, 140) }}</p>
-                            <div class="flex items-center gap-4 text-xs text-slate-500 mb-4">
-                                <button
-                                    type="button"
-                                    class="inline-flex items-center gap-1 text-slate-600 hover:text-rose-600 transition-colors"
-                                    data-like-button
-                                    data-book-id="{{ $book->id }}"
-                                    onclick="toggleBookLike(this)"
-                                >
-                                    <svg viewBox="0 0 24 24" class="w-4 h-4" aria-hidden="true">
-                                        <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6 3.99 4 6.5 4c1.74 0 3.41 0.81 4.5 2.09C12.09 4.81 13.76 4 15.5 4 18.01 4 20 6 20 8.5c0 3.78-3.4 6.86-8.55 11.54z"/>
-                                    </svg>
-                                    <span>{{ __('messages.common.like') }}</span>
-                                    <span data-like-count>{{ $book->likes_count ?? 0 }}</span>
-                                </button>
-                                <a href="{{ route('books.show', $book) }}" class="text-slate-600 hover:text-blue-700 transition-colors">
-                                    {{ __('messages.common.comments') }} ({{ $book->comments_count ?? 0 }})
-                                </a>
-                            </div>
-                            <div class="mt-auto flex items-center justify-between">
-                                <span class="text-xs text-slate-500">{{ $book->published_at?->toDateString() ?? $book->created_at?->toDateString() }}</span>
-                                <div class="flex items-center gap-3">
-                                    <a href="{{ route('books.show', $book) }}" class="text-blue-700 font-medium text-sm hover:text-blue-900">{{ __('messages.home.read_online') }}</a>
-                                    <a href="{{ route('books.reader', $book) }}" class="text-slate-600 font-medium text-sm hover:text-slate-900">Reader</a>
+
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/70 to-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                                <h3 class="text-white text-base font-semibold line-clamp-2">{{ $book->title }}</h3>
+                                <p class="text-slate-200 text-xs mt-2 line-clamp-3">{{ \Illuminate\Support\Str::limit($book->description, 110) }}</p>
+                                <div class="mt-3 flex items-center gap-3 text-[11px] text-slate-200">
+                                    <span>{{ $book->category?->name ?? __('messages.common.book') }}</span>
+                                    <span>•</span>
+                                    <span>{{ $book->published_at?->toDateString() ?? $book->created_at?->toDateString() }}</span>
+                                </div>
+                                <div class="mt-3 flex items-center justify-between">
+                                    <button
+                                        type="button"
+                                        class="inline-flex items-center gap-1 text-slate-100 hover:text-rose-300 transition-colors text-xs"
+                                        data-like-button
+                                        data-book-id="{{ $book->id }}"
+                                        onclick="toggleBookLike(this)"
+                                    >
+                                        <svg viewBox="0 0 24 24" class="w-4 h-4" aria-hidden="true">
+                                            <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6 3.99 4 6.5 4c1.74 0 3.41 0.81 4.5 2.09C12.09 4.81 13.76 4 15.5 4 18.01 4 20 6 20 8.5c0 3.78-3.4 6.86-8.55 11.54z"/>
+                                        </svg>
+                                        <span data-like-count>{{ $book->likes_count ?? 0 }}</span>
+                                    </button>
+                                    <div class="flex items-center gap-2">
+                                        <a href="{{ route('books.reader', $book) }}" class="px-2.5 py-1.5 rounded bg-blue-600 text-white text-xs font-semibold hover:bg-blue-500">{{ __('messages.home.read_online') }}</a>
+                                        <a href="{{ route('books.show', $book) }}" class="px-2.5 py-1.5 rounded bg-white/90 text-slate-900 text-xs font-semibold hover:bg-white">{{ __('messages.common.details') }}</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </article>
                 @empty
-                    <div class="col-span-3 text-center text-slate-500">{{ __('messages.books.none') }}</div>
+                    <div class="col-span-4 text-center text-slate-500">{{ __('messages.books.none') }}</div>
                 @endforelse
             </div>
 

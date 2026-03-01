@@ -97,7 +97,7 @@
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       @forelse ($books as $book)
-        <a href="{{ route('books.show', $book) }}" class="group bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden hover-lift">
+        <a href="{{ route('books.reader', $book) }}" class="group bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden hover-lift">
           <div class="h-40 bg-slate-100">
             @if (!empty($book->cover_image))
               <img src="{{ asset('storage/' . $book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">

@@ -108,6 +108,11 @@ class ContentTable extends Component
     {
         $model = $this->modelClass();
         $query = $model::query()->with('category');
+        if ($this->type === 'documents') {
+            $query->with(['audiobooks' => function ($relation) {
+                $relation->select('id', 'book_id')->orderByDesc('id');
+            }]);
+        }
 
         if ($this->deleted === 'with') {
             $query->withTrashed();

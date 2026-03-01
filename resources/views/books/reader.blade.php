@@ -2,7 +2,7 @@
 @section('contents')
 <main class="grow bg-slate-100">
     <section class="pt-8 pb-4 bg-gradient-to-b from-blue-950 to-slate-900 text-white">
-        <div class="container mx-auto px-6">
+        <div class="container mx-auto px-3 sm:px-4 lg:px-5">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
                     <div class="text-xs uppercase tracking-[0.2em] text-blue-200 mb-1">{{ __('messages.books.badge') }}</div>
@@ -25,13 +25,35 @@
     </section>
 
     <section class="py-6">
-        <div class="container mx-auto px-6">
+        <div class="container mx-auto px-3 sm:px-4 lg:px-5">
             @if (!$book->file_path)
                 <div class="bg-white rounded-2xl border border-slate-200 p-10 text-center text-slate-500">
                     {{ __('messages.books.no_pdf') }}
                 </div>
             @else
                 <div id="readerShell" class="grid grid-cols-1 gap-5">
+                    @php
+                        $readerAudioPartsCount = 0;
+                        if (!empty($linkedAudiobooks) && $linkedAudiobooks->count()) {
+                            foreach ($linkedAudiobooks as $readerAudioBook) {
+                                $readerAudioPartsCount += $readerAudioBook->publishedParts->count();
+                            }
+                        }
+                    @endphp
+
+                    @if (!empty($linkedAudiobooks) && $linkedAudiobooks->count() && $readerAudioPartsCount > 0)
+                        <div class="bg-blue-50 border border-blue-200 text-blue-900 rounded-xl p-3 flex items-center justify-between gap-3">
+                            <div class="text-sm">
+                                <span class="font-semibold">Audiobook available:</span>
+                                <span>{{ $readerAudioPartsCount }} parts ready for listening while reading.</span>
+                            </div>
+                            <button type="button" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-700 text-white text-xs font-semibold hover:bg-blue-600" onclick="document.getElementById('toggleAbout')?.click();">
+                                <i data-lucide="headphones" class="w-4 h-4"></i>
+                                Open Audio
+                            </button>
+                        </div>
+                    @endif
+
                     <div id="aboutPanel" class="hidden fixed inset-0 z-[80] bg-slate-950/70 p-4 md:p-8 overflow-y-auto">
                         <div class="mx-auto w-full max-w-4xl bg-white rounded-2xl border border-slate-200 shadow-2xl">
                         <div class="p-5 border-b border-slate-100 flex items-center justify-between">
@@ -135,7 +157,9 @@
                                             >
                                                 <div class="flex items-center justify-between gap-2">
                                                     <div class="text-xs font-semibold truncate">{{ $loop->iteration }}. {{ $track['label'] }}</div>
-                                                    <a href="{{ $track['download'] }}" download class="text-[11px] underline text-slate-300 hover:text-white" data-track-download>{{ __('messages.common.download') }}</a>
+                                                    <a href="{{ $track['download'] }}" download class="inline-flex items-center justify-center text-slate-300 hover:text-white" data-track-download title="{{ __('messages.common.download') }}" aria-label="{{ __('messages.common.download') }}">
+                                                        <i data-lucide="download" class="w-4 h-4"></i>
+                                                    </a>
                                                 </div>
                                             </button>
                                         @endforeach
@@ -148,23 +172,32 @@
                     </div>
 
                     <div id="readerPanel" class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-                        <div class="p-4 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center gap-2">
+                        <div class="p-3 md:p-4 border-b border-slate-200 bg-slate-50 flex items-center gap-2 overflow-x-auto whitespace-nowrap">
                             <button type="button" id="prevPage" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">&larr; {{ __('messages.common.prev') }}</button>
                             <button type="button" id="nextPage" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.next') }} &rarr;</button>
                             <div class="flex items-center gap-2 text-sm text-slate-700">
                                 <span>{{ __('messages.common.page') }}</span>
-                                <input id="pageNumber" type="number" min="1" value="1" class="w-20 px-2 py-1.5 border border-slate-200 rounded-lg text-sm">
+                                <input id="pageNumber" type="number" min="1" value="1" class="w-14 md:w-20 px-2 py-1.5 border border-slate-200 rounded-lg text-sm">
                                 <button type="button" id="goPage" class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-700 text-xs hover:bg-white">{{ __('messages.common.go') }}</button>
                                 <span>{{ __('messages.common.of') }}</span>
                                 <span id="pageCount">-</span>
                             </div>
-                            <div class="text-xs text-slate-500" id="readingHint">{{ __('messages.books.use_arrow_keys') }}</div>
-                            <div class="mx-2 h-6 border-l border-slate-200"></div>
+                            <div class="hidden md:block text-xs text-slate-500" id="readingHint">{{ __('messages.books.use_arrow_keys') }}</div>
+                            <div class="hidden md:block mx-2 h-6 border-l border-slate-200"></div>
                             <button type="button" id="zoomOut" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">-</button>
                             <button type="button" id="zoomIn" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">+</button>
-                            <button type="button" id="fitWidth" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.books.fit_width') }}</button>
-                            <button type="button" id="rotate" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.books.rotate') }}</button>
-                            <button type="button" id="toggleAbout" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.books.about_this_book') }} & {{ __('messages.books.audiobook_while_reading') }}</button>
+                            <button type="button" id="fitWidth" class="hidden md:inline-flex px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.books.fit_width') }}</button>
+                            <button type="button" id="rotate" class="hidden md:inline-flex px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.books.rotate') }}</button>
+                            <button type="button" id="toggleAbout" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white inline-flex items-center gap-1.5">
+                                <i data-lucide="book-open" class="w-4 h-4"></i>
+                                {{ __('messages.books.about_this_book') }}
+                                @if (!empty($linkedAudiobooks) && $linkedAudiobooks->count() && $readerAudioPartsCount > 0)
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[11px] font-semibold">
+                                        <i data-lucide="headphones" class="w-3.5 h-3.5"></i>
+                                        {{ $readerAudioPartsCount }}
+                                    </span>
+                                @endif
+                            </button>
                             <div class="ml-auto flex gap-2">
                                 <button type="button" id="toggleFullscreen" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm hover:bg-white">{{ __('messages.common.fullscreen') }}</button>
                             </div>
@@ -179,9 +212,64 @@
                             </div>
                         </div>
 
-                        <div id="readerContainer" class="bg-slate-200 overflow-auto" style="height: 75vh;">
+                        <div id="readerContainer" class="bg-slate-200 overflow-auto h-[62vh] md:h-[75vh]">
                             <canvas id="pdfCanvas" class="mx-auto my-4 shadow-md bg-white"></canvas>
                         </div>
+                    </div>
+                </div>
+            @endif
+
+            @if (!empty($recommendedBooks) && $recommendedBooks->count())
+                <div class="mt-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg md:text-xl font-serif font-bold text-blue-950">{{ __('messages.common.you_may_also_like') }}</h3>
+                        <a href="{{ route('books.index') }}" class="text-sm text-blue-700 hover:text-blue-900">{{ __('messages.common.browse_all') }}</a>
+                    </div>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        @foreach ($recommendedBooks as $item)
+                            <article class="group bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100">
+                                <div class="relative aspect-[2/3] overflow-hidden bg-slate-100">
+                                    @if ($item->cover_image)
+                                        <img src="{{ asset('storage/'.$item->cover_image) }}" alt="{{ $item->title }}" class="w-full h-full object-cover">
+                                    @else
+                                        <img src="{{ asset('landingpage/download-book.webp') }}" alt="{{ __('messages.common.book') }}" class="w-full h-full object-cover">
+                                    @endif
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/70 to-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    <div class="absolute inset-x-0 bottom-0 p-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                                        <div class="text-white text-sm font-semibold line-clamp-2">{{ $item->title }}</div>
+                                        <a href="{{ route('books.reader', $item) }}" class="inline-flex mt-2 px-2.5 py-1.5 rounded bg-blue-600 text-white text-xs font-semibold hover:bg-blue-500">{{ __('messages.common.read') }}</a>
+                                    </div>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
+            @if (!empty($recommendedAudiobooks) && $recommendedAudiobooks->count())
+                <div class="mt-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg md:text-xl font-serif font-bold text-blue-950">{{ __('messages.home.featured_audiobooks') }}</h3>
+                        <a href="{{ route('books.index') }}" class="text-sm text-blue-700 hover:text-blue-900">{{ __('messages.common.browse_all') }}</a>
+                    </div>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        @foreach ($recommendedAudiobooks as $ab)
+                            <article class="group bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100">
+                                <div class="relative aspect-[2/3] overflow-hidden bg-slate-100">
+                                    @if ($ab->thumbnail)
+                                        <img src="{{ asset('storage/'.$ab->thumbnail) }}" alt="{{ $ab->title }}" class="w-full h-full object-cover">
+                                    @else
+                                        <img src="{{ asset('landingpage/download-audio.webp') }}" alt="{{ __('messages.common.audio') }}" class="w-full h-full object-cover">
+                                    @endif
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/70 to-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    <div class="absolute inset-x-0 bottom-0 p-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                                        <div class="text-white text-sm font-semibold line-clamp-2">{{ $ab->title }}</div>
+                                        <div class="text-slate-200 text-xs mt-1">{{ $ab->parts_count ?? 0 }} parts</div>
+                                        <a href="{{ $ab->linkedBook ? route('books.reader', ['book' => $ab->linkedBook, 'audio' => 1]) : route('books.index') }}" class="inline-flex mt-2 px-2.5 py-1.5 rounded bg-blue-600 text-white text-xs font-semibold hover:bg-blue-500">{{ __('messages.home.listen_now') }}</a>
+                                    </div>
+                                </div>
+                            </article>
+                        @endforeach
                     </div>
                 </div>
             @endif
@@ -194,6 +282,7 @@
 <script>
     const BOOK_ID = {{ $book->id }};
     const PDF_URL = @json(asset('storage/'.$book->file_path));
+    const OPEN_AUDIO_PANEL = @json(request()->query('audio') == '1');
     const VISITOR_STORAGE_KEY = 'bgm_audience_visitor_id';
     const READER_SESSION_KEY = `bgm_reader_session_${BOOK_ID}`;
     const visitorId = (() => {
@@ -664,6 +753,10 @@
                 aboutPanel.classList.add('hidden');
             }
         });
+
+        if (OPEN_AUDIO_PANEL) {
+            aboutPanel?.classList.remove('hidden');
+        }
 
         document.getElementById('readPage')?.addEventListener('click', speakCurrentPage);
         document.getElementById('pauseRead')?.addEventListener('click', () => {

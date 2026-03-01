@@ -337,7 +337,29 @@ class HomeController extends Controller
             ->orderByDesc('created_at')
             ->get();
 
-        return view('books.reader', compact('book', 'linkedAudiobooks'));
+        $recommendedBooks = book::query()
+            ->with(['category.translations', 'translations'])
+            ->where('is_published', true)
+            ->where('id', '!=', $book->id)
+            ->when($book->category_id, function ($query) use ($book) {
+                $query->where('category_id', $book->category_id);
+            })
+            ->orderByDesc('featured')
+            ->orderByDesc('published_at')
+            ->limit(4)
+            ->get();
+
+        $recommendedAudiobooks = audiobook::query()
+            ->with(['linkedBook.translations', 'linkedBook.category.translations'])
+            ->withCount(['publishedParts as parts_count'])
+            ->where('is_published', true)
+            ->where('book_id', '!=', $book->id)
+            ->orderByDesc('featured')
+            ->orderByDesc('published_at')
+            ->limit(4)
+            ->get();
+
+        return view('books.reader', compact('book', 'linkedAudiobooks', 'recommendedBooks', 'recommendedAudiobooks'));
     }
 
     public function audios(Request $request)

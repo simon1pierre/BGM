@@ -558,22 +558,23 @@
                         <h3 class="text-xl font-serif font-bold text-blue-950">{{ __('messages.common.you_may_also_like') }}</h3>
                         <a href="{{ route('books.index') }}" class="text-sm text-blue-700 hover:text-blue-900">{{ __('messages.common.browse_all') }}</a>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                         @foreach ($relatedBooks as $item)
-                            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100">
-                                <div class="relative aspect-[3/2] overflow-hidden bg-slate-100">
+                            <article class="group bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100">
+                                <div class="relative aspect-[2/3] overflow-hidden bg-slate-100">
                                     @if ($item->cover_image)
                                         <img src="{{ asset('storage/'.$item->cover_image) }}" alt="{{ $item->title }}" class="w-full h-full object-cover">
                                     @else
                                         <div class="w-full h-full flex items-center justify-center text-slate-500">{{ __('messages.books.no_cover') }}</div>
                                     @endif
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/70 to-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    <div class="absolute inset-x-0 bottom-0 p-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                                        <div class="text-white text-sm font-semibold line-clamp-2">{{ $item->title }}</div>
+                                        <div class="text-slate-200 text-xs mt-1">{{ $item->category?->name ?? __('messages.common.book') }}</div>
+                                        <a href="{{ route('books.reader', $item) }}" class="inline-flex mt-2 px-2.5 py-1.5 rounded bg-blue-600 text-white text-xs font-semibold hover:bg-blue-500">{{ __('messages.common.read') }}</a>
+                                    </div>
                                 </div>
-                                <div class="p-4">
-                                    <div class="font-serif text-blue-950 font-semibold text-sm">{{ $item->title }}</div>
-                                    <div class="text-xs text-slate-500 mt-1">{{ $item->category?->name ?? __('messages.common.book') }}</div>
-                                    <a href="{{ route('books.show', $item) }}" class="inline-flex text-sm text-blue-700 hover:text-blue-900 mt-3">{{ __('messages.common.read') }}</a>
-                                </div>
-                            </div>
+                            </article>
                         @endforeach
                     </div>
                 </div>

@@ -171,23 +171,35 @@
                                 <td class="text-muted fs-12">{{ $item->published_at?->toDateString() ?? '-' }}</td>
                                 <td class="text-end">
                                     @if ($item->trashed())
-                                        <form method="POST" action="{{ route('admin.'.$type.'.restore', $item->id) }}" class="d-inline">
-                                            @csrf
-                                            <button class="btn btn-sm btn-success">Restore</button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.'.$type.'.force-delete', $item->id) }}" class="d-inline" data-confirm="Permanently delete this item? This cannot be undone." data-confirm-action="Permanent Delete">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>
-                                        </form>
+                                        <div class="d-inline-flex align-items-center gap-1 flex-nowrap" style="white-space: nowrap;">
+                                            <form method="POST" action="{{ route('admin.'.$type.'.restore', $item->id) }}" class="d-inline m-0">
+                                                @csrf
+                                                <button class="btn btn-sm btn-success">Restore</button>
+                                            </form>
+                                            <form method="POST" action="{{ route('admin.'.$type.'.force-delete', $item->id) }}" class="d-inline m-0" data-confirm="Permanently delete this item? This cannot be undone." data-confirm-action="Permanent Delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm btn-outline-danger">Permanent Delete</button>
+                                            </form>
+                                        </div>
                                     @else
-                                        <a href="{{ route('admin.'.$type.'.preview', $item->id) }}" class="btn btn-sm btn-light">Preview</a>
-                                        <a href="{{ route('admin.'.$type.'.edit', $item->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                        <form method="POST" action="{{ route('admin.'.$type.'.destroy', $item->id) }}" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-sm btn-danger">Delete</button>
-                                        </form>
+                                        <div class="d-inline-flex align-items-center gap-1 flex-nowrap" style="white-space: nowrap;">
+                                            @if ($type === 'documents')
+                                                @php($firstAudiobookId = optional($item->audiobooks->first())->id)
+                                                @if ($firstAudiobookId)
+                                                    <a href="{{ route('admin.audiobooks.edit', $firstAudiobookId) }}" class="btn btn-sm btn-outline-primary">Audiobook</a>
+                                                @else
+                                                    <a href="{{ route('admin.documents.edit', $item->id) }}#audiobook-parts-management" class="btn btn-sm btn-outline-primary">Audiobook</a>
+                                                @endif
+                                            @endif
+                                            <a href="{{ route('admin.'.$type.'.preview', $item->id) }}" class="btn btn-sm btn-light">Preview</a>
+                                            <a href="{{ route('admin.'.$type.'.edit', $item->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                            <form method="POST" action="{{ route('admin.'.$type.'.destroy', $item->id) }}" class="d-inline m-0">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
+                                        </div>
                                     @endif
                                 </td>
                             </tr>
