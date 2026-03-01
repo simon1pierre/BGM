@@ -58,9 +58,11 @@
                                     foreach ($linkedAudiobooks as $ab) {
                                         if ($ab->publishedParts->count() > 0) {
                                             foreach ($ab->publishedParts as $part) {
+                                                $partLabel = trim((string) $part->title);
+                                                $trackLabel = $partLabel !== '' ? $partLabel : trim((string) $ab->title);
                                                 $track = [
                                                     'key' => 'part_'.$part->id,
-                                                    'label' => $ab->title.' - '.$part->title,
+                                                    'label' => $trackLabel,
                                                     'audio' => asset('storage/'.$part->audio_file),
                                                     'download' => route('content.download.audiobook-part', $part),
                                                     'lang' => in_array($part->language, ['rw', 'en', 'fr'], true) ? $part->language : 'rw',
@@ -93,7 +95,7 @@
                                         <div id="linkedNowPlaying" class="text-xs font-semibold truncate">{{ $readerQueue[0]['label'] }}</div>
                                     </div>
                                     <div class="p-3 border-b border-slate-700">
-                                        <audio id="linkedAudiobookPlayer" class="hidden">
+                                        <audio id="linkedAudiobookPlayer" class="hidden" preload="none">
                                             <source id="linkedAudiobookSource" src="{{ $readerQueue[0]['audio'] }}" type="audio/mpeg">
                                         </audio>
                                         <div class="mb-3 flex flex-wrap gap-2">

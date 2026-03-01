@@ -63,6 +63,7 @@
                                     class="w-full h-full"
                                     src="{{ asset('storage/'.$book->file_path) }}#toolbar=1&view=FitH&page=1"
                                     title="{{ $book->title }}"
+                                    loading="eager"
                                     frameborder="0"
                                 ></iframe>
                             @else
@@ -172,9 +173,11 @@
                                     foreach ($linkedAudiobooks as $ab) {
                                         if ($ab->publishedParts->count() > 0) {
                                             foreach ($ab->publishedParts as $part) {
+                                                $partLabel = trim((string) $part->title);
+                                                $trackLabel = $partLabel !== '' ? $partLabel : trim((string) $ab->title);
                                                 $track = [
                                                     'key' => 'part_'.$part->id,
-                                                    'label' => $ab->title.' - '.$part->title,
+                                                    'label' => $trackLabel,
                                                     'audio' => asset('storage/'.$part->audio_file),
                                                     'download' => route('content.download.audiobook-part', $part),
                                                     'lang' => in_array($part->language, ['rw', 'en', 'fr'], true) ? $part->language : 'rw',
@@ -215,7 +218,7 @@
                                             <div id="bookLinkedNowPlaying" class="text-sm font-semibold mt-1 truncate">{{ $bookQueue[0]['label'] }}</div>
                                         </div>
                                         <div class="p-3 border-b border-slate-700">
-                                            <audio id="bookLinkedPlayer" class="hidden">
+                                            <audio id="bookLinkedPlayer" class="hidden" preload="none">
                                                 <source id="bookLinkedSource" src="{{ $bookQueue[0]['audio'] }}" type="audio/mpeg">
                                             </audio>
                                             <div class="mb-3 flex flex-wrap gap-2">
@@ -464,7 +467,8 @@
                                 <iframe
                                     id="modalPdfFrame"
                                     class="w-full h-full"
-                                    src="{{ asset('storage/'.$book->file_path) }}#toolbar=0&view=FitH&page=1"
+                                    src="about:blank"
+                                    data-base-src="{{ asset('storage/'.$book->file_path) }}"
                                     title="{{ $book->title }} - Modal Reader"
                                     frameborder="0"
                                 ></iframe>
@@ -478,8 +482,10 @@
                                     foreach ($linkedAudiobooks as $ab) {
                                         if ($ab->publishedParts->count() > 0) {
                                             foreach ($ab->publishedParts as $part) {
+                                                $partLabel = trim((string) $part->title);
+                                                $trackLabel = $partLabel !== '' ? $partLabel : trim((string) $ab->title);
                                                 $modalBookQueue[] = [
-                                                    'label' => $ab->title.' - '.$part->title,
+                                                    'label' => $trackLabel,
                                                     'audio' => asset('storage/'.$part->audio_file),
                                                     'download' => route('content.download.audiobook-part', $part),
                                                     'lang' => in_array($part->language, ['rw', 'en', 'fr'], true) ? $part->language : 'rw',
@@ -500,7 +506,7 @@
                                 @endphp
                                 @if (count($modalBookQueue) > 0)
                                     <div class="px-4 py-3 border-b border-slate-100">
-                                        <audio id="modalBookAudioPlayer" class="hidden">
+                                        <audio id="modalBookAudioPlayer" class="hidden" preload="none">
                                             <source id="modalBookAudioSource" src="{{ $modalBookQueue[0]['audio'] }}" type="audio/mpeg">
                                         </audio>
                                         <div id="modalBookNowPlaying" class="text-sm font-semibold text-slate-800 truncate mb-2">{{ $modalBookQueue[0]['label'] }}</div>
@@ -779,7 +785,7 @@
 
         const updateModalFramePage = () => {
             if (!modalPdfFrame) return;
-            const base = @json(asset('storage/'.$book->file_path));
+            const base = modalPdfFrame.getAttribute('data-base-src') || @json(asset('storage/'.$book->file_path));
             modalPdfFrame.src = `${base}#toolbar=0&view=FitH&page=${modalPage}`;
             if (modalPageInput) modalPageInput.value = modalPage;
             modalReaderLoading?.classList.remove('hidden');
@@ -793,10 +799,12 @@
         });
         document.getElementById('closeReadModal')?.addEventListener('click', () => {
             readModal?.classList.add('hidden');
+            if (modalPdfFrame) modalPdfFrame.src = 'about:blank';
         });
         readModal?.addEventListener('click', (event) => {
             if (event.target === readModal) {
                 readModal.classList.add('hidden');
+                if (modalPdfFrame) modalPdfFrame.src = 'about:blank';
             }
         });
         document.getElementById('modalPrevPage')?.addEventListener('click', () => {

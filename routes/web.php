@@ -119,7 +119,9 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->group(function ()
     Route::get('audiobooks/{audiobook}/preview', [AudiobookController::class, 'preview'])->name('admin.audiobooks.preview');
     Route::get('audiobooks/{audiobook}/parts', [AudiobookController::class, 'parts'])->name('admin.audiobooks.parts');
     Route::post('audiobooks/{audiobook}/parts', [AudiobookController::class, 'addPart'])->name('admin.audiobooks.parts.store');
+    Route::put('audiobooks/{audiobook}/parts/{part}', [AudiobookController::class, 'updatePart'])->name('admin.audiobooks.parts.update');
     Route::post('audiobooks/{audiobook}/parts/reorder', [AudiobookController::class, 'reorderParts'])->name('admin.audiobooks.parts.reorder');
+    Route::delete('audiobooks/{audiobook}/parts', [AudiobookController::class, 'destroyManyParts'])->name('admin.audiobooks.parts.destroy-many');
     Route::delete('audiobooks/{audiobook}/parts/{part}', [AudiobookController::class, 'destroyPart'])->name('admin.audiobooks.parts.destroy');
     Route::post('audiobooks/{audiobook}/restore', [AudiobookController::class, 'restore'])->name('admin.audiobooks.restore');
     Route::delete('audiobooks/{audiobook}/force-delete', [AudiobookController::class, 'forceDelete'])->name('admin.audiobooks.force-delete');
@@ -127,6 +129,7 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->group(function ()
     Route::resource('documents', DocumentController::class)->except(['show'])->names('admin.documents');
     Route::get('documents/{document}/preview', [DocumentController::class, 'preview'])->name('admin.documents.preview');
     Route::post('documents/{document}/audiobooks', [AudiobookController::class, 'storeForBook'])->name('admin.documents.audiobooks.store');
+    Route::get('documents/{document}/audiobook-parts', [AudiobookController::class, 'showPartsForBook'])->name('admin.documents.audiobook-parts');
     Route::post('documents/{document}/audiobook-parts', [AudiobookController::class, 'storePartsForBook'])->name('admin.documents.audiobook-parts.store');
     Route::post('documents/{document}/restore', [DocumentController::class, 'restore'])->name('admin.documents.restore');
     Route::delete('documents/{document}/force-delete', [DocumentController::class, 'forceDelete'])->name('admin.documents.force-delete');

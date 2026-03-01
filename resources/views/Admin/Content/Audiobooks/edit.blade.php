@@ -65,15 +65,6 @@
                                                 <input type="date" name="published_at" value="{{ old('published_at', optional($audiobook->published_at)->toDateString()) }}" class="form-control">
                                             </div>
                                             <div class="col-md-4">
-                                                <label class="form-label fw-semibold">Category (optional)</label>
-                                                <select name="category_id" class="form-select">
-                                                    <option value="">None</option>
-                                                    @foreach ($categories as $category)
-                                                        <option value="{{ $category->id }}" @selected(old('category_id', $audiobook->category_id) == $category->id)>{{ $category->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4">
                                                 <label class="form-label fw-semibold">Thumbnail (optional)</label>
                                                 <input type="file" name="thumbnail" class="form-control" accept="image/*">
                                                 @if ($audiobook->thumbnail)
@@ -81,20 +72,11 @@
                                                 @endif
                                             </div>
                                             <div class="col-md-4">
-                                                <label class="form-label fw-semibold">Narrator</label>
-                                                <input type="text" name="narrator" value="{{ old('narrator', $audiobook->narrator) }}" class="form-control">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-semibold">Series</label>
-                                                <input type="text" name="series" value="{{ old('series', $audiobook->series) }}" class="form-control">
-                                            </div>
-                                            <div class="col-md-4">
                                                 <label class="form-label fw-semibold">Duration</label>
                                                 <input type="text" name="duration" value="{{ old('duration', $audiobook->duration) }}" class="form-control">
                                             </div>
                                             <div class="col-md-12">
-                                                <label class="form-label fw-semibold">Description</label>
-                                                <textarea name="description" class="form-control" rows="4">{{ old('description', $audiobook->description) }}</textarea>
+                                                <div class="alert alert-light border">Category is inherited from linked book: <strong>{{ $books->firstWhere('id', $audiobook->book_id)?->category?->name ?? '-' }}</strong></div>
                                             </div>
                                         </div>
                                     </div>
@@ -113,18 +95,6 @@
                                     <div class="col-md-4">
                                         <label class="form-label fw-semibold">Title (RW)</label>
                                         <input type="text" name="title_rw" value="{{ old('title_rw', $translations['rw']?->title) }}" class="form-control" required>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-semibold">Description (EN)</label>
-                                        <textarea name="description_en" class="form-control" rows="3">{{ old('description_en', $translations['en']?->description) }}</textarea>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-semibold">Description (FR)</label>
-                                        <textarea name="description_fr" class="form-control" rows="3">{{ old('description_fr', $translations['fr']?->description) }}</textarea>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-semibold">Description (RW)</label>
-                                        <textarea name="description_rw" class="form-control" rows="3">{{ old('description_rw', $translations['rw']?->description) }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -164,6 +134,12 @@
                         <h6 class="mb-0">Audiobook Parts</h6>
                         <div class="d-flex align-items-center gap-2">
                             <span class="badge bg-light text-dark">{{ $audiobook->parts->count() }} part(s)</span>
+                            <form id="partBulkDeleteForm" method="POST" action="{{ route('admin.audiobooks.parts.destroy-many', $audiobook) }}" class="d-inline" data-confirm="Delete selected audiobook parts?" data-confirm-action="Delete Selected">
+                                @csrf
+                                @method('DELETE')
+                                <div id="partBulkDeleteInputs"></div>
+                                <button id="partBulkDeleteBtn" type="submit" class="btn btn-sm btn-outline-danger" disabled>Delete Selected</button>
+                            </form>
                             @if ($audiobook->parts->count() > 1)
                                 <form id="partReorderForm" method="POST" action="{{ route('admin.audiobooks.parts.reorder', $audiobook) }}" class="d-inline">
                                     @csrf
@@ -178,6 +154,9 @@
                         <table class="table table-sm align-middle">
                             <thead>
                                 <tr>
+                                    <th style="width: 45px;">
+                                        <input type="checkbox" id="partSelectAll" class="form-check-input" title="Select all parts">
+                                    </th>
                                     <th style="width: 80px;">Order</th>
                                     <th>Title</th>
                                     <th>Language</th>
@@ -189,7 +168,11 @@
                             </thead>
                             <tbody id="partsTableBody">
                                 @forelse ($audiobook->parts as $part)
+                                    @php($editId = 'editPart'.$part->id)
                                     <tr data-part-id="{{ $part->id }}">
+                                        <td>
+                                            <input type="checkbox" class="form-check-input part-select" value="{{ $part->id }}" aria-label="Select part {{ $part->id }}">
+                                        </td>
                                         <td><span class="part-order">{{ $part->sort_order }}</span></td>
                                         <td>{{ $part->title }}</td>
                                         <td><span class="badge bg-soft-info text-info">{{ $part->language_label }}</span></td>
@@ -207,18 +190,68 @@
                                             @endif
                                         </td>
                                         <td class="text-end">
-                                            <button type="button" class="btn btn-sm btn-light part-move-up" title="Move Up">↑</button>
-                                            <button type="button" class="btn btn-sm btn-light part-move-down" title="Move Down">↓</button>
+                                            <div class="d-flex justify-content-end align-items-center gap-1 flex-nowrap" style="white-space: nowrap;">
+                                            <button type="button" class="btn btn-sm btn-light part-move-up" title="Move Up">&uarr;</button>
+                                            <button type="button" class="btn btn-sm btn-light part-move-down" title="Move Down">&darr;</button>
+                                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#{{ $editId }}" aria-expanded="false" aria-controls="{{ $editId }}">Edit</button>
                                             <form method="POST" action="{{ route('admin.audiobooks.parts.destroy', [$audiobook, $part->id]) }}" class="d-inline" data-confirm="Remove this audiobook part?" data-confirm-action="Remove">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-sm btn-outline-danger">Remove</button>
                                             </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="8" class="p-0 border-0">
+                                            <div id="{{ $editId }}" class="collapse border-top bg-light-subtle p-3">
+                                                <form method="POST" action="{{ route('admin.audiobooks.parts.update', [$audiobook, $part->id]) }}" enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div class="row g-3 align-items-end">
+                                                        <div class="col-md-4">
+                                                            <label class="form-label fw-semibold">Part Title</label>
+                                                            <input type="text" name="title" class="form-control" value="{{ $part->title }}" required>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="form-label fw-semibold">Order</label>
+                                                            <input type="number" name="sort_order" min="1" class="form-control" value="{{ $part->sort_order }}" required>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="form-label fw-semibold">Language</label>
+                                                            <select name="language" class="form-select" required>
+                                                                <option value="rw" @selected($part->language === 'rw')>Kinyarwanda</option>
+                                                                <option value="en" @selected($part->language === 'en')>English</option>
+                                                                <option value="fr" @selected($part->language === 'fr')>French</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="form-label fw-semibold">Duration</label>
+                                                            <input type="text" name="duration" class="form-control" value="{{ $part->duration }}" placeholder="e.g. 11:48">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <input type="hidden" name="is_published" value="0">
+                                                            <div class="form-check mt-4">
+                                                                <input class="form-check-input" type="checkbox" name="is_published" value="1" id="partPublished{{ $part->id }}" @checked($part->is_published)>
+                                                                <label class="form-check-label" for="partPublished{{ $part->id }}">Published</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <label class="form-label fw-semibold">Replace Audio File (optional)</label>
+                                                            <input type="file" name="audio_file" class="form-control" accept="audio/*">
+                                                            <div class="fs-12 text-muted mt-1">Current file: {{ basename((string) $part->audio_file) }}</div>
+                                                        </div>
+                                                        <div class="col-md-3 d-grid">
+                                                            <button class="btn btn-primary">Save Part Changes</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7" class="text-muted text-center">No parts yet. Add parts below.</td>
+                                        <td colspan="8" class="text-muted text-center">No parts yet. Add parts below.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -333,6 +366,9 @@
     (() => {
         const tbody = document.getElementById('partsTableBody');
         const inputContainer = document.getElementById('partReorderInputs');
+        const selectAll = document.getElementById('partSelectAll');
+        const bulkDeleteInputs = document.getElementById('partBulkDeleteInputs');
+        const bulkDeleteBtn = document.getElementById('partBulkDeleteBtn');
         if (!tbody || !inputContainer) return;
 
         const rebuildOrderPayload = () => {
@@ -352,29 +388,98 @@
             });
         };
 
+        const rebuildBulkDeletePayload = () => {
+            if (!bulkDeleteInputs || !bulkDeleteBtn) return;
+            const checked = Array.from(tbody.querySelectorAll('.part-select:checked'));
+            bulkDeleteInputs.innerHTML = '';
+            checked.forEach((checkbox) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'part_ids[]';
+                input.value = checkbox.value;
+                bulkDeleteInputs.appendChild(input);
+            });
+            bulkDeleteBtn.disabled = checked.length === 0;
+            if (selectAll) {
+                const all = Array.from(tbody.querySelectorAll('.part-select'));
+                selectAll.checked = all.length > 0 && checked.length === all.length;
+            }
+        };
+
+        const getEditRow = (mainRow) => {
+            const next = mainRow.nextElementSibling;
+            return next && !next.hasAttribute('data-part-id') ? next : null;
+        };
+
+        const getPrevMainRow = (mainRow) => {
+            let node = mainRow.previousElementSibling;
+            while (node && !node.hasAttribute('data-part-id')) {
+                node = node.previousElementSibling;
+            }
+            return node;
+        };
+
+        const getNextMainRow = (mainRow) => {
+            let node = mainRow.nextElementSibling;
+            while (node && !node.hasAttribute('data-part-id')) {
+                node = node.nextElementSibling;
+            }
+            return node;
+        };
+
         tbody.querySelectorAll('.part-move-up').forEach((btn) => {
             btn.addEventListener('click', (event) => {
-                const row = event.currentTarget.closest('tr[data-part-id]');
-                if (!row) return;
-                const prev = row.previousElementSibling;
-                if (!prev) return;
-                tbody.insertBefore(row, prev);
+                const mainRow = event.currentTarget.closest('tr[data-part-id]');
+                if (!mainRow) return;
+
+                const prevMain = getPrevMainRow(mainRow);
+                if (!prevMain) return;
+
+                const editRow = getEditRow(mainRow);
+                const fragment = document.createDocumentFragment();
+                fragment.appendChild(mainRow);
+                if (editRow) fragment.appendChild(editRow);
+
+                tbody.insertBefore(fragment, prevMain);
                 rebuildOrderPayload();
             });
         });
 
         tbody.querySelectorAll('.part-move-down').forEach((btn) => {
             btn.addEventListener('click', (event) => {
-                const row = event.currentTarget.closest('tr[data-part-id]');
-                if (!row) return;
-                const next = row.nextElementSibling;
-                if (!next) return;
-                tbody.insertBefore(next, row);
+                const mainRow = event.currentTarget.closest('tr[data-part-id]');
+                if (!mainRow) return;
+
+                const nextMain = getNextMainRow(mainRow);
+                if (!nextMain) return;
+
+                const nextMainEditRow = getEditRow(nextMain);
+                const insertBeforeNode = nextMainEditRow ? nextMainEditRow.nextElementSibling : nextMain.nextElementSibling;
+
+                const editRow = getEditRow(mainRow);
+                const fragment = document.createDocumentFragment();
+                fragment.appendChild(mainRow);
+                if (editRow) fragment.appendChild(editRow);
+
+                tbody.insertBefore(fragment, insertBeforeNode);
                 rebuildOrderPayload();
             });
         });
 
+        selectAll?.addEventListener('change', () => {
+            const all = tbody.querySelectorAll('.part-select');
+            all.forEach((checkbox) => {
+                checkbox.checked = selectAll.checked;
+            });
+            rebuildBulkDeletePayload();
+        });
+
+        tbody.querySelectorAll('.part-select').forEach((checkbox) => {
+            checkbox.addEventListener('change', rebuildBulkDeletePayload);
+        });
+
         rebuildOrderPayload();
+        rebuildBulkDeletePayload();
     })();
 </script>
 @endpush

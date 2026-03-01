@@ -1,0 +1,66 @@
+{
+    "exported_at": "2026-03-01 02:26:55",
+    "connection": "sqlite",
+    "tables": [
+        {
+            "name": "users",
+            "rows": 1
+        },
+        {
+            "name": "content_categories",
+            "rows": 12
+        },
+        {
+            "name": "video_series",
+            "rows": 8
+        },
+        {
+            "name": "ministry_leaders",
+            "rows": 5
+        },
+        {
+            "name": "books",
+            "rows": 4
+        },
+        {
+            "name": "audiobooks",
+            "rows": 6
+        },
+        {
+            "name": "audiobook_parts",
+            "rows": 21
+        },
+        {
+            "name": "videos",
+            "rows": 8
+        },
+        {
+            "name": "audios",
+            "rows": 0
+        },
+        {
+            "name": "playlists",
+            "rows": 0
+        },
+        {
+            "name": "playlist_items",
+            "rows": 0
+        },
+        {
+            "name": "settings",
+            "rows": 0
+        },
+        {
+            "name": "setting_translations",
+            "rows": 0
+        },
+        {
+            "name": "content_translations",
+            "rows": 114
+        },
+        {
+            "name": "events",
+            "rows": 0
+        }
+    ]
+}

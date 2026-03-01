@@ -90,33 +90,15 @@
                                                 <input type="date" name="published_at" value="{{ old('published_at') }}" class="form-control">
                                             </div>
                                             <div class="col-md-4">
-                                                <label class="form-label fw-semibold">Category (optional)</label>
-                                                <select name="category_id" class="form-select">
-                                                    <option value="">None</option>
-                                                    @foreach ($categories as $category)
-                                                        <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>{{ $category->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4">
                                                 <label class="form-label fw-semibold">Thumbnail (optional)</label>
                                                 <input type="file" name="thumbnail" class="form-control" accept="image/*">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-semibold">Narrator</label>
-                                                <input type="text" name="narrator" value="{{ old('narrator') }}" class="form-control">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label fw-semibold">Series</label>
-                                                <input type="text" name="series" value="{{ old('series') }}" class="form-control">
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label fw-semibold">Duration</label>
                                                 <input type="text" name="duration" value="{{ old('duration') }}" class="form-control" placeholder="e.g. 45:30">
                                             </div>
                                             <div class="col-md-12">
-                                                <label class="form-label fw-semibold">Description</label>
-                                                <textarea name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
+                                                <div class="alert alert-light border">Audiobook category is automatically inherited from linked book category.</div>
                                             </div>
                                         </div>
                                     </div>
@@ -135,18 +117,6 @@
                                     <div class="col-md-4">
                                         <label class="form-label fw-semibold">Title (RW)</label>
                                         <input type="text" name="title_rw" value="{{ old('title_rw') }}" class="form-control" required>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-semibold">Description (EN)</label>
-                                        <textarea name="description_en" class="form-control" rows="3">{{ old('description_en') }}</textarea>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-semibold">Description (FR)</label>
-                                        <textarea name="description_fr" class="form-control" rows="3">{{ old('description_fr') }}</textarea>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-semibold">Description (RW)</label>
-                                        <textarea name="description_rw" class="form-control" rows="3">{{ old('description_rw') }}</textarea>
                                     </div>
                                 </div>
                             </div>

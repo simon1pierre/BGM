@@ -61,6 +61,12 @@ class DocumentController extends Controller
             'notify_target' => ['nullable', 'in:all,custom'],
             'notify_emails' => ['nullable', 'string'],
             'notify_message' => ['nullable', 'string'],
+            'create_audiobook' => ['nullable', 'boolean'],
+            'audiobook_title' => ['required_if:create_audiobook,1', 'nullable', 'string', 'max:255'],
+            'audiobook_part_files' => ['nullable', 'array'],
+            'audiobook_part_files.*' => ['file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'audiobook_is_prayer_audio' => ['nullable', 'boolean'],
+            'audiobook_is_published' => ['nullable', 'boolean'],
         ]);
 
         $documentPath = $request->file('document_file')->store('content/documents', 'public');
@@ -93,6 +99,63 @@ class DocumentController extends Controller
         ]);
 
         $this->syncTranslations($document, $request, ['title', 'description']);
+
+        if ($request->boolean('create_audiobook')) {
+            if (!$request->hasFile('audiobook_part_files')) {
+                throw ValidationException::withMessages([
+                    'audiobook_part_files' => 'Upload at least one audiobook part.',
+                ]);
+            }
+
+            $parts = [];
+            $order = 1;
+            foreach ((array) $request->file('audiobook_part_files', []) as $file) {
+                $stored = $file->store('content/audiobooks/parts', 'public');
+                $baseName = pathinfo((string) $file->getClientOriginalName(), PATHINFO_FILENAME);
+                $parts[] = [
+                    'title' => trim($baseName) !== '' ? trim($baseName) : 'untitled',
+                    'audio_file' => $stored,
+                    'language' => 'rw',
+                    'duration' => null,
+                    'sort_order' => $order,
+                    'is_published' => true,
+                ];
+                $order++;
+            }
+
+            $audioPath = null;
+            if (count($parts) > 0) {
+                $audioPath = $parts[0]['audio_file'];
+            }
+
+            $audiobook = audiobook::create([
+                'title' => trim((string) ($validated['audiobook_title'] ?? '')),
+                'description' => null,
+                'audio_file' => $audioPath,
+                'thumbnail' => null,
+                'duration' => null,
+                'category_id' => $document->category_id,
+                'book_id' => $document->id,
+                'narrator' => null,
+                'series' => null,
+                'published_at' => $validated['published_at'] ?? null,
+                'featured' => false,
+                'recommended' => false,
+                'is_prayer_audio' => $request->boolean('audiobook_is_prayer_audio'),
+                'is_published' => $request->boolean('audiobook_is_published', true),
+            ]);
+
+            if (count($parts) > 0) {
+                $audiobook->parts()->createMany($parts);
+            }
+
+            $request->merge([
+                'title_en' => $audiobook->title,
+                'title_fr' => $audiobook->title,
+                'title_rw' => $audiobook->title,
+            ]);
+            $this->syncTranslations($audiobook, $request, ['title']);
+        }
 
         $this->maybeNotifySubscribers($request, [
             'type' => 'document',

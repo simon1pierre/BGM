@@ -34,20 +34,13 @@ class AudiobookController extends Controller
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
             'title_en' => ['required', 'string', 'max:255'],
             'title_fr' => ['required', 'string', 'max:255'],
             'title_rw' => ['required', 'string', 'max:255'],
-            'description_en' => ['nullable', 'string'],
-            'description_fr' => ['nullable', 'string'],
-            'description_rw' => ['nullable', 'string'],
             'audio_file' => ['nullable', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
             'thumbnail' => ['nullable', 'image', 'max:4096'],
             'duration' => ['nullable', 'string', 'max:50'],
-            'category_id' => ['nullable', Rule::exists('content_categories', 'id')->whereIn('type', ['audio', 'all'])],
             'book_id' => ['required', 'exists:books,id'],
-            'narrator' => ['nullable', 'string', 'max:255'],
-            'series' => ['nullable', 'string', 'max:255'],
             'published_at' => ['nullable', 'date'],
             'featured' => ['nullable', 'boolean'],
             'is_prayer_audio' => ['nullable', 'boolean'],
@@ -100,16 +93,18 @@ class AudiobookController extends Controller
             $thumbnailPath = $request->file('thumbnail')->store('content/audiobooks/thumbnails', 'public');
         }
 
+        $linkedBook = book::query()->find($validated['book_id']);
+
         $audiobook = audiobook::create([
             'title' => $validated['title'],
-            'description' => $validated['description'] ?? null,
+            'description' => null,
             'audio_file' => $audioPath,
             'thumbnail' => $thumbnailPath,
             'duration' => $validated['duration'] ?? null,
-            'category_id' => $validated['category_id'] ?? null,
+            'category_id' => $linkedBook?->category_id,
             'book_id' => $validated['book_id'] ?? null,
-            'narrator' => $validated['narrator'] ?? null,
-            'series' => $validated['series'] ?? null,
+            'narrator' => null,
+            'series' => null,
             'published_at' => $validated['published_at'] ?? null,
             'featured' => $request->boolean('featured'),
             'recommended' => false,
@@ -130,7 +125,7 @@ class AudiobookController extends Controller
             ],
         ]);
 
-        $this->syncTranslations($audiobook, $request, ['title', 'description']);
+        $this->syncTranslations($audiobook, $request, ['title']);
 
         return redirect()
             ->route('admin.documents.edit', $audiobook->book_id)
@@ -175,20 +170,13 @@ class AudiobookController extends Controller
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
             'title_en' => ['required', 'string', 'max:255'],
             'title_fr' => ['required', 'string', 'max:255'],
             'title_rw' => ['required', 'string', 'max:255'],
-            'description_en' => ['nullable', 'string'],
-            'description_fr' => ['nullable', 'string'],
-            'description_rw' => ['nullable', 'string'],
             'audio_file' => ['nullable', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
             'thumbnail' => ['nullable', 'image', 'max:4096'],
             'duration' => ['nullable', 'string', 'max:50'],
-            'category_id' => ['nullable', Rule::exists('content_categories', 'id')->whereIn('type', ['audio', 'all'])],
             'book_id' => ['required', 'exists:books,id'],
-            'narrator' => ['nullable', 'string', 'max:255'],
-            'series' => ['nullable', 'string', 'max:255'],
             'published_at' => ['nullable', 'date'],
             'featured' => ['nullable', 'boolean'],
             'is_prayer_audio' => ['nullable', 'boolean'],
@@ -205,16 +193,18 @@ class AudiobookController extends Controller
             $thumbnailPath = $request->file('thumbnail')->store('content/audiobooks/thumbnails', 'public');
         }
 
+        $linkedBook = book::query()->find($validated['book_id']);
+
         $audiobook->update([
             'title' => $validated['title'],
-            'description' => $validated['description'] ?? null,
+            'description' => null,
             'audio_file' => $audioPath,
             'thumbnail' => $thumbnailPath,
             'duration' => $validated['duration'] ?? null,
-            'category_id' => $validated['category_id'] ?? null,
+            'category_id' => $linkedBook?->category_id,
             'book_id' => $validated['book_id'] ?? null,
-            'narrator' => $validated['narrator'] ?? null,
-            'series' => $validated['series'] ?? null,
+            'narrator' => null,
+            'series' => null,
             'published_at' => $validated['published_at'] ?? null,
             'featured' => $request->boolean('featured'),
             'recommended' => false,
@@ -231,7 +221,7 @@ class AudiobookController extends Controller
             ],
         ]);
 
-        $this->syncTranslations($audiobook, $request, ['title', 'description']);
+        $this->syncTranslations($audiobook, $request, ['title']);
 
         return $this->redirectToBookEdit($audiobook, 'Audiobook updated.');
     }
@@ -293,7 +283,7 @@ class AudiobookController extends Controller
         $filePath = $request->file('audio_file')->store('content/audiobooks/parts', 'public');
 
         $originalName = pathinfo((string) $request->file('audio_file')->getClientOriginalName(), PATHINFO_FILENAME);
-        $defaultTitle = trim($originalName) !== '' ? trim($originalName) : 'Part '.$nextOrder;
+        $defaultTitle = trim($originalName) !== '' ? trim($originalName) : 'untitled';
 
         $part = $audiobook->parts()->create([
             'title' => trim((string) ($validated['title'] ?? '')) ?: $defaultTitle,
@@ -315,19 +305,12 @@ class AudiobookController extends Controller
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
             'title_en' => ['nullable', 'string', 'max:255'],
             'title_fr' => ['nullable', 'string', 'max:255'],
             'title_rw' => ['nullable', 'string', 'max:255'],
-            'description_en' => ['nullable', 'string'],
-            'description_fr' => ['nullable', 'string'],
-            'description_rw' => ['nullable', 'string'],
             'audio_file' => ['nullable', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
             'thumbnail' => ['nullable', 'image', 'max:4096'],
             'duration' => ['nullable', 'string', 'max:50'],
-            'category_id' => ['nullable', Rule::exists('content_categories', 'id')->whereIn('type', ['audio', 'all'])],
-            'narrator' => ['nullable', 'string', 'max:255'],
-            'series' => ['nullable', 'string', 'max:255'],
             'published_at' => ['nullable', 'date'],
             'featured' => ['nullable', 'boolean'],
             'is_prayer_audio' => ['nullable', 'boolean'],
@@ -382,14 +365,14 @@ class AudiobookController extends Controller
 
         $audiobook = audiobook::create([
             'title' => $validated['title'],
-            'description' => $validated['description'] ?? null,
+            'description' => null,
             'audio_file' => $audioPath,
             'thumbnail' => $thumbnailPath,
             'duration' => $validated['duration'] ?? null,
-            'category_id' => $validated['category_id'] ?? null,
+            'category_id' => $document->category_id,
             'book_id' => $document->id,
-            'narrator' => $validated['narrator'] ?? null,
-            'series' => $validated['series'] ?? null,
+            'narrator' => null,
+            'series' => null,
             'published_at' => $validated['published_at'] ?? null,
             'featured' => $request->boolean('featured'),
             'recommended' => false,
@@ -405,11 +388,8 @@ class AudiobookController extends Controller
             'title_en' => $validated['title_en'] ?? $validated['title'],
             'title_fr' => $validated['title_fr'] ?? $validated['title'],
             'title_rw' => $validated['title_rw'] ?? $validated['title'],
-            'description_en' => $validated['description_en'] ?? ($validated['description'] ?? null),
-            'description_fr' => $validated['description_fr'] ?? ($validated['description'] ?? null),
-            'description_rw' => $validated['description_rw'] ?? ($validated['description'] ?? null),
         ]);
-        $this->syncTranslations($audiobook, $request, ['title', 'description']);
+        $this->syncTranslations($audiobook, $request, ['title']);
 
         UserActivityLog::create([
             'actor_user_id' => $request->user()->id ?? null,
@@ -427,11 +407,7 @@ class AudiobookController extends Controller
     public function storePartsForBook(Request $request, book $document)
     {
         $validated = $request->validate([
-            'audiobook_id' => ['nullable', 'integer', 'exists:audiobooks,id'],
             'title' => ['nullable', 'string', 'max:255'],
-            'category_id' => ['nullable', Rule::exists('content_categories', 'id')->whereIn('type', ['audio', 'all'])],
-            'narrator' => ['nullable', 'string', 'max:255'],
-            'series' => ['nullable', 'string', 'max:255'],
             'published_at' => ['nullable', 'date'],
             'is_published' => ['nullable', 'boolean'],
             'is_prayer_audio' => ['nullable', 'boolean'],
@@ -456,15 +432,18 @@ class AudiobookController extends Controller
             return back()->withErrors(['part_files' => 'Upload at least one audiobook part.'])->withInput();
         }
 
-        $targetAudiobook = null;
-        if (!empty($validated['audiobook_id'])) {
-            $targetAudiobook = audiobook::query()
-                ->where('book_id', $document->id)
-                ->findOrFail((int) $validated['audiobook_id']);
-        } else {
+        // One flat audiobook-parts list per book (no nested/main parts grouping).
+        $targetAudiobook = audiobook::query()
+            ->where('book_id', $document->id)
+            ->latest('id')
+            ->first();
+
+        if (!$targetAudiobook) {
             $title = trim((string) ($validated['title'] ?? ''));
             if ($title === '') {
-                $title = trim((string) $document->title).' - Audiobook';
+                return back()
+                    ->withErrors(['title' => 'Enter audiobook title when creating a new audiobook.'])
+                    ->withInput();
             }
 
             $targetAudiobook = audiobook::create([
@@ -473,10 +452,10 @@ class AudiobookController extends Controller
                 'audio_file' => null,
                 'thumbnail' => null,
                 'duration' => $validated['part_duration'] ?? null,
-                'category_id' => $validated['category_id'] ?? null,
+                'category_id' => $document->category_id,
                 'book_id' => $document->id,
-                'narrator' => $validated['narrator'] ?? null,
-                'series' => $validated['series'] ?? null,
+                'narrator' => null,
+                'series' => null,
                 'published_at' => $validated['published_at'] ?? null,
                 'featured' => false,
                 'recommended' => false,
@@ -489,7 +468,7 @@ class AudiobookController extends Controller
                 'title_fr' => $title,
                 'title_rw' => $title,
             ]);
-            $this->syncTranslations($targetAudiobook, $request, ['title', 'description']);
+            $this->syncTranslations($targetAudiobook, $request, ['title']);
         }
 
         $startOrder = (int) (
@@ -545,12 +524,73 @@ class AudiobookController extends Controller
         return redirect()->route('admin.documents.edit', $document)->with('status', count($parts).' part(s) uploaded for this book.');
     }
 
+    public function showPartsForBook(book $document)
+    {
+        return redirect()
+            ->route('admin.documents.edit', $document)
+            ->with('warning', 'Use the upload form on this page to add audiobook parts.');
+    }
+
+    public function updatePart(Request $request, audiobook $audiobook, int $part)
+    {
+        $partModel = $audiobook->parts()->findOrFail($part);
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'audio_file' => ['nullable', 'file', 'mimetypes:audio/mpeg,audio/mp3,audio/mp4,audio/x-wav,audio/ogg', 'max:262144'],
+            'language' => ['required', 'in:rw,en,fr'],
+            'duration' => ['nullable', 'string', 'max:50'],
+            'sort_order' => ['required', 'integer', 'min:1'],
+            'is_published' => ['nullable', 'boolean'],
+        ]);
+
+        $oldFile = $partModel->audio_file;
+        $filePath = $oldFile;
+        if ($request->hasFile('audio_file')) {
+            $filePath = $request->file('audio_file')->store('content/audiobooks/parts', 'public');
+        }
+
+        $partModel->update([
+            'title' => $validated['title'],
+            'audio_file' => $filePath,
+            'language' => $this->normalizePartLanguage($validated['language']),
+            'duration' => $validated['duration'] ?? null,
+            'sort_order' => (int) $validated['sort_order'],
+            'is_published' => $request->boolean('is_published', true),
+        ]);
+
+        if (!empty($audiobook->audio_file) && $audiobook->audio_file === $oldFile && $filePath !== $oldFile) {
+            $audiobook->update(['audio_file' => $filePath]);
+        }
+
+        return redirect()->back()->with('status', 'Audiobook part updated.');
+    }
+
     public function destroyPart(Request $request, audiobook $audiobook, int $part)
     {
         $partModel = $audiobook->parts()->findOrFail($part);
         $partModel->delete();
 
         return redirect()->back()->with('status', 'Audiobook part removed.');
+    }
+
+    public function destroyManyParts(Request $request, audiobook $audiobook)
+    {
+        $validated = $request->validate([
+            'part_ids' => ['required', 'array', 'min:1'],
+            'part_ids.*' => ['required', 'integer'],
+        ]);
+
+        $ids = array_values(array_unique(array_map('intval', $validated['part_ids'])));
+        $ownedIds = $audiobook->parts()->whereIn('id', $ids)->pluck('id')->map(fn ($id) => (int) $id)->all();
+
+        if (count($ownedIds) === 0) {
+            return redirect()->back()->withErrors(['part_ids' => 'No valid parts selected.']);
+        }
+
+        $audiobook->parts()->whereIn('id', $ownedIds)->delete();
+
+        return redirect()->back()->with('status', count($ownedIds).' audiobook part(s) removed.');
     }
 
     public function reorderParts(Request $request, audiobook $audiobook)
@@ -665,7 +705,7 @@ class AudiobookController extends Controller
 
             $audioPath = $file->store('content/audiobooks/parts', 'public');
             $originalName = pathinfo((string) $file->getClientOriginalName(), PATHINFO_FILENAME);
-            $defaultTitle = trim($originalName) !== '' ? trim($originalName) : 'Part '.$order;
+            $defaultTitle = trim($originalName) !== '' ? trim($originalName) : 'untitled';
 
             $rows[] = [
                 'title' => $defaultTitle,

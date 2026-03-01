@@ -8,7 +8,7 @@
                 </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('admin.documents.index') }}">Documents</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.documents.index') }}">Books</a></li>
                     <li class="breadcrumb-item">Create</li>
                 </ul>
             </div>
@@ -59,6 +59,47 @@
                                 <label class="form-label fw-semibold">Description</label>
                                 <textarea name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
                                 @error('description') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card border border-dashed">
+                                    <div class="card-body">
+                                        <div class="form-check mb-3">
+                                            <input type="hidden" name="create_audiobook" value="0">
+                                            <input class="form-check-input" type="checkbox" name="create_audiobook" value="1" id="createAudiobookOnBook" @checked(old('create_audiobook'))>
+                                            <label class="form-check-label fw-semibold" for="createAudiobookOnBook">Create audiobook parts now (optional)</label>
+                                        </div>
+                                        <p class="text-muted fs-12 mb-3">You can skip this section and upload audiobook parts later from the book edit page.</p>
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-semibold">Audiobook Parts Title</label>
+                                                <input type="text" name="audiobook_title" value="{{ old('audiobook_title') }}" class="form-control" placeholder="Enter audiobook parts title">
+                                                @error('audiobook_title') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label fw-semibold">Audiobook Parts (many files)</label>
+                                                <input type="file" name="audiobook_part_files[]" class="form-control" accept="audio/*" multiple>
+                                                @error('audiobook_part_files') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                                                @error('audiobook_part_files.*') <div class="text-danger fs-12">{{ $message }}</div> @enderror
+                                            </div>
+                                            <div class="col-md-12 d-flex align-items-center gap-4">
+                                                <div>
+                                                    <input type="hidden" name="audiobook_is_published" value="0">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="audiobook_is_published" value="1" @checked(old('audiobook_is_published', true))>
+                                                        <label class="form-check-label">Audiobook Published</label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <input type="hidden" name="audiobook_is_prayer_audio" value="0">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="audiobook_is_prayer_audio" value="1" @checked(old('audiobook_is_prayer_audio'))>
+                                                        <label class="form-check-label">Prayer Audio</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="card border border-dashed">

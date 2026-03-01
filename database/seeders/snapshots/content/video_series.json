@@ -1,0 +1,82 @@
+[
+    {
+        "id": 1,
+        "title": "Ubutumwa bw'Abamarayika Batatu",
+        "description": "Urukurikirane rw'inyigisho ku butumwa bwo mu Ibyahishuwe 14 no guhamagarira abantu gusenga Imana by'ukuri.",
+        "sort_order": 1,
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 2,
+        "title": "Isabato n'Irema",
+        "description": "Inyigisho zigaragaza Isabato nk'ikimenyetso cy'irema n'ubusabane n'Imana.",
+        "sort_order": 2,
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 3,
+        "title": "Yesu Umutambyi Mukuru",
+        "description": "Urukurikirane ku murimo wa Kristo mu buturo bwo mu ijuru no kwizera gukiza.",
+        "sort_order": 3,
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 4,
+        "title": "Ubuzima buzira umuze bwa Gikristo",
+        "description": "Inyigisho ku mibereho myiza, kwirinda no kubaha Imana mu mibiri yacu.",
+        "sort_order": 4,
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 5,
+        "title": "Umuryango wubakiye kuri Kristo",
+        "description": "Urukurikirane rwigisha kubaka urugo rw'amasengesho, urukundo n'ubudahemuka.",
+        "sort_order": 5,
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 6,
+        "title": "Ubutumwa bw'Ububyutse n'Ivugurura",
+        "description": "Inyigisho zihamagarira kwihana, kuvugurura umutima no gukomera mu kwizera.",
+        "sort_order": 6,
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 7,
+        "title": "Daniyeli n'Ibyahishuwe",
+        "description": "Urukurikirane rw'ubuhanuzi busobanura ibihe n'ibyiringiro byo kugaruka kwa Kristo.",
+        "sort_order": 7,
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 8,
+        "title": "Kwitegura Kugaruka kwa Yesu",
+        "description": "Inyigisho zo gufasha abizera kuba maso, gusenga no gukorera Imana mu gihe cya nyuma.",
+        "sort_order": 8,
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    }
+]

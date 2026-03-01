@@ -1,0 +1,126 @@
+{
+    "exported_at": "2026-03-01 02:17:21",
+    "connection": "sqlite",
+    "tables": [
+        {
+            "name": "users",
+            "rows": 1
+        },
+        {
+            "name": "content_categories",
+            "rows": 12
+        },
+        {
+            "name": "books",
+            "rows": 4
+        },
+        {
+            "name": "audiobooks",
+            "rows": 6
+        },
+        {
+            "name": "audiobook_parts",
+            "rows": 21
+        },
+        {
+            "name": "audios",
+            "rows": 0
+        },
+        {
+            "name": "videos",
+            "rows": 8
+        },
+        {
+            "name": "admin_notification_reads",
+            "rows": 0
+        },
+        {
+            "name": "audience_page_events",
+            "rows": 258
+        },
+        {
+            "name": "contact_messages",
+            "rows": 0
+        },
+        {
+            "name": "content_comments",
+            "rows": 0
+        },
+        {
+            "name": "content_events",
+            "rows": 102
+        },
+        {
+            "name": "content_likes",
+            "rows": 1
+        },
+        {
+            "name": "content_notifications",
+            "rows": 0
+        },
+        {
+            "name": "content_translations",
+            "rows": 114
+        },
+        {
+            "name": "downloads_log",
+            "rows": 3
+        },
+        {
+            "name": "email_campaigns",
+            "rows": 0
+        },
+        {
+            "name": "events",
+            "rows": 0
+        },
+        {
+            "name": "ministry_leaders",
+            "rows": 5
+        },
+        {
+            "name": "playlist_items",
+            "rows": 0
+        },
+        {
+            "name": "playlists",
+            "rows": 0
+        },
+        {
+            "name": "setting_translations",
+            "rows": 0
+        },
+        {
+            "name": "settings",
+            "rows": 0
+        },
+        {
+            "name": "subscribers",
+            "rows": 0
+        },
+        {
+            "name": "user_activity_logs",
+            "rows": 683
+        },
+        {
+            "name": "user_login_logs",
+            "rows": 1
+        },
+        {
+            "name": "user_status_logs",
+            "rows": 0
+        },
+        {
+            "name": "verification_codes",
+            "rows": 1
+        },
+        {
+            "name": "video_events",
+            "rows": 0
+        },
+        {
+            "name": "video_series",
+            "rows": 8
+        }
+    ]
+}

@@ -1,0 +1,134 @@
+[
+    {
+        "id": 1,
+        "name": "Inyigisho z'Ibyanditswe",
+        "slug": "inyigisho-z-ibyanditswe",
+        "type": "video",
+        "description": "Icyiciro gikubiyemo inyigisho zisobanura Bibiliya mu buryo bwimbitse kandi bwubaka ukwizera.",
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 2,
+        "name": "Ubuhamya bw'Ukuri",
+        "slug": "ubuhamya-bw-ukuri",
+        "type": "video",
+        "description": "Ubuhamya bw'abizera bwerekana uburyo Imana ikora mu buzima bwa buri munsi.",
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 3,
+        "name": "Amasengesho n'Ubwiyunge",
+        "slug": "amasengesho-n-ubwiyunge",
+        "type": "video",
+        "description": "Ubutumwa n'ibiganiro byubaka ubuzima bw'isengesho no kugendana n'Imana.",
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 4,
+        "name": "Inyigisho z'Amajwi",
+        "slug": "inyigisho-z-amajwi",
+        "type": "audio",
+        "description": "Icyiciro cy'amajwi y'inyigisho z'ijambo ry'Imana ushobora kumva aho uri hose.",
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 5,
+        "name": "Indirimbo z'Ibisigo",
+        "slug": "indirimbo-z-ibisigo",
+        "type": "audio",
+        "description": "Indirimbo zo kuramya no guhimbaza Imana zubaka umutima no kwizera.",
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 6,
+        "name": "Amasengesho y'Amajwi",
+        "slug": "amasengesho-y-amajwi",
+        "type": "audio",
+        "description": "Amajwi y'amasengesho ayobora abizera mu gusenga no kwizera byimbitse.",
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 7,
+        "name": "Ibitabo by'Iyobokamana",
+        "slug": "ibitabo-by-iyobokamana",
+        "type": "document",
+        "description": "Ibitabo n'inyandiko bigamije gufasha abakristo gukura mu byo kwizera.",
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 8,
+        "name": "Inyigisho Zanditse",
+        "slug": "inyigisho-zanditse",
+        "type": "document",
+        "description": "Inyandiko z'inyigisho zifasha gusobanukirwa ukuri kwa Bibiliya mu buryo bworoshye.",
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 9,
+        "name": "Amasomo y'Abana",
+        "slug": "amasomo-y-abana",
+        "type": "document",
+        "description": "Ibitabo n'amasomo y'abana bibatoza gukunda Imana no kugendera mu kuri.",
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 10,
+        "name": "Ivugabutumwa Rusange",
+        "slug": "ivugabutumwa-rusange",
+        "type": "all",
+        "description": "Icyiciro rusange gihuza ubutumwa bw'ivugabutumwa muri video, amajwi n'inyandiko.",
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 11,
+        "name": "Urubyiruko n'Imiryango",
+        "slug": "urubyiruko-n-imiryango",
+        "type": "all",
+        "description": "Ubutumwa bufasha urubyiruko n'imiryango kubaho mu ndangagaciro z'ijambo ry'Imana.",
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    },
+    {
+        "id": 12,
+        "name": "Isengesho n'Ububyutse",
+        "slug": "isengesho-n-ububyutse",
+        "type": "all",
+        "description": "Icyiciro cy'ubutumwa n'ibikoresho bishyigikira ububyutse n'ubuzima bw'isengesho.",
+        "is_active": 1,
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 21:55:43"
+    }
+]

@@ -72,7 +72,7 @@
 
 
   <!-- Content -->
-  <div class="relative z-20 container mx-auto px-6 text-center">
+  <div class="relative z-20 container mx-auto px-3 sm:px-4 lg:px-5 text-center">
     <span class="inline-block py-1 px-3 rounded-full bg-blue-500/20 border border-blue-300/30 text-blue-100 text-sm font-medium tracking-widest uppercase mb-6 backdrop-blur-sm animate-fade-in-down">
       {{ __('messages.home.welcome', ['name' => $siteName]) }}
     </span>
@@ -94,7 +94,7 @@
 </section>
 <!-- About Section -->
 <section id="about" class="py-6 bg-slate-50 text-slate-800 scroll-mt-28">
-  <div class="container mx-auto px-6">
+  <div class="container mx-auto px-3 sm:px-4 lg:px-5">
     <div class="text-center mb-8">
     <h2 class="text-4xl md:text-5xl font-serif font-bold text-brand-blue mb-4">
         {{ __('messages.home.about_title') }}
@@ -104,7 +104,7 @@
 
 
     <!-- Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       <!-- Mission Card -->
       <div class="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow">
         <h3 class="text-2xl font-serif font-bold text-brand-blue mb-4">{{ __('messages.home.mission_title') }}</h3>
@@ -149,7 +149,7 @@
   </div>
 </section>
 <section id="leaders" class="py-20 bg-gradient-to-b from-slate-50 to-white">
-  <div class="container mx-auto px-6">
+  <div class="container mx-auto px-3 sm:px-4 lg:px-5">
     <div class="flex items-end justify-between mb-8">
       <div>
         <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950">{{ __('messages.home.leaders_title') }}</h2>
@@ -165,7 +165,7 @@
       </div>
     </div>
 
-    <div id="leadersTrack" class="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-3 scroll-smooth">
+    <div id="leadersTrack" class="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-2 scroll-smooth">
       @forelse ($ministryLeaders as $leader)
         <article class="min-w-[280px] md:min-w-[320px] max-w-[340px] bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 snap-start interactive-card">
           <div class="relative h-52 overflow-hidden rounded-t-2xl">
@@ -213,13 +213,13 @@
   </div>
 </section>
 <section id="resources" class="py-24 bg-slate-50 scroll-mt-28">
-  <div class="container mx-auto px-6">
+  <div class="container mx-auto px-3 sm:px-4 lg:px-5">
     <div class="text-center mb-16">
       <h2 class="text-3xl md:text-4xl font-serif text-blue-900 mb-4">{{ __('messages.home.resources_title') }}</h2>
       <p class="text-slate-600 max-w-2xl mx-auto">{{ __('messages.home.resources_subtitle') }}</p>
     </div>
    
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       <!-- Feature 1: Sermons -->
       <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-slate-100 scroll-animate hover-lift hover-glow-intense ripple-container">
         <div class="aspect-[3/2] overflow-hidden bg-slate-100">
@@ -327,7 +327,7 @@
   </div>
 </section>
 <section id="events" class="py-20 bg-white scroll-mt-28">
-  <div class="container mx-auto px-6">
+  <div class="container mx-auto px-3 sm:px-4 lg:px-5">
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
       <div>
         <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950">{{ __('messages.home.upcoming_prayer_events') }}</h2>
@@ -343,7 +343,7 @@
         <a href="{{ route('events') }}" class="text-blue-700 font-semibold hover:text-blue-900">{{ __('messages.common.view_all') }}</a>
       </div>
     </div>
-    <div id="eventsTrack" data-slider-track class="{{ $upcomingEvents->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-6 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-3 gap-8' }}">
+    <div id="eventsTrack" data-slider-track class="{{ $upcomingEvents->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-3 gap-5' }}">
       @forelse ($upcomingEvents as $event)
         <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col {{ $upcomingEvents->count() > 3 ? 'min-w-[300px] md:min-w-[340px] max-w-[340px] snap-start' : '' }}">
           <div class="relative h-44 overflow-hidden bg-slate-100">
@@ -387,7 +387,7 @@
   </div>
 </section>
 <section id="sermons" class="py-6 bg-white text-slate-800 scroll-mt-28">
-  <div class="container mx-auto px-6 max-w-6xl text-center">
+  <div class="container mx-auto px-3 sm:px-4 lg:px-5 max-w-6xl text-center">
     <span class="block text-amber-600 font-semibold tracking-widest uppercase text-sm mb-3">{{ __('messages.home.latest_messages') }}</span>
     <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950 mb-4">{{ __('messages.home.walking_light') }}</h2>
     <p class="text-lg text-slate-600 mb-10 italic">"Your word is a lamp for my feet, a light on my path." — Psalm 119:105</p>
@@ -398,7 +398,7 @@
         <button type="button" data-slider-next="sermonsTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_next') }}">&rarr;</button>
       </div>
     @endif
-    <div id="sermonsTrack" data-slider-track class="{{ $latestVideos->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-6 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-3 gap-8' }}">
+    <div id="sermonsTrack" data-slider-track class="{{ $latestVideos->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-3 gap-5' }}">
       @forelse ($latestVideos as $video)
         <div class="flex flex-col {{ $latestVideos->count() > 3 ? 'min-w-[320px] md:min-w-[360px] max-w-[360px] snap-start' : '' }}">
           <div class="relative w-full aspect-video bg-slate-100 rounded-xl overflow-hidden shadow-lg border border-slate-200 mb-4">
@@ -428,7 +428,7 @@
   </div>
 </section>
 <section class="py-24 bg-slate-50">
-  <div class="container mx-auto px-6 max-w-6xl">
+  <div class="container mx-auto px-3 sm:px-4 lg:px-5">
     <div class="text-center mb-16">
       <h2 class="text-3xl md:text-4xl font-serif font-bold text-blue-950 mb-4">{{ __('messages.home.ministry_resources') }}</h2>
       <p class="text-slate-600 max-w-2xl mx-auto text-lg">{{ __('messages.home.ministry_resources_body') }}</p>
@@ -444,10 +444,10 @@
           <button type="button" data-slider-next="booksTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_next') }}">&rarr;</button>
         </div>
       @endif
-      <div id="booksTrack" data-slider-track class="{{ $recommendedBooks->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-6 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-3 gap-8' }}">
+      <div id="booksTrack" data-slider-track class="{{ $recommendedBooks->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-3 gap-5' }}">
         @forelse ($recommendedBooks as $book)
-          <article class="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-100 scroll-animate hover-lift hover-glow-intense {{ $recommendedBooks->count() > 3 ? 'min-w-[300px] md:min-w-[340px] max-w-[340px] snap-start' : '' }}">
-            <div class="relative h-[430px] overflow-hidden bg-slate-100">
+          <article class="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-100 scroll-animate hover-lift hover-glow-intense {{ $recommendedBooks->count() > 3 ? 'min-w-[250px] md:min-w-[280px] max-w-[280px] snap-start' : '' }}">
+            <div class="relative h-[390px] overflow-hidden bg-slate-100">
               @if ($book->cover_image)
                 <img src="{{ asset('storage/'.$book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
               @else
@@ -514,7 +514,7 @@
           <button type="button" data-slider-next="audiosTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_next') }}">&rarr;</button>
         </div>
       @endif
-      <div id="audiosTrack" data-slider-track class="{{ $recommendedAudios->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-6 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-3 gap-8' }}">
+      <div id="audiosTrack" data-slider-track class="{{ $recommendedAudios->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-3 gap-5' }}">
         @forelse ($recommendedAudios as $audio)
           <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col scroll-animate hover-lift hover-glow-intense {{ $recommendedAudios->count() > 3 ? 'min-w-[300px] md:min-w-[340px] max-w-[340px] snap-start' : '' }}">
             <div class="relative h-48 overflow-hidden bg-slate-100">
@@ -556,7 +556,7 @@
           <button type="button" data-slider-next="audiobooksTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_next') }}">&rarr;</button>
         </div>
       @endif
-      <div id="audiobooksTrack" data-slider-track class="{{ $featuredAudiobooks->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-6 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6' }}">
+      <div id="audiobooksTrack" data-slider-track class="{{ $featuredAudiobooks->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6' }}">
         @forelse ($featuredAudiobooks as $audiobook)
           <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col {{ $featuredAudiobooks->count() > 3 ? 'min-w-[260px] md:min-w-[280px] max-w-[280px] snap-start' : '' }}">
             <div class="relative h-40 overflow-hidden bg-slate-100">
@@ -589,7 +589,7 @@
     </svg>
   </div>
  
-  <div class="container mx-auto px-6 max-w-3xl text-center relative z-10">
+  <div class="container mx-auto px-3 sm:px-4 lg:px-5 max-w-3xl text-center relative z-10">
     <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-900 mb-6">
       <i data-lucide="mail" class="w-8 h-8 text-amber-500"></i>
     </div>

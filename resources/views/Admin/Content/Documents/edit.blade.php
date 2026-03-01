@@ -175,10 +175,11 @@
                     </form>
 
                     <hr class="my-4">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                        <h6 class="mb-0">Audiobooks For This Book</h6>
-                        <span class="badge bg-light text-dark">{{ $linkedAudiobooks->count() }} audiobook(s)</span>
+                    <div id="audiobook-parts-management" class="d-flex align-items-center justify-content-between mb-3">
+                        <h6 class="mb-0">Audiobook Parts For This Book</h6>
+                        <span class="badge bg-light text-dark">{{ $linkedAudiobooks->count() }} part list(s)</span>
                     </div>
+                    <div class="text-muted fs-12 mb-2">Tip: click a row to open and manage audiobook parts.</div>
 
                     <div class="table-responsive mb-4">
                         <table class="table table-sm align-middle">
@@ -193,8 +194,11 @@
                             </thead>
                             <tbody>
                                 @forelse ($linkedAudiobooks as $linkedAudiobook)
-                                    <tr>
-                                        <td>{{ $linkedAudiobook->title }}</td>
+                                    <tr style="cursor: pointer;" title="Open audiobook parts" onclick="if(event.target.closest('a,button,form,input,select,textarea,label')) return; window.location.href='{{ route('admin.audiobooks.edit', $linkedAudiobook) }}';">
+                                        <td>
+                                            <div class="fw-semibold">{{ $document->title }}</div>
+                                            <div class="fs-12 text-muted">Book row (click to manage/upload parts)</div>
+                                        </td>
                                         <td>{{ $linkedAudiobook->published_parts_count }}</td>
                                         <td>
                                             @if ($linkedAudiobook->is_prayer_audio)
@@ -211,7 +215,6 @@
                                             @endif
                                         </td>
                                         <td class="text-end">
-                                            <a href="{{ route('admin.audiobooks.edit', $linkedAudiobook) }}" class="btn btn-sm btn-primary">Manage Parts</a>
                                             <a href="{{ route('admin.audiobooks.preview', $linkedAudiobook) }}" class="btn btn-sm btn-light">Preview</a>
                                         </td>
                                     </tr>
@@ -225,24 +228,26 @@
                     </div>
 
                     <div class="border rounded-3 p-3 bg-light mb-4">
-                        <h6 class="mb-2">Upload Audiobook Parts (Simple)</h6>
-                        <p class="text-muted fs-12 mb-3">Upload files directly. If no audiobook is selected, the system creates one automatically for this book.</p>
+                        <h6 class="mb-2">Upload Book Audiobook Parts</h6>
+                        <p class="text-muted fs-12 mb-3">Upload audiobook parts only (no single full-audio upload here). One part cannot contain sub-parts.</p>
                         <form method="POST" action="{{ route('admin.documents.audiobook-parts.store', $document) }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Target Audiobook (optional)</label>
-                                    <select name="audiobook_id" class="form-select">
-                                        <option value="">Auto create for this book</option>
-                                        @foreach ($linkedAudiobooks as $linkedAudiobook)
-                                            <option value="{{ $linkedAudiobook->id }}">{{ $linkedAudiobook->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">New Audiobook Title (optional)</label>
-                                    <input type="text" name="title" class="form-control" placeholder="Leave empty to auto-generate">
-                                </div>
+                                @if ($linkedAudiobooks->count() === 0)
+                                    <div class="col-md-12">
+                                        <div class="alert alert-info mb-0">No audiobook parts list yet for this book. Enter title once, then upload parts.</div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label fw-semibold">Audiobook Parts Title</label>
+                                        <input type="text" name="title" class="form-control" placeholder="Enter audiobook parts title" value="{{ old('title') }}">
+                                    </div>
+                                @else
+                                    <div class="col-md-12">
+                                        <label class="form-label fw-semibold">Audiobook Parts Title</label>
+                                        <div class="form-control bg-light">{{ $linkedAudiobooks->first()->title }}</div>
+                                        <div class="fs-12 text-muted mt-1">All uploaded files are added as separate parts under this book.</div>
+                                    </div>
+                                @endif
                                 <div class="col-md-4">
                                     <label class="form-label fw-semibold d-block">Upload Many Parts</label>
                                     <ul class="nav nav-pills mb-2" role="tablist">
@@ -291,21 +296,7 @@
                                 <div class="col-md-12 collapse" id="quickPartsAdvanced">
                                     <div class="card border border-dashed">
                                         <div class="card-body">
-                                            <div class="row g-3">
-                                                <div class="col-md-6">
-                                                    <label class="form-label fw-semibold">Narrator (new only)</label>
-                                                    <input type="text" name="narrator" class="form-control">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label fw-semibold">Category (new only)</label>
-                                                    <select name="category_id" class="form-select">
-                                                        <option value="">None</option>
-                                                        @foreach ($audioCategories as $audioCategory)
-                                                            <option value="{{ $audioCategory->id }}">{{ $audioCategory->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
+                                            <div class="text-muted fs-12 mb-0">Audiobook category is automatically inherited from this book category.</div>
                                         </div>
                                     </div>
                                 </div>

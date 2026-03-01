@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "ip_address": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "success": 1,
+        "logged_in_at": "2026-02-28 22:05:10",
+        "deleted_at": null,
+        "created_at": "2026-02-28 22:05:10",
+        "updated_at": "2026-02-28 22:05:10"
+    }
+]

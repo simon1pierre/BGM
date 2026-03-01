@@ -1,0 +1,19 @@
+[
+    {
+        "id": 1,
+        "avatar": null,
+        "first_name": "Simon Pierre",
+        "last_name": "Turamyumukiza",
+        "user_name": "simon1pierre",
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "password": "$2y$12$X8CXSsqEDMbvMByF2YBr2.wlwQMaIzwj.r80nBUnoKvC0ZY91VDb6",
+        "email_verified_at": "2026-02-28 21:55:43",
+        "remember_token": "HQ2i36hmWACnIqV2WJPvQXgeVKCutt6cIi0AJs9wkrHWK8YqXIq4rWisdBIr",
+        "role": "admin",
+        "is_active": 1,
+        "last_login_at": "2026-02-28 22:05:10",
+        "deleted_at": null,
+        "created_at": "2026-02-28 21:55:43",
+        "updated_at": "2026-02-28 22:05:10"
+    }
+]

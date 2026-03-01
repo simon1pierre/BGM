@@ -111,7 +111,17 @@
                     </thead>
                     <tbody>
                         @forelse ($items as $item)
-                            <tr>
+                            @php
+                                $isDocumentRowLink = $type === 'documents' && !$item->trashed();
+                                $documentManageUrl = $isDocumentRowLink ? route('admin.documents.edit', $item->id).'#audiobook-parts-management' : '';
+                            @endphp
+                            <tr
+                                @if ($isDocumentRowLink)
+                                    style="cursor: pointer;"
+                                    title="Open audiobook parts management"
+                                    onclick="if(event.target.closest('a,button,form,input,select,textarea,label')) return; window.location.href='{{ $documentManageUrl }}';"
+                                @endif
+                            >
                                 <td>
                                     <div class="d-flex align-items-center gap-3">
                                         @if ($type === 'videos' && $item->thumbnail_url)
@@ -122,6 +132,9 @@
                                             <div class="fs-12 text-muted text-truncate">
                                                 {{ $item->series ?? $item->category?->name ?? '-' }}
                                             </div>
+                                            @if ($isDocumentRowLink)
+                                                <div class="fs-12 text-primary">Click row to manage book audio parts</div>
+                                            @endif
                                         </div>
                                     </div>
                                 </td>

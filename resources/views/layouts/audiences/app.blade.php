@@ -120,6 +120,14 @@
 
 
   <style>
+    /* Wider audience layout on laptop/desktop to avoid large empty side space */
+    .container {
+      max-width: none !important;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     /* Custom styles for the divine atmosphere */
     body {
       background-color: #f8fafc;

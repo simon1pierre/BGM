@@ -1,0 +1,13 @@
+[
+    {
+        "id": 1,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "code": "304822",
+        "purpose": "login",
+        "expires_at": "2026-02-28 22:14:38",
+        "used_at": "2026-02-28 22:05:10",
+        "created_at": "2026-02-28 22:04:38",
+        "updated_at": "2026-02-28 22:05:10"
+    }
+]
