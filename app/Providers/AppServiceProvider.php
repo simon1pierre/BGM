@@ -16,6 +16,7 @@ use App\Models\book;
 use App\Models\ContentCategory;
 use App\Models\Playlist;
 use App\Models\VideoSeries;
+use App\Models\Devotional;
 use App\Models\UserActivityLog;
 use App\Notifications\SystemActivityNotification;
 use App\Services\Translation\LibreTranslateTranslator;
@@ -119,6 +120,7 @@ class AppServiceProvider extends ServiceProvider
                 'categories' => 0,
                 'playlists' => 0,
                 'video_series' => 0,
+                'devotionals' => 0,
                 'subscribers' => 0,
                 'contacts_unread' => 0,
                 'events' => 0,
@@ -153,6 +155,9 @@ class AppServiceProvider extends ServiceProvider
             if (Schema::hasTable('video_series')) {
                 $counts['video_series'] = VideoSeries::query()->count();
             }
+            if (Schema::hasTable('devotionals')) {
+                $counts['devotionals'] = Devotional::query()->count();
+            }
             if (Schema::hasTable('subscribers')) {
                 $counts['subscribers'] = Subscriber::query()->count();
             }
@@ -175,6 +180,7 @@ class AppServiceProvider extends ServiceProvider
             if (Schema::hasTable('content_categories') && Schema::hasColumn('content_categories', 'deleted_at')) $trashTotal += ContentCategory::onlyTrashed()->count();
             if (Schema::hasTable('playlists') && Schema::hasColumn('playlists', 'deleted_at')) $trashTotal += Playlist::onlyTrashed()->where('type', 'audio')->count();
             if (Schema::hasTable('video_series') && Schema::hasColumn('video_series', 'deleted_at')) $trashTotal += VideoSeries::onlyTrashed()->count();
+            if (Schema::hasTable('devotionals') && Schema::hasColumn('devotionals', 'deleted_at')) $trashTotal += Devotional::onlyTrashed()->count();
             if (Schema::hasTable('subscribers') && Schema::hasColumn('subscribers', 'deleted_at')) $trashTotal += Subscriber::onlyTrashed()->count();
             if (Schema::hasTable('events') && Schema::hasColumn('events', 'deleted_at')) $trashTotal += Event::onlyTrashed()->count();
             if (Schema::hasTable('contact_messages') && Schema::hasColumn('contact_messages', 'deleted_at')) $trashTotal += ContactMessage::onlyTrashed()->count();

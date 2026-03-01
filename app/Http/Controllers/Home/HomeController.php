@@ -14,6 +14,7 @@ use App\Models\video;
 use App\Models\book;
 use App\Models\audio;
 use App\Models\audiobook;
+use App\Models\Devotional;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -105,7 +106,16 @@ class HomeController extends Controller
             ->limit(12)
             ->get();
 
-        return view('home', compact('latestVideos', 'featuredVideo', 'featuredBook', 'featuredAudio', 'recommendedBooks', 'recommendedAudios', 'featuredAudiobooks', 'upcomingEvents', 'ministryLeaders'));
+        $latestDevotionals = Devotional::query()
+            ->with('translations')
+            ->where('is_published', true)
+            ->orderByDesc('featured')
+            ->orderBy('sort_order')
+            ->orderByDesc('published_at')
+            ->limit(4)
+            ->get();
+
+        return view('home', compact('latestVideos', 'featuredVideo', 'featuredBook', 'featuredAudio', 'recommendedBooks', 'recommendedAudios', 'featuredAudiobooks', 'upcomingEvents', 'ministryLeaders', 'latestDevotionals'));
     }
 
     public function videos(Request $request)
@@ -463,6 +473,81 @@ class HomeController extends Controller
         }
 
         return redirect()->route('books.show', $audiobook->linkedBook);
+    }
+
+    public function devotionals(Request $request)
+    {
+        $search = trim((string) $request->query('q'));
+        $featuredOnly = $request->boolean('featured');
+
+        $locale = app()->getLocale();
+
+        $devotionals = Devotional::query()
+            ->with('translations')
+            ->where('is_published', true)
+            ->when($search, function ($query) use ($search, $locale) {
+                $query->where(function ($builder) use ($search, $locale) {
+                    $builder->where('title', 'like', '%'.$search.'%')
+                        ->orWhere('excerpt', 'like', '%'.$search.'%')
+                        ->orWhere('body', 'like', '%'.$search.'%')
+                        ->orWhere('author', 'like', '%'.$search.'%')
+                        ->orWhere('scripture_reference', 'like', '%'.$search.'%')
+                        ->orWhereHas('translations', function ($translation) use ($search, $locale) {
+                            $translation->where('locale', $locale)
+                                ->where(function ($sub) use ($search) {
+                                    $sub->where('title', 'like', '%'.$search.'%')
+                                        ->orWhere('excerpt', 'like', '%'.$search.'%')
+                                        ->orWhere('body', 'like', '%'.$search.'%');
+                                });
+                        });
+                });
+            })
+            ->when($featuredOnly, fn ($query) => $query->where('featured', true))
+            ->orderByDesc('featured')
+            ->orderBy('sort_order')
+            ->orderByDesc('published_at')
+            ->paginate(9)
+            ->withQueryString();
+
+        $featuredCount = Devotional::query()
+            ->where('is_published', true)
+            ->where('featured', true)
+            ->count();
+
+        return view('devotionals.index', compact('devotionals', 'search', 'featuredOnly', 'featuredCount'));
+    }
+
+    public function devotionalShow(Devotional $devotional)
+    {
+        if (!$devotional->is_published) {
+            abort(404);
+        }
+
+        $devotional->load('translations');
+
+        $relatedDevotionals = Devotional::query()
+            ->with('translations')
+            ->where('is_published', true)
+            ->where('id', '!=', $devotional->id)
+            ->orderByDesc('featured')
+            ->orderBy('sort_order')
+            ->orderByDesc('published_at')
+            ->limit(3)
+            ->get();
+
+        $previousDevotional = Devotional::query()
+            ->where('is_published', true)
+            ->where('id', '<', $devotional->id)
+            ->orderByDesc('id')
+            ->first();
+
+        $nextDevotional = Devotional::query()
+            ->where('is_published', true)
+            ->where('id', '>', $devotional->id)
+            ->orderBy('id')
+            ->first();
+
+        return view('devotionals.show', compact('devotional', 'relatedDevotionals', 'previousDevotional', 'nextDevotional'));
     }
 
     public function subscribe(Request $request)

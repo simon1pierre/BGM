@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\Content\CategoryController;
 use App\Http\Controllers\Admin\Content\ContentNotificationController;
 use App\Http\Controllers\Admin\Content\PlaylistController;
 use App\Http\Controllers\Admin\Content\VideoSeriesController;
+use App\Http\Controllers\Admin\Content\DevotionalController;
 use App\Http\Controllers\Admin\Auth\TwoFactorController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Content\ContentDownloadController;
@@ -44,6 +45,8 @@ Route::controller(HomeController::class)->group(function(){
     Route::get('/audios/{audio}', 'audioShow')->name('audios.show');
     Route::get('/audiobooks', 'audiobooks')->name('audiobooks.index');
     Route::get('/audiobooks/{audiobook}', 'audiobookShow')->name('audiobooks.show');
+    Route::get('/devotionals', 'devotionals')->name('devotionals.index');
+    Route::get('/devotionals/{devotional}', 'devotionalShow')->name('devotionals.show');
     Route::get('/about', 'about')->name('about');
     Route::get('/resources', 'resources')->name('resources');
     Route::get('/contact', 'contact')->name('contact');
@@ -148,6 +151,12 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->group(function ()
     Route::resource('video-series', VideoSeriesController::class)->except(['show'])->names('admin.video-series');
     Route::post('video-series/{videoSeries}/restore', [VideoSeriesController::class, 'restore'])->name('admin.video-series.restore');
     Route::delete('video-series/{videoSeries}/force-delete', [VideoSeriesController::class, 'forceDelete'])->name('admin.video-series.force-delete');
+
+    Route::resource('devotionals', DevotionalController::class)->names('admin.devotionals');
+    Route::post('devotionals/{devotional}/toggle-featured', [DevotionalController::class, 'toggleFeatured'])->name('admin.devotionals.toggle-featured');
+    Route::post('devotionals/{devotional}/toggle-published', [DevotionalController::class, 'togglePublished'])->name('admin.devotionals.toggle-published');
+    Route::post('devotionals/{devotional}/restore', [DevotionalController::class, 'restore'])->name('admin.devotionals.restore');
+    Route::delete('devotionals/{devotional}/force-delete', [DevotionalController::class, 'forceDelete'])->name('admin.devotionals.force-delete');
 
     Route::resource('ministry-leaders', MinistryLeaderController::class)->except(['show'])->names('admin.ministry-leaders');
     Route::post('ministry-leaders/{ministry_leader}/restore', [MinistryLeaderController::class, 'restore'])->name('admin.ministry-leaders.restore');

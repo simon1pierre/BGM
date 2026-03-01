@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             ContentCategorySeeder::class,
             VideoSeriesSeeder::class,
             VideoSeeder::class,
+            DevotionalSeeder::class,
         ]);
     }
 }

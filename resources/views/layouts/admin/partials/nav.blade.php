@@ -26,6 +26,7 @@
                 $isContentNotifications = request()->routeIs('admin.content-notifications.*');
                 $isPlaylists = request()->routeIs('admin.playlists.*');
                 $isVideoSeries = request()->routeIs('admin.video-series.*');
+                $isDevotionals = request()->routeIs('admin.devotionals.*');
                 $isAnalytics = request()->routeIs('admin.analytics.*');
                 $isTrash = request()->routeIs('admin.trash.*');
                 $isTranslations = request()->routeIs('admin.translations.*');
@@ -35,7 +36,7 @@
                 $isTranslationNeedsReview = $isTranslations && $translationStatus === 'needs_review';
                 $isTranslationApproved = $isTranslations && $translationStatus === 'approved';
                 $isTranslationManual = $isTranslations && $translationTranslatedBy === 'manual';
-                $isContentMenu = $isVideos || $isAudios || $isDocuments || $isCategories || $isContentNotifications || $isPlaylists || $isVideoSeries;
+                $isContentMenu = $isVideos || $isAudios || $isDocuments || $isCategories || $isContentNotifications || $isPlaylists || $isVideoSeries || $isDevotionals;
             @endphp
             <div class="navbar-content" style="background-color: #10295E">
                 <ul class="nxl-navbar">
@@ -104,6 +105,7 @@
                             <li class="nxl-item {{ $isVideos ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.videos.index') }}"><span>Videos</span><span class="badge bg-light text-dark">{{ $count('videos') }}</span></a></li>
                             <li class="nxl-item {{ $isAudios ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.audios.index') }}"><span>Audios</span><span class="badge bg-light text-dark">{{ $count('audios') }}</span></a></li>
                             <li class="nxl-item {{ $isDocuments ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.documents.index') }}"><span>Books</span><span class="badge bg-light text-dark">{{ $count('documents') }}</span></a></li>
+                            <li class="nxl-item {{ $isDevotionals ? 'active' : '' }}"><a class="nxl-link d-flex justify-content-between" style="color: white" href="{{ route('admin.devotionals.index') }}"><span>Devotionals</span><span class="badge bg-light text-dark">{{ $count('devotionals') }}</span></a></li>
                             <li class="nxl-item {{ $isContentNotifications ? 'active' : '' }}"><a class="nxl-link" style="color: white" href="{{ route('admin.content-notifications.index') }}">Content Emails</a></li>
                         </ul>
                     </li>

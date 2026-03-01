@@ -148,7 +148,7 @@
     </div>
   </div>
 </section>
-<section id="leaders" class="py-20 bg-gradient-to-b from-slate-50 to-white">
+<section id="leaders" class="py-10 bg-gradient-to-b from-slate-50 to-white">
   <div class="container mx-auto px-3 sm:px-4 lg:px-5">
     <div class="flex items-end justify-between mb-8">
       <div>
@@ -165,58 +165,40 @@
       </div>
     </div>
 
-    <div id="leadersTrack" class="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-2 scroll-smooth">
+    <div id="leadersTrack" class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scroll-smooth">
       @forelse ($ministryLeaders as $leader)
-        <article class="group min-w-[240px] md:min-w-[280px] max-w-[300px] bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 snap-start interactive-card overflow-hidden">
-          <div class="relative h-72 overflow-hidden bg-white">
+        <article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 {{ $ministryLeaders->count() > 3 ? 'min-w-[300px] md:min-w-[340px] max-w-[340px] snap-start' : '' }}">
+          <div class="relative h-[430px] overflow-hidden bg-slate-100">
             <img
               src="{{ $leader->photo_path ? asset('storage/'.$leader->photo_path) : asset('images/logo.png') }}"
               alt="{{ $leader->name }}"
-              class="w-full h-full object-contain p-2"
+              class="w-full h-full object-cover"
               loading="lazy"
             >
-            <span class="absolute left-3 top-3 text-[11px] uppercase tracking-widest px-2 py-1 rounded-full {{ $leader->role_type === 'preacher' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800' }}">
+            <span class="absolute top-3 left-3 text-[11px] uppercase tracking-widest px-2 py-1 rounded-full {{ $leader->role_type === 'preacher' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800' }}">
               {{ $leader->role_type === 'preacher' ? __('messages.home.preacher') : __('messages.home.leader') }}
             </span>
-            <div class="absolute inset-x-0 bottom-0 bg-slate-950/85 backdrop-blur-sm opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
               <h3 class="text-lg font-serif font-bold text-white leading-tight">{{ $leader->name }}</h3>
               <p class="text-sm text-slate-200 mt-1">{{ $leader->position ?: 'Ministry Team' }}</p>
               @if ($leader->country)
                 <p class="text-xs text-slate-300 mt-1">{{ $leader->country }}</p>
               @endif
-              <div class="mt-3 space-y-1.5 text-xs">
-                <div class="flex items-center gap-2 text-slate-200">
-                  <i data-lucide="mail" class="w-3.5 h-3.5 text-blue-300"></i>
-                  @if ($leader->email)
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ urlencode($leader->email) }}" target="_blank" rel="noopener" class="hover:text-white truncate">{{ $leader->email }}</a>
-                  @else
-                    <span class="text-slate-300">{{ __('messages.home.contact_not_available') }}</span>
-                  @endif
-                </div>
-                <div class="flex items-center gap-2 text-slate-200">
-                  <i data-lucide="phone" class="w-3.5 h-3.5 text-blue-300"></i>
-                  @if ($leader->phone)
-                    <a href="https://wa.me/{{ preg_replace('/\D+/', '', $leader->phone) }}" target="_blank" rel="noopener" class="hover:text-white">{{ $leader->phone }}</a>
-                  @else
-                    <span class="text-slate-300">{{ __('messages.home.contact_not_available') }}</span>
-                  @endif
-                </div>
+              <div class="mt-3 space-y-2">
+                @if ($leader->phone)
+                  <a href="https://wa.me/{{ preg_replace('/\D+/', '', $leader->phone) }}" target="_blank" rel="noopener" class="w-full py-2 px-3 bg-emerald-500/90 text-white font-semibold rounded-lg hover:bg-emerald-500 transition-colors inline-flex items-center justify-center gap-2 text-sm">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
+                  </a>
+                @endif
+                @if ($leader->email)
+                  <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ urlencode($leader->email) }}" target="_blank" rel="noopener" class="w-full py-2 px-3 bg-blue-600/90 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors inline-flex items-center justify-center gap-2 text-sm">
+                    <i data-lucide="mail" class="w-4 h-4"></i> Gmail
+                  </a>
+                @endif
+                @if (!$leader->phone && !$leader->email)
+                  <div class="text-xs text-slate-300">{{ __('messages.home.contact_not_available') }}</div>
+                @endif
               </div>
-            </div>
-          </div>
-          <div class="px-4 py-2 border-t border-slate-100">
-            <div class="text-sm font-semibold text-blue-950 truncate">{{ $leader->name }}</div>
-            <div class="mt-2 flex items-center gap-2 md:hidden">
-              @if ($leader->phone)
-                <a href="https://wa.me/{{ preg_replace('/\D+/', '', $leader->phone) }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 text-xs font-semibold">
-                  <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
-                </a>
-              @endif
-              @if ($leader->email)
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ urlencode($leader->email) }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-blue-50 text-blue-700 text-xs font-semibold">
-                  <i data-lucide="mail" class="w-3.5 h-3.5"></i> Gmail
-                </a>
-              @endif
             </div>
           </div>
         </article>
@@ -226,7 +208,7 @@
     </div>
   </div>
 </section>
-<section id="resources" class="py-24 bg-slate-50 scroll-mt-28">
+<section id="resources" class="py-12 bg-slate-50 scroll-mt-28">
   <div class="container mx-auto px-3 sm:px-4 lg:px-5">
     <div class="text-center mb-16">
       <h2 class="text-3xl md:text-4xl font-serif text-blue-900 mb-4">{{ __('messages.home.resources_title') }}</h2>
@@ -452,15 +434,9 @@
     <!-- PDF Downloads Section -->
     <div class="mb-16">
       <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">{{ __('messages.home.recommended_books') }}</h3>
-      @if ($recommendedBooks->count() > 3)
-        <div class="hidden md:flex justify-end gap-2 mb-4">
-          <button type="button" data-slider-prev="booksTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_prev') }}">&larr;</button>
-          <button type="button" data-slider-next="booksTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_next') }}">&rarr;</button>
-        </div>
-      @endif
-      <div id="booksTrack" data-slider-track class="{{ $recommendedBooks->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-3 pb-2 scroll-smooth' : 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3' }}">
+      <div id="booksTrack" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         @forelse ($recommendedBooks as $book)
-          <article class="group relative bg-white rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 scroll-animate {{ $recommendedBooks->count() > 3 ? 'min-w-[210px] md:min-w-[240px] max-w-[240px] snap-start' : '' }}">
+          <article class="group relative bg-white rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 scroll-animate">
             <div class="relative aspect-[2/3] overflow-hidden bg-slate-100">
               @if ($book->cover_image)
                 <img src="{{ asset('storage/'.$book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
@@ -470,17 +446,17 @@
 
               <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/55 to-slate-900/10 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300"></div>
 
-              <div class="absolute inset-x-0 bottom-0 p-5 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-300">
-                <h4 class="text-white text-base font-semibold mb-3 line-clamp-2">{{ $book->title }}</h4>
-                <div class="grid grid-cols-3 gap-2">
-                  <a href="{{ route('books.reader', $book) }}" class="inline-flex items-center justify-center gap-1 py-2 px-2 rounded-md bg-blue-600 text-white text-xs font-semibold hover:bg-blue-500">
-                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i> {{ __('messages.home.read_online') }}
+              <div class="absolute inset-x-0 bottom-0 p-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-300">
+                <h4 class="text-white text-sm font-semibold mb-2 line-clamp-2">{{ $book->title }}</h4>
+                <div class="flex items-center gap-2 flex-nowrap">
+                  <a href="{{ route('books.reader', $book) }}" class="inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-md bg-blue-600 text-white text-[11px] font-semibold hover:bg-blue-500 whitespace-nowrap" title="{{ __('messages.home.read_online') }}">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i><span>Read</span>
                   </a>
-                  <a href="{{ route('content.download.document', $book) }}" class="inline-flex items-center justify-center gap-1 py-2 px-2 rounded-md bg-white/95 text-slate-900 text-xs font-semibold hover:bg-white">
-                    <i data-lucide="download" class="w-3.5 h-3.5"></i> {{ __('messages.home.download_pdf') }}
+                  <a href="{{ route('content.download.document', $book) }}" class="inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-md bg-white/95 text-slate-900 text-[11px] font-semibold hover:bg-white whitespace-nowrap" title="{{ __('messages.home.download_pdf') }}">
+                    <i data-lucide="download" class="w-3.5 h-3.5"></i><span>Download</span>
                   </a>
-                  <button type="button" data-book-about-open="book-about-{{ $book->id }}" class="inline-flex items-center justify-center gap-1 py-2 px-2 rounded-md bg-amber-500 text-white text-xs font-semibold hover:bg-amber-400">
-                    <i data-lucide="info" class="w-3.5 h-3.5"></i> {{ __('messages.common.details') }}
+                  <button type="button" data-book-about-open="book-about-{{ $book->id }}" class="inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-md bg-amber-500 text-white text-[11px] font-semibold hover:bg-amber-400 whitespace-nowrap" title="{{ __('messages.common.details') }}">
+                    <i data-lucide="info" class="w-3.5 h-3.5"></i><span>Details</span>
                   </button>
                 </div>
               </div>
@@ -516,7 +492,7 @@
             </div>
           </div>
         @empty
-          <div class="col-span-3 text-center text-slate-500">{{ __('messages.home.no_recommended_books') }}</div>
+          <div class="col-span-4 text-center text-slate-500">{{ __('messages.home.no_recommended_books') }}</div>
         @endforelse
       </div>
     </div>
@@ -595,6 +571,55 @@
           <div class="col-span-4 text-center text-slate-500">{{ __('messages.home.no_featured_audiobooks') }}</div>
         @endforelse
       </div>
+    </div>
+  </div>
+</section>
+<section id="devotionals" class="py-12 bg-white">
+  <div class="container mx-auto px-3 sm:px-4 lg:px-5">
+    <div class="flex items-center justify-between gap-3 mb-8">
+      <div>
+        <h3 class="text-2xl md:text-3xl font-serif font-bold text-blue-950">{{ __('messages.home.devotionals_title') }}</h3>
+        <p class="text-slate-600">{{ __('messages.home.devotionals_subtitle') }}</p>
+      </div>
+      <a href="{{ route('devotionals.index') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-800 hover:text-blue-950">
+        {{ __('messages.common.view_all') }}
+        <span>&rarr;</span>
+      </a>
+    </div>
+
+    @if (($latestDevotionals ?? collect())->count() > 3)
+      <div class="hidden md:flex justify-end gap-2 mb-4">
+        <button type="button" data-slider-prev="devotionalsTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_prev') }}">&larr;</button>
+        <button type="button" data-slider-next="devotionalsTrack" class="w-10 h-10 rounded-full border border-blue-200 text-blue-900 hover:bg-blue-50 transition-colors" aria-label="{{ __('messages.home.slide_next') }}">&rarr;</button>
+      </div>
+    @endif
+
+    <div id="devotionalsTrack" data-slider-track class="{{ ($latestDevotionals ?? collect())->count() > 3 ? 'flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scroll-smooth' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5' }}">
+      @forelse (($latestDevotionals ?? collect()) as $devotional)
+        <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 {{ ($latestDevotionals ?? collect())->count() > 3 ? 'min-w-[270px] md:min-w-[290px] max-w-[290px] snap-start' : '' }}">
+          <a href="{{ route('devotionals.show', $devotional) }}" class="block relative h-44 bg-slate-100 overflow-hidden">
+            @if ($devotional->cover_image)
+              <img src="{{ $devotional->cover_image_url }}" alt="{{ $devotional->title }}" class="w-full h-full object-cover">
+            @else
+              <img src="{{ asset('landingpage/download-book.webp') }}" alt="{{ $devotional->title }}" class="w-full h-full object-cover">
+            @endif
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent"></div>
+            <div class="absolute bottom-3 left-3 right-3 text-xs text-white/95 font-semibold line-clamp-1">
+              {{ $devotional->scripture_reference ?: __('messages.devotionals.daily_reflection') }}
+            </div>
+          </a>
+          <div class="p-5">
+            <h4 class="text-lg font-serif font-bold text-blue-950 line-clamp-2">{{ $devotional->title }}</h4>
+            <p class="text-sm text-slate-600 mt-2 line-clamp-3">{{ \Illuminate\Support\Str::limit($devotional->excerpt ?: strip_tags($devotional->body), 110) }}</p>
+            <div class="mt-4 flex items-center justify-between text-xs text-slate-500">
+              <span>{{ optional($devotional->published_at)->format('M d, Y') ?: $devotional->created_at->format('M d, Y') }}</span>
+              <a href="{{ route('devotionals.show', $devotional) }}" class="text-blue-700 font-semibold hover:text-blue-900">{{ __('messages.common.read') }}</a>
+            </div>
+          </div>
+        </article>
+      @empty
+        <div class="col-span-4 text-center text-slate-500">{{ __('messages.devotionals.none') }}</div>
+      @endforelse
     </div>
   </div>
 </section>
@@ -703,6 +728,7 @@
       setupSlider('booksTrack', 4800);
       setupSlider('audiosTrack', 4800);
       setupSlider('audiobooksTrack', 5000);
+      setupSlider('devotionalsTrack', 5000);
 
       const openAboutModal = (modal) => {
         if (!modal) return;

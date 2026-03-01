@@ -16,6 +16,7 @@ use App\Models\Subscriber;
 use App\Models\User;
 use App\Models\UserActivityLog;
 use App\Models\VideoSeries;
+use App\Models\Devotional;
 use App\Models\video;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -161,6 +162,7 @@ class TrashController extends Controller
             'categories' => ['label' => 'Categories', 'route' => route('admin.categories.index', ['deleted' => 'only'])],
             'playlists' => ['label' => 'Playlists', 'route' => route('admin.playlists.index', ['deleted' => 'only'])],
             'video_series' => ['label' => 'Video Series', 'route' => route('admin.video-series.index', ['deleted' => 'only'])],
+            'devotionals' => ['label' => 'Devotionals', 'route' => route('admin.devotionals.index', ['deleted' => 'only'])],
             'events' => ['label' => 'Events', 'route' => route('admin.events.index', ['deleted' => 'only'])],
             'users' => ['label' => 'Users', 'route' => route('admin.users.index', ['deleted' => 'only'])],
             'subscribers' => ['label' => 'Subscribers', 'route' => route('admin.subscribers.index', ['deleted' => 'only'])],
@@ -180,6 +182,7 @@ class TrashController extends Controller
             'categories' => $this->filter(ContentCategory::onlyTrashed(), $search, ['name', 'slug']),
             'playlists' => $this->filter(Playlist::onlyTrashed(), $search, ['title', 'description']),
             'video_series' => $this->filter(VideoSeries::onlyTrashed(), $search, ['title', 'description']),
+            'devotionals' => $this->filter(Devotional::onlyTrashed(), $search, ['title', 'excerpt', 'body', 'author', 'scripture_reference']),
             'events' => $this->filter(Event::onlyTrashed(), $search, ['title', 'description', 'location', 'venue']),
             'users' => $this->filter(User::onlyTrashed(), $search, ['name', 'email', 'user_name', 'first_name', 'last_name']),
             'subscribers' => $this->filter(Subscriber::onlyTrashed(), $search, ['email', 'name']),
@@ -236,6 +239,7 @@ class TrashController extends Controller
             'categories' => ContentCategory::withTrashed()->findOrFail($id),
             'playlists' => Playlist::withTrashed()->findOrFail($id),
             'video_series' => VideoSeries::withTrashed()->findOrFail($id),
+            'devotionals' => Devotional::withTrashed()->findOrFail($id),
             'events' => Event::withTrashed()->findOrFail($id),
             'users' => User::withTrashed()->findOrFail($id),
             'subscribers' => Subscriber::withTrashed()->findOrFail($id),
@@ -268,6 +272,7 @@ class TrashController extends Controller
             'categories' => (string) ($row->name ?: 'Category'),
             'playlists' => (string) ($row->title ?: 'Playlist'),
             'video_series' => (string) ($row->title ?: 'Video series'),
+            'devotionals' => (string) ($row->title ?: 'Devotional'),
             'ministry' => (string) ($row->name ?: 'Ministry profile'),
             default => (string) ($row->title ?: 'Untitled'),
         };
@@ -283,6 +288,7 @@ class TrashController extends Controller
             'categories' => (string) ($row->type ?? ''),
             'playlists' => (string) ($row->type ?? ''),
             'video_series' => '',
+            'devotionals' => (string) ($row->scripture_reference ?? ''),
             'events' => (string) ($row->event_type ?? ''),
             'ministry' => (string) ($row->position ?? ''),
             default => '',

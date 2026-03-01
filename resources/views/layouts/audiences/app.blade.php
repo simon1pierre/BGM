@@ -792,6 +792,7 @@
         <a href="{{ $homeUrl }}" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.home') }}</a>
         <a href="{{ $resourcesLink }}" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.resources') }}</a>
         <a href="{{ $sermonsLink }}" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.sermons') }}</a>
+        <a href="{{ route('devotionals.index') }}" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.devotionals') }}</a>
         <a href="{{ route('about') }}" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.about') }}</a>
         <a href="{{ route('contact') }}" class="px-4 py-2 text-slate-700 hover:text-brand-blue font-medium transition-all duration-200 border-b-2 border-transparent hover:border-brand-blue">{{ __('messages.nav.contact') }}</a>
       </nav>
@@ -833,6 +834,7 @@
         <a href="{{ $homeUrl }}" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.home') }}</a>
         <a href="{{ $resourcesLink }}" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.resources') }}</a>
         <a href="{{ $sermonsLink }}" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.sermons') }}</a>
+        <a href="{{ route('devotionals.index') }}" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.devotionals') }}</a>
         <a href="{{ route('about') }}" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.about') }}</a>
         <a href="{{ route('contact') }}" class="block px-4 py-2 text-slate-700 hover:text-brand-blue hover:bg-slate-50 rounded-lg font-medium transition-colors duration-200">{{ __('messages.nav.contact') }}</a>
         <a href="#newsletter" class="block w-full mt-3 px-4 py-2 text-center text-white bg-brand-blue rounded-lg font-semibold hover:bg-blue-800 transition-colors duration-200">{{ __('messages.nav.join_ministry') }}</a>
@@ -901,6 +903,7 @@
             <li><a href="{{ route('videos.index') }}" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.latest_sermons') }}</a></li>
             <li><a href="{{ route('audios.index') }}" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.audio_teachings') }}</a></li>
             <li><a href="{{ route('books.index') }}" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.ebooks') }}</a></li>
+            <li><a href="{{ route('devotionals.index') }}" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.devotionals') }}</a></li>
             <li><a href="{{ route('resources') }}" class="hover:text-brand-gold transition-colors">{{ __('messages.footer.devotionals') }}</a></li>
           </ul>
         </div>
