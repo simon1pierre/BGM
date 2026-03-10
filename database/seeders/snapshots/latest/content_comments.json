@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "id": 1,
+        "content_type": "App\\Models\\video",
+        "content_id": 1,
+        "name": "Simon Pierre TURAMYUMUKIZA",
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "body": "Ukomeretsa Niwe Ukiza",
+        "ip_address": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "session_id": "reYI4gSkVCqvPN0SXcBK8x5mQJQfa0hQ7SffcS5u",
+        "is_approved": 1,
+        "created_at": "2026-03-11 00:20:14",
+        "updated_at": "2026-03-11 00:20:14"
+    }
+]

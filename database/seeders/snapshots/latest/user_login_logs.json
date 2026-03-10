@@ -10,5 +10,113 @@
         "deleted_at": null,
         "created_at": "2026-02-28 22:05:10",
         "updated_at": "2026-02-28 22:05:10"
+    },
+    {
+        "id": 2,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "ip_address": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "success": 1,
+        "logged_in_at": "2026-03-01 13:31:23",
+        "deleted_at": null,
+        "created_at": "2026-03-01 13:31:23",
+        "updated_at": "2026-03-01 13:31:23"
+    },
+    {
+        "id": 3,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "ip_address": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "success": 1,
+        "logged_in_at": "2026-03-01 19:11:56",
+        "deleted_at": null,
+        "created_at": "2026-03-01 19:11:56",
+        "updated_at": "2026-03-01 19:11:56"
+    },
+    {
+        "id": 4,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "ip_address": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "success": 1,
+        "logged_in_at": "2026-03-02 00:31:41",
+        "deleted_at": null,
+        "created_at": "2026-03-02 00:31:41",
+        "updated_at": "2026-03-02 00:31:41"
+    },
+    {
+        "id": 5,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "ip_address": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "success": 1,
+        "logged_in_at": "2026-03-03 10:21:52",
+        "deleted_at": null,
+        "created_at": "2026-03-03 10:21:52",
+        "updated_at": "2026-03-03 10:21:52"
+    },
+    {
+        "id": 6,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "ip_address": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "success": 1,
+        "logged_in_at": "2026-03-09 13:21:37",
+        "deleted_at": null,
+        "created_at": "2026-03-09 13:21:37",
+        "updated_at": "2026-03-09 13:21:37"
+    },
+    {
+        "id": 7,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "ip_address": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "success": 1,
+        "logged_in_at": "2026-03-09 16:24:24",
+        "deleted_at": null,
+        "created_at": "2026-03-09 16:24:24",
+        "updated_at": "2026-03-09 16:24:24"
+    },
+    {
+        "id": 8,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "ip_address": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "success": 1,
+        "logged_in_at": "2026-03-10 23:00:25",
+        "deleted_at": null,
+        "created_at": "2026-03-10 23:00:25",
+        "updated_at": "2026-03-10 23:00:25"
+    },
+    {
+        "id": 9,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "ip_address": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "success": 1,
+        "logged_in_at": "2026-03-10 23:16:33",
+        "deleted_at": null,
+        "created_at": "2026-03-10 23:16:33",
+        "updated_at": "2026-03-10 23:16:33"
+    },
+    {
+        "id": 10,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "ip_address": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "success": 1,
+        "logged_in_at": "2026-03-10 23:41:07",
+        "deleted_at": null,
+        "created_at": "2026-03-10 23:41:07",
+        "updated_at": "2026-03-10 23:41:07"
     }
 ]

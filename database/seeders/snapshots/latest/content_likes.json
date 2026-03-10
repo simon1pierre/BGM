@@ -9,5 +9,27 @@
         "session_id": "ZYPo4JRP6VaWO7CKcJqNCz4MfH9wXKcvEHWDgiRJ",
         "created_at": "2026-02-28 22:51:30",
         "updated_at": "2026-02-28 22:51:30"
+    },
+    {
+        "id": 2,
+        "content_type": "App\\Models\\book",
+        "content_id": 3,
+        "device_hash": "d824053123eafa727c92840181ac20ff1bddd33f86e1fa5c9c47f84bc6ba169b",
+        "ip_address": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "session_id": "Ud3ZI8gTkeff4PTEejeP6vg8xwjRgHJGMplG9him",
+        "created_at": "2026-03-01 14:02:45",
+        "updated_at": "2026-03-01 14:02:45"
+    },
+    {
+        "id": 3,
+        "content_type": "App\\Models\\video",
+        "content_id": 2,
+        "device_hash": "d824053123eafa727c92840181ac20ff1bddd33f86e1fa5c9c47f84bc6ba169b",
+        "ip_address": "127.0.0.1",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "session_id": "reYI4gSkVCqvPN0SXcBK8x5mQJQfa0hQ7SffcS5u",
+        "created_at": "2026-03-11 00:21:29",
+        "updated_at": "2026-03-11 00:21:29"
     }
 ]

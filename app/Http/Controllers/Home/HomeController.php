@@ -506,6 +506,7 @@ class HomeController extends Controller
             ->orderByDesc('featured')
             ->orderBy('sort_order')
             ->orderByDesc('published_at')
+            ->orderByDesc('id')
             ->paginate(9)
             ->withQueryString();
 

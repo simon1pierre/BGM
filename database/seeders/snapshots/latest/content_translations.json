@@ -14,7 +14,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 2,
@@ -31,7 +33,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 3,
@@ -48,7 +52,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 4,
@@ -65,7 +71,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 5,
@@ -82,7 +90,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 6,
@@ -99,7 +109,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 7,
@@ -116,7 +128,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 8,
@@ -133,7 +147,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 9,
@@ -150,7 +166,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 10,
@@ -167,7 +185,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 11,
@@ -184,7 +204,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 12,
@@ -201,7 +223,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 13,
@@ -218,7 +242,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 14,
@@ -235,7 +261,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 15,
@@ -252,7 +280,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 16,
@@ -269,7 +299,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 17,
@@ -286,7 +318,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 18,
@@ -303,7 +337,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 19,
@@ -320,7 +356,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 20,
@@ -337,7 +375,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 21,
@@ -354,7 +394,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 22,
@@ -371,7 +413,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 23,
@@ -388,7 +432,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 24,
@@ -405,7 +451,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 25,
@@ -422,7 +470,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 26,
@@ -439,7 +489,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 27,
@@ -456,7 +508,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 28,
@@ -473,7 +527,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 29,
@@ -490,7 +546,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 30,
@@ -507,7 +565,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 31,
@@ -524,7 +584,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 32,
@@ -541,7 +603,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 33,
@@ -558,7 +622,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 34,
@@ -575,7 +641,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 35,
@@ -592,7 +660,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 36,
@@ -609,7 +679,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 37,
@@ -626,7 +698,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 38,
@@ -643,7 +717,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 39,
@@ -660,7 +736,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 40,
@@ -677,7 +755,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 41,
@@ -694,7 +774,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 42,
@@ -711,7 +793,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 43,
@@ -728,7 +812,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 44,
@@ -745,7 +831,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 45,
@@ -762,7 +850,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 46,
@@ -779,7 +869,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 47,
@@ -796,7 +888,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 48,
@@ -813,7 +907,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 49,
@@ -830,7 +926,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 50,
@@ -847,7 +945,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 51,
@@ -864,7 +964,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 52,
@@ -881,7 +983,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 53,
@@ -898,7 +1002,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 54,
@@ -915,7 +1021,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 55,
@@ -932,7 +1040,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 56,
@@ -949,7 +1059,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 57,
@@ -966,7 +1078,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 58,
@@ -983,7 +1097,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 59,
@@ -1000,7 +1116,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 60,
@@ -1017,7 +1135,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:43"
+        "reviewed_at": "2026-02-28 21:55:43",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 61,
@@ -1034,7 +1154,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 62,
@@ -1051,7 +1173,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 63,
@@ -1068,7 +1192,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 64,
@@ -1085,7 +1211,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 65,
@@ -1102,7 +1230,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 66,
@@ -1119,7 +1249,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 67,
@@ -1136,7 +1268,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 68,
@@ -1153,7 +1287,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 69,
@@ -1170,7 +1306,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 70,
@@ -1180,14 +1318,16 @@
         "title": "Ubuntu bw'Imana bwabonetse",
         "description": "Ubutumwa bwerekana ubuntu bw'Imana butwigisha kubaho twera no gutegereza ibyiringiro byiza.",
         "created_at": "2026-02-28 21:55:44",
-        "updated_at": "2026-02-28 21:55:44",
+        "updated_at": "2026-03-01 19:13:01",
         "source_locale": "rw",
         "translation_status": "approved",
         "translated_by": "manual",
         "quality_score": 100,
         "is_bible_locked": 0,
-        "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 19:13:01",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 71,
@@ -1197,14 +1337,16 @@
         "title": "The Grace of God Has Appeared",
         "description": "A sermon on God's grace that trains us to live holy lives while awaiting blessed hope.",
         "created_at": "2026-02-28 21:55:44",
-        "updated_at": "2026-02-28 21:55:44",
-        "source_locale": "rw",
+        "updated_at": "2026-03-01 19:13:01",
+        "source_locale": "en",
         "translation_status": "approved",
         "translated_by": "manual",
-        "quality_score": 95,
+        "quality_score": 100,
         "is_bible_locked": 0,
-        "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 19:13:01",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 72,
@@ -1214,14 +1356,16 @@
         "title": "La Grace de Dieu Est Apparue",
         "description": "Une predication sur la grace de Dieu qui nous enseigne a vivre saintement en attendant la bienheureuse esperance.",
         "created_at": "2026-02-28 21:55:44",
-        "updated_at": "2026-02-28 21:55:44",
-        "source_locale": "rw",
+        "updated_at": "2026-03-01 19:13:01",
+        "source_locale": "fr",
         "translation_status": "approved",
         "translated_by": "manual",
-        "quality_score": 95,
+        "quality_score": 100,
         "is_bible_locked": 0,
-        "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 19:13:01",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 73,
@@ -1238,7 +1382,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 74,
@@ -1255,7 +1401,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 75,
@@ -1272,7 +1420,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 76,
@@ -1289,7 +1439,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 77,
@@ -1306,7 +1458,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 78,
@@ -1323,7 +1477,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 79,
@@ -1340,7 +1496,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 80,
@@ -1357,7 +1515,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 81,
@@ -1374,7 +1534,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 82,
@@ -1391,7 +1553,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 83,
@@ -1408,7 +1572,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 84,
@@ -1425,7 +1591,9 @@
         "quality_score": 95,
         "is_bible_locked": 0,
         "reviewed_by": null,
-        "reviewed_at": "2026-02-28 21:55:44"
+        "reviewed_at": "2026-02-28 21:55:44",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 85,
@@ -1435,14 +1603,16 @@
         "title": "The Great Controversy",
         "description": "This is the second edition of “The Great Controversy Between Christ and Satan”, revised and corrected from the first edition. It faithfully follows the original English publication.\r\n\r\nThe book presents the great conflict between good and evil from the destruction of Jerusalem through the Reformation and into the final events of earth’s history. It strengthens faith and prepares believers for Christ’s return.",
         "created_at": "2026-02-28 22:28:59",
-        "updated_at": "2026-02-28 22:28:59",
+        "updated_at": "2026-03-01 13:42:20",
         "source_locale": "en",
         "translation_status": "approved",
         "translated_by": "manual",
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 22:28:59"
+        "reviewed_at": "2026-03-01 13:42:20",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 86,
@@ -1452,14 +1622,16 @@
         "title": "La Tragédie des Siècles",
         "description": "Deuxième édition révisée et corrigée du livre « La Tragédie des Siècles », fidèle à l’original anglais.\r\n\r\nCe livre décrit le grand conflit entre le bien et le mal à travers l’histoire, depuis la destruction de Jérusalem jusqu’aux événements de la fin des temps, préparant les croyants au retour du Christ.",
         "created_at": "2026-02-28 22:28:59",
-        "updated_at": "2026-02-28 22:28:59",
+        "updated_at": "2026-03-01 13:42:20",
         "source_locale": "fr",
         "translation_status": "approved",
         "translated_by": "manual",
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 22:28:59"
+        "reviewed_at": "2026-03-01 13:42:20",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 87,
@@ -1469,14 +1641,16 @@
         "title": "INTAMBARA IKOMEYE",
         "description": "Iyi ni ngeri ya kabiri y’igitabo “Intambara Ikomeye Hagati ya Kristo na Satani”. Muri iyi ngeri, ibidatunganye byagaragaye mu ya mbere byarakosowe, kandi igitabo cyateguwe hakurikijwe umwimerere w’icyongereza “The Great Controversy Between Christ and Satan”.\r\n\r\nIki gitabo gisobanura intambara iri hagati y’icyiza n’ikibi kuva mu mateka ya kera, gusenyuka kwa Yerusalemu, kugeza ku bihe bya nyuma no kugaruka kwa Kristo. Gitera kwizera, kigakomeza umutima w’abizera kandi kikabategurira ibihe bya nyuma.",
         "created_at": "2026-02-28 22:28:59",
-        "updated_at": "2026-02-28 22:28:59",
+        "updated_at": "2026-03-01 13:42:20",
         "source_locale": "rw",
         "translation_status": "approved",
         "translated_by": "manual",
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 22:28:59"
+        "reviewed_at": "2026-03-01 13:42:20",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 88,
@@ -1493,7 +1667,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 22:56:31"
+        "reviewed_at": "2026-02-28 22:56:31",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 89,
@@ -1510,7 +1686,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 22:56:31"
+        "reviewed_at": "2026-02-28 22:56:31",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 90,
@@ -1527,7 +1705,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 22:56:31"
+        "reviewed_at": "2026-02-28 22:56:31",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 91,
@@ -1537,14 +1717,16 @@
         "title": "Prophets and Kings",
         "description": "Prophets and Kings” is the second volume in the five-book series explaining sacred history. Though written later, it presents a powerful overview of the lives of Israel’s prophets and kings.\r\n\r\nThrough decades of ministry, Ellen G. White revealed that behind human history stand unseen forces — the hand of God working in righteousness and the opposing power of the enemy. This book connects biblical history with the ongoing spiritual conflict between good and evil.",
         "created_at": "2026-02-28 23:22:16",
-        "updated_at": "2026-02-28 23:22:16",
+        "updated_at": "2026-03-01 13:39:12",
         "source_locale": "en",
         "translation_status": "approved",
         "translated_by": "manual",
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 23:22:16"
+        "reviewed_at": "2026-03-01 13:39:12",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 92,
@@ -1554,14 +1736,16 @@
         "title": "Prophètes et Rois",
         "description": "Prophètes et Rois » est le deuxième volume de la série expliquant l’histoire sacrée. Ce livre met en lumière la vie des prophètes et des rois d’Israël.\r\n\r\nEllen G. White montre que derrière les événements humains agissent des forces invisibles : la main de Dieu et l’œuvre de l’ennemi. L’ouvrage relie l’histoire biblique au conflit spirituel entre le bien et le mal.",
         "created_at": "2026-02-28 23:22:16",
-        "updated_at": "2026-02-28 23:22:16",
+        "updated_at": "2026-03-01 13:39:12",
         "source_locale": "fr",
         "translation_status": "approved",
         "translated_by": "manual",
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 23:22:16"
+        "reviewed_at": "2026-03-01 13:39:12",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 93,
@@ -1571,14 +1755,16 @@
         "title": "ABAHANUZI N’ABAMI",
         "description": "Abahanuzi n’Abami” ni igitabo cya kabiri mu bitabo bitanu by’ingenzi bisobanura amateka yera. Nubwo ari cyo cyanditswe bwa nyuma muri uru ruhererekane, gifite agaciro gakomeye mu gusobanura amateka y’abahanuzi n’abami ba Isirayeli.\r\n\r\nMu myaka irenga 70 Ellen G. White yamaze yigisha no kwandika, yagiye agaragaza ubusobanuro bwimbitse bw’ibyabaye mu mateka y’abantu, agaragaza ko inyuma y’ibibera mu bantu habamo imbaraga zitagaragara: ukuboko kw’Imana gukorera mu gukiranuka n’imbaraga z’umwanzi zishaka kurimbura.\r\n\r\nIki gitabo gifasha umusomyi gusobanukirwa isano iri hagati y’amateka y’abantu n’intambara y’umwuka ikomeje hagati y’icyiza n’ikibi.",
         "created_at": "2026-02-28 23:22:16",
-        "updated_at": "2026-02-28 23:22:16",
+        "updated_at": "2026-03-01 13:39:12",
         "source_locale": "rw",
         "translation_status": "approved",
         "translated_by": "manual",
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 23:22:16"
+        "reviewed_at": "2026-03-01 13:39:12",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 94,
@@ -1595,7 +1781,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 23:32:45"
+        "reviewed_at": "2026-02-28 23:32:45",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 95,
@@ -1612,7 +1800,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 23:32:45"
+        "reviewed_at": "2026-02-28 23:32:45",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 96,
@@ -1629,7 +1819,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 23:32:45"
+        "reviewed_at": "2026-02-28 23:32:45",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 97,
@@ -1646,7 +1838,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 23:35:55"
+        "reviewed_at": "2026-02-28 23:35:55",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 98,
@@ -1663,7 +1857,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 23:35:55"
+        "reviewed_at": "2026-02-28 23:35:55",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 99,
@@ -1680,7 +1876,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 23:35:55"
+        "reviewed_at": "2026-02-28 23:35:55",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 100,
@@ -1697,7 +1895,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 23:54:29"
+        "reviewed_at": "2026-02-28 23:54:29",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 101,
@@ -1714,7 +1914,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 23:54:29"
+        "reviewed_at": "2026-02-28 23:54:29",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 102,
@@ -1731,7 +1933,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-02-28 23:54:29"
+        "reviewed_at": "2026-02-28 23:54:29",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 103,
@@ -1741,14 +1945,16 @@
         "title": "The Acts of the Apostles",
         "description": "The Acts of the Apostles” is the fourth volume in the sacred history series. It tells the inspiring story of the early Christian believers after Christ’s victory over Satan and His ascension to heaven.\r\n\r\nThe book describes intense persecution, unwavering faith, and the missionary journeys of Peter, Paul, John, James, Luke, Barnabas, Stephen, Mark, and other early disciples who carried the gospel throughout the known world.\r\n\r\nThough many sacrificed their lives for their faith, the story continues today as Christ’s church advances under the same divine promises and spiritual power.",
         "created_at": "2026-03-01 00:26:33",
-        "updated_at": "2026-03-01 00:26:33",
+        "updated_at": "2026-03-01 13:51:39",
         "source_locale": "en",
         "translation_status": "approved",
         "translated_by": "manual",
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-03-01 00:26:33"
+        "reviewed_at": "2026-03-01 13:51:39",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 104,
@@ -1758,14 +1964,16 @@
         "title": "Les Actes des Apôtres",
         "description": "Les Actes des Apôtres » est le quatrième volume de la série d’histoire sacrée. Il raconte l’histoire inspirante de l’Église chrétienne primitive après l’ascension du Christ.\r\n\r\nLe livre décrit les persécutions sévères, la fidélité des croyants et l’expansion de l’Évangile par Pierre, Paul, Jean, Jacques et les autres disciples.\r\n\r\nMalgré les sacrifices, l’œuvre continue aujourd’hui, guidée par les mêmes promesses et la puissance de Dieu.",
         "created_at": "2026-03-01 00:26:33",
-        "updated_at": "2026-03-01 00:26:33",
+        "updated_at": "2026-03-01 13:51:39",
         "source_locale": "fr",
         "translation_status": "approved",
         "translated_by": "manual",
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-03-01 00:26:33"
+        "reviewed_at": "2026-03-01 13:51:39",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 105,
@@ -1775,14 +1983,16 @@
         "title": "IBYAKOZWE N’INTUMWA",
         "description": "Ibyakozwe n’Intumwa” ni igitabo cya kane mu ruhererekane rw’ibitabo bisobanura amateka yera. Gisobanura inkuru itangaje y’itorero rya mbere nyuma y’uko Yesu amaze gutsinda Satani agasubira mu ijuru.\r\n\r\nIki gitabo kigaragaza uburyo umwanzi yahanganye n’itorero rya Kristo ku isi, binyuze mu gutotezwa gukomeye no kugerageza kwizera kw’abakristo ba mbere. Petero, Pawulo, Yakobo, Yohana, Luka, Barinaba, Sitefano, Mariko n’izindi ntumwa zatwaye ubutumwa bwiza ku isi yose yari izwi icyo gihe.\r\n\r\nNubwo benshi batanze ubuzima bwabo kubera kwizera kwabo, ubutumwa bwiza bwakomeje gukwira hose. Inkuru iracyakomeza no muri iki gihe, kuko itorero rya Kristo rikomeje umurimo umwe kandi rifite amasezerano amwe yo kuyoborwa n’imbaraga z’Imana.",
         "created_at": "2026-03-01 00:26:33",
-        "updated_at": "2026-03-01 00:26:33",
+        "updated_at": "2026-03-01 13:51:39",
         "source_locale": "rw",
         "translation_status": "approved",
         "translated_by": "manual",
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-03-01 00:26:33"
+        "reviewed_at": "2026-03-01 13:51:39",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 106,
@@ -1799,7 +2009,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-03-01 00:26:34"
+        "reviewed_at": "2026-03-01 00:26:34",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 107,
@@ -1816,7 +2028,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-03-01 00:26:34"
+        "reviewed_at": "2026-03-01 00:26:34",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 108,
@@ -1833,7 +2047,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-03-01 00:26:34"
+        "reviewed_at": "2026-03-01 00:26:34",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 109,
@@ -1843,14 +2059,16 @@
         "title": "The One Desired in All Ages",
         "description": "In every human heart, regardless of background or social status, there is a deep longing for something greater than what is currently possessed.\r\n\r\nThis desire was placed in humanity by a merciful God so that people would not be satisfied with temporary achievements. God invites every person to seek what is eternal — truth, salvation, and everlasting life.",
         "created_at": "2026-03-01 00:48:49",
-        "updated_at": "2026-03-01 00:48:49",
+        "updated_at": "2026-03-01 13:44:56",
         "source_locale": "en",
         "translation_status": "approved",
         "translated_by": "manual",
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-03-01 00:48:49"
+        "reviewed_at": "2026-03-01 13:44:56",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 110,
@@ -1860,14 +2078,16 @@
         "title": "Celui qui est Désiré en Tout Temps",
         "description": "Dans le cœur de chaque être humain se trouve un profond désir de quelque chose de plus grand. Ce désir a été placé par un Dieu miséricordieux afin que l’homme ne se contente pas de ce qu’il possède temporairement.\r\n\r\nCe message invite chacun à rechercher ce qui est éternel et à recevoir la bénédiction de la vie éternelle.",
         "created_at": "2026-03-01 00:48:49",
-        "updated_at": "2026-03-01 00:48:49",
+        "updated_at": "2026-03-01 13:44:56",
         "source_locale": "fr",
         "translation_status": "approved",
         "translated_by": "manual",
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-03-01 00:48:49"
+        "reviewed_at": "2026-03-01 13:44:56",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 111,
@@ -1877,14 +2097,16 @@
         "title": "UWIFUZWA IBIHE BYOSE",
         "description": "Uwifuzwa Ibihe Byose” ni ubutumwa bushingiye ku kuri ko mu mitima y’abantu bose, hatitawe ku bwoko cyangwa urwego rw’imibereho, habamo icyifuzo gikomeye cyo kubona icyo badafite.\r\n\r\nIki cyifuzo cyashyizwe mu muntu n’Imana y’inyambabazi, kugira ngo atanyurwa n’ubuzima bwe bwa none cyangwa ngo yishimire ibyo agezeho gusa. Imana yifuza ko umuntu ashakisha icy’ingenzi kirenze ibindi byose — ukuri, agakiza n’ubugingo buhoraho.\r\n\r\nUbu butumwa burahamagarira buri wese gushaka iby’iteka, no kwakira umugisha w’ubugingo bw’ibihe bidashira.",
         "created_at": "2026-03-01 00:48:49",
-        "updated_at": "2026-03-01 00:48:49",
+        "updated_at": "2026-03-01 13:44:56",
         "source_locale": "rw",
         "translation_status": "approved",
         "translated_by": "manual",
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-03-01 00:48:49"
+        "reviewed_at": "2026-03-01 13:44:56",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 112,
@@ -1901,7 +2123,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-03-01 00:48:49"
+        "reviewed_at": "2026-03-01 00:48:49",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 113,
@@ -1918,7 +2142,9 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-03-01 00:48:49"
+        "reviewed_at": "2026-03-01 00:48:49",
+        "excerpt": null,
+        "body": null
     },
     {
         "id": 114,
@@ -1935,6 +2161,1718 @@
         "quality_score": 100,
         "is_bible_locked": 0,
         "reviewed_by": 1,
-        "reviewed_at": "2026-03-01 00:48:49"
+        "reviewed_at": "2026-03-01 00:48:49",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 115,
+        "content_type": "App\\Models\\book",
+        "content_id": 5,
+        "locale": "en",
+        "title": "Prophets and Kings",
+        "description": "Prophets and Kings” is the second volume in the five-book series explaining sacred history. Though written later, it presents a powerful overview of the lives of Israel’s prophets and kings.\r\n\r\nThrough decades of ministry, Ellen G. White revealed that behind human history stand unseen forces — the hand of God working in righteousness and the opposing power of the enemy. This book connects biblical history with the ongoing spiritual conflict between good and evil.",
+        "created_at": "2026-03-01 15:03:54",
+        "updated_at": "2026-03-01 15:03:54",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 15:03:54",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 116,
+        "content_type": "App\\Models\\book",
+        "content_id": 5,
+        "locale": "fr",
+        "title": "Prophètes et Rois",
+        "description": "Prophètes et Rois » est le deuxième volume de la série expliquant l’histoire sacrée. Ce livre met en lumière la vie des prophètes et des rois d’Israël.\r\n\r\nEllen G. White montre que derrière les événements humains agissent des forces invisibles : la main de Dieu et l’œuvre de l’ennemi. L’ouvrage relie l’histoire biblique au conflit spirituel entre le bien et le mal.",
+        "created_at": "2026-03-01 15:03:54",
+        "updated_at": "2026-03-01 15:03:54",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 15:03:54",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 117,
+        "content_type": "App\\Models\\book",
+        "content_id": 5,
+        "locale": "rw",
+        "title": "ABAHANUZI N’ABAMI",
+        "description": "Abahanuzi n’Abami” ni igitabo cya kabiri mu bitabo bitanu by’ingenzi bisobanura amateka yera. Nubwo ari cyo cyanditswe bwa nyuma muri uru ruhererekane, gifite agaciro gakomeye mu gusobanura amateka y’abahanuzi n’abami ba Isirayeli.\r\n\r\nMu myaka irenga 70 Ellen G. White yamaze yigisha no kwandika, yagiye agaragaza ubusobanuro bwimbitse bw’ibyabaye mu mateka y’abantu, agaragaza ko inyuma y’ibibera mu bantu habamo imbaraga zitagaragara: ukuboko kw’Imana gukorera mu gukiranuka n’imbaraga z’umwanzi zishaka kurimbura.\r\n\r\nIki gitabo gifasha umusomyi gusobanukirwa isano iri hagati y’amateka y’abantu n’intambara y’umwuka ikomeje hagati y’icyiza n’ikibi.",
+        "created_at": "2026-03-01 15:03:54",
+        "updated_at": "2026-03-01 15:03:54",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 15:03:54",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 118,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 7,
+        "locale": "en",
+        "title": "IGICE CYA 1 Salomo",
+        "description": null,
+        "created_at": "2026-03-01 15:03:54",
+        "updated_at": "2026-03-01 15:03:54",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 15:03:54",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 119,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 7,
+        "locale": "fr",
+        "title": "IGICE CYA 1 Salomo",
+        "description": null,
+        "created_at": "2026-03-01 15:03:54",
+        "updated_at": "2026-03-01 15:03:54",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 15:03:54",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 120,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 7,
+        "locale": "rw",
+        "title": "IGICE CYA 1 Salomo",
+        "description": null,
+        "created_at": "2026-03-01 15:03:54",
+        "updated_at": "2026-03-01 15:03:54",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 15:03:54",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 121,
+        "content_type": "App\\Models\\book",
+        "content_id": 6,
+        "locale": "en",
+        "title": "Messages to Young People",
+        "description": "Messages to Young People” is a collection of letters written by Ellen G. White to her children before the death of her eldest son, Henry, at the age of sixteen.\r\n\r\nThese letters reflect heartfelt parental counsel grounded in biblical principles, aimed at building strong character and spiritual commitment in youth.\r\n\r\nThe volume also includes material from the original compilation, including Uriah Smith’s address at Henry White’s funeral and selected writings from other contributors.",
+        "created_at": "2026-03-01 16:37:20",
+        "updated_at": "2026-03-01 16:38:20",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 16:38:20",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 122,
+        "content_type": "App\\Models\\book",
+        "content_id": 6,
+        "locale": "fr",
+        "title": "Prophètes et Rois",
+        "description": "Messages à la Jeunesse » est un recueil de lettres écrites par Ellen G. White à ses enfants avant le décès de son fils aîné, Henry, à l’âge de seize ans.\r\n\r\nCes lettres contiennent des conseils spirituels et pratiques basés sur les principes bibliques, destinés à fortifier le caractère et la foi des jeunes.\r\n\r\nL’ouvrage comprend également des extraits de la compilation originale, y compris l’adresse de Uriah Smith lors des funérailles de Henry White.",
+        "created_at": "2026-03-01 16:37:20",
+        "updated_at": "2026-03-01 16:38:20",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 16:38:20",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 123,
+        "content_type": "App\\Models\\book",
+        "content_id": 6,
+        "locale": "rw",
+        "title": "UBUTUMWA KU BASORE",
+        "description": "UBUTUMWA KU BASORE\r\nubutumwa ku basore ni icyegeranyo cy’amabaruwa Ellen White yandikiye abana be, mbere y’urupfu rw’umuhungu we w’imfura, Henry, afite imyaka 16. Aya mabaruwa ni agace kavuye mu gitabo cyuzuye, cyarimo mbere na Uriah Smith. aderesi mu muhango wo gushyingura Henry White, kimwe n’inyandiko y’abandi banditsi",
+        "created_at": "2026-03-01 16:37:20",
+        "updated_at": "2026-03-01 16:38:20",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 16:38:20",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 124,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 8,
+        "locale": "en",
+        "title": "UBUTUMWA KU BASORE",
+        "description": null,
+        "created_at": "2026-03-01 16:37:20",
+        "updated_at": "2026-03-01 16:37:20",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 16:37:20",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 125,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 8,
+        "locale": "fr",
+        "title": "UBUTUMWA KU BASORE",
+        "description": null,
+        "created_at": "2026-03-01 16:37:20",
+        "updated_at": "2026-03-01 16:37:20",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 16:37:20",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 126,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 8,
+        "locale": "rw",
+        "title": "UBUTUMWA KU BASORE",
+        "description": null,
+        "created_at": "2026-03-01 16:37:20",
+        "updated_at": "2026-03-01 16:37:20",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 16:37:20",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 127,
+        "content_type": "App\\Models\\book",
+        "content_id": 7,
+        "locale": "en",
+        "title": "Patriarchs and Prophets",
+        "description": "Patriarchs and Prophets is the first volume in the sacred history series. It covers biblical history from the creation of the world to the reign of King David.\r\n\r\nWhile presenting ancient events, the book reveals deeper spiritual meanings, explaining the motives behind human actions and highlighting the great conflict between good and evil.\r\n\r\nIt demonstrates that biblical history is not merely narrative but a powerful source of instruction capable of transforming lives and producing lasting change.",
+        "created_at": "2026-03-01 16:56:24",
+        "updated_at": "2026-03-01 16:56:24",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 16:56:24",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 128,
+        "content_type": "App\\Models\\book",
+        "content_id": 7,
+        "locale": "fr",
+        "title": "Patriarches et Prophètes",
+        "description": "Patriarches et Prophètes » est le premier volume de la série d’histoire sacrée. Il retrace l’histoire biblique depuis la création du monde jusqu’au règne du roi David.\r\n\r\nL’ouvrage révèle les significations spirituelles profondes des événements anciens et met en lumière le grand conflit entre le bien et le mal.\r\n\r\nIl montre que l’histoire biblique possède un pouvoir transformateur pour la vie des croyants.",
+        "created_at": "2026-03-01 16:56:24",
+        "updated_at": "2026-03-01 16:56:24",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 16:56:24",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 129,
+        "content_type": "App\\Models\\book",
+        "content_id": 7,
+        "locale": "rw",
+        "title": "ABAKURAMBERE N’ABAHANUZI",
+        "description": "Abakurambere n’Abahanuzi” ni igitabo cya mbere mu ruhererekane rw’ibitabo bisobanura amateka yera. Gifite insanganyamatsiko ku mateka akubiye mu Byanditswe Byera, kuva mu kuremwa kw’isi kugeza ku ngoma ya Dawidi.\r\n\r\nNubwo kivuga ku mateka ya kera, gitanga ubusobanuro bushya kandi bwimbitse, gihishura impamvu z’ibikorwa by’abantu n’ingaruka zabyo. Kigaragaza ibikorwa by’ingenzi mu mateka ya Bibiliya kandi kikazana umucyo ku ntambara iri hagati y’icyiza n’ikibi.\r\n\r\nIki gitabo gifasha umusomyi kubona ko amateka ya Bibiliya atari inkuru gusa, ahubwo ari isoko y’inyigisho zifite imbaraga zo guhindura ubuzima no kuzana impinduka zirambye.",
+        "created_at": "2026-03-01 16:56:24",
+        "updated_at": "2026-03-01 16:56:24",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 16:56:24",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 130,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 9,
+        "locale": "en",
+        "title": "Patriarchs and Prophets",
+        "description": null,
+        "created_at": "2026-03-01 16:56:24",
+        "updated_at": "2026-03-01 16:56:24",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 16:56:24",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 131,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 9,
+        "locale": "fr",
+        "title": "Patriarchs and Prophets",
+        "description": null,
+        "created_at": "2026-03-01 16:56:24",
+        "updated_at": "2026-03-01 16:56:24",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 16:56:24",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 132,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 9,
+        "locale": "rw",
+        "title": "Patriarchs and Prophets",
+        "description": null,
+        "created_at": "2026-03-01 16:56:24",
+        "updated_at": "2026-03-01 16:56:24",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 16:56:24",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 133,
+        "content_type": "App\\Models\\book",
+        "content_id": 8,
+        "locale": "en",
+        "title": "Counsels on Diet and Foods",
+        "description": "Counsels on Diet and Foods” presents practical guidance on nutrition and its impact on physical, mental, and spiritual health.\r\n\r\nEllen G. White emphasized the importance of wholesome diet and balanced living long before modern scientific research confirmed its value. This book provides timeless principles for healthy Christian living.",
+        "created_at": "2026-03-01 17:19:38",
+        "updated_at": "2026-03-01 17:19:38",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 17:19:38",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 134,
+        "content_type": "App\\Models\\book",
+        "content_id": 8,
+        "locale": "fr",
+        "title": "Conseils sur la Nutrition et les Aliments",
+        "description": "Conseils sur la Nutrition et les Aliments » présente des conseils pratiques sur la relation entre l’alimentation et la santé physique et spirituelle.\r\n\r\nEllen G. White soulignait l’importance d’une alimentation saine bien avant les recherches scientifiques modernes.",
+        "created_at": "2026-03-01 17:19:38",
+        "updated_at": "2026-03-01 17:19:38",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 17:19:38",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 135,
+        "content_type": "App\\Models\\book",
+        "content_id": 8,
+        "locale": "rw",
+        "title": "INAMA KU MIRIRE N’IBYOKURYA",
+        "description": "Iki gitabo gitanga ubuyobozi ku buzima bwiza binyuze mu mirire iboneye, gishingiye ku nyigisho za Ellen G. White.",
+        "created_at": "2026-03-01 17:19:38",
+        "updated_at": "2026-03-01 17:19:38",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 17:19:38",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 136,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 10,
+        "locale": "en",
+        "title": "Counsels on Diet and Foods",
+        "description": null,
+        "created_at": "2026-03-01 17:19:38",
+        "updated_at": "2026-03-01 17:19:38",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 17:19:38",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 137,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 10,
+        "locale": "fr",
+        "title": "Counsels on Diet and Foods",
+        "description": null,
+        "created_at": "2026-03-01 17:19:38",
+        "updated_at": "2026-03-01 17:19:38",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 17:19:38",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 138,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 10,
+        "locale": "rw",
+        "title": "Counsels on Diet and Foods",
+        "description": null,
+        "created_at": "2026-03-01 17:19:38",
+        "updated_at": "2026-03-01 17:19:38",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 17:19:38",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 139,
+        "content_type": "App\\Models\\book",
+        "content_id": 9,
+        "locale": "en",
+        "title": "Testimonies for the Church – Volume 1",
+        "description": "Testimonies for the Church – Volume 1  contains spiritual counsel given to guide God’s church in preparation for the return of Christ.\r\n\r\nSeventh-day Adventists eagerly await the second coming of Jesus, when sin, suffering, sickness, and death will be no more.\r\n\r\nThis volume is drawn from Ellen G. White’s earliest published works, including Christian Experience and Views (1851), Supplement to Christian Experience and Views (1854), and Spiritual Gifts, Volume 1 (1858).\r\n\r\nIt provides foundational instruction for Christian character development and spiritual readiness.",
+        "created_at": "2026-03-01 17:32:13",
+        "updated_at": "2026-03-01 17:32:13",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 17:32:13",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 140,
+        "content_type": "App\\Models\\book",
+        "content_id": 9,
+        "locale": "fr",
+        "title": "Témoignages pour l’Église – Volume 1",
+        "description": "Témoignages pour l’Église – Volume 1  rassemble des conseils spirituels destinés à préparer l’Église au retour du Christ.\r\n\r\nLes Adventistes du Septième Jour attendent avec espérance la seconde venue de Jésus, lorsque le péché, la souffrance et la mort disparaîtront.\r\n\r\nCet ouvrage est issu des premiers écrits publiés par Ellen G. White, notamment Christian Experience and Views (1851), Supplement (1854) et Spiritual Gifts, Volume 1 (1858).\r\n\r\nIl offre des orientations essentielles pour la croissance spirituelle et la préparation au retour du Seigneur.",
+        "created_at": "2026-03-01 17:32:13",
+        "updated_at": "2026-03-01 17:32:13",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 17:32:13",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 141,
+        "content_type": "App\\Models\\book",
+        "content_id": 9,
+        "locale": "rw",
+        "title": "INAMA ZIGIRWA ITORERO – IGITABO CYA 1",
+        "description": "Inama Zigirwa Itorero – Igitabo cya 1  ni igitabo gikubiyemo inama z’umwuka zigenewe itorero ry’Imana mu gihe cyo kwitegura gusanganira Kristo.\r\n\r\nAbadiventisti b’Umunsi wa Karindwi bategereje n’icyizere kinini kugaruka kwa Yesu Kristo, aho nta cyaha, nta mibabaro, nta ndwara cyangwa urupfu bizongera kubaho.\r\n\r\nIki gitabo gikomoka ku nyandiko za mbere za Ellen G. White, zirimo “Imibereho ya Gikristo n’Ibitekerezo bya Ellen G. White” (1851), “Inyongera ku Mibereho n’Ibitekerezo” (1854), ndetse na “Impano za Mwuka”, umuzingo wa 1 (1858).\r\n\r\nGitanga ubuyobozi bwimbitse ku buzima bwa gikristo no ku kwitegura kugaruka kwa Kristo.",
+        "created_at": "2026-03-01 17:32:13",
+        "updated_at": "2026-03-01 17:32:13",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 17:32:13",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 142,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 11,
+        "locale": "en",
+        "title": "Testimonies for the Church – Volume 1",
+        "description": null,
+        "created_at": "2026-03-01 17:32:13",
+        "updated_at": "2026-03-01 17:32:13",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 17:32:13",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 143,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 11,
+        "locale": "fr",
+        "title": "Testimonies for the Church – Volume 1",
+        "description": null,
+        "created_at": "2026-03-01 17:32:13",
+        "updated_at": "2026-03-01 17:32:13",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 17:32:13",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 144,
+        "content_type": "App\\Models\\audiobook",
+        "content_id": 11,
+        "locale": "rw",
+        "title": "Testimonies for the Church – Volume 1",
+        "description": null,
+        "created_at": "2026-03-01 17:32:13",
+        "updated_at": "2026-03-01 17:32:13",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-01 17:32:13",
+        "excerpt": null,
+        "body": null
+    },
+    {
+        "id": 145,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 1,
+        "locale": "en",
+        "title": "Trusting God in Times of Trial",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Yakobo 1:2-4\n\nTODAY'S REFLECTION\nTrusting God in Times of Trial calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Yakobo 1:2-4.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 146,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 1,
+        "locale": "fr",
+        "title": "Faire Confiance a Dieu dans l Epreuve",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Yakobo 1:2-4\n\nREFLEXION DU JOUR\nFaire Confiance a Dieu dans l Epreuve nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Yakobo 1:2-4.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 147,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 1,
+        "locale": "rw",
+        "title": "Kwiringira Imana mu gihe cy ibigeragezo",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Iyo ibihe bikomeye byegeranye, ijambo ry Imana ridukomeza kandi riduha amahoro adashingiye ku bihe.",
+        "body": "UMURONGO NYAMUTIMA: Yakobo 1:2-4\n\nINSHINGA Y UYU MUNSI\nKwiringira Imana mu gihe cy ibigeragezo ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Yakobo 1:2-4.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 148,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 2,
+        "locale": "en",
+        "title": "Christ's Peace in the Heart",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Abafilipi 4:6-7\n\nTODAY'S REFLECTION\nChrist's Peace in the Heart calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Abafilipi 4:6-7.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 149,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 2,
+        "locale": "fr",
+        "title": "La Paix de Christ dans le Coeur",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Abafilipi 4:6-7\n\nREFLEXION DU JOUR\nLa Paix de Christ dans le Coeur nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Abafilipi 4:6-7.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 150,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 2,
+        "locale": "rw",
+        "title": "Amahoro ya Kristo mu mutima",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Amahoro ya Kristo aturuka ku kwiringira Imana, si ku kuba ibintu byose byatunganye.",
+        "body": "UMURONGO NYAMUTIMA: Abafilipi 4:6-7\n\nINSHINGA Y UYU MUNSI\nAmahoro ya Kristo mu mutima ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Abafilipi 4:6-7.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 151,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 3,
+        "locale": "en",
+        "title": "Forgive as We Have Been Forgiven",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Abefeso 4:31-32\n\nTODAY'S REFLECTION\nForgive as We Have Been Forgiven calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Abefeso 4:31-32.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 152,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 3,
+        "locale": "fr",
+        "title": "Pardonner Comme Nous Avons Ete Pardonnés",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Abefeso 4:31-32\n\nREFLEXION DU JOUR\nPardonner Comme Nous Avons Ete Pardonnés nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Abefeso 4:31-32.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 153,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 3,
+        "locale": "rw",
+        "title": "Kubabarira nk uko twababariwe",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Kubabarira ni inzira yo kurekura uburemere no kwakira ubwisanzure bwo mu mutima.",
+        "body": "UMURONGO NYAMUTIMA: Abefeso 4:31-32\n\nINSHINGA Y UYU MUNSI\nKubabarira nk uko twababariwe ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Abefeso 4:31-32.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 154,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 4,
+        "locale": "en",
+        "title": "Persevere in Prayer",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: 1 Abatesalonike 5:17\n\nTODAY'S REFLECTION\nPersevere in Prayer calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around 1 Abatesalonike 5:17.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 155,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 4,
+        "locale": "fr",
+        "title": "Persévérer dans la Prière",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: 1 Abatesalonike 5:17\n\nREFLEXION DU JOUR\nPersévérer dans la Prière nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de 1 Abatesalonike 5:17.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 156,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 4,
+        "locale": "rw",
+        "title": "Gukomera mu isengesho",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Isengesho rihoraho rituma twumva neza icyerekezo cy Imana mu buzima bwacu.",
+        "body": "UMURONGO NYAMUTIMA: 1 Abatesalonike 5:17\n\nINSHINGA Y UYU MUNSI\nGukomera mu isengesho ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa 1 Abatesalonike 5:17.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 157,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 5,
+        "locale": "en",
+        "title": "The Light of God's Word",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Zaburi 119:105\n\nTODAY'S REFLECTION\nThe Light of God's Word calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Zaburi 119:105.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 158,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 5,
+        "locale": "fr",
+        "title": "La Lumière de la Parole de Dieu",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Zaburi 119:105\n\nREFLEXION DU JOUR\nLa Lumière de la Parole de Dieu nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Zaburi 119:105.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 159,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 5,
+        "locale": "rw",
+        "title": "Umucyo w Ijambo ry Imana",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Ijambo ry Imana riduha ubuyobozi bwizewe mu nzira z ubuzima.",
+        "body": "UMURONGO NYAMUTIMA: Zaburi 119:105\n\nINSHINGA Y UYU MUNSI\nUmucyo w Ijambo ry Imana ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Zaburi 119:105.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 160,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 6,
+        "locale": "en",
+        "title": "Faithful in Small Things",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Luka 16:10\n\nTODAY'S REFLECTION\nFaithful in Small Things calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Luka 16:10.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 161,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 6,
+        "locale": "fr",
+        "title": "Fidèle dans les Petites Choses",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Luka 16:10\n\nREFLEXION DU JOUR\nFidèle dans les Petites Choses nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Luka 16:10.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 162,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 6,
+        "locale": "rw",
+        "title": "Kuba umwizerwa mu bito",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Kuba umwizerwa mu byo dufite ubu bitwigisha uko twakirwa n inshingano nini ejo.",
+        "body": "UMURONGO NYAMUTIMA: Luka 16:10\n\nINSHINGA Y UYU MUNSI\nKuba umwizerwa mu bito ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Luka 16:10.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 163,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 7,
+        "locale": "en",
+        "title": "New Strength Every Morning",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Amaganya 3:22-23\n\nTODAY'S REFLECTION\nNew Strength Every Morning calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Amaganya 3:22-23.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 164,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 7,
+        "locale": "fr",
+        "title": "Une Force Nouvelle Chaque Matin",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Amaganya 3:22-23\n\nREFLEXION DU JOUR\nUne Force Nouvelle Chaque Matin nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Amaganya 3:22-23.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 165,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 7,
+        "locale": "rw",
+        "title": "Imbaraga nshya buri gitondo",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Ubuntu bw Imana bushya buri gitondo butuma dutangira umunsi dufite ibyiringiro.",
+        "body": "UMURONGO NYAMUTIMA: Amaganya 3:22-23\n\nINSHINGA Y UYU MUNSI\nImbaraga nshya buri gitondo ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Amaganya 3:22-23.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 166,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 8,
+        "locale": "en",
+        "title": "Walking in Truth",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Yohana 8:31-32\n\nTODAY'S REFLECTION\nWalking in Truth calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Yohana 8:31-32.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 167,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 8,
+        "locale": "fr",
+        "title": "Marcher dans la Vérité",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Yohana 8:31-32\n\nREFLEXION DU JOUR\nMarcher dans la Vérité nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Yohana 8:31-32.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 168,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 8,
+        "locale": "rw",
+        "title": "Kugendera mu kuri",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Ukuri kutubohora kandi kutuyobora ku buzima bufite intego.",
+        "body": "UMURONGO NYAMUTIMA: Yohana 8:31-32\n\nINSHINGA Y UYU MUNSI\nKugendera mu kuri ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Yohana 8:31-32.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 169,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 9,
+        "locale": "en",
+        "title": "Humility Before God",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Yakobo 4:6\n\nTODAY'S REFLECTION\nHumility Before God calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Yakobo 4:6.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 170,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 9,
+        "locale": "fr",
+        "title": "L Humilité Devant Dieu",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Yakobo 4:6\n\nREFLEXION DU JOUR\nL Humilité Devant Dieu nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Yakobo 4:6.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 171,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 9,
+        "locale": "rw",
+        "title": "Kwicisha bugufi imbere y Imana",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Kwicisha bugufi kudufungurira urugi rw ubuntu n ubuyobozi bw Imana.",
+        "body": "UMURONGO NYAMUTIMA: Yakobo 4:6\n\nINSHINGA Y UYU MUNSI\nKwicisha bugufi imbere y Imana ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Yakobo 4:6.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 172,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 10,
+        "locale": "en",
+        "title": "Hope that Moves Us Forward",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Abaroma 15:13\n\nTODAY'S REFLECTION\nHope that Moves Us Forward calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Abaroma 15:13.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 173,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 10,
+        "locale": "fr",
+        "title": "Une Espérance Qui Nous Fait Avancer",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Abaroma 15:13\n\nREFLEXION DU JOUR\nUne Espérance Qui Nous Fait Avancer nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Abaroma 15:13.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 174,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 10,
+        "locale": "rw",
+        "title": "Ibyiringiro biduteranya imbere",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:04",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:04",
+        "excerpt": "Ibyiringiro byo muri Kristo biduha imbaraga zo gukomeza nubwo habaho inzitizi.",
+        "body": "UMURONGO NYAMUTIMA: Abaroma 15:13\n\nINSHINGA Y UYU MUNSI\nIbyiringiro biduteranya imbere ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Abaroma 15:13.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 175,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 11,
+        "locale": "en",
+        "title": "The Unfailing Love of God",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Abaroma 8:38-39\n\nTODAY'S REFLECTION\nThe Unfailing Love of God calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Abaroma 8:38-39.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 176,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 11,
+        "locale": "fr",
+        "title": "L Amour Inébranlable de Dieu",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Abaroma 8:38-39\n\nREFLEXION DU JOUR\nL Amour Inébranlable de Dieu nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Abaroma 8:38-39.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 177,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 11,
+        "locale": "rw",
+        "title": "Urukundo rutava ku Mana",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Nta kintu na kimwe gishobora kudutandukanya n urukundo rw Imana ruri muri Kristo.",
+        "body": "UMURONGO NYAMUTIMA: Abaroma 8:38-39\n\nINSHINGA Y UYU MUNSI\nUrukundo rutava ku Mana ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Abaroma 8:38-39.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 178,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 12,
+        "locale": "en",
+        "title": "Choosing Joy",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-03 11:44:26",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-03 11:44:26",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Nehemiya 8:10\n\nTODAY'S REFLECTION\nChoosing Joy calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Nehemiya 8:10.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 179,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 12,
+        "locale": "fr",
+        "title": "Choisir la Joie",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-03 11:44:26",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-03 11:44:26",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Nehemiya 8:10\n\nREFLEXION DU JOUR\nChoisir la Joie nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Nehemiya 8:10.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 180,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 12,
+        "locale": "rw",
+        "title": "Guhitamo umunezero",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-10 23:03:11",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": 1,
+        "reviewed_at": "2026-03-10 23:03:11",
+        "excerpt": "Umunezero wo mu Mwami ni imbaraga zacu no mu bihe by ibibazo.",
+        "body": "UMURONGO NYAMUTIMA: Nehemiya 8:10\n\nINSHINGA Y UYU MUNSI\nGuhitamo umunezero ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Nehemiya 8:10.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 181,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 13,
+        "locale": "en",
+        "title": "Hearing and Obeying God's Voice",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Yohana 10:27\n\nTODAY'S REFLECTION\nHearing and Obeying God's Voice calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Yohana 10:27.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 182,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 13,
+        "locale": "fr",
+        "title": "Entendre et Obéir a la Voix de Dieu",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Yohana 10:27\n\nREFLEXION DU JOUR\nEntendre et Obéir a la Voix de Dieu nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Yohana 10:27.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 183,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 13,
+        "locale": "rw",
+        "title": "Kumva no kumvira ijwi ry Imana",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Intama zimenya ijwi ry Umushumba, kandi zigamije kumukurikira.",
+        "body": "UMURONGO NYAMUTIMA: Yohana 10:27\n\nINSHINGA Y UYU MUNSI\nKumva no kumvira ijwi ry Imana ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Yohana 10:27.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 184,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 14,
+        "locale": "en",
+        "title": "Overcoming Fear",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: 2 Timoteyo 1:7\n\nTODAY'S REFLECTION\nOvercoming Fear calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around 2 Timoteyo 1:7.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 185,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 14,
+        "locale": "fr",
+        "title": "Affronter la Peur",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: 2 Timoteyo 1:7\n\nREFLEXION DU JOUR\nAffronter la Peur nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de 2 Timoteyo 1:7.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 186,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 14,
+        "locale": "rw",
+        "title": "Guhangana n ubwoba",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Imana ntitwahawe umwuka w ubwoba, ahubwo twahawe imbaraga n urukundo.",
+        "body": "UMURONGO NYAMUTIMA: 2 Timoteyo 1:7\n\nINSHINGA Y UYU MUNSI\nGuhangana n ubwoba ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa 2 Timoteyo 1:7.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 187,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 15,
+        "locale": "en",
+        "title": "A Grateful Heart",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: 1 Abatesalonike 5:18\n\nTODAY'S REFLECTION\nA Grateful Heart calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around 1 Abatesalonike 5:18.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 188,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 15,
+        "locale": "fr",
+        "title": "Un Coeur Reconnaissant",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: 1 Abatesalonike 5:18\n\nREFLEXION DU JOUR\nUn Coeur Reconnaissant nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de 1 Abatesalonike 5:18.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 189,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 15,
+        "locale": "rw",
+        "title": "Umutima ushimira",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Gushima Imana mu bihe byose bituma tubona ubuntu bwayo buri munsi.",
+        "body": "UMURONGO NYAMUTIMA: 1 Abatesalonike 5:18\n\nINSHINGA Y UYU MUNSI\nUmutima ushimira ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa 1 Abatesalonike 5:18.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 190,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 16,
+        "locale": "en",
+        "title": "Building a Home on the Rock",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Matayo 7:24-25\n\nTODAY'S REFLECTION\nBuilding a Home on the Rock calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Matayo 7:24-25.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 191,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 16,
+        "locale": "fr",
+        "title": "Construire Son Foyer sur le Roc",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Matayo 7:24-25\n\nREFLEXION DU JOUR\nConstruire Son Foyer sur le Roc nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Matayo 7:24-25.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 192,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 16,
+        "locale": "rw",
+        "title": "Kubaka urugo ku rutare",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Ijambo ry Imana ni urufatiro rukomeye rw urugo n ubuzima.",
+        "body": "UMURONGO NYAMUTIMA: Matayo 7:24-25\n\nINSHINGA Y UYU MUNSI\nKubaka urugo ku rutare ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Matayo 7:24-25.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 193,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 17,
+        "locale": "en",
+        "title": "Being Salt and Light",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Matayo 5:13-16\n\nTODAY'S REFLECTION\nBeing Salt and Light calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Matayo 5:13-16.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 194,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 17,
+        "locale": "fr",
+        "title": "Etre le Sel et la Lumière",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Matayo 5:13-16\n\nREFLEXION DU JOUR\nEtre le Sel et la Lumière nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Matayo 5:13-16.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 195,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 17,
+        "locale": "rw",
+        "title": "Kuba umunyu n umucyo",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Abakristo bahamagarirwa kugira ingaruka nziza mu muryango no mu gihugu.",
+        "body": "UMURONGO NYAMUTIMA: Matayo 5:13-16\n\nINSHINGA Y UYU MUNSI\nKuba umunyu n umucyo ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Matayo 5:13-16.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 196,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 18,
+        "locale": "en",
+        "title": "Enduring to the End",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Abaheburayo 10:36\n\nTODAY'S REFLECTION\nEnduring to the End calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Abaheburayo 10:36.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 197,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 18,
+        "locale": "fr",
+        "title": "Persévérer Jusqu a la Fin",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Abaheburayo 10:36\n\nREFLEXION DU JOUR\nPersévérer Jusqu a la Fin nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Abaheburayo 10:36.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 198,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 18,
+        "locale": "rw",
+        "title": "Kwihangana kugeza ku iherezo",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Kwihangana mu kwizera kudutegurira kubona imbuto zirambye.",
+        "body": "UMURONGO NYAMUTIMA: Abaheburayo 10:36\n\nINSHINGA Y UYU MUNSI\nKwihangana kugeza ku iherezo ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Abaheburayo 10:36.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 199,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 19,
+        "locale": "en",
+        "title": "The Holy Spirit Helps Us",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Yohana 14:26\n\nTODAY'S REFLECTION\nThe Holy Spirit Helps Us calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Yohana 14:26.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 200,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 19,
+        "locale": "fr",
+        "title": "Le Saint-Esprit Nous Aide",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Yohana 14:26\n\nREFLEXION DU JOUR\nLe Saint-Esprit Nous Aide nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Yohana 14:26.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 201,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 19,
+        "locale": "rw",
+        "title": "Umwuka Wera adufasha",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Umwuka Wera atwigisha, akaduhumuriza kandi akatwibutsa ukuri kwa Kristo.",
+        "body": "UMURONGO NYAMUTIMA: Yohana 14:26\n\nINSHINGA Y UYU MUNSI\nUmwuka Wera adufasha ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Yohana 14:26.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
+    },
+    {
+        "id": 202,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 20,
+        "locale": "en",
+        "title": "Love Shows We Belong to Christ",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "en",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Daily devotional reflection from Beacon of God Ministries.",
+        "body": "KEY SCRIPTURE: Yohana 13:34-35\n\nTODAY'S REFLECTION\nLove Shows We Belong to Christ calls us to keep our eyes on God more than on pressure around us. Scripture does not only comfort us; it forms our character and direction for daily life.\n\nBIBLICAL INSIGHT\nGod often works progressively. He may not answer every question immediately, but He always remains faithful. In every season, obedience and trust create room for peace, clarity, and spiritual growth.\n\nPRACTICAL RESPONSE\n1) Spend at least 10 focused minutes in prayer around Yohana 13:34-35.\n2) Write three gratitude points from your current day.\n3) Practice one concrete act of obedience: forgive, speak truth, or serve someone.\n4) Before sleeping, review how God guided your steps.\n\nPRAYER\nLord, thank You for Your living Word. Teach me to walk in faith, to choose truth, and to love as Christ loved. Strengthen my heart by Your Spirit, and let my life reflect Your grace in every decision. In Jesus' name, Amen.\n\nSPIRITUAL ACTION\nRead this devotional twice today and share it with one person who needs encouragement."
+    },
+    {
+        "id": 203,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 20,
+        "locale": "fr",
+        "title": "L Amour Montre que Nous Appartenons au Christ",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "fr",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Meditation devotionnelle quotidienne de Beacon of God Ministries.",
+        "body": "VERSET CLE: Yohana 13:34-35\n\nREFLEXION DU JOUR\nL Amour Montre que Nous Appartenons au Christ nous rappelle de regarder a Dieu avant de regarder aux circonstances. La Parole ne nous console pas seulement; elle nous forme et nous conduit.\n\nCOMPREHENSION BIBLIQUE\nDieu agit souvent par etapes. Il ne repond pas toujours immediatement a toutes nos questions, mais Il demeure fidele. Dans chaque saison, l obeissance et la confiance ouvrent la voie a la paix et a la maturite spirituelle.\n\nAPPLICATION PRATIQUE\n1) Prenez au moins 10 minutes de priere autour de Yohana 13:34-35.\n2) Ecrivez trois sujets de reconnaissance aujourd hui.\n3) Posez un acte concret d obeissance: pardonner, dire la verite, ou servir quelqu un.\n4) Le soir, relisez votre journee pour discerner la main de Dieu.\n\nPRIERE\nSeigneur, merci pour Ta Parole vivante. Apprends-moi a marcher par la foi, a choisir la verite, et a aimer comme Christ. Fortifie mon coeur par Ton Esprit, afin que ma vie Te glorifie chaque jour. Au nom de Jesus, Amen.\n\nACTION SPIRITUELLE\nLisez ce devotionnel deux fois aujourd hui et partagez-le avec une personne qui a besoin d encouragement."
+    },
+    {
+        "id": 204,
+        "content_type": "App\\Models\\Devotional",
+        "content_id": 20,
+        "locale": "rw",
+        "title": "Urukundo rwerekana ko turi abe",
+        "description": null,
+        "created_at": "2026-03-02 00:03:38",
+        "updated_at": "2026-03-02 00:21:05",
+        "source_locale": "rw",
+        "translation_status": "approved",
+        "translated_by": "manual",
+        "quality_score": 100,
+        "is_bible_locked": 0,
+        "reviewed_by": null,
+        "reviewed_at": "2026-03-02 00:21:05",
+        "excerpt": "Urukundo ni ikimenyetso nyakuri cy umwigishwa wa Yesu.",
+        "body": "UMURONGO NYAMUTIMA: Yohana 13:34-35\n\nINSHINGA Y UYU MUNSI\nUrukundo rwerekana ko turi abe ni ubutumwa buduhamagarira kureba ku Mana kuruta uko tureba ku bibazo. Ijambo ry Imana riduha icyerekezo, rikadukomeza kandi rikadutoza kuguma mu kuri no mu kwizera. Ibi si amagambo gusa yo kuduhumuriza, ahubwo ni umurongo wo kubaho buri munsi.\n\nICYO DUSOBANUKIRWA N IRIJAMBO\nIyo twiga Ijambo ry Imana twitonze, tubona ko Imana ikunda kutuyobora buhoro buhoro, ikadukura mu bwoba ikatugeza ku mahoro. Nubwo ibihe biba bikomeye, Imana ikomeza kuba indahemuka. Ntabwo idusaba gusobanukirwa byose mbere; idusaba kuyizera no kuyumvira. Iyo tubikoze, umutima uraruhuka kandi ubuzima bugenda bugira umusaruro.\n\nGUSHYIRA MU BIKORWA UYU MUNSI\n1) Tangira umunsi wawe usenga byibura iminota 10, uvuga ku murongo wa Yohana 13:34-35.\n2) Andika ibintu bitatu ushimira Imana uyu munsi, nubwo byaba bito.\n3) Fata icyemezo kimwe gifatika cyo kubaho mu kuri: kubabarira, kuvugisha ukuri, cyangwa gufasha undi muntu.\n4) Nimugoroba, subiza amaso inyuma urebe aho Imana yakuyoboye.\n\nISENGESHO RISOZA\nMwami Mana, urakoze kuko Ijambo ryawe rinyubaka kandi rikankomeza. Nyigisha kugendera mu kuri kwawe no kuguma mu kwizera nubwo ibihe bitoroshye. Mpa umutima wumva, umenya kubabarira, no gukunda abantu nk uko wabikunze. Umwuka Wera ampindure buri munsi, kugira ngo ubuzima bwanjye bugaragaze Kristo. Mu izina rya Yesu, Amen.\n\nINTAMBWE Y UMWUKA\nUrahamagariwe gusoma iri jambo inshuro ebyiri uyu munsi no kurisangiza undi muntu umwe. Ibyo ukoze uyu munsi birashobora gutangira impinduka ndende mu buzima bwawe no mu buzima bw abandi."
     }
 ]

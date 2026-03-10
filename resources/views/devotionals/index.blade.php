@@ -69,7 +69,7 @@
             </div>
 
             <div class="mt-8">
-                {{ $devotionals->links() }}
+                {{ $devotionals->links('pagination.audience') }}
             </div>
         </div>
     </section>

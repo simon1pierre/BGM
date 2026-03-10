@@ -9,5 +9,137 @@
         "used_at": "2026-02-28 22:05:10",
         "created_at": "2026-02-28 22:04:38",
         "updated_at": "2026-02-28 22:05:10"
+    },
+    {
+        "id": 2,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "code": "285105",
+        "purpose": "login",
+        "expires_at": "2026-03-01 13:40:13",
+        "used_at": "2026-03-01 13:31:22",
+        "created_at": "2026-03-01 13:30:13",
+        "updated_at": "2026-03-01 13:31:22"
+    },
+    {
+        "id": 3,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "code": "958708",
+        "purpose": "login",
+        "expires_at": "2026-03-01 19:21:15",
+        "used_at": "2026-03-01 19:11:56",
+        "created_at": "2026-03-01 19:11:15",
+        "updated_at": "2026-03-01 19:11:56"
+    },
+    {
+        "id": 4,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "code": "575722",
+        "purpose": "login",
+        "expires_at": "2026-03-01 23:11:34",
+        "used_at": null,
+        "created_at": "2026-03-01 23:01:34",
+        "updated_at": "2026-03-01 23:01:34"
+    },
+    {
+        "id": 5,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "code": "160207",
+        "purpose": "login",
+        "expires_at": "2026-03-01 23:12:24",
+        "used_at": null,
+        "created_at": "2026-03-01 23:02:24",
+        "updated_at": "2026-03-01 23:02:24"
+    },
+    {
+        "id": 6,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "code": "946165",
+        "purpose": "login",
+        "expires_at": "2026-03-02 00:40:58",
+        "used_at": "2026-03-02 00:31:41",
+        "created_at": "2026-03-02 00:30:58",
+        "updated_at": "2026-03-02 00:31:41"
+    },
+    {
+        "id": 7,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "code": "432534",
+        "purpose": "login",
+        "expires_at": "2026-03-03 10:31:27",
+        "used_at": "2026-03-03 10:21:52",
+        "created_at": "2026-03-03 10:21:27",
+        "updated_at": "2026-03-03 10:21:52"
+    },
+    {
+        "id": 8,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "code": "951540",
+        "purpose": "login",
+        "expires_at": "2026-03-09 13:31:05",
+        "used_at": "2026-03-09 13:21:37",
+        "created_at": "2026-03-09 13:21:05",
+        "updated_at": "2026-03-09 13:21:37"
+    },
+    {
+        "id": 9,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "code": "146992",
+        "purpose": "login",
+        "expires_at": "2026-03-09 16:24:51",
+        "used_at": null,
+        "created_at": "2026-03-09 16:14:51",
+        "updated_at": "2026-03-09 16:14:51"
+    },
+    {
+        "id": 10,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "code": "724738",
+        "purpose": "login",
+        "expires_at": "2026-03-09 16:26:16",
+        "used_at": "2026-03-09 16:24:24",
+        "created_at": "2026-03-09 16:16:16",
+        "updated_at": "2026-03-09 16:24:24"
+    },
+    {
+        "id": 11,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "code": "320663",
+        "purpose": "login",
+        "expires_at": "2026-03-10 23:09:40",
+        "used_at": "2026-03-10 23:00:25",
+        "created_at": "2026-03-10 22:59:40",
+        "updated_at": "2026-03-10 23:00:25"
+    },
+    {
+        "id": 12,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "code": "430216",
+        "purpose": "login",
+        "expires_at": "2026-03-10 23:26:16",
+        "used_at": "2026-03-10 23:16:33",
+        "created_at": "2026-03-10 23:16:16",
+        "updated_at": "2026-03-10 23:16:33"
+    },
+    {
+        "id": 13,
+        "user_id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "code": "778414",
+        "purpose": "login",
+        "expires_at": "2026-03-10 23:50:35",
+        "used_at": "2026-03-10 23:41:07",
+        "created_at": "2026-03-10 23:40:35",
+        "updated_at": "2026-03-10 23:41:07"
     }
 ]

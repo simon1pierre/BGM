@@ -1,5 +1,5 @@
 {
-    "exported_at": "2026-03-01 02:17:21",
+    "exported_at": "2026-03-11 00:46:19",
     "connection": "sqlite",
     "tables": [
         {
@@ -12,15 +12,15 @@
         },
         {
             "name": "books",
-            "rows": 4
+            "rows": 8
         },
         {
             "name": "audiobooks",
-            "rows": 6
+            "rows": 11
         },
         {
             "name": "audiobook_parts",
-            "rows": 21
+            "rows": 87
         },
         {
             "name": "audios",
@@ -32,11 +32,11 @@
         },
         {
             "name": "admin_notification_reads",
-            "rows": 0
+            "rows": 2
         },
         {
             "name": "audience_page_events",
-            "rows": 258
+            "rows": 1249
         },
         {
             "name": "contact_messages",
@@ -44,27 +44,31 @@
         },
         {
             "name": "content_comments",
-            "rows": 0
-        },
-        {
-            "name": "content_events",
-            "rows": 102
-        },
-        {
-            "name": "content_likes",
             "rows": 1
         },
         {
+            "name": "content_events",
+            "rows": 886
+        },
+        {
+            "name": "content_likes",
+            "rows": 3
+        },
+        {
             "name": "content_notifications",
-            "rows": 0
+            "rows": 1
         },
         {
             "name": "content_translations",
-            "rows": 114
+            "rows": 204
+        },
+        {
+            "name": "devotionals",
+            "rows": 20
         },
         {
             "name": "downloads_log",
-            "rows": 3
+            "rows": 5
         },
         {
             "name": "email_campaigns",
@@ -76,7 +80,7 @@
         },
         {
             "name": "ministry_leaders",
-            "rows": 5
+            "rows": 6
         },
         {
             "name": "playlist_items",
@@ -96,15 +100,15 @@
         },
         {
             "name": "subscribers",
-            "rows": 0
+            "rows": 1
         },
         {
             "name": "user_activity_logs",
-            "rows": 683
+            "rows": 3535
         },
         {
             "name": "user_login_logs",
-            "rows": 1
+            "rows": 10
         },
         {
             "name": "user_status_logs",
@@ -112,11 +116,11 @@
         },
         {
             "name": "verification_codes",
-            "rows": 1
+            "rows": 13
         },
         {
             "name": "video_events",
-            "rows": 0
+            "rows": 116
         },
         {
             "name": "video_series",

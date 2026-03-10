@@ -15,6 +15,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $latestSnapshotManifest = database_path('seeders/snapshots/latest/manifest.json');
+        if (File::exists($latestSnapshotManifest)) {
+            $this->call([
+                DatabaseSnapshotSeeder::class,
+            ]);
+
+            return;
+        }
+
         $contentSnapshotManifest = database_path('seeders/snapshots/content/manifest.json');
         if (File::exists($contentSnapshotManifest)) {
             $this->call([

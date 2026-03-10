@@ -1,1 +1,12 @@
-[]
+[
+    {
+        "id": 1,
+        "email": "simonpierreturamyumukiza96@gmail.com",
+        "name": "Simon Pierre",
+        "is_active": 1,
+        "subscribed_at": "2026-03-01 20:04:16",
+        "deleted_at": null,
+        "created_at": "2026-03-01 20:04:16",
+        "updated_at": "2026-03-01 20:04:16"
+    }
+]
