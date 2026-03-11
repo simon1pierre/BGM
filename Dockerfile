@@ -1,7 +1,7 @@
 FROM composer:2 AS vendor
 WORKDIR /app
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --prefer-dist --no-interaction --no-progress
+RUN composer install --no-dev --prefer-dist --no-interaction --no-progress --no-scripts
 
 FROM php:8.2-fpm-bullseye
 
@@ -40,7 +40,8 @@ COPY docker/start.sh /start.sh
 
 RUN chmod +x /start.sh \
   && mkdir -p storage bootstrap/cache \
-  && chown -R www-data:www-data storage bootstrap/cache
+  && chown -R www-data:www-data storage bootstrap/cache \
+  && php /var/www/html/artisan package:discover --no-interaction --ansi
 
 EXPOSE 8080
 
