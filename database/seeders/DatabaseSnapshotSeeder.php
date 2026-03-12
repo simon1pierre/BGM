@@ -120,6 +120,8 @@ class DatabaseSnapshotSeeder extends Seeder
             'audiobook_parts',
             'audios',
             'devotionals',
+            'user_activity_logs',
+            'admin_notification_reads',
         ];
 
         $priorityIndex = array_flip($priority);
