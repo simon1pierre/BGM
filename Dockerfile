@@ -2,6 +2,8 @@ FROM php:8.4-cli-bookworm
 
 WORKDIR /var/www/html
 
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     git \
@@ -27,13 +29,11 @@ RUN apt-get update \
 COPY . /var/www/html
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-  && composer install --no-dev --optimize-autoloader --no-interaction \
-  && mkdir -p storage bootstrap/cache \
+  && composer install --no-dev --optimize-autoloader --no-interaction --no-scripts \
+  && mkdir -p storage bootstrap/cache storage/framework/cache/data storage/framework/sessions storage/framework/views \
   && chown -R www-data:www-data storage bootstrap/cache \
-  && php artisan config:cache \
-  && php artisan route:cache \
-  && php artisan view:cache
+  && php artisan package:discover --no-interaction
 
 EXPOSE 10000
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
+CMD ["sh", "-c", "php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan serve --host=0.0.0.0 --port=10000"]
