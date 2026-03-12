@@ -11,7 +11,7 @@ RUN apt-get update \
     git \
     unzip \
     libpng-dev \
-    libjpeg-dev \
+    libjpeg62-turbo-dev \
     libfreetype6-dev \
     libonig-dev \
     libzip-dev \
