@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\\Models\\EmailCampaign;
+use App\Models\EmailCampaign;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -23,5 +23,11 @@ class EmailCampaignMailable extends Mailable
             ]);
     }
 }
+
+
+
+
+
+
 
 

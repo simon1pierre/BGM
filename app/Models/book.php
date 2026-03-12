@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\ContentCategory;
 use App\Models\ContentLike;
 use App\Models\ContentComment;
-use App\\Models\\Audiobook;
+use App\Models\Audiobook;
 use App\Models\Concerns\HasTranslations;
 
 class Book extends Model
@@ -78,5 +78,11 @@ class Book extends Model
         return $this->hasMany(Audiobook::class, 'book_id');
     }
 }
+
+
+
+
+
+
 
 

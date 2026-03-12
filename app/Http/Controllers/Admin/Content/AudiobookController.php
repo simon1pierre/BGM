@@ -6,8 +6,8 @@ use App\Http\Controllers\Concerns\HandlesTranslations;
 use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
 use App\Models\UserActivityLog;
-use App\\Models\\Audiobook;
-use App\\Models\\Book;
+use App\Models\Audiobook;
+use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -770,5 +770,11 @@ class AudiobookController extends Controller
         return $result;
     }
 }
+
+
+
+
+
+
 
 

@@ -31,9 +31,8 @@ COPY . /var/www/html
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
   && composer install --no-dev --optimize-autoloader --no-interaction --no-scripts \
   && mkdir -p storage bootstrap/cache storage/framework/cache/data storage/framework/sessions storage/framework/views \
-  && chown -R www-data:www-data storage bootstrap/cache \
-  && php artisan package:discover --no-interaction
+  && chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan serve --host=0.0.0.0 --port=10000"]
+CMD ["sh", "-c", "php artisan package:discover --no-interaction && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan serve --host=0.0.0.0 --port=10000"]

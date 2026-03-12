@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Admin;
 
-use App\\Models\\Audio;
-use App\\Models\\Book;
-use App\\Models\\Audiobook;
+use App\Models\Audio;
+use App\Models\Book;
+use App\Models\Audiobook;
 use App\Models\ContentCategory;
-use App\\Models\\Video;
+use App\Models\Video;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -167,5 +167,11 @@ class ContentTable extends Component
         ]);
     }
 }
+
+
+
+
+
+
 
 

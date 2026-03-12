@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
 use App\Models\UserActivityLog;
 use App\Models\MinistryLeader;
-use App\\Models\\Video;
+use App\Models\Video;
 use App\Jobs\SendContentNotificationJob;
 use App\Models\ContentNotification;
 use App\Models\VideoSeries;
@@ -391,6 +391,12 @@ class VideoController extends Controller
     }
 
 }
+
+
+
+
+
+
 
 
 

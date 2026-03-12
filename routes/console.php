@@ -2,13 +2,13 @@
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Schedule;
-use App\\Models\\EmailCampaign;
+use App\Models\EmailCampaign;
 use App\Jobs\SendEmailCampaignJob;
 use Illuminate\Support\Facades\Artisan;
-use App\\Models\\Audio;
-use App\\Models\\Audiobook;
-use App\\Models\\Book;
-use App\\Models\\Video;
+use App\Models\Audio;
+use App\Models\Audiobook;
+use App\Models\Book;
+use App\Models\Video;
 use App\Services\Translation\ContentTranslationPipeline;
 
 Artisan::command('inspire', function () {
@@ -55,4 +55,10 @@ Schedule::call(function () {
             SendEmailCampaignJob::dispatch($campaign->id);
         });
 })->everyMinute();
+
+
+
+
+
+
 

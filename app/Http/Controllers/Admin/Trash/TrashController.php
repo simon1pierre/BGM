@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\Admin\Trash;
 
 use App\Http\Controllers\Controller;
-use App\\Models\\Audio;
-use App\\Models\\Audiobook;
-use App\\Models\\Book;
+use App\Models\Audio;
+use App\Models\Audiobook;
+use App\Models\Book;
 use App\Models\ContactMessage;
 use App\Models\ContentCategory;
-use App\\Models\\EmailCampaign;
+use App\Models\EmailCampaign;
 use App\Models\Event;
 use App\Models\MinistryLeader;
 use App\Models\Playlist;
-use App\\Models\\Subscriber;
+use App\Models\Subscriber;
 use App\Models\User;
 use App\Models\UserActivityLog;
 use App\Models\VideoSeries;
 use App\Models\Devotional;
-use App\\Models\\Video;
+use App\Models\Video;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -295,5 +295,11 @@ class TrashController extends Controller
         };
     }
 }
+
+
+
+
+
+
 
 

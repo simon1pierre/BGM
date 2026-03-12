@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\\Models\\Audio;
-use App\\Models\\Book;
-use App\\Models\\Subscriber;
-use App\\Models\\Video;
+use App\Models\Audio;
+use App\Models\Book;
+use App\Models\Subscriber;
+use App\Models\Video;
 use App\Models\UserActivityLog;
 use App\Models\VideoEvent;
 use App\Models\ContentEvent;
@@ -241,5 +241,11 @@ class AdminController extends Controller
         return $labels->map(fn ($day) => (int) ($rows[$day] ?? 0))->values();
     }
 }
+
+
+
+
+
+
 
 

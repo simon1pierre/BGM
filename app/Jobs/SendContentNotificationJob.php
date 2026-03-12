@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\ContentNotificationMailable;
-use App\\Models\\Subscriber;
+use App\Models\Subscriber;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -40,5 +40,11 @@ class SendContentNotificationJob implements ShouldQueue
         }
     }
 }
+
+
+
+
+
+
 
 

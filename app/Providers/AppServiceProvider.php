@@ -3,16 +3,16 @@
 namespace App\Providers;
 
 use App\Models\Setting;
-use App\\Models\\Subscriber;
+use App\Models\Subscriber;
 use App\Models\ContactMessage;
 use App\Models\Event;
-use App\\Models\\EmailCampaign;
+use App\Models\EmailCampaign;
 use App\Models\MinistryLeader;
 use App\Models\User;
-use App\\Models\\Video;
-use App\\Models\\Audio;
-use App\\Models\\Audiobook;
-use App\\Models\\Book;
+use App\Models\Video;
+use App\Models\Audio;
+use App\Models\Audiobook;
+use App\Models\Book;
 use App\Models\ContentCategory;
 use App\Models\Playlist;
 use App\Models\VideoSeries;
@@ -222,5 +222,11 @@ class AppServiceProvider extends ServiceProvider
         }
     }
 }
+
+
+
+
+
+
 
 

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\ContentCategory;
 use App\Models\ContentTranslation;
 use App\Models\MinistryLeader;
-use App\\Models\\Video;
+use App\Models\Video;
 use App\Models\VideoSeries;
 use Illuminate\Database\Seeder;
 
@@ -237,6 +237,12 @@ class VideoSeeder extends Seeder
         return null;
     }
 }
+
+
+
+
+
+
 
 
 

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\ContentCategory;
-use App\\Models\\Book;
+use App\Models\Book;
 use App\Models\AudiobookPart;
 use App\Models\Concerns\HasTranslations;
 
@@ -102,5 +102,11 @@ class Audiobook extends Model
         return null;
     }
 }
+
+
+
+
+
+
 
 

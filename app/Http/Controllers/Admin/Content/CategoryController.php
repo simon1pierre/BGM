@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin\Content;
 use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
 use App\Models\UserActivityLog;
-use App\\Models\\Audio;
-use App\\Models\\Audiobook;
-use App\\Models\\Book;
-use App\\Models\\Video;
+use App\Models\Audio;
+use App\Models\Audiobook;
+use App\Models\Book;
+use App\Models\Video;
 use App\Http\Controllers\Concerns\HandlesTranslations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -249,6 +249,12 @@ class CategoryController extends Controller
         return redirect()->back()->with('status', 'Category permanently deleted.');
     }
 }
+
+
+
+
+
+
 
 
 

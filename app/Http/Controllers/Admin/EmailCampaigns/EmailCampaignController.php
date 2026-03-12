@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin\EmailCampaigns;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\SendEmailCampaignJob;
-use App\\Models\\EmailCampaign;
-use App\\Models\\Subscriber;
+use App\Models\EmailCampaign;
+use App\Models\Subscriber;
 use App\Models\UserActivityLog;
-use App\\Models\\Video;
-use App\\Models\\Audio;
-use App\\Models\\Book;
+use App\Models\Video;
+use App\Models\Audio;
+use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
@@ -367,6 +367,12 @@ class EmailCampaignController extends Controller
     }
 
 }
+
+
+
+
+
+
 
 
 

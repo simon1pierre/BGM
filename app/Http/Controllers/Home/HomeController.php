@@ -7,13 +7,13 @@ use App\Models\ContentCategory;
 use App\Models\ContactMessage;
 use App\Models\Event;
 use App\Models\Setting;
-use App\\Models\\Subscriber;
+use App\Models\Subscriber;
 use App\Models\MinistryLeader;
 use App\Models\UserActivityLog;
-use App\\Models\\Video;
-use App\\Models\\Book;
-use App\\Models\\Audio;
-use App\\Models\\Audiobook;
+use App\Models\Video;
+use App\Models\Book;
+use App\Models\Audio;
+use App\Models\Audiobook;
 use App\Models\Devotional;
 use Illuminate\Http\Request;
 
@@ -780,5 +780,11 @@ class HomeController extends Controller
         return null;
     }
 }
+
+
+
+
+
+
 
 

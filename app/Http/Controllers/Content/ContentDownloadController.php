@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Content;
 use App\Http\Controllers\Controller;
 use App\Models\DownloadsLog;
 use App\Models\AudiobookPart;
-use App\\Models\\Audio;
-use App\\Models\\Book;
-use App\\Models\\Video;
+use App\Models\Audio;
+use App\Models\Book;
+use App\Models\Video;
 use App\Models\VideoEvent;
 use App\Services\GeoIpService;
 use Illuminate\Http\Request;
@@ -199,5 +199,11 @@ class ContentDownloadController extends Controller
         return app(GeoIpService::class)->lookup($request->ip());
     }
 }
+
+
+
+
+
+
 
 

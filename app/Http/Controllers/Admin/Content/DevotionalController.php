@@ -337,3 +337,9 @@ class DevotionalController extends Controller
 }
 
 
+
+
+
+
+
+

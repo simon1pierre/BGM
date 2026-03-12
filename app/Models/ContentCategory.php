@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use App\\Models\\Video;
-use App\\Models\\Audio;
-use App\\Models\\Audiobook;
-use App\\Models\\Book;
+use App\Models\Video;
+use App\Models\Audio;
+use App\Models\Audiobook;
+use App\Models\Book;
 use App\Models\Concerns\HasTranslations;
 
 class ContentCategory extends Model
@@ -67,5 +67,13 @@ class ContentCategory extends Model
         return $this->translatedValue('description', $value);
     }
 }
+
+
+
+
+
+
+
+
 
 

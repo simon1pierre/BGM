@@ -44,3 +44,9 @@ class LibreTranslateTranslator implements TranslatorInterface
 
 
 
+
+
+
+
+
+

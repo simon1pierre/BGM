@@ -70,3 +70,9 @@ class Devotional extends Model
 }
 
 
+
+
+
+
+
+

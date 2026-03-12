@@ -22,3 +22,9 @@ class ContentNotificationMailable extends Mailable
 }
 
 
+
+
+
+
+
+

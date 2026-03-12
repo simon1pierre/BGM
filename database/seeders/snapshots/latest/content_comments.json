@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 1,
         "name": "Simon Pierre TURAMYUMUKIZA",
         "email": "simonpierreturamyumukiza96@gmail.com",

@@ -1021,7 +1021,7 @@
     },
     {
         "id": 61,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 1,
         "locale": "rw",
         "title": "UKOMERETSA NIWE UKIZA",
@@ -1038,7 +1038,7 @@
     },
     {
         "id": 62,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 1,
         "locale": "en",
         "title": "The One Who Wounds Is the One Who Heals",
@@ -1055,7 +1055,7 @@
     },
     {
         "id": 63,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 1,
         "locale": "fr",
         "title": "Celui Qui Blesse Est Celui Qui Guerit",
@@ -1072,7 +1072,7 @@
     },
     {
         "id": 64,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 2,
         "locale": "rw",
         "title": "Imbabazi n'Umurava Bye Kukuvaho",
@@ -1089,7 +1089,7 @@
     },
     {
         "id": 65,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 2,
         "locale": "en",
         "title": "May Mercy and Diligence Not Depart from You",
@@ -1106,7 +1106,7 @@
     },
     {
         "id": 66,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 2,
         "locale": "fr",
         "title": "Que la Misericorde et le Zele Ne Te Quittent Pas",
@@ -1123,7 +1123,7 @@
     },
     {
         "id": 67,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 3,
         "locale": "rw",
         "title": "URUFATIRO NYAKURI",
@@ -1140,7 +1140,7 @@
     },
     {
         "id": 68,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 3,
         "locale": "en",
         "title": "The True Foundation",
@@ -1157,7 +1157,7 @@
     },
     {
         "id": 69,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 3,
         "locale": "fr",
         "title": "Le Vrai Fondement",
@@ -1174,7 +1174,7 @@
     },
     {
         "id": 70,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 4,
         "locale": "rw",
         "title": "Ubuntu bw'Imana bwabonetse",
@@ -1191,7 +1191,7 @@
     },
     {
         "id": 71,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 4,
         "locale": "en",
         "title": "The Grace of God Has Appeared",
@@ -1208,7 +1208,7 @@
     },
     {
         "id": 72,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 4,
         "locale": "fr",
         "title": "La Grace de Dieu Est Apparue",
@@ -1225,7 +1225,7 @@
     },
     {
         "id": 73,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 5,
         "locale": "rw",
         "title": "Nigute umuntu yakwandikwa mu gitabo cy'ubugingo?",
@@ -1242,7 +1242,7 @@
     },
     {
         "id": 74,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 5,
         "locale": "en",
         "title": "How Can a Person Be Written in the Book of Life?",
@@ -1259,7 +1259,7 @@
     },
     {
         "id": 75,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 5,
         "locale": "fr",
         "title": "Comment Etre Inscrit Dans le Livre de Vie ?",
@@ -1276,7 +1276,7 @@
     },
     {
         "id": 76,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 6,
         "locale": "rw",
         "title": "Umwuka ni we utanga ubugingo, umubiri nta cyo umaze",
@@ -1293,7 +1293,7 @@
     },
     {
         "id": 77,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 6,
         "locale": "en",
         "title": "The Spirit Gives Life; The Flesh Profits Nothing",
@@ -1310,7 +1310,7 @@
     },
     {
         "id": 78,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 6,
         "locale": "fr",
         "title": "L'Esprit Donne la Vie; la Chair Ne Sert de Rien",
@@ -1327,7 +1327,7 @@
     },
     {
         "id": 79,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 7,
         "locale": "rw",
         "title": "AKAGA MU GIHE CY'UBUSAZA",
@@ -1344,7 +1344,7 @@
     },
     {
         "id": 80,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 7,
         "locale": "en",
         "title": "Danger in Old Age",
@@ -1361,7 +1361,7 @@
     },
     {
         "id": 81,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 7,
         "locale": "fr",
         "title": "Le Danger au Temps de la Vieillesse",
@@ -1378,7 +1378,7 @@
     },
     {
         "id": 82,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 8,
         "locale": "rw",
         "title": "UBUBATA",
@@ -1395,7 +1395,7 @@
     },
     {
         "id": 83,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 8,
         "locale": "en",
         "title": "Bondage",
@@ -1412,7 +1412,7 @@
     },
     {
         "id": 84,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 8,
         "locale": "fr",
         "title": "La Servitude",
@@ -1429,7 +1429,7 @@
     },
     {
         "id": 85,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 1,
         "locale": "en",
         "title": "The Great Controversy",
@@ -1446,7 +1446,7 @@
     },
     {
         "id": 86,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 1,
         "locale": "fr",
         "title": "La Tragédie des Siècles",
@@ -1463,7 +1463,7 @@
     },
     {
         "id": 87,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 1,
         "locale": "rw",
         "title": "INTAMBARA IKOMEYE",
@@ -1480,7 +1480,7 @@
     },
     {
         "id": 88,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 1,
         "locale": "en",
         "title": "Intambara Ikomeye",
@@ -1497,7 +1497,7 @@
     },
     {
         "id": 89,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 1,
         "locale": "fr",
         "title": "Intambara Ikomeye",
@@ -1514,7 +1514,7 @@
     },
     {
         "id": 90,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 1,
         "locale": "rw",
         "title": "Intambara Ikomeye",
@@ -1531,7 +1531,7 @@
     },
     {
         "id": 91,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 2,
         "locale": "en",
         "title": "Prophets and Kings",
@@ -1548,7 +1548,7 @@
     },
     {
         "id": 92,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 2,
         "locale": "fr",
         "title": "Prophètes et Rois",
@@ -1565,7 +1565,7 @@
     },
     {
         "id": 93,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 2,
         "locale": "rw",
         "title": "ABAHANUZI N’ABAMI",
@@ -1582,7 +1582,7 @@
     },
     {
         "id": 94,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 2,
         "locale": "en",
         "title": "IGICE CYA 1 Salomo",
@@ -1599,7 +1599,7 @@
     },
     {
         "id": 95,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 2,
         "locale": "fr",
         "title": "IGICE CYA 1 Salomo",
@@ -1616,7 +1616,7 @@
     },
     {
         "id": 96,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 2,
         "locale": "rw",
         "title": "IGICE CYA 1 Salomo",
@@ -1633,7 +1633,7 @@
     },
     {
         "id": 97,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 3,
         "locale": "en",
         "title": "IGICE CYA 2 ingoro no kwegurirwa imana kwayo",
@@ -1650,7 +1650,7 @@
     },
     {
         "id": 98,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 3,
         "locale": "fr",
         "title": "IGICE CYA 2 ingoro no kwegurirwa imana kwayo",
@@ -1667,7 +1667,7 @@
     },
     {
         "id": 99,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 3,
         "locale": "rw",
         "title": "IGICE CYA 2 ingoro no kwegurirwa imana kwayo",
@@ -1684,7 +1684,7 @@
     },
     {
         "id": 100,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 4,
         "locale": "en",
         "title": "Prophets and Kings - Audiobook",
@@ -1701,7 +1701,7 @@
     },
     {
         "id": 101,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 4,
         "locale": "fr",
         "title": "Prophets and Kings - Audiobook",
@@ -1718,7 +1718,7 @@
     },
     {
         "id": 102,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 4,
         "locale": "rw",
         "title": "3. IGICE CYA 3 ubwibone buterwa no kugubwa neza kwirata ubukire",
@@ -1735,7 +1735,7 @@
     },
     {
         "id": 103,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 3,
         "locale": "en",
         "title": "The Acts of the Apostles",
@@ -1752,7 +1752,7 @@
     },
     {
         "id": 104,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 3,
         "locale": "fr",
         "title": "Les Actes des Apôtres",
@@ -1769,7 +1769,7 @@
     },
     {
         "id": 105,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 3,
         "locale": "rw",
         "title": "IBYAKOZWE N’INTUMWA",
@@ -1786,7 +1786,7 @@
     },
     {
         "id": 106,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 5,
         "locale": "en",
         "title": "IGICE CYA 1 UMUGAMBI IMANA IFITIYE ITORERO RYAYO",
@@ -1803,7 +1803,7 @@
     },
     {
         "id": 107,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 5,
         "locale": "fr",
         "title": "IGICE CYA 1 UMUGAMBI IMANA IFITIYE ITORERO RYAYO",
@@ -1820,7 +1820,7 @@
     },
     {
         "id": 108,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 5,
         "locale": "rw",
         "title": "IGICE CYA 1 UMUGAMBI IMANA IFITIYE ITORERO RYAYO",
@@ -1837,7 +1837,7 @@
     },
     {
         "id": 109,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 4,
         "locale": "en",
         "title": "The One Desired in All Ages",
@@ -1854,7 +1854,7 @@
     },
     {
         "id": 110,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 4,
         "locale": "fr",
         "title": "Celui qui est Désiré en Tout Temps",
@@ -1871,7 +1871,7 @@
     },
     {
         "id": 111,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 4,
         "locale": "rw",
         "title": "UWIFUZWA IBIHE BYOSE",
@@ -1888,7 +1888,7 @@
     },
     {
         "id": 112,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 6,
         "locale": "en",
         "title": "IGICE CYA 1 IMANA IRI KUMWE NATWE",
@@ -1905,7 +1905,7 @@
     },
     {
         "id": 113,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 6,
         "locale": "fr",
         "title": "IGICE CYA 1 IMANA IRI KUMWE NATWE",
@@ -1922,7 +1922,7 @@
     },
     {
         "id": 114,
-        "content_type": "App\\Models\\audiobook",
+        "content_type": "App\\Models\\Audiobook",
         "content_id": 6,
         "locale": "rw",
         "title": "IGICE CYA 1 IMANA IRI KUMWE NATWE",

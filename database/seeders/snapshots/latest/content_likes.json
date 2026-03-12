@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 1,
         "device_hash": "c9c58e8a9c940ef12373633db589e8b24cd886c81eb240c757962e51195f2461",
         "ip_address": "127.0.0.1",
@@ -12,7 +12,7 @@
     },
     {
         "id": 2,
-        "content_type": "App\\Models\\book",
+        "content_type": "App\\Models\\Book",
         "content_id": 3,
         "device_hash": "d824053123eafa727c92840181ac20ff1bddd33f86e1fa5c9c47f84bc6ba169b",
         "ip_address": "127.0.0.1",
@@ -23,7 +23,7 @@
     },
     {
         "id": 3,
-        "content_type": "App\\Models\\video",
+        "content_type": "App\\Models\\Video",
         "content_id": 2,
         "device_hash": "d824053123eafa727c92840181ac20ff1bddd33f86e1fa5c9c47f84bc6ba169b",
         "ip_address": "127.0.0.1",
