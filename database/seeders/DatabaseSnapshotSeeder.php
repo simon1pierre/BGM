@@ -46,9 +46,13 @@ class DatabaseSnapshotSeeder extends Seeder
                 $rows = [];
             }
 
-            DB::table($table)->delete();
-            if ($driver === 'sqlite') {
-                DB::statement("DELETE FROM sqlite_sequence WHERE name = '{$table}'");
+            if ($driver === 'pgsql') {
+                $this->truncatePostgresTable($table);
+            } else {
+                DB::table($table)->delete();
+                if ($driver === 'sqlite') {
+                    DB::statement("DELETE FROM sqlite_sequence WHERE name = '{$table}'");
+                }
             }
 
             foreach (array_chunk($rows, 300) as $chunk) {
@@ -74,7 +78,8 @@ class DatabaseSnapshotSeeder extends Seeder
             return;
         }
         if ($driver === 'pgsql') {
-            DB::statement("SET session_replication_role = 'replica'");
+            // Render-managed Postgres does not allow changing session_replication_role.
+            return;
         }
     }
 
@@ -89,8 +94,14 @@ class DatabaseSnapshotSeeder extends Seeder
             return;
         }
         if ($driver === 'pgsql') {
-            DB::statement("SET session_replication_role = 'origin'");
+            return;
         }
+    }
+
+    private function truncatePostgresTable(string $table): void
+    {
+        $quoted = '"'.str_replace('"', '""', $table).'"';
+        DB::statement("TRUNCATE TABLE {$quoted} RESTART IDENTITY CASCADE");
     }
 }
 
