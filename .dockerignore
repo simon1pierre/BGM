@@ -1,4 +1,6 @@
 .git
+.github
+.vscode
 .env
 node_modules
 vendor
@@ -8,3 +10,5 @@ storage/framework/sessions
 storage/framework/views
 npm-debug.log
 docker-compose.yml
+tests
+docs

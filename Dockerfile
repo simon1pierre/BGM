@@ -1,29 +1,22 @@
-FROM composer:2 AS vendor
-WORKDIR /app
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --prefer-dist --no-interaction --no-progress --no-scripts
+FROM php:8.4-cli-bookworm
 
-FROM php:8.2-fpm-bullseye
+WORKDIR /var/www/html
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-    nginx \
     git \
     unzip \
-    libpng-dev \
+    curl \
     libjpeg62-turbo-dev \
+    libpng-dev \
     libfreetype6-dev \
-    libonig-dev \
     libzip-dev \
-    sqlite3 \
+    libonig-dev \
   && docker-php-ext-configure gd --with-freetype --with-jpeg \
   && docker-php-ext-install -j$(nproc) \
     pdo \
     pdo_mysql \
-    pdo_sqlite \
     mbstring \
-    exif \
-    pcntl \
     bcmath \
     gd \
     zip \
@@ -31,18 +24,16 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /var/www/html
-
-COPY --from=vendor /app/vendor /var/www/html/vendor
 COPY . /var/www/html
-COPY docker/nginx.conf.template /etc/nginx/conf.d/default.conf.template
-COPY docker/start.sh /start.sh
 
-RUN chmod +x /start.sh \
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+  && composer install --no-dev --optimize-autoloader --no-interaction \
   && mkdir -p storage bootstrap/cache \
   && chown -R www-data:www-data storage bootstrap/cache \
-  && php /var/www/html/artisan package:discover --no-interaction --ansi
+  && php artisan config:cache \
+  && php artisan route:cache \
+  && php artisan view:cache
 
-EXPOSE 8080
+EXPOSE 10000
 
-CMD ["/start.sh"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
