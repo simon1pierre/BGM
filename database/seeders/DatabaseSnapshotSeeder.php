@@ -31,6 +31,7 @@ class DatabaseSnapshotSeeder extends Seeder
                 ->values()
                 ->all();
         }
+        $tables = $this->orderTables($tables);
 
         $driver = DB::getDriverName();
         $this->disableForeignKeys($driver);
@@ -96,6 +97,46 @@ class DatabaseSnapshotSeeder extends Seeder
         if ($driver === 'pgsql') {
             return;
         }
+    }
+
+    /**
+     * @param array<int, string> $tables
+     * @return array<int, string>
+     */
+    private function orderTables(array $tables): array
+    {
+        if (count($tables) <= 1) {
+            return $tables;
+        }
+
+        // Preferred order to satisfy common FK constraints.
+        $priority = [
+            'users',
+            'content_categories',
+            'video_series',
+            'videos',
+            'books',
+            'audiobooks',
+            'audiobook_parts',
+            'audios',
+            'devotionals',
+        ];
+
+        $priorityIndex = array_flip($priority);
+        $originalIndex = array_flip($tables);
+
+        usort($tables, function (string $a, string $b) use ($priorityIndex, $originalIndex): int {
+            $aPriority = $priorityIndex[$a] ?? PHP_INT_MAX;
+            $bPriority = $priorityIndex[$b] ?? PHP_INT_MAX;
+
+            if ($aPriority === $bPriority) {
+                return ($originalIndex[$a] ?? 0) <=> ($originalIndex[$b] ?? 0);
+            }
+
+            return $aPriority <=> $bPriority;
+        });
+
+        return $tables;
     }
 
     private function truncatePostgresTable(string $table): void
