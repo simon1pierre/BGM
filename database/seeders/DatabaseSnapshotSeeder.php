@@ -46,6 +46,7 @@ class DatabaseSnapshotSeeder extends Seeder
             if (!is_array($rows)) {
                 $rows = [];
             }
+            $rows = $this->filterRowsToColumns($table, $rows);
 
             if ($driver === 'pgsql') {
                 $this->truncatePostgresTable($table);
@@ -145,6 +146,38 @@ class DatabaseSnapshotSeeder extends Seeder
     {
         $quoted = '"'.str_replace('"', '""', $table).'"';
         DB::statement("TRUNCATE TABLE {$quoted} RESTART IDENTITY CASCADE");
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $rows
+     * @return array<int, array<string, mixed>>
+     */
+    private function filterRowsToColumns(string $table, array $rows): array
+    {
+        if (count($rows) === 0) {
+            return $rows;
+        }
+
+        try {
+            $columns = Schema::getColumnListing($table);
+        } catch (\Throwable $e) {
+            return $rows;
+        }
+
+        if (count($columns) === 0) {
+            return $rows;
+        }
+
+        $allowed = array_flip($columns);
+        $filtered = [];
+        foreach ($rows as $row) {
+            if (!is_array($row)) {
+                continue;
+            }
+            $filtered[] = array_intersect_key($row, $allowed);
+        }
+
+        return $filtered;
     }
 }
 
