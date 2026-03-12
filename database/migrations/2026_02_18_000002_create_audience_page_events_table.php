@@ -60,3 +60,5 @@ return new class extends Migration
         Schema::dropIfExists('audience_page_events');
     }
 };
+
+

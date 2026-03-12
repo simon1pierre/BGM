@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\ContentCategory;
-use App\Models\book;
+use App\\Models\\Book;
 use App\Models\AudiobookPart;
 use App\Models\Concerns\HasTranslations;
 
-class audiobook extends Model
+class Audiobook extends Model
 {
     use SoftDeletes;
     use HasTranslations;
@@ -52,7 +52,7 @@ class audiobook extends Model
 
     public function linkedBook()
     {
-        return $this->belongsTo(book::class, 'book_id');
+        return $this->belongsTo(Book::class, 'book_id');
     }
 
     public function parts()
@@ -102,3 +102,5 @@ class audiobook extends Model
         return null;
     }
 }
+
+

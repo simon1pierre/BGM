@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin\EmailCampaigns;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\SendEmailCampaignJob;
-use App\Models\EmailCampaign;
-use App\Models\Subscriber;
+use App\\Models\\EmailCampaign;
+use App\\Models\\Subscriber;
 use App\Models\UserActivityLog;
-use App\Models\video;
-use App\Models\audio;
-use App\Models\book;
+use App\\Models\\Video;
+use App\\Models\\Audio;
+use App\\Models\\Book;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
@@ -56,9 +56,9 @@ class EmailCampaignController extends Controller
             ->orderBy('email')
             ->get();
 
-        $videos = video::query()->orderByDesc('created_at')->limit(50)->get();
-        $audios = audio::query()->orderByDesc('created_at')->limit(50)->get();
-        $documents = book::query()->orderByDesc('created_at')->limit(50)->get();
+        $videos = Video::query()->orderByDesc('created_at')->limit(50)->get();
+        $audios = Audio::query()->orderByDesc('created_at')->limit(50)->get();
+        $documents = Book::query()->orderByDesc('created_at')->limit(50)->get();
 
         return view('Admin.EmailCampaigns.create', compact('subscribers', 'videos', 'audios', 'documents'));
     }
@@ -101,7 +101,7 @@ class EmailCampaignController extends Controller
         }
         $videoUrl = $validated['video_url'] ?? null;
         if (!empty($validated['video_id'])) {
-            $videoModel = video::find($validated['video_id']);
+            $videoModel = Video::find($validated['video_id']);
             $videoUrl = $videoModel?->youtube_url ?? $videoUrl;
         }
         if ($request->hasFile('video_file')) {
@@ -109,7 +109,7 @@ class EmailCampaignController extends Controller
         }
         $audioUrl = $validated['audio_url'] ?? null;
         if (!empty($validated['audio_id'])) {
-            $audioModel = audio::find($validated['audio_id']);
+            $audioModel = Audio::find($validated['audio_id']);
             if ($audioModel?->audio_file) {
                 $audioUrl = asset('storage/'.$audioModel->audio_file);
             }
@@ -119,7 +119,7 @@ class EmailCampaignController extends Controller
         }
         $documentUrl = $validated['document_url'] ?? null;
         if (!empty($validated['document_id'])) {
-            $documentModel = book::find($validated['document_id']);
+            $documentModel = Book::find($validated['document_id']);
             if ($documentModel?->file_path) {
                 $documentUrl = asset('storage/'.$documentModel->file_path);
             }
@@ -162,9 +162,9 @@ class EmailCampaignController extends Controller
             ->orderBy('email')
             ->get();
 
-        $videos = video::query()->orderByDesc('created_at')->limit(50)->get();
-        $audios = audio::query()->orderByDesc('created_at')->limit(50)->get();
-        $documents = book::query()->orderByDesc('created_at')->limit(50)->get();
+        $videos = Video::query()->orderByDesc('created_at')->limit(50)->get();
+        $audios = Audio::query()->orderByDesc('created_at')->limit(50)->get();
+        $documents = Book::query()->orderByDesc('created_at')->limit(50)->get();
 
         return view('Admin.EmailCampaigns.edit', compact('campaign', 'subscribers', 'videos', 'audios', 'documents'));
     }
@@ -207,7 +207,7 @@ class EmailCampaignController extends Controller
         }
         $videoUrl = $validated['video_url'] ?? $campaign->video_url;
         if (!empty($validated['video_id'])) {
-            $videoModel = video::find($validated['video_id']);
+            $videoModel = Video::find($validated['video_id']);
             $videoUrl = $videoModel?->youtube_url ?? $videoUrl;
         }
         if ($request->hasFile('video_file')) {
@@ -215,7 +215,7 @@ class EmailCampaignController extends Controller
         }
         $audioUrl = $validated['audio_url'] ?? $campaign->audio_url;
         if (!empty($validated['audio_id'])) {
-            $audioModel = audio::find($validated['audio_id']);
+            $audioModel = Audio::find($validated['audio_id']);
             if ($audioModel?->audio_file) {
                 $audioUrl = asset('storage/'.$audioModel->audio_file);
             }
@@ -225,7 +225,7 @@ class EmailCampaignController extends Controller
         }
         $documentUrl = $validated['document_url'] ?? $campaign->document_url;
         if (!empty($validated['document_id'])) {
-            $documentModel = book::find($validated['document_id']);
+            $documentModel = Book::find($validated['document_id']);
             if ($documentModel?->file_path) {
                 $documentUrl = asset('storage/'.$documentModel->file_path);
             }
@@ -367,5 +367,7 @@ class EmailCampaignController extends Controller
     }
 
 }
+
+
 
 

@@ -20,3 +20,5 @@ class ContentNotificationMailable extends Mailable
             ->view('emails.content-notification', $this->payload);
     }
 }
+
+

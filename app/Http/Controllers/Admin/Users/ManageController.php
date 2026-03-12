@@ -70,3 +70,5 @@ class ManageController extends Controller
         return redirect()->back()->with('status', 'Account created. Verification code sent to user email.');
     }
 }
+
+

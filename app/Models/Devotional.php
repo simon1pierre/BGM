@@ -68,3 +68,5 @@ class Devotional extends Model
         return asset('storage/'.$value);
     }
 }
+
+

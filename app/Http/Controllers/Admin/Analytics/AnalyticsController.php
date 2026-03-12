@@ -7,9 +7,9 @@ use App\Models\AudiencePageEvent;
 use App\Models\ContentComment;
 use App\Models\ContentEvent;
 use App\Models\ContentLike;
-use App\Models\audio;
-use App\Models\book;
-use App\Models\video;
+use App\\Models\\Audio;
+use App\\Models\\Book;
+use App\\Models\\Video;
 use App\Models\VideoEvent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,15 +23,15 @@ class AnalyticsController extends Controller
         [$prevFrom, $prevTo] = $this->previousRange($from, $to);
 
         $videoTotals = [
-            'views' => video::query()->sum('view_count'),
+            'views' => Video::query()->sum('view_count'),
             'plays' => VideoEvent::query()->where('event_type', 'play')->count(),
             'impressions' => VideoEvent::query()->where('event_type', 'impression')->count(),
             'shares' => VideoEvent::query()->where('event_type', 'share')->count(),
             'watch_minutes' => (int) (VideoEvent::query()->where('event_type', 'watch')->sum('watch_seconds') / 60),
         ];
 
-        $audioType = (new audio())->getMorphClass();
-        $bookType = (new book())->getMorphClass();
+        $audioType = (new Audio())->getMorphClass();
+        $bookType = (new Book())->getMorphClass();
 
         $audioTotals = [
             'plays' => ContentEvent::query()->where('content_type', $audioType)->where('event_type', 'play')->count(),
@@ -204,7 +204,7 @@ class AnalyticsController extends Controller
     {
         [$from, $to] = $this->resolveDateRange($request);
         [$prevFrom, $prevTo] = $this->previousRange($from, $to);
-        $bookType = (new book())->getMorphClass();
+        $bookType = (new Book())->getMorphClass();
         $visitorKeyExpr = "COALESCE(NULLIF(ce.visitor_id, ''), ce.device_hash)";
         $readerSessionExpr = "COALESCE(NULLIF(ce.reader_session_id, ''), ce.session_id)";
 
@@ -385,29 +385,29 @@ class AnalyticsController extends Controller
 
     public function content()
     {
-        $topVideos = video::query()->orderByDesc('view_count')->limit(10)->get();
+        $topVideos = Video::query()->orderByDesc('view_count')->limit(10)->get();
         $topAudios = ContentEvent::query()
             ->select('content_id', DB::raw('COUNT(*) as total'))
-            ->where('content_type', (new audio())->getMorphClass())
+            ->where('content_type', (new Audio())->getMorphClass())
             ->where('event_type', 'play')
             ->groupBy('content_id')
             ->orderByDesc('total')
             ->limit(10)
             ->get()
             ->map(function ($row) {
-                $row->audio = audio::find($row->content_id);
+                $row->audio = Audio::find($row->content_id);
                 return $row;
             });
         $topBooks = ContentEvent::query()
             ->select('content_id', DB::raw('COUNT(*) as total'))
-            ->where('content_type', (new book())->getMorphClass())
+            ->where('content_type', (new Book())->getMorphClass())
             ->where('event_type', 'read')
             ->groupBy('content_id')
             ->orderByDesc('total')
             ->limit(10)
             ->get()
             ->map(function ($row) {
-                $row->book = book::find($row->content_id);
+                $row->book = Book::find($row->content_id);
                 return $row;
             });
 
@@ -474,12 +474,12 @@ class AnalyticsController extends Controller
             ->get();
 
         return $likes->map(function ($row) {
-            if ($row->content_type === (new video())->getMorphClass()) {
-                $row->title = video::find($row->content_id)?->title;
-            } elseif ($row->content_type === (new audio())->getMorphClass()) {
-                $row->title = audio::find($row->content_id)?->title;
-            } elseif ($row->content_type === (new book())->getMorphClass()) {
-                $row->title = book::find($row->content_id)?->title;
+            if ($row->content_type === (new Video())->getMorphClass()) {
+                $row->title = Video::find($row->content_id)?->title;
+            } elseif ($row->content_type === (new Audio())->getMorphClass()) {
+                $row->title = Audio::find($row->content_id)?->title;
+            } elseif ($row->content_type === (new Book())->getMorphClass()) {
+                $row->title = Book::find($row->content_id)?->title;
             } else {
                 $row->title = 'Unknown';
             }
@@ -721,3 +721,5 @@ class AnalyticsController extends Controller
         return [$from, $to];
     }
 }
+
+

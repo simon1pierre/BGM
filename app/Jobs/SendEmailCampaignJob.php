@@ -3,8 +3,8 @@
 namespace App\Jobs;
 
 use App\Mail\EmailCampaignMailable;
-use App\Models\EmailCampaign;
-use App\Models\Subscriber;
+use App\\Models\\EmailCampaign;
+use App\\Models\\Subscriber;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -60,3 +60,5 @@ class SendEmailCampaignJob implements ShouldQueue
         $campaign->save();
     }
 }
+
+

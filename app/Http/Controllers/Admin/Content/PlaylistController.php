@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Playlist;
 use App\Models\PlaylistItem;
 use App\Models\UserActivityLog;
-use App\Models\audio;
+use App\\Models\\Audio;
 use App\Http\Controllers\Concerns\HandlesTranslations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -59,7 +59,7 @@ class PlaylistController extends Controller
 
     public function create()
     {
-        $audios = audio::query()->orderByDesc('created_at')->get();
+        $audios = Audio::query()->orderByDesc('created_at')->get();
 
         return view('Admin.Content.Playlists.create', compact('audios'));
     }
@@ -116,7 +116,7 @@ class PlaylistController extends Controller
 
     public function edit(Playlist $playlist)
     {
-        $audios = audio::query()->orderByDesc('created_at')->get();
+        $audios = Audio::query()->orderByDesc('created_at')->get();
         $selected = $playlist->items->pluck('item_id')->all();
         $orders = $playlist->items->pluck('sort_order', 'item_id')->all();
 
@@ -260,3 +260,5 @@ class PlaylistController extends Controller
         }
     }
 }
+
+

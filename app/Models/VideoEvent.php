@@ -36,3 +36,5 @@ class VideoEvent extends Model
         'geo_asn',
     ];
 }
+
+

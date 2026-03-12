@@ -149,3 +149,5 @@ class TranslationReviewController extends Controller
             && Schema::hasColumn('content_translations', 'quality_score');
     }
 }
+
+

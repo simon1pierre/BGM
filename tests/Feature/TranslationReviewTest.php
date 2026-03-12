@@ -2,7 +2,7 @@
 
 use App\Models\ContentTranslation;
 use App\Models\User;
-use App\Models\book;
+use App\\Models\\Book;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 
@@ -23,7 +23,7 @@ function makeAdminReviewer(): User
 
 function makeTranslationBookRecord(): book
 {
-    return book::create([
+    return Book::create([
         'title' => 'Translation Book',
         'description' => 'Translation description',
         'file_path' => 'content/books/translation-book.pdf',
@@ -82,3 +82,4 @@ test('admin can approve translation from review queue', function () {
         'reviewed_by' => $admin->id,
     ]);
 });
+

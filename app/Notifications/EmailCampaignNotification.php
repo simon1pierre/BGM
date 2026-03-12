@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\EmailCampaign;
+use App\\Models\\EmailCampaign;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -24,3 +24,5 @@ class EmailCampaignNotification extends Notification
             ->line($this->campaign->message);
     }
 }
+
+

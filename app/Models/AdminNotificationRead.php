@@ -12,3 +12,5 @@ class AdminNotificationRead extends Model
         'read_at',
     ];
 }
+
+

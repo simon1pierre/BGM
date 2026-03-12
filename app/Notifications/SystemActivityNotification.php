@@ -34,7 +34,7 @@ class SystemActivityNotification extends Notification
             'login_success' => 'Successful login!!',
             'login_failed' => 'Failed login attempt!!',
             'security_issue' => 'Security issue detected!!',
-            'subscriber_created' => 'New subscriber!!',
+            'subscriber_created' => 'new Subscriber!!',
         ];
 
         $title = $labels[$this->activity->action] ?? 'System activity';
@@ -50,3 +50,5 @@ class SystemActivityNotification extends Notification
             ]);
     }
 }
+
+

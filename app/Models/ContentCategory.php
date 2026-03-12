@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use App\Models\video;
-use App\Models\audio;
-use App\Models\audiobook;
-use App\Models\book;
+use App\\Models\\Video;
+use App\\Models\\Audio;
+use App\\Models\\Audiobook;
+use App\\Models\\Book;
 use App\Models\Concerns\HasTranslations;
 
 class ContentCategory extends Model
@@ -39,22 +39,22 @@ class ContentCategory extends Model
 
     public function videos()
     {
-        return $this->hasMany(video::class, 'category_id');
+        return $this->hasMany(Video::class, 'category_id');
     }
 
     public function audios()
     {
-        return $this->hasMany(audio::class, 'category_id');
+        return $this->hasMany(Audio::class, 'category_id');
     }
 
     public function documents()
     {
-        return $this->hasMany(book::class, 'category_id');
+        return $this->hasMany(Book::class, 'category_id');
     }
 
     public function audiobooks()
     {
-        return $this->hasMany(audiobook::class, 'category_id');
+        return $this->hasMany(Audiobook::class, 'category_id');
     }
 
     public function getNameAttribute($value)
@@ -67,3 +67,5 @@ class ContentCategory extends Model
         return $this->translatedValue('description', $value);
     }
 }
+
+

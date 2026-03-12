@@ -83,3 +83,5 @@ class VerificationController extends Controller
         return back()->with('status', 'Verification code sent.');
     }
 }
+
+

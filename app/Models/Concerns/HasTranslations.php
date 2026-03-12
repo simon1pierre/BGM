@@ -38,3 +38,5 @@ trait HasTranslations
         return $fallback;
     }
 }
+
+

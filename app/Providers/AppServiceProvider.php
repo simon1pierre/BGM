@@ -3,16 +3,16 @@
 namespace App\Providers;
 
 use App\Models\Setting;
-use App\Models\Subscriber;
+use App\\Models\\Subscriber;
 use App\Models\ContactMessage;
 use App\Models\Event;
-use App\Models\EmailCampaign;
+use App\\Models\\EmailCampaign;
 use App\Models\MinistryLeader;
 use App\Models\User;
-use App\Models\video;
-use App\Models\audio;
-use App\Models\audiobook;
-use App\Models\book;
+use App\\Models\\Video;
+use App\\Models\\Audio;
+use App\\Models\\Audiobook;
+use App\\Models\\Book;
 use App\Models\ContentCategory;
 use App\Models\Playlist;
 use App\Models\VideoSeries;
@@ -135,16 +135,16 @@ class AppServiceProvider extends ServiceProvider
                 $counts['campaigns'] = EmailCampaign::query()->count();
             }
             if (Schema::hasTable('videos')) {
-                $counts['videos'] = video::query()->count();
+                $counts['videos'] = Video::query()->count();
             }
             if (Schema::hasTable('audios')) {
-                $counts['audios'] = audio::query()->count();
+                $counts['audios'] = Audio::query()->count();
             }
             if (Schema::hasTable('audiobooks')) {
-                $counts['audiobooks'] = audiobook::query()->count();
+                $counts['audiobooks'] = Audiobook::query()->count();
             }
             if (Schema::hasTable('books')) {
-                $counts['documents'] = book::query()->count();
+                $counts['documents'] = Book::query()->count();
             }
             if (Schema::hasTable('content_categories')) {
                 $counts['categories'] = ContentCategory::query()->count();
@@ -173,10 +173,10 @@ class AppServiceProvider extends ServiceProvider
 
             $trashTotal = 0;
             if (Schema::hasTable('users') && Schema::hasColumn('users', 'deleted_at')) $trashTotal += User::onlyTrashed()->count();
-            if (Schema::hasTable('videos') && Schema::hasColumn('videos', 'deleted_at')) $trashTotal += video::onlyTrashed()->count();
-            if (Schema::hasTable('audios') && Schema::hasColumn('audios', 'deleted_at')) $trashTotal += audio::onlyTrashed()->count();
-            if (Schema::hasTable('audiobooks') && Schema::hasColumn('audiobooks', 'deleted_at')) $trashTotal += audiobook::onlyTrashed()->count();
-            if (Schema::hasTable('books') && Schema::hasColumn('books', 'deleted_at')) $trashTotal += book::onlyTrashed()->count();
+            if (Schema::hasTable('videos') && Schema::hasColumn('videos', 'deleted_at')) $trashTotal += Video::onlyTrashed()->count();
+            if (Schema::hasTable('audios') && Schema::hasColumn('audios', 'deleted_at')) $trashTotal += Audio::onlyTrashed()->count();
+            if (Schema::hasTable('audiobooks') && Schema::hasColumn('audiobooks', 'deleted_at')) $trashTotal += Audiobook::onlyTrashed()->count();
+            if (Schema::hasTable('books') && Schema::hasColumn('books', 'deleted_at')) $trashTotal += Book::onlyTrashed()->count();
             if (Schema::hasTable('content_categories') && Schema::hasColumn('content_categories', 'deleted_at')) $trashTotal += ContentCategory::onlyTrashed()->count();
             if (Schema::hasTable('playlists') && Schema::hasColumn('playlists', 'deleted_at')) $trashTotal += Playlist::onlyTrashed()->where('type', 'audio')->count();
             if (Schema::hasTable('video_series') && Schema::hasColumn('video_series', 'deleted_at')) $trashTotal += VideoSeries::onlyTrashed()->count();
@@ -222,3 +222,5 @@ class AppServiceProvider extends ServiceProvider
         }
     }
 }
+
+

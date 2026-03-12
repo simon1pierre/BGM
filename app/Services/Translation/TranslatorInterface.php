@@ -7,3 +7,5 @@ interface TranslatorInterface
     public function translate(string $text, string $sourceLocale, string $targetLocale): TranslationResult;
 }
 
+
+

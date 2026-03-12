@@ -20,3 +20,5 @@ class DownloadsLog extends Model
 
     public $timestamps = false;
 }
+
+

@@ -50,3 +50,5 @@ public function down(): void
     Schema::dropIfExists('sessions');
 }
 };
+
+

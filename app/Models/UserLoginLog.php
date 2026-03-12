@@ -17,3 +17,5 @@ class UserLoginLog extends Model
         'logged_in_at',
     ];
 }
+
+

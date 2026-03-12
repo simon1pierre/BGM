@@ -33,7 +33,7 @@ class AudiobookPart extends Model
 
     public function audiobook(): BelongsTo
     {
-        return $this->belongsTo(audiobook::class, 'audiobook_id');
+        return $this->belongsTo(Audiobook::class, 'audiobook_id');
     }
 
     public function getAudioUrlAttribute(): ?string
@@ -45,3 +45,5 @@ class AudiobookPart extends Model
         return asset('storage/'.$this->audio_file);
     }
 }
+
+

@@ -31,3 +31,5 @@ class UserActivityLog extends Model
         return $this->hasMany(AdminNotificationRead::class, 'activity_log_id');
     }
 }
+
+

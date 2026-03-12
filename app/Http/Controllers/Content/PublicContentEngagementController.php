@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Content;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContentEvent;
-use App\Models\audio;
-use App\Models\book;
+use App\\Models\\Audio;
+use App\\Models\\Book;
 use App\Services\GeoIpService;
 use Illuminate\Http\Request;
 
 class PublicContentEngagementController extends Controller
 {
-    public function trackAudio(Request $request, audio $audio)
+    public function trackAudio(Request $request, Audio $audio)
     {
         $event = $request->input('event');
         if (!in_array($event, ['view', 'play', 'watch', 'share', 'download'], true)) {
@@ -65,7 +65,7 @@ class PublicContentEngagementController extends Controller
         return response()->noContent();
     }
 
-    public function trackBook(Request $request, book $book)
+    public function trackBook(Request $request, Book $book)
     {
         $event = $request->input('event');
         if (!in_array($event, ['view', 'read', 'share', 'download', 'open_reader', 'read_aloud', 'read_progress'], true)) {
@@ -152,3 +152,5 @@ class PublicContentEngagementController extends Controller
         return app(GeoIpService::class)->lookup($request->ip());
     }
 }
+
+

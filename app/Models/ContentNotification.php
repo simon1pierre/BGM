@@ -21,3 +21,5 @@ class ContentNotification extends Model
         'sent_at' => 'datetime',
     ];
 }
+
+

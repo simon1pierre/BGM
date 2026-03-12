@@ -6,8 +6,8 @@ use App\Http\Controllers\Concerns\HandlesTranslations;
 use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
 use App\Models\UserActivityLog;
-use App\Models\audiobook;
-use App\Models\book;
+use App\\Models\\Audiobook;
+use App\\Models\\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -93,9 +93,9 @@ class AudiobookController extends Controller
             $thumbnailPath = $request->file('thumbnail')->store('content/audiobooks/thumbnails', 'public');
         }
 
-        $linkedBook = book::query()->find($validated['book_id']);
+        $linkedBook = Book::query()->find($validated['book_id']);
 
-        $audiobook = audiobook::create([
+        $audiobook = Audiobook::create([
             'title' => $validated['title'],
             'description' => null,
             'audio_file' => $audioPath,
@@ -132,7 +132,7 @@ class AudiobookController extends Controller
             ->with('status', 'Audiobook created.');
     }
 
-    public function edit(audiobook $audiobook)
+    public function edit(Audiobook $audiobook)
     {
         $audiobook->load(['parts' => function ($query) {
             $query->orderBy('sort_order')->orderBy('id');
@@ -144,7 +144,7 @@ class AudiobookController extends Controller
             ->orderBy('name')
             ->get();
 
-        $books = book::query()
+        $books = Book::query()
             ->where('is_published', true)
             ->orWhere('id', $audiobook->book_id)
             ->orderByDesc('published_at')
@@ -154,19 +154,19 @@ class AudiobookController extends Controller
         return view('Admin.Content.Audiobooks.edit', compact('audiobook', 'categories', 'books'));
     }
 
-    public function preview(audiobook $audiobook)
+    public function preview(Audiobook $audiobook)
     {
         return view('Admin.Content.Audiobooks.preview', compact('audiobook'));
     }
 
-    public function parts(audiobook $audiobook)
+    public function parts(Audiobook $audiobook)
     {
         return redirect()
             ->route('admin.audiobooks.edit', $audiobook)
             ->with('warning', 'Use the form on the edit page to upload audiobook parts.');
     }
 
-    public function update(Request $request, audiobook $audiobook)
+    public function update(Request $request, Audiobook $audiobook)
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -193,7 +193,7 @@ class AudiobookController extends Controller
             $thumbnailPath = $request->file('thumbnail')->store('content/audiobooks/thumbnails', 'public');
         }
 
-        $linkedBook = book::query()->find($validated['book_id']);
+        $linkedBook = Book::query()->find($validated['book_id']);
 
         $audiobook->update([
             'title' => $validated['title'],
@@ -226,7 +226,7 @@ class AudiobookController extends Controller
         return $this->redirectToBookEdit($audiobook, 'Audiobook updated.');
     }
 
-    public function addPart(Request $request, audiobook $audiobook)
+    public function addPart(Request $request, Audiobook $audiobook)
     {
         $validated = $request->validate([
             'title' => ['nullable', 'string', 'max:255'],
@@ -301,7 +301,7 @@ class AudiobookController extends Controller
         return redirect()->back()->with('status', 'Audiobook part added.');
     }
 
-    public function storeForBook(Request $request, book $document)
+    public function storeForBook(Request $request, Book $document)
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -363,7 +363,7 @@ class AudiobookController extends Controller
             $thumbnailPath = $request->file('thumbnail')->store('content/audiobooks/thumbnails', 'public');
         }
 
-        $audiobook = audiobook::create([
+        $audiobook = Audiobook::create([
             'title' => $validated['title'],
             'description' => null,
             'audio_file' => $audioPath,
@@ -404,7 +404,7 @@ class AudiobookController extends Controller
         return redirect()->route('admin.documents.edit', $document)->with('status', 'Audiobook added to this book.');
     }
 
-    public function storePartsForBook(Request $request, book $document)
+    public function storePartsForBook(Request $request, Book $document)
     {
         $validated = $request->validate([
             'title' => ['nullable', 'string', 'max:255'],
@@ -433,7 +433,7 @@ class AudiobookController extends Controller
         }
 
         // One flat audiobook-parts list per book (no nested/main parts grouping).
-        $targetAudiobook = audiobook::query()
+        $targetAudiobook = Audiobook::query()
             ->where('book_id', $document->id)
             ->latest('id')
             ->first();
@@ -442,11 +442,11 @@ class AudiobookController extends Controller
             $title = trim((string) ($validated['title'] ?? ''));
             if ($title === '') {
                 return back()
-                    ->withErrors(['title' => 'Enter audiobook title when creating a new audiobook.'])
+                    ->withErrors(['title' => 'Enter audiobook title when creating a new Audiobook.'])
                     ->withInput();
             }
 
-            $targetAudiobook = audiobook::create([
+            $targetAudiobook = Audiobook::create([
                 'title' => $title,
                 'description' => null,
                 'audio_file' => null,
@@ -524,14 +524,14 @@ class AudiobookController extends Controller
         return redirect()->route('admin.documents.edit', $document)->with('status', count($parts).' part(s) uploaded for this book.');
     }
 
-    public function showPartsForBook(book $document)
+    public function showPartsForBook(Book $document)
     {
         return redirect()
             ->route('admin.documents.edit', $document)
             ->with('warning', 'Use the upload form on this page to add audiobook parts.');
     }
 
-    public function updatePart(Request $request, audiobook $audiobook, int $part)
+    public function updatePart(Request $request, Audiobook $audiobook, int $part)
     {
         $partModel = $audiobook->parts()->findOrFail($part);
 
@@ -566,7 +566,7 @@ class AudiobookController extends Controller
         return redirect()->back()->with('status', 'Audiobook part updated.');
     }
 
-    public function destroyPart(Request $request, audiobook $audiobook, int $part)
+    public function destroyPart(Request $request, Audiobook $audiobook, int $part)
     {
         $partModel = $audiobook->parts()->findOrFail($part);
         $partModel->delete();
@@ -574,7 +574,7 @@ class AudiobookController extends Controller
         return redirect()->back()->with('status', 'Audiobook part removed.');
     }
 
-    public function destroyManyParts(Request $request, audiobook $audiobook)
+    public function destroyManyParts(Request $request, Audiobook $audiobook)
     {
         $validated = $request->validate([
             'part_ids' => ['required', 'array', 'min:1'],
@@ -593,7 +593,7 @@ class AudiobookController extends Controller
         return redirect()->back()->with('status', count($ownedIds).' audiobook part(s) removed.');
     }
 
-    public function reorderParts(Request $request, audiobook $audiobook)
+    public function reorderParts(Request $request, Audiobook $audiobook)
     {
         $validated = $request->validate([
             'ordered_ids' => ['required', 'array', 'min:1'],
@@ -624,7 +624,7 @@ class AudiobookController extends Controller
         return redirect()->back()->with('status', 'Audiobook parts reordered.');
     }
 
-    public function destroy(Request $request, audiobook $audiobook)
+    public function destroy(Request $request, Audiobook $audiobook)
     {
         $bookId = $audiobook->book_id;
         $audiobook->delete();
@@ -647,7 +647,7 @@ class AudiobookController extends Controller
 
     public function restore(Request $request, int $audiobook)
     {
-        $record = audiobook::withTrashed()->findOrFail($audiobook);
+        $record = Audiobook::withTrashed()->findOrFail($audiobook);
         $record->restore();
 
         UserActivityLog::create([
@@ -668,7 +668,7 @@ class AudiobookController extends Controller
 
     public function forceDelete(Request $request, int $audiobook)
     {
-        $record = audiobook::withTrashed()->findOrFail($audiobook);
+        $record = Audiobook::withTrashed()->findOrFail($audiobook);
         $title = $record->title;
         $bookId = $record->book_id;
         $record->forceDelete();
@@ -721,7 +721,7 @@ class AudiobookController extends Controller
         return $rows;
     }
 
-    private function redirectToBookEdit(audiobook $audiobook, string $statusMessage)
+    private function redirectToBookEdit(Audiobook $audiobook, string $statusMessage)
     {
         if ($audiobook->book_id) {
             return redirect()->route('admin.documents.edit', $audiobook->book_id)->with('status', $statusMessage);
@@ -770,3 +770,5 @@ class AudiobookController extends Controller
         return $result;
     }
 }
+
+

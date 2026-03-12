@@ -47,3 +47,5 @@ class SettingTranslation extends Model
         return $this->belongsTo(Setting::class);
     }
 }
+
+

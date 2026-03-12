@@ -238,3 +238,5 @@ class Setting extends Model
         return $this->{$field};
     }
 }
+
+

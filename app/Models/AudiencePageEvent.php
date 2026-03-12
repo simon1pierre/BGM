@@ -43,3 +43,5 @@ class AudiencePageEvent extends Model
         'geo_asn',
     ];
 }
+
+

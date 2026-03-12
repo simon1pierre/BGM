@@ -290,7 +290,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <button class="btn btn-light btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#quickPartsAdvanced" aria-expanded="false" aria-controls="quickPartsAdvanced">
-                                        Advanced Options (new audiobook only)
+                                        Advanced Options (new Audiobook only)
                                     </button>
                                 </div>
                                 <div class="col-md-12 collapse" id="quickPartsAdvanced">
@@ -428,3 +428,5 @@
         </div>
     </div>
 @endsection
+
+

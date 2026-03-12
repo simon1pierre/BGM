@@ -156,3 +156,5 @@ class ContactMessageController extends Controller
         return redirect()->back()->with('status', 'Message permanently deleted.');
     }
 }
+
+

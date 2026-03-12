@@ -13,8 +13,7 @@ return new class extends Migration
 {
     Schema::create('downloads_log', function (Blueprint $table) {
         $table->id();
-        $table->string('item_type'); // book or audio
-        $table->unsignedBigInteger('item_id');
+        $table->string('item_type'); // book or Audio $table->unsignedBigInteger('item_id');
         $table->string('ip_address')->nullable();
         $table->timestamp('downloaded_at')->useCurrent();
         $table->softDeletes();
@@ -30,3 +29,5 @@ return new class extends Migration
         Schema::dropIfExists('downloads_log');
     }
 };
+
+

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin\Content;
 use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
 use App\Models\UserActivityLog;
-use App\Models\book;
-use App\Models\audiobook;
+use App\\Models\\Book;
+use App\\Models\\Audiobook;
 use App\Jobs\SendContentNotificationJob;
 use App\Models\ContentNotification;
 use App\Http\Controllers\Concerns\HandlesTranslations;
@@ -75,7 +75,7 @@ class DocumentController extends Controller
             $coverPath = $request->file('cover_image')->store('content/documents/covers', 'public');
         }
 
-        $document = book::create([
+        $document = Book::create([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
             'file_path' => $documentPath,
@@ -128,7 +128,7 @@ class DocumentController extends Controller
                 $audioPath = $parts[0]['audio_file'];
             }
 
-            $audiobook = audiobook::create([
+            $audiobook = Audiobook::create([
                 'title' => trim((string) ($validated['audiobook_title'] ?? '')),
                 'description' => null,
                 'audio_file' => $audioPath,
@@ -172,7 +172,7 @@ class DocumentController extends Controller
         return redirect()->route('admin.documents.index')->with('status', 'Document created.');
     }
 
-    public function edit(book $document)
+    public function edit(Book $document)
     {
         $categories = ContentCategory::query()
             ->whereIn('type', ['document', 'all'])
@@ -186,7 +186,7 @@ class DocumentController extends Controller
             ->orderBy('name')
             ->get();
 
-        $linkedAudiobooks = audiobook::query()
+        $linkedAudiobooks = Audiobook::query()
             ->withCount('publishedParts')
             ->where('book_id', $document->id)
             ->orderByDesc('created_at')
@@ -195,12 +195,12 @@ class DocumentController extends Controller
         return view('Admin.Content.Documents.edit', compact('document', 'categories', 'audioCategories', 'linkedAudiobooks'));
     }
 
-    public function preview(book $document)
+    public function preview(Book $document)
     {
         return view('Admin.Content.Documents.preview', compact('document'));
     }
 
-    public function update(Request $request, book $document)
+    public function update(Request $request, Book $document)
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -279,7 +279,7 @@ class DocumentController extends Controller
         return redirect()->route('admin.documents.index')->with('status', 'Document updated.');
     }
 
-    public function destroy(Request $request, book $document)
+    public function destroy(Request $request, Book $document)
     {
         $document->delete();
 
@@ -297,7 +297,7 @@ class DocumentController extends Controller
 
     public function restore(Request $request, int $document)
     {
-        $record = book::withTrashed()->findOrFail($document);
+        $record = Book::withTrashed()->findOrFail($document);
         $record->restore();
 
         UserActivityLog::create([
@@ -314,7 +314,7 @@ class DocumentController extends Controller
 
     public function forceDelete(Request $request, int $document)
     {
-        $record = book::withTrashed()->findOrFail($document);
+        $record = Book::withTrashed()->findOrFail($document);
         $title = $record->title;
         $record->forceDelete();
 
@@ -379,5 +379,7 @@ class DocumentController extends Controller
             ->all();
     }
 }
+
+
 
 

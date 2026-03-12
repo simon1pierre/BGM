@@ -379,3 +379,5 @@ return [
         'changes_body' => 'We may update these terms when needed. Continued use means you accept updates.',
     ],
 ];
+
+

@@ -152,3 +152,5 @@
     <button class="btn btn-primary">{{ $editing ? 'Update Devotional' : 'Save Devotional' }}</button>
     <a href="{{ route('admin.devotionals.index') }}" class="btn btn-light">Cancel</a>
 </div>
+
+

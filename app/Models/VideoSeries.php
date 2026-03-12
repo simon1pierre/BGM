@@ -25,7 +25,7 @@ class VideoSeries extends Model
 
     public function videos()
     {
-        return $this->hasMany(video::class, 'video_series_id');
+        return $this->hasMany(Video::class, 'video_series_id');
     }
 
     public function getTitleAttribute($value)
@@ -38,3 +38,5 @@ class VideoSeries extends Model
         return $this->translatedValue('description', $value);
     }
 }
+
+

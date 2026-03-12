@@ -242,3 +242,5 @@ class ContentCategorySeeder extends Seeder
     }
 }
 
+
+

@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Content;
 use App\Http\Controllers\Controller;
 use App\Models\DownloadsLog;
 use App\Models\AudiobookPart;
-use App\Models\audio;
-use App\Models\book;
-use App\Models\video;
+use App\\Models\\Audio;
+use App\\Models\\Book;
+use App\\Models\\Video;
 use App\Models\VideoEvent;
 use App\Services\GeoIpService;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ContentDownloadController extends Controller
 {
-    public function audio(Request $request, audio $audio): StreamedResponse
+    public function audio(Request $request, Audio $audio): StreamedResponse
     {
         if (!Storage::disk('public')->exists($audio->audio_file)) {
             abort(404);
@@ -32,7 +32,7 @@ class ContentDownloadController extends Controller
         );
     }
 
-    public function document(Request $request, book $document): StreamedResponse
+    public function document(Request $request, Book $document): StreamedResponse
     {
         if (!Storage::disk('public')->exists($document->file_path)) {
             abort(404);
@@ -72,14 +72,14 @@ class ContentDownloadController extends Controller
         );
     }
 
-    public function videoView(video $video)
+    public function videoView(Video $video)
     {
         $video->increment('view_count');
 
         return response()->noContent();
     }
 
-    public function trackVideo(Request $request, video $video)
+    public function trackVideo(Request $request, Video $video)
     {
         $event = $request->input('event');
         if (!in_array($event, ['play', 'youtube_click', 'impression', 'watch', 'share'], true)) {
@@ -199,3 +199,5 @@ class ContentDownloadController extends Controller
         return app(GeoIpService::class)->lookup($request->ip());
     }
 }
+
+

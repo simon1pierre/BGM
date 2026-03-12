@@ -46,3 +46,5 @@ class ContentEvent extends Model
         return $this->morphTo();
     }
 }
+
+

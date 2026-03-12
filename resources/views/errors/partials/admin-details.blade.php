@@ -22,3 +22,4 @@
         <div class="text-slate-400 mt-3">If this persists, capture a screenshot and report to the development team.</div>
     </div>
 @endauth
+

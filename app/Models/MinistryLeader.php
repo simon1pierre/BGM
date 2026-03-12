@@ -26,3 +26,5 @@ class MinistryLeader extends Model
         'sort_order' => 'integer',
     ];
 }
+
+

@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Content;
 use App\Http\Controllers\Controller;
 use App\Models\ContentComment;
 use App\Models\ContentLike;
-use App\Models\video;
-use App\Models\book;
-use App\Models\audio;
+use App\\Models\\Video;
+use App\\Models\\Book;
+use App\\Models\\Audio;
 use Illuminate\Http\Request;
 
 class ContentEngagementController extends Controller
 {
-    public function likeVideo(Request $request, video $video)
+    public function likeVideo(Request $request, Video $video)
     {
         $deviceHash = $this->deviceHash($request);
 
@@ -48,7 +48,7 @@ class ContentEngagementController extends Controller
         ]);
     }
 
-    public function commentVideo(Request $request, video $video)
+    public function commentVideo(Request $request, Video $video)
     {
         $validated = $request->validate([
             'name' => ['nullable', 'string', 'max:120'],
@@ -85,7 +85,7 @@ class ContentEngagementController extends Controller
         ]);
     }
 
-    public function likeBook(Request $request, book $book)
+    public function likeBook(Request $request, Book $book)
     {
         $deviceHash = $this->deviceHash($request);
 
@@ -121,7 +121,7 @@ class ContentEngagementController extends Controller
         ]);
     }
 
-    public function commentBook(Request $request, book $book)
+    public function commentBook(Request $request, Book $book)
     {
         $validated = $request->validate([
             'name' => ['nullable', 'string', 'max:120'],
@@ -158,7 +158,7 @@ class ContentEngagementController extends Controller
         ]);
     }
 
-    public function likeAudio(Request $request, audio $audio)
+    public function likeAudio(Request $request, Audio $audio)
     {
         $deviceHash = $this->deviceHash($request);
 
@@ -194,7 +194,7 @@ class ContentEngagementController extends Controller
         ]);
     }
 
-    public function commentAudio(Request $request, audio $audio)
+    public function commentAudio(Request $request, Audio $audio)
     {
         $validated = $request->validate([
             'name' => ['nullable', 'string', 'max:120'],
@@ -246,3 +246,5 @@ class ContentEngagementController extends Controller
         return hash('sha256', implode('|', $parts));
     }
 }
+
+

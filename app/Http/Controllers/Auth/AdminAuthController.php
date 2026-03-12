@@ -11,3 +11,5 @@ class AdminAuthController extends Controller
         return view('Admin.Auth.login');
     }
 }
+
+

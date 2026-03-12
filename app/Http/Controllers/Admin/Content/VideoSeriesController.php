@@ -170,3 +170,5 @@ class VideoSeriesController extends Controller
         return redirect()->back()->with('status', 'Video series permanently deleted.');
     }
 }
+
+

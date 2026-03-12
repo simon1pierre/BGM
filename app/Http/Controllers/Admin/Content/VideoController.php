@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
 use App\Models\UserActivityLog;
 use App\Models\MinistryLeader;
-use App\Models\video;
+use App\\Models\\Video;
 use App\Jobs\SendContentNotificationJob;
 use App\Models\ContentNotification;
 use App\Models\VideoSeries;
@@ -98,7 +98,7 @@ class VideoController extends Controller
             $selectedSeries = VideoSeries::query()->find($validated['video_series_id']);
         }
 
-        $video = video::create([
+        $video = Video::create([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
             'youtube_url' => $validated['youtube_url'],
@@ -132,14 +132,14 @@ class VideoController extends Controller
             'thumbnail' => $video->thumbnail_url,
             'cta_url' => $video->youtube_url,
             'cta_text' => 'Watch on YouTube',
-            'subject' => 'New Video: '.$video->title,
+            'subject' => 'new Video: '.$video->title,
             'extra_text' => $request->input('notify_message'),
         ]);
 
         return redirect()->route('admin.videos.index')->with('status', 'Video created.');
     }
 
-    public function edit(video $video)
+    public function edit(Video $video)
     {
         $categories = ContentCategory::query()
             ->whereIn('type', ['video', 'all'])
@@ -163,12 +163,12 @@ class VideoController extends Controller
         return view('Admin.Content.Videos.edit', compact('video', 'categories', 'videoSeries', 'preachers'));
     }
 
-    public function preview(video $video)
+    public function preview(Video $video)
     {
         return view('Admin.Content.Videos.preview', compact('video'));
     }
 
-    public function update(Request $request, video $video)
+    public function update(Request $request, Video $video)
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -259,7 +259,7 @@ class VideoController extends Controller
         return redirect()->route('admin.videos.index')->with('status', 'Video updated.');
     }
 
-    public function destroy(Request $request, video $video)
+    public function destroy(Request $request, Video $video)
     {
         $video->delete();
 
@@ -277,7 +277,7 @@ class VideoController extends Controller
 
     public function restore(Request $request, int $video)
     {
-        $record = video::withTrashed()->findOrFail($video);
+        $record = Video::withTrashed()->findOrFail($video);
         $record->restore();
 
         UserActivityLog::create([
@@ -294,7 +294,7 @@ class VideoController extends Controller
 
     public function forceDelete(Request $request, int $video)
     {
-        $record = video::withTrashed()->findOrFail($video);
+        $record = Video::withTrashed()->findOrFail($video);
         $title = $record->title;
         $record->forceDelete();
 
@@ -391,5 +391,7 @@ class VideoController extends Controller
     }
 
 }
+
+
 
 

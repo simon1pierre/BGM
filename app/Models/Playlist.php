@@ -41,3 +41,5 @@ class Playlist extends Model
         return $this->translatedValue('description', $value);
     }
 }
+
+

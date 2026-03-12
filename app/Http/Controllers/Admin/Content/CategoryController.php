@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin\Content;
 use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
 use App\Models\UserActivityLog;
-use App\Models\audio;
-use App\Models\audiobook;
-use App\Models\book;
-use App\Models\video;
+use App\\Models\\Audio;
+use App\\Models\\Audiobook;
+use App\\Models\\Book;
+use App\\Models\\Video;
 use App\Http\Controllers\Concerns\HandlesTranslations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -27,25 +27,25 @@ class CategoryController extends Controller
         $query = ContentCategory::query()
             ->select('content_categories.*')
             ->selectSub(
-                video::query()
+                Video::query()
                     ->selectRaw('count(*)')
                     ->whereColumn('category_id', 'content_categories.id'),
                 'video_count'
             )
             ->selectSub(
-                audio::query()
+                Audio::query()
                     ->selectRaw('count(*)')
                     ->whereColumn('category_id', 'content_categories.id'),
                 'audio_count'
             )
             ->selectSub(
-                audiobook::query()
+                Audiobook::query()
                     ->selectRaw('count(*)')
                     ->whereColumn('category_id', 'content_categories.id'),
                 'audiobook_count'
             )
             ->selectSub(
-                book::query()
+                Book::query()
                     ->selectRaw('count(*)')
                     ->whereColumn('category_id', 'content_categories.id'),
                 'document_count'
@@ -126,9 +126,9 @@ class CategoryController extends Controller
         $tab = $request->string('tab')->toString() ?: 'videos';
         $tab = in_array($tab, ['videos', 'audios', 'documents'], true) ? $tab : 'videos';
 
-        $videoQuery = video::query()->where('category_id', $category->id);
-        $audioQuery = audio::query()->where('category_id', $category->id);
-        $documentQuery = book::query()->where('category_id', $category->id);
+        $videoQuery = Video::query()->where('category_id', $category->id);
+        $audioQuery = Audio::query()->where('category_id', $category->id);
+        $documentQuery = Book::query()->where('category_id', $category->id);
 
         $stats = [
             'videos' => [
@@ -249,5 +249,7 @@ class CategoryController extends Controller
         return redirect()->back()->with('status', 'Category permanently deleted.');
     }
 }
+
+
 
 

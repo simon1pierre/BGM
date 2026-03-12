@@ -16,3 +16,5 @@ class UserStatusLog extends Model
         'reason',
     ];
 }
+
+

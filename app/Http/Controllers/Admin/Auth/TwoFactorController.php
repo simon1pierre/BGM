@@ -102,3 +102,5 @@ class TwoFactorController extends Controller
         return back()->with('status', 'Verification code resent.');
     }
 }
+
+

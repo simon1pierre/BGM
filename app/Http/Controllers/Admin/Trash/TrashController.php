@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\Admin\Trash;
 
 use App\Http\Controllers\Controller;
-use App\Models\audio;
-use App\Models\audiobook;
-use App\Models\book;
+use App\\Models\\Audio;
+use App\\Models\\Audiobook;
+use App\\Models\\Book;
 use App\Models\ContactMessage;
 use App\Models\ContentCategory;
-use App\Models\EmailCampaign;
+use App\\Models\\EmailCampaign;
 use App\Models\Event;
 use App\Models\MinistryLeader;
 use App\Models\Playlist;
-use App\Models\Subscriber;
+use App\\Models\\Subscriber;
 use App\Models\User;
 use App\Models\UserActivityLog;
 use App\Models\VideoSeries;
 use App\Models\Devotional;
-use App\Models\video;
+use App\\Models\\Video;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -175,10 +175,10 @@ class TrashController extends Controller
     private function queryFor(string $module, string $search): Builder
     {
         return match ($module) {
-            'videos' => $this->filter(video::onlyTrashed(), $search, ['title', 'description', 'speaker', 'series']),
-            'audios' => $this->filter(audio::onlyTrashed(), $search, ['title', 'description', 'speaker', 'series']),
-            'audiobooks' => $this->filter(audiobook::onlyTrashed(), $search, ['title', 'description', 'narrator', 'series']),
-            'documents' => $this->filter(book::onlyTrashed(), $search, ['title', 'description', 'author', 'series']),
+            'videos' => $this->filter(Video::onlyTrashed(), $search, ['title', 'description', 'speaker', 'series']),
+            'audios' => $this->filter(Audio::onlyTrashed(), $search, ['title', 'description', 'speaker', 'series']),
+            'audiobooks' => $this->filter(Audiobook::onlyTrashed(), $search, ['title', 'description', 'narrator', 'series']),
+            'documents' => $this->filter(Book::onlyTrashed(), $search, ['title', 'description', 'author', 'series']),
             'categories' => $this->filter(ContentCategory::onlyTrashed(), $search, ['name', 'slug']),
             'playlists' => $this->filter(Playlist::onlyTrashed(), $search, ['title', 'description']),
             'video_series' => $this->filter(VideoSeries::onlyTrashed(), $search, ['title', 'description']),
@@ -189,7 +189,7 @@ class TrashController extends Controller
             'contacts' => $this->filter(ContactMessage::onlyTrashed(), $search, ['name', 'email', 'subject', 'message']),
             'campaigns' => $this->filter(EmailCampaign::onlyTrashed(), $search, ['subject', 'message']),
             'ministry' => $this->filter(MinistryLeader::onlyTrashed(), $search, ['name', 'position', 'email', 'phone', 'country']),
-            default => video::onlyTrashed(),
+            default => Video::onlyTrashed(),
         };
     }
 
@@ -232,10 +232,10 @@ class TrashController extends Controller
     private function resolveTrashedRecord(string $module, int $id): Model
     {
         return match ($module) {
-            'videos' => video::withTrashed()->findOrFail($id),
-            'audios' => audio::withTrashed()->findOrFail($id),
-            'audiobooks' => audiobook::withTrashed()->findOrFail($id),
-            'documents' => book::withTrashed()->findOrFail($id),
+            'videos' => Video::withTrashed()->findOrFail($id),
+            'audios' => Audio::withTrashed()->findOrFail($id),
+            'audiobooks' => Audiobook::withTrashed()->findOrFail($id),
+            'documents' => Book::withTrashed()->findOrFail($id),
             'categories' => ContentCategory::withTrashed()->findOrFail($id),
             'playlists' => Playlist::withTrashed()->findOrFail($id),
             'video_series' => VideoSeries::withTrashed()->findOrFail($id),
@@ -295,3 +295,5 @@ class TrashController extends Controller
         };
     }
 }
+
+

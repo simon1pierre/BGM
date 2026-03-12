@@ -28,3 +28,5 @@ class ContactReplyMailable extends Mailable
             ]);
     }
 }
+
+

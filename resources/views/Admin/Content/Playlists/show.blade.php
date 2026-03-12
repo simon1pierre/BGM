@@ -66,8 +66,8 @@
                                 @forelse ($items as $item)
                                     @php
                                         $model = $playlist->type === 'video'
-                                            ? \App\Models\video::find($item->item_id)
-                                            : \App\Models\audio::find($item->item_id);
+                                            ? \App\Models\Video::find($item->item_id)
+                                            : \App\Models\Audio::find($item->item_id);
                                     @endphp
                                     <tr>
                                         <td>{{ $item->sort_order }}</td>
@@ -90,3 +90,5 @@
         </div>
     </div>
 @endsection
+
+

@@ -33,3 +33,5 @@ class Event extends Model
         'is_featured' => 'boolean',
     ];
 }
+
+

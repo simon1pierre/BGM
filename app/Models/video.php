@@ -11,7 +11,7 @@ use App\Models\ContentLike;
 use App\Models\ContentComment;
 use App\Models\Concerns\HasTranslations;
 
-class video extends Model
+class Video extends Model
 {
     use SoftDeletes;
     use HasTranslations;
@@ -95,3 +95,5 @@ class video extends Model
         return $this->morphMany(ContentComment::class, 'content');
     }
 }
+
+

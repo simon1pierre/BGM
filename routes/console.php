@@ -2,13 +2,13 @@
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Schedule;
-use App\Models\EmailCampaign;
+use App\\Models\\EmailCampaign;
 use App\Jobs\SendEmailCampaignJob;
 use Illuminate\Support\Facades\Artisan;
-use App\Models\audio;
-use App\Models\audiobook;
-use App\Models\book;
-use App\Models\video;
+use App\\Models\\Audio;
+use App\\Models\\Audiobook;
+use App\\Models\\Book;
+use App\\Models\\Video;
 use App\Services\Translation\ContentTranslationPipeline;
 
 Artisan::command('inspire', function () {
@@ -19,10 +19,10 @@ Artisan::command('translations:auto-fill {type=all}', function (ContentTranslati
     $type = (string) $this->argument('type');
 
     $map = [
-        'videos' => video::class,
-        'audios' => audio::class,
-        'audiobooks' => audiobook::class,
-        'books' => book::class,
+        'videos' => Video::class,
+        'audios' => Audio::class,
+        'audiobooks' => Audiobook::class,
+        'books' => Book::class,
     ];
 
     $targets = $type === 'all' ? $map : [$type => $map[$type] ?? null];
@@ -55,3 +55,4 @@ Schedule::call(function () {
             SendEmailCampaignJob::dispatch($campaign->id);
         });
 })->everyMinute();
+

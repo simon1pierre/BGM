@@ -335,3 +335,5 @@ class DevotionalController extends Controller
             ->all();
     }
 }
+
+

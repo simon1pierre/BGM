@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Admin;
 
-use App\Models\audio;
-use App\Models\book;
-use App\Models\audiobook;
+use App\\Models\\Audio;
+use App\\Models\\Book;
+use App\\Models\\Audiobook;
 use App\Models\ContentCategory;
-use App\Models\video;
+use App\\Models\\Video;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -87,10 +87,10 @@ class ContentTable extends Component
     private function modelClass(): string
     {
         return match ($this->type) {
-            'audios' => audio::class,
-            'audiobooks' => audiobook::class,
-            'documents' => book::class,
-            default => video::class,
+            'audios' => Audio::class,
+            'audiobooks' => Audiobook::class,
+            'documents' => Book::class,
+            default => Video::class,
         };
     }
 
@@ -167,3 +167,5 @@ class ContentTable extends Component
         ]);
     }
 }
+
+

@@ -10,7 +10,7 @@ use App\Models\ContentLike;
 use App\Models\ContentComment;
 use App\Models\Concerns\HasTranslations;
 
-class audio extends Model
+class Audio extends Model
 {
     use SoftDeletes;
     use HasTranslations;
@@ -86,3 +86,5 @@ class audio extends Model
         return $this->morphMany(ContentComment::class, 'content');
     }
 }
+
+

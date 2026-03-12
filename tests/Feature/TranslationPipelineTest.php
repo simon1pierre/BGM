@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\ContentTranslation;
-use App\Models\book;
+use App\\Models\\Book;
 use App\Services\Translation\ContentTranslationPipeline;
 use App\Services\Translation\TranslationResult;
 use App\Services\Translation\TranslatorInterface;
@@ -11,7 +11,7 @@ uses(RefreshDatabase::class);
 
 function makeTranslationBook(array $overrides = []): book
 {
-    return book::create(array_merge([
+    return Book::create(array_merge([
         'title' => 'Igitabo',
         'description' => 'Ibisobanuro',
         'file_path' => 'content/books/sample.pdf',
@@ -92,4 +92,5 @@ test('translation pipeline skips bible-like text for machine translation', funct
         'locale' => 'en',
     ]);
 });
+
 

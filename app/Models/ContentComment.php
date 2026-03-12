@@ -27,3 +27,5 @@ class ContentComment extends Model
         return $this->morphTo();
     }
 }
+
+

@@ -35,3 +35,5 @@ class EmailCampaign extends Model
         'target_emails' => 'array',
     ];
 }
+
+

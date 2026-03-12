@@ -38,3 +38,5 @@ class ContentNotificationController extends Controller
         return back()->with('status', 'Notification resent.');
     }
 }
+
+

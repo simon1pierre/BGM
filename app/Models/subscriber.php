@@ -21,3 +21,5 @@ class Subscriber extends Model
         'subscribed_at' => 'datetime',
     ];
 }
+
+

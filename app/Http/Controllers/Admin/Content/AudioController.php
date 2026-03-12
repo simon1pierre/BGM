@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Content;
 use App\Http\Controllers\Controller;
 use App\Models\ContentCategory;
 use App\Models\UserActivityLog;
-use App\Models\audio;
+use App\\Models\\Audio;
 use App\Jobs\SendContentNotificationJob;
 use App\Models\ContentNotification;
 use App\Models\Playlist;
@@ -94,7 +94,7 @@ class AudioController extends Controller
             $thumbnailPath = $request->file('thumbnail')->store('content/audios/thumbnails', 'public');
         }
 
-        $audio = audio::create([
+        $audio = Audio::create([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
             'audio_file' => $audioPath,
@@ -130,14 +130,14 @@ class AudioController extends Controller
             'thumbnail' => $audio->thumbnail_url,
             'cta_url' => asset('storage/'.$audio->audio_file),
             'cta_text' => 'Listen Now',
-            'subject' => 'New Audio: '.$audio->title,
+            'subject' => 'new Audio: '.$audio->title,
             'extra_text' => $request->input('notify_message'),
         ]);
 
         return redirect()->route('admin.audios.index')->with('status', 'Audio created.');
     }
 
-    public function edit(audio $audio)
+    public function edit(Audio $audio)
     {
         $categories = ContentCategory::query()
             ->whereIn('type', ['audio', 'all'])
@@ -160,12 +160,12 @@ class AudioController extends Controller
         return view('Admin.Content.Audios.edit', compact('audio', 'categories', 'playlists', 'selectedPlaylists'));
     }
 
-    public function preview(audio $audio)
+    public function preview(Audio $audio)
     {
         return view('Admin.Content.Audios.preview', compact('audio'));
     }
 
-    public function update(Request $request, audio $audio)
+    public function update(Request $request, Audio $audio)
     {
         if ($request->hasFile('audio_file') && !$request->file('audio_file')->isValid()) {
             return back()
@@ -259,7 +259,7 @@ class AudioController extends Controller
         return redirect()->route('admin.audios.index')->with('status', 'Audio updated.');
     }
 
-    public function destroy(Request $request, audio $audio)
+    public function destroy(Request $request, Audio $audio)
     {
         $audio->delete();
 
@@ -277,7 +277,7 @@ class AudioController extends Controller
 
     public function restore(Request $request, int $audio)
     {
-        $record = audio::withTrashed()->findOrFail($audio);
+        $record = Audio::withTrashed()->findOrFail($audio);
         $record->restore();
 
         UserActivityLog::create([
@@ -294,7 +294,7 @@ class AudioController extends Controller
 
     public function forceDelete(Request $request, int $audio)
     {
-        $record = audio::withTrashed()->findOrFail($audio);
+        $record = Audio::withTrashed()->findOrFail($audio);
         $title = $record->title;
         $record->forceDelete();
 
@@ -394,5 +394,7 @@ class AudioController extends Controller
         }
     }
 }
+
+
 
 

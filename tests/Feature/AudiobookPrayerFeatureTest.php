@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\audiobook;
-use App\Models\book;
+use App\\Models\\Audiobook;
+use App\\Models\\Book;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,7 +29,7 @@ function makeAdminUser(): User
 
 function makeBook(array $overrides = []): book
 {
-    return book::create(array_merge([
+    return Book::create(array_merge([
         'title' => 'Prayer Book',
         'description' => 'Book description',
         'file_path' => 'content/books/prayer-book.pdf',
@@ -39,7 +39,7 @@ function makeBook(array $overrides = []): book
 
 function makeAudiobook(array $overrides = []): audiobook
 {
-    return audiobook::create(array_merge([
+    return Audiobook::create(array_merge([
         'title' => 'Linked Audio',
         'description' => 'Audio description',
         'audio_file' => 'content/audiobooks/sample.mp3',
@@ -73,7 +73,7 @@ test('admin can create and update audiobook prayer audio field', function () {
 
     $storeResponse->assertRedirect(route('admin.audiobooks.index'));
 
-    $created = audiobook::query()->latest('id')->firstOrFail();
+    $created = Audiobook::query()->latest('id')->firstOrFail();
     expect($created->is_prayer_audio)->toBeTrue();
 
     $updateResponse = $this->put(route('admin.audiobooks.update', $created), [
@@ -165,3 +165,4 @@ test('book details linked audiobook block respects prayer filter', function () {
         ->assertSeeText('Study Session Linked')
         ->assertDontSeeText('Prayer Only Linked');
 });
+

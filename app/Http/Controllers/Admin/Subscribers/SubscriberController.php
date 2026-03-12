@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Subscribers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Subscriber;
+use App\\Models\\Subscriber;
 use App\Models\UserActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -108,3 +108,5 @@ class SubscriberController extends Controller
         return redirect()->back()->with('status', 'Subscriber permanently deleted.');
     }
 }
+
+

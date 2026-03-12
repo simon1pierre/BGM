@@ -32,3 +32,5 @@ class ContentTranslation extends Model
         return $this->morphTo();
     }
 }
+
+

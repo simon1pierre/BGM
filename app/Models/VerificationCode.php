@@ -20,3 +20,5 @@ class VerificationCode extends Model
         'used_at' => 'datetime',
     ];
 }
+
+

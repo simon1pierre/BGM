@@ -2,7 +2,7 @@
 
 use App\Models\ContentEvent;
 use App\Models\User;
-use App\Models\book;
+use App\\Models\\Book;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 
@@ -23,7 +23,7 @@ function makeAdminForAnalytics(): User
 
 function makeTrackableBook(array $overrides = []): book
 {
-    return book::create(array_merge([
+    return Book::create(array_merge([
         'title' => 'Tracked Book',
         'description' => 'Tracked description',
         'file_path' => 'content/books/tracked-book.pdf',
@@ -81,3 +81,4 @@ test('admin audiences analytics shows book reading progress table data', functio
         ->assertSeeText('Prayer Guide')
         ->assertSeeText('65.5%');
 });
+

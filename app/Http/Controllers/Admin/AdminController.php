@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\audio;
-use App\Models\book;
-use App\Models\subscriber;
-use App\Models\video;
+use App\\Models\\Audio;
+use App\\Models\\Book;
+use App\\Models\\Subscriber;
+use App\\Models\\Video;
 use App\Models\UserActivityLog;
 use App\Models\VideoEvent;
 use App\Models\ContentEvent;
@@ -19,21 +19,21 @@ class AdminController extends Controller
     public function index(){
         $since = Carbon::now()->subDays(7);
 
-        $videoCount = video::query()->count();
-        $audioCount = audio::query()->count();
-        $documentCount = book::query()->count();
-        $subscriberCount = subscriber::query()->count();
-        $totalDownloads = audio::query()->sum('download_count') + book::query()->sum('download_count');
+        $videoCount = Video::query()->count();
+        $audioCount = Audio::query()->count();
+        $documentCount = Book::query()->count();
+        $subscriberCount = Subscriber::query()->count();
+        $totalDownloads = Audio::query()->sum('download_count') + Book::query()->sum('download_count');
 
-        $latestVideos = video::query()->latest()->limit(5)->get();
-        $latestAudios = audio::query()->latest()->limit(5)->get();
-        $latestDocuments = book::query()->latest()->limit(5)->get();
+        $latestVideos = Video::query()->latest()->limit(5)->get();
+        $latestAudios = Audio::query()->latest()->limit(5)->get();
+        $latestDocuments = Book::query()->latest()->limit(5)->get();
         $recentActivity = UserActivityLog::query()
             ->orderByDesc('created_at')
             ->limit(8)
             ->get();
 
-        $totalVideoViews = video::query()->sum('view_count');
+        $totalVideoViews = Video::query()->sum('view_count');
         $totalVideoPlays = VideoEvent::query()->where('event_type', 'play')->count();
         $totalVideoImpressions = VideoEvent::query()->where('event_type', 'impression')->count();
         $totalVideoShares = VideoEvent::query()->where('event_type', 'share')->count();
@@ -50,8 +50,8 @@ class AdminController extends Controller
             ->where('created_at', '>=', $since)
             ->count();
 
-        $audioType = (new audio())->getMorphClass();
-        $bookType = (new book())->getMorphClass();
+        $audioType = (new Audio())->getMorphClass();
+        $bookType = (new Book())->getMorphClass();
 
         $audioPlays = ContentEvent::query()
             ->where('content_type', $audioType)
@@ -79,11 +79,11 @@ class AdminController extends Controller
             ->where('event_type', 'download')
             ->count();
 
-        $newSubscribersLast7 = subscriber::query()
+        $newSubscribersLast7 = Subscriber::query()
             ->where('subscribed_at', '>=', $since)
             ->count();
 
-        $topVideosByViews = video::query()
+        $topVideosByViews = Video::query()
             ->orderByDesc('view_count')
             ->limit(5)
             ->get();
@@ -96,7 +96,7 @@ class AdminController extends Controller
             ->limit(5)
             ->get()
             ->map(function ($row) {
-                $row->video = video::find($row->video_id);
+                $row->video = Video::find($row->video_id);
                 return $row;
             });
 
@@ -109,7 +109,7 @@ class AdminController extends Controller
             ->limit(5)
             ->get()
             ->map(function ($row) {
-                $row->audio = audio::find($row->content_id);
+                $row->audio = Audio::find($row->content_id);
                 return $row;
             });
 
@@ -122,7 +122,7 @@ class AdminController extends Controller
             ->limit(5)
             ->get()
             ->map(function ($row) {
-                $row->book = book::find($row->content_id);
+                $row->book = Book::find($row->content_id);
                 return $row;
             });
 
@@ -180,8 +180,8 @@ class AdminController extends Controller
             $labels
         );
 
-        $audioType = (new audio())->getMorphClass();
-        $bookType = (new book())->getMorphClass();
+        $audioType = (new Audio())->getMorphClass();
+        $bookType = (new Book())->getMorphClass();
 
         $audioPlays = $this->dailyCounts(
             ContentEvent::query()->where('content_type', $audioType)->where('event_type', 'play'),
@@ -194,7 +194,7 @@ class AdminController extends Controller
             $labels
         );
         $subscriberAdds = $this->dailyCounts(
-            subscriber::query(),
+            Subscriber::query(),
             'subscribed_at',
             $labels
         );
@@ -209,7 +209,7 @@ class AdminController extends Controller
                 'subscriberAdds' => $subscriberAdds,
             ],
             'totals' => [
-                'videoViews' => video::query()->sum('view_count'),
+                'videoViews' => Video::query()->sum('view_count'),
                 'videoPlays' => VideoEvent::query()->where('event_type', 'play')->count(),
                 'videoImpressions' => VideoEvent::query()->where('event_type', 'impression')->count(),
                 'videoShares' => VideoEvent::query()->where('event_type', 'share')->count(),
@@ -222,7 +222,7 @@ class AdminController extends Controller
                 'bookShares' => ContentEvent::query()->where('content_type', $bookType)->where('event_type', 'share')->count(),
                 'likes' => \App\Models\ContentLike::query()->count(),
                 'comments' => \App\Models\ContentComment::query()->count(),
-                'subscribers' => subscriber::query()->count(),
+                'subscribers' => Subscriber::query()->count(),
             ],
         ]);
     }
@@ -241,3 +241,5 @@ class AdminController extends Controller
         return $labels->map(fn ($day) => (int) ($rows[$day] ?? 0))->values();
     }
 }
+
+

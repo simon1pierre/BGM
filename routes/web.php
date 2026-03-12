@@ -242,3 +242,4 @@ Route::post('/books/{book}/track', [PublicContentEngagementController::class, 't
     ->name('content.book.track');
 Route::post('/analytics/audience/track', [AudienceAnalyticsController::class, 'track'])
     ->name('content.audience.track');
+

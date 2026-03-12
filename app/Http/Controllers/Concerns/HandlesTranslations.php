@@ -95,3 +95,5 @@ trait HandlesTranslations
             ->autoFillMissingTranslations($model, array_values($fieldMap), config('translation_pipeline.primary_locale', 'rw'));
     }
 }
+
+

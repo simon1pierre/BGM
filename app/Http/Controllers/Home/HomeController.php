@@ -7,20 +7,20 @@ use App\Models\ContentCategory;
 use App\Models\ContactMessage;
 use App\Models\Event;
 use App\Models\Setting;
-use App\Models\Subscriber;
+use App\\Models\\Subscriber;
 use App\Models\MinistryLeader;
 use App\Models\UserActivityLog;
-use App\Models\video;
-use App\Models\book;
-use App\Models\audio;
-use App\Models\audiobook;
+use App\\Models\\Video;
+use App\\Models\\Book;
+use App\\Models\\Audio;
+use App\\Models\\Audiobook;
 use App\Models\Devotional;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index(){
-        $latestVideos = video::query()
+        $latestVideos = Video::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('featured')
@@ -29,7 +29,7 @@ class HomeController extends Controller
             ->limit(8)
             ->get();
 
-        $featuredVideo = video::query()
+        $featuredVideo = Video::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('featured')
@@ -37,7 +37,7 @@ class HomeController extends Controller
             ->orderByDesc('created_at')
             ->first();
 
-        $featuredBook = book::query()
+        $featuredBook = Book::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('featured')
@@ -45,7 +45,7 @@ class HomeController extends Controller
             ->orderByDesc('created_at')
             ->first();
 
-        $featuredAudio = audio::query()
+        $featuredAudio = Audio::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('featured')
@@ -53,7 +53,7 @@ class HomeController extends Controller
             ->orderByDesc('created_at')
             ->first();
 
-        $recommendedBooks = book::query()
+        $recommendedBooks = Book::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->where('recommended', true)
@@ -62,7 +62,7 @@ class HomeController extends Controller
             ->limit(6)
             ->get();
 
-        $recommendedAudios = audio::query()
+        $recommendedAudios = Audio::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->where('recommended', true)
@@ -71,7 +71,7 @@ class HomeController extends Controller
             ->limit(6)
             ->get();
 
-        $featuredAudiobooks = audiobook::query()
+        $featuredAudiobooks = Audiobook::query()
             ->with(['category.translations', 'translations', 'linkedBook.translations'])
             ->withCount(['publishedParts as parts_count'])
             ->where('is_published', true)
@@ -149,7 +149,7 @@ class HomeController extends Controller
                 ->pluck('name');
         }
 
-        $videosQuery = video::query()
+        $videosQuery = Video::query()
             ->with(['category.translations', 'translations'])
             ->withCount(['likes', 'comments' => function ($query) {
                 $query->where('is_approved', true);
@@ -187,10 +187,10 @@ class HomeController extends Controller
             ->orderByDesc('published_at')
             ->orderByDesc('created_at');
 
-        $allCount = video::query()
+        $allCount = Video::query()
             ->where('is_published', true)
             ->count();
-        $featuredCount = video::query()
+        $featuredCount = Video::query()
             ->where('is_published', true)
             ->where('featured', true)
             ->count();
@@ -198,7 +198,7 @@ class HomeController extends Controller
             ->paginate(9)
             ->withQueryString();
 
-        $recommendedVideos = video::query()
+        $recommendedVideos = Video::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->whereNotIn('id', $videos->pluck('id'))
@@ -228,7 +228,7 @@ class HomeController extends Controller
 
         $locale = app()->getLocale();
 
-        $booksQuery = book::query()
+        $booksQuery = Book::query()
             ->with(['category.translations', 'translations'])
             ->withCount(['likes', 'comments' => function ($query) {
                 $query->where('is_approved', true);
@@ -255,7 +255,7 @@ class HomeController extends Controller
             ->orderByDesc('published_at')
             ->orderByDesc('created_at');
 
-        $allCount = book::query()
+        $allCount = Book::query()
             ->where('is_published', true)
             ->count();
 
@@ -266,7 +266,7 @@ class HomeController extends Controller
         return view('books.index', compact('books', 'categories', 'activeCategory', 'allCount', 'search'));
     }
 
-    public function bookShow(Request $request, book $book)
+    public function bookShow(Request $request, Book $book)
     {
         if (!$book->is_published) {
             abort(404);
@@ -284,7 +284,7 @@ class HomeController extends Controller
                 ->limit(5);
         }]);
 
-        $relatedBooks = book::query()
+        $relatedBooks = Book::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->where('id', '!=', $book->id)
@@ -296,12 +296,12 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
         $prayerFilter = $this->resolvePrayerFilter($request->query('prayer'));
-        $hasLinkedAudiobooks = audiobook::query()
+        $hasLinkedAudiobooks = Audiobook::query()
             ->where('is_published', true)
             ->where('book_id', $book->id)
             ->exists();
 
-        $linkedAudiobooks = audiobook::query()
+        $linkedAudiobooks = Audiobook::query()
             ->with(['publishedParts' => function ($query) {
                 $query->select('id', 'audiobook_id', 'title', 'audio_file', 'duration', 'sort_order')
                     ->where('is_published', true)
@@ -322,7 +322,7 @@ class HomeController extends Controller
         return view('books.show', compact('book', 'relatedBooks', 'linkedAudiobooks', 'prayerFilter', 'hasLinkedAudiobooks'));
     }
 
-    public function bookReader(book $book)
+    public function bookReader(Book $book)
     {
         if (!$book->is_published) {
             abort(404);
@@ -332,7 +332,7 @@ class HomeController extends Controller
         $book->load('translations');
         $book->category?->load('translations');
 
-        $linkedAudiobooks = audiobook::query()
+        $linkedAudiobooks = Audiobook::query()
             ->with(['publishedParts' => function ($query) {
                 $query->select('id', 'audiobook_id', 'title', 'audio_file', 'duration', 'sort_order')
                     ->where('is_published', true)
@@ -347,7 +347,7 @@ class HomeController extends Controller
             ->orderByDesc('created_at')
             ->get();
 
-        $recommendedBooks = book::query()
+        $recommendedBooks = Book::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->where('id', '!=', $book->id)
@@ -359,7 +359,7 @@ class HomeController extends Controller
             ->limit(4)
             ->get();
 
-        $recommendedAudiobooks = audiobook::query()
+        $recommendedAudiobooks = Audiobook::query()
             ->with(['linkedBook.translations', 'linkedBook.category.translations'])
             ->withCount(['publishedParts as parts_count'])
             ->where('is_published', true)
@@ -389,7 +389,7 @@ class HomeController extends Controller
 
         $locale = app()->getLocale();
 
-        $audiosQuery = audio::query()
+        $audiosQuery = Audio::query()
             ->with(['category.translations', 'translations'])
             ->withCount(['likes', 'comments' => function ($query) {
                 $query->where('is_approved', true);
@@ -416,7 +416,7 @@ class HomeController extends Controller
             ->orderByDesc('published_at')
             ->orderByDesc('created_at');
 
-        $allCount = audio::query()
+        $allCount = Audio::query()
             ->where('is_published', true)
             ->count();
 
@@ -427,7 +427,7 @@ class HomeController extends Controller
         return view('audios.index', compact('audios', 'categories', 'activeCategory', 'allCount', 'search'));
     }
 
-    public function audioShow(audio $audio)
+    public function audioShow(Audio $audio)
     {
         if (!$audio->is_published) {
             abort(404);
@@ -445,7 +445,7 @@ class HomeController extends Controller
                 ->limit(5);
         }]);
 
-        $relatedAudios = audio::query()
+        $relatedAudios = Audio::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->where('id', '!=', $audio->id)
@@ -465,7 +465,7 @@ class HomeController extends Controller
         return redirect()->route('books.index');
     }
 
-    public function audiobookShow(audiobook $audiobook)
+    public function audiobookShow(Audiobook $audiobook)
     {
         $audiobook->load('linkedBook');
         if (!$audiobook->linkedBook || !$audiobook->linkedBook->is_published) {
@@ -583,9 +583,9 @@ class HomeController extends Controller
     public function about()
     {
         $stats = [
-            'videos' => video::query()->where('is_published', true)->count(),
-            'audios' => audio::query()->where('is_published', true)->count(),
-            'books' => book::query()->where('is_published', true)->count(),
+            'videos' => Video::query()->where('is_published', true)->count(),
+            'audios' => Audio::query()->where('is_published', true)->count(),
+            'books' => Book::query()->where('is_published', true)->count(),
             'subscribers' => Subscriber::query()->where('is_active', true)->count(),
         ];
 
@@ -597,7 +597,7 @@ class HomeController extends Controller
         $settings = Setting::currentOrDefault();
         $limit = max(3, (int) ($settings->home_featured_video_limit ?? 3));
 
-        $featuredVideo = video::query()
+        $featuredVideo = Video::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('featured')
@@ -605,7 +605,7 @@ class HomeController extends Controller
             ->orderByDesc('created_at')
             ->first();
 
-        $featuredBook = book::query()
+        $featuredBook = Book::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('featured')
@@ -613,7 +613,7 @@ class HomeController extends Controller
             ->orderByDesc('created_at')
             ->first();
 
-        $featuredAudio = audio::query()
+        $featuredAudio = Audio::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('featured')
@@ -621,7 +621,7 @@ class HomeController extends Controller
             ->orderByDesc('created_at')
             ->first();
 
-        $videos = video::query()
+        $videos = Video::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('published_at')
@@ -629,7 +629,7 @@ class HomeController extends Controller
             ->limit($limit)
             ->get();
 
-        $books = book::query()
+        $books = Book::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('published_at')
@@ -637,7 +637,7 @@ class HomeController extends Controller
             ->limit(6)
             ->get();
 
-        $audios = audio::query()
+        $audios = Audio::query()
             ->with(['category.translations', 'translations'])
             ->where('is_published', true)
             ->orderByDesc('published_at')
@@ -780,3 +780,5 @@ class HomeController extends Controller
         return null;
     }
 }
+
+
