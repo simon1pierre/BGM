@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
@@ -54,6 +55,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+
+        // Force HTTPS URLs when behind Render proxy in production to avoid mixed content.
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
         
         $settings = null;
 
