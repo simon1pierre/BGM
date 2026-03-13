@@ -64,6 +64,10 @@ class DatabaseSnapshotSeeder extends Seeder
                 }
             }
 
+            if ($driver === 'pgsql') {
+                $this->bumpPostgresSequence($table, $rows);
+            }
+
             $this->command?->line(sprintf('Seeded %s (%d row(s))', $table, count($rows)));
         }
 
@@ -147,6 +151,36 @@ class DatabaseSnapshotSeeder extends Seeder
     {
         $quoted = '"'.str_replace('"', '""', $table).'"';
         DB::statement("TRUNCATE TABLE {$quoted} RESTART IDENTITY CASCADE");
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $rows
+     */
+    private function bumpPostgresSequence(string $table, array $rows): void
+    {
+        if (count($rows) === 0) {
+            return;
+        }
+
+        $maxId = null;
+        foreach ($rows as $row) {
+            if (is_array($row) && array_key_exists('id', $row) && is_numeric($row['id'])) {
+                $value = (int) $row['id'];
+                $maxId = is_null($maxId) ? $value : max($maxId, $value);
+            }
+        }
+
+        if (is_null($maxId)) {
+            return;
+        }
+
+        $sequenceSql = "SELECT pg_get_serial_sequence(?, 'id') as seq";
+        $sequence = DB::selectOne($sequenceSql, [$table])->seq ?? null;
+        if (!$sequence) {
+            return;
+        }
+
+        DB::statement('SELECT setval(?, ?, true)', [$sequence, $maxId]);
     }
 
     /**
