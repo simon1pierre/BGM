@@ -37,4 +37,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "php artisan package:discover --no-interaction && if [ \"${SEED_ON_START:-true}\" = \"true\" ]; then php artisan migrate:fresh --force --seed; else php artisan migrate --force; fi && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan serve --host=0.0.0.0 --port=10000"]
+CMD ["sh", "-c", "php artisan package:discover --no-interaction && php artisan storage:link || true && if [ \"${SEED_ON_START:-true}\" = \"true\" ]; then php artisan migrate:fresh --force --seed; else php artisan migrate --force; fi && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan serve --host=0.0.0.0 --port=10000"]
