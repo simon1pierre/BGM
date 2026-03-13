@@ -74,8 +74,8 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.analy
     Route::get('/analytics/content', [AnalyticsController::class, 'content'])->name('content');
 });
 Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.trash.')->group(function () {
-    Route::get('/trash', [TrashController::class, 'index'])->name('index');
     Route::post('/trash/{module}/{id}/restore', [TrashController::class, 'restore'])->name('restore');
+    Route::get('/trash', [TrashController::class, 'index'])->name('index');
     Route::delete('/trash/{module}/{id}/force-delete', [TrashController::class, 'forceDelete'])->name('force-delete');
     Route::post('/trash/bulk/restore', [TrashController::class, 'bulkRestore'])->name('bulk-restore');
     Route::delete('/trash/bulk/force-delete', [TrashController::class, 'bulkForceDelete'])->name('bulk-force-delete');
