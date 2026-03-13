@@ -88,36 +88,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              blue: '#0f2b5e', /* Deep Royal Blue */
-              light: '#f8fafc', /* Soft Off-white */
-              gold: '#d4af37', /* Muted Gold */
-              sky: '#e0f2fe', /* Soft Sky */
-            }
-          },
-          fontFamily: {
-            serif: ['"Playfair Display"', 'serif'],
-            sans: ['"Lato"', 'sans-serif'],
-          },
-          animation: {
-            'float-slow': 'float 8s ease-in-out infinite',
-            'ray-spin': 'spin 60s linear infinite',
-          },
-          keyframes: {
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-20px)' },
-            }
-          }
-        }
-      }
-    }
-  </script>
+  
 
 
   <style>
