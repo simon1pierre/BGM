@@ -49,6 +49,7 @@
   <meta name="application-name" content="{{ $siteName }}">
   <meta name="theme-color" content="{{ $themeColor }}">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
   <link rel="canonical" href="https://beaconsofgod.org">
@@ -83,7 +84,7 @@
 
 
   <!-- Tailwind & Lucide -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
   <script src="https://unpkg.com/lucide@latest"></script>
 
 

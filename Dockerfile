@@ -1,3 +1,12 @@
+FROM node:20-alpine AS frontend
+
+WORKDIR /app
+
+COPY package.json package-lock.json vite.config.js ./
+COPY resources ./resources
+
+RUN npm ci && npm run build
+
 FROM php:8.4-cli-bookworm
 
 WORKDIR /var/www/html
@@ -29,6 +38,7 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 COPY . /var/www/html
+COPY --from=frontend /app/public/build /var/www/html/public/build
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
   && composer install --no-dev --optimize-autoloader --no-interaction --no-scripts \
