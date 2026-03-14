@@ -108,23 +108,29 @@
         }
 
         .admin-footer {
-            margin-top: 2rem;
-            padding: 1.25rem 1.5rem;
+            position: fixed;
+            left: 1rem;
+            right: 1rem;
+            bottom: 1rem;
+            z-index: 1030;
+            margin-top: 0;
+            padding: .9rem 1.25rem;
             border-radius: 18px;
-            background: linear-gradient(135deg, rgba(15, 43, 94, 0.96), rgba(11, 21, 48, 0.98));
+            background: #10295E;
             color: #e2e8f0;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(15, 43, 94, 0.25);
+            box-shadow: 0 18px 30px rgba(15, 23, 42, 0.18);
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem 2rem;
+            gap: .75rem 1.5rem;
             align-items: center;
             justify-content: space-between;
         }
 
         .admin-footer a {
-            color: #f8fafc;
+            color: #e2e8f0;
             text-decoration: none;
-            opacity: .88;
+            opacity: .9;
         }
 
         .admin-footer a:hover {
@@ -138,8 +144,8 @@
         }
 
         .admin-footer .footer-brand img {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             object-fit: contain;
             border-radius: 10px;
             background: #fff;
@@ -148,12 +154,12 @@
 
         .admin-footer .footer-title {
             font-weight: 600;
-            font-size: .95rem;
+            font-size: .9rem;
         }
 
         .admin-footer .footer-subtitle {
-            font-size: .75rem;
-            opacity: .7;
+            font-size: .72rem;
+            opacity: .75;
         }
 
         .admin-footer .footer-meta {
@@ -161,7 +167,7 @@
             flex-wrap: wrap;
             gap: .35rem 1rem;
             font-size: .75rem;
-            opacity: .75;
+            opacity: .8;
         }
 
         .admin-footer .footer-links {
@@ -171,6 +177,10 @@
             font-size: .75rem;
             text-transform: uppercase;
             letter-spacing: .04em;
+        }
+
+        .nxl-container {
+            padding-bottom: 6.5rem;
         }
 
         .table td.text-end form {
@@ -305,7 +315,10 @@
             }
 
             .admin-footer {
-                padding: 1rem 1.1rem;
+                left: .75rem;
+                right: .75rem;
+                bottom: .75rem;
+                padding: .85rem 1rem;
             }
         }
 
