@@ -436,7 +436,7 @@
       <h3 class="text-2xl font-serif font-bold text-blue-950 mb-8 text-center">{{ __('messages.home.recommended_books') }}</h3>
       <div id="booksTrack" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         @forelse ($recommendedBooks as $book)
-          <article class="group relative bg-white rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 scroll-animate">
+          <article class="group relative bg-white rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 scroll-animate" data-tap-reveal tabindex="0">
             <div class="relative aspect-[2/3] overflow-hidden bg-slate-100">
               @if ($book->cover_image)
                 <img src="{{ asset('storage/'.$book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
@@ -444,9 +444,9 @@
                 <img src="{{ asset('landingpage/download-book.webp') }}" alt="{{ __('messages.home.downloadable_books') }}" class="w-full h-full object-cover">
               @endif
 
-              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/55 to-slate-900/10 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/55 to-slate-900/10 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300 tap-overlay"></div>
 
-              <div class="absolute inset-x-0 bottom-0 p-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-300">
+              <div class="absolute inset-x-0 bottom-0 p-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-300 tap-overlay">
                 <h4 class="text-white text-sm font-semibold mb-2 line-clamp-2">{{ $book->title }}</h4>
                 <div class="flex items-center gap-2 flex-nowrap">
                   <a href="{{ route('books.reader', $book) }}" class="inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-md bg-blue-600 text-white text-[11px] font-semibold hover:bg-blue-500 whitespace-nowrap" title="{{ __('messages.home.read_online') }}">

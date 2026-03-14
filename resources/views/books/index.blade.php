@@ -54,7 +54,7 @@
 
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
                 @forelse ($books as $book)
-                    <article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100">
+                    <article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100" data-tap-reveal tabindex="0">
                         <div class="relative aspect-[2/3] overflow-hidden bg-slate-100">
                             @if ($book->cover_image)
                                 <img src="{{ asset('storage/'.$book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
@@ -66,8 +66,8 @@
                                 <span class="absolute top-3 left-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">{{ __('messages.common.featured') }}</span>
                             @endif
 
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/70 to-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            <div class="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/70 to-slate-900/20 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300 tap-overlay"></div>
+                            <div class="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-300 tap-overlay">
                                 <h3 class="text-white text-base font-semibold line-clamp-2">{{ $book->title }}</h3>
                                 <p class="text-slate-200 text-xs mt-2 line-clamp-3">{{ \Illuminate\Support\Str::limit($book->description, 110) }}</p>
                                 <div class="mt-3 flex items-center gap-3 text-[11px] text-slate-200">

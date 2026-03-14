@@ -211,6 +211,17 @@
                                 <div id="readingProgressBar" class="h-full bg-blue-700 transition-all duration-200" style="width: 0%"></div>
                             </div>
                         </div>
+                        <div class="md:hidden sticky bottom-0 z-20 bg-white/95 backdrop-blur border-t border-slate-200 px-3 py-2 flex items-center gap-2">
+                            <button type="button" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm" data-reader-action="prev">&larr;</button>
+                            <button type="button" class="px-3 py-2 rounded-lg border border-slate-200 text-slate-700 text-sm" data-reader-action="next">&rarr;</button>
+                            <div class="flex items-center gap-2 text-xs text-slate-700 ml-auto">
+                                <span>{{ __('messages.common.page') }}</span>
+                                <input id="pageNumberMobile" type="number" min="1" value="1" class="w-16 px-2 py-1.5 border border-slate-200 rounded-lg text-xs">
+                                <button type="button" class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-700 text-[11px]" data-reader-action="go">{{ __('messages.common.go') }}</button>
+                                <span class="text-slate-500">/</span>
+                                <span id="pageCountMobile" class="text-slate-600">-</span>
+                            </div>
+                        </div>
 
                         <div id="readerContainer" class="bg-slate-200 overflow-auto h-[62vh] md:h-[75vh]">
                             <canvas id="pdfCanvas" class="mx-auto my-4 shadow-md bg-white"></canvas>
@@ -489,6 +500,7 @@
             return page.render(renderContext).promise.then(() => {
                 currentPage = pageNumber;
                 document.getElementById('pageNumber').value = currentPage;
+                syncMobilePage();
                 updateReadingProgress();
                 trackReadProgress();
                 if (container) {
@@ -656,6 +668,7 @@
             pdfDoc = pdf;
             totalPages = pdf.numPages;
             document.getElementById('pageCount').textContent = totalPages;
+            syncMobilePage();
             queueRender(1);
             trackBook('open_reader', readerProgressPayload());
         }).catch(() => {
@@ -706,8 +719,32 @@
             trackBook('read', readerProgressPayload());
         };
 
-        document.getElementById('pageNumber').addEventListener('change', jumpToPage);
-        document.getElementById('goPage').addEventListener('click', jumpToPage);
+        const pageNumberInput = document.getElementById('pageNumber');
+        const pageNumberMobile = document.getElementById('pageNumberMobile');
+        const pageCountMobile = document.getElementById('pageCountMobile');
+
+        const syncMobilePage = () => {
+            if (pageNumberMobile) pageNumberMobile.value = String(currentPage);
+            if (pageCountMobile) pageCountMobile.textContent = String(totalPages || '-');
+        };
+
+        pageNumberInput?.addEventListener('change', jumpToPage);
+        document.getElementById('goPage')?.addEventListener('click', jumpToPage);
+
+        pageNumberMobile?.addEventListener('change', () => {
+            if (!pageNumberMobile) return;
+            pageNumberInput.value = pageNumberMobile.value;
+            jumpToPage();
+        });
+
+        document.querySelectorAll('[data-reader-action]').forEach((button) => {
+            button.addEventListener('click', () => {
+                const action = button.getAttribute('data-reader-action');
+                if (action === 'prev') document.getElementById('prevPage')?.click();
+                if (action === 'next') document.getElementById('nextPage')?.click();
+                if (action === 'go') pageNumberMobile?.dispatchEvent(new Event('change'));
+            });
+        });
 
         document.getElementById('zoomIn').addEventListener('click', () => {
             zoom = Math.min(zoom + 0.2, 3.0);

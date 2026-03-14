@@ -951,8 +951,11 @@
           <svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true"><path fill="currentColor" d="M18.3 5.71L12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.71 2.88 18.3 9.17 12 2.88 5.71 4.29 4.29 10.59 10.6l6.3-6.31z"/></svg>
         </button>
       </div>
-      <p class="text-sm text-slate-600 mb-5">
+      <p class="text-sm text-slate-600 mb-5" id="pwa-install-copy">
         {{ __('messages.site.install_prompt', ['name' => $siteName]) }}
+      </p>
+      <p class="hidden text-xs text-slate-500 mb-5" id="pwa-install-ios">
+        On iPhone/iPad: tap Share, then “Add to Home Screen”.
       </p>
       <div class="grid gap-3 mb-6 sm:grid-cols-2">
         <div class="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 px-3 py-3">
@@ -1104,6 +1107,12 @@
         showInstallModal();
       });
     }
+
+    [data-tap-reveal].is-active .tap-overlay,
+    [data-tap-reveal]:focus-within .tap-overlay {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
     if (installLater) {
       installLater.addEventListener('click', hideInstallModal);
     }
@@ -1128,6 +1137,18 @@
         }
         hideInstallModal();
       });
+    }
+
+    const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent || '');
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    if (!isStandalone && isIos && installButton) {
+      installButton.classList.remove('hidden');
+      if (installNow) installNow.classList.add('hidden');
+      const iosHint = document.getElementById('pwa-install-ios');
+      const genericCopy = document.getElementById('pwa-install-copy');
+      iosHint?.classList.remove('hidden');
+      genericCopy?.classList.add('hidden');
     }
   </script>
   <script>
@@ -1353,6 +1374,22 @@
           setTimeout(hideLoader, 4500);
         }, { passive: true });
       });
+
+      const tapCards = Array.from(document.querySelectorAll('[data-tap-reveal]'));
+      const clearActive = () => tapCards.forEach((card) => card.classList.remove('is-active'));
+
+      tapCards.forEach((card) => {
+        card.addEventListener('touchstart', (event) => {
+          const isActive = card.classList.contains('is-active');
+          clearActive();
+          if (!isActive) {
+            card.classList.add('is-active');
+            event.stopPropagation();
+          }
+        }, { passive: true });
+      });
+
+      document.addEventListener('touchstart', clearActive, { passive: true });
 
       const mediaSelector = 'img, iframe, audio, video';
       document.querySelectorAll(mediaSelector).forEach((media) => {
