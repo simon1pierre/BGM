@@ -201,6 +201,32 @@
               </div>
             </div>
           </div>
+          <div class="md:hidden p-4 border-t border-slate-100">
+            <div class="flex items-center justify-between gap-2">
+              <div>
+                <h3 class="text-base font-serif font-bold text-blue-950">{{ $leader->name }}</h3>
+                <p class="text-xs text-slate-600">{{ $leader->position ?: 'Ministry Team' }}</p>
+              </div>
+              <span class="text-[10px] uppercase tracking-widest px-2 py-1 rounded-full {{ $leader->role_type === 'preacher' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800' }}">
+                {{ $leader->role_type === 'preacher' ? __('messages.home.preacher') : __('messages.home.leader') }}
+              </span>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2">
+              @if ($leader->phone)
+                <a href="https://wa.me/{{ preg_replace('/\D+/', '', $leader->phone) }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-500/90 text-white text-xs font-semibold">
+                  <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
+                </a>
+              @endif
+              @if ($leader->email)
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ urlencode($leader->email) }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-600/90 text-white text-xs font-semibold">
+                  <i data-lucide="mail" class="w-4 h-4"></i> Gmail
+                </a>
+              @endif
+              @if (!$leader->phone && !$leader->email)
+                <div class="text-xs text-slate-500">{{ __('messages.home.contact_not_available') }}</div>
+              @endif
+            </div>
+          </div>
         </article>
       @empty
         <div class="w-full text-center text-slate-500 py-10">{{ __('messages.home.no_leaders') }}</div>
@@ -252,19 +278,19 @@
 
       <!-- Feature 2: Books -->
       <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-slate-100 scroll-animate hover-lift hover-glow-intense ripple-container">
-        <div class="aspect-[3/2] overflow-hidden bg-slate-100">
+        <div class="aspect-[2/3] overflow-hidden bg-slate-100">
           @if ($featuredBook && $featuredBook->cover_image)
             <img
               src="{{ asset('storage/'.$featuredBook->cover_image) }}"
               alt="{{ $featuredBook->title }}"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              class="w-full h-full object-contain bg-white p-3 transition-transform duration-500"
               loading="lazy"
             />
           @else
             <img
               src="{{asset('landingpage/download-book.webp')}}"
               alt="{{ __('messages.home.downloadable_books') }}"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              class="w-full h-full object-contain bg-white p-3 transition-transform duration-500"
               loading="lazy"
             />
           @endif
@@ -439,9 +465,9 @@
           <article class="group relative bg-white rounded-md overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 scroll-animate" data-tap-reveal tabindex="0">
             <div class="relative aspect-[2/3] overflow-hidden bg-slate-100">
               @if ($book->cover_image)
-                <img src="{{ asset('storage/'.$book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
+                <img src="{{ asset('storage/'.$book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-contain bg-white p-2">
               @else
-                <img src="{{ asset('landingpage/download-book.webp') }}" alt="{{ __('messages.home.downloadable_books') }}" class="w-full h-full object-cover">
+                <img src="{{ asset('landingpage/download-book.webp') }}" alt="{{ __('messages.home.downloadable_books') }}" class="w-full h-full object-contain bg-white p-2">
               @endif
 
               <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/55 to-slate-900/10 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300 tap-overlay"></div>

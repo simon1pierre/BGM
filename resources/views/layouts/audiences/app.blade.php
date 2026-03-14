@@ -598,9 +598,9 @@
       align-items: center;
       justify-content: center;
       background:
-        radial-gradient(circle at 20% 20%, rgba(15, 43, 94, 0.24), transparent 45%),
-        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.2), transparent 40%),
-        rgba(248, 250, 252, 0.95);
+        radial-gradient(circle at 18% 15%, rgba(15, 43, 94, 0.25), transparent 42%),
+        radial-gradient(circle at 82% 82%, rgba(212, 175, 55, 0.22), transparent 38%),
+        rgba(248, 250, 252, 0.94);
       transition: opacity 260ms ease, visibility 260ms ease;
     }
 
@@ -611,41 +611,42 @@
     }
 
     .loader-card {
-      min-width: 230px;
+      min-width: 240px;
       max-width: 86vw;
-      border-radius: 1rem;
+      border-radius: 1.2rem;
       border: 1px solid rgba(15, 43, 94, 0.12);
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.14);
-      padding: 1rem 1.1rem;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 22px 50px rgba(15, 23, 42, 0.16);
+      padding: 1.2rem 1.4rem;
       text-align: center;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
     }
 
     .loader-core {
-      width: 56px;
-      height: 56px;
+      width: 62px;
+      height: 62px;
       margin: 0 auto .7rem auto;
       border-radius: 9999px;
-      border: 3px solid rgba(15, 43, 94, 0.14);
+      border: 3px solid rgba(15, 43, 94, 0.12);
       border-top-color: rgba(15, 43, 94, 0.95);
-      animation: spin .9s linear infinite;
+      animation: spin 1s linear infinite;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: inset 0 0 0 6px rgba(15, 43, 94, 0.03);
     }
 
     .loader-logo {
-      width: 18px;
-      height: 18px;
+      width: 24px;
+      height: 24px;
       object-fit: contain;
       border-radius: 9999px;
       background: #fff;
-      padding: 1px;
+      padding: 2px;
     }
 
     .loader-text {
-      font-size: .83rem;
+      font-size: .86rem;
       color: #0f2b5e;
       font-weight: 600;
       letter-spacing: .01em;
@@ -655,6 +656,29 @@
       margin-top: .2rem;
       font-size: .72rem;
       color: #64748b;
+    }
+
+    .loader-dots {
+      display: flex;
+      justify-content: center;
+      gap: .35rem;
+      margin-top: .6rem;
+    }
+
+    .loader-dots span {
+      width: 6px;
+      height: 6px;
+      border-radius: 9999px;
+      background: rgba(15, 43, 94, 0.6);
+      animation: dot-bounce 0.9s ease-in-out infinite;
+    }
+
+    .loader-dots span:nth-child(2) { animation-delay: 0.15s; }
+    .loader-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes dot-bounce {
+      0%, 100% { transform: translateY(0); opacity: .6; }
+      50% { transform: translateY(-4px); opacity: 1; }
     }
 
     .route-progress {
@@ -733,6 +757,9 @@
       </div>
       <div class="loader-text">{{ __('messages.site.loading') }}</div>
       <div id="pageLoaderHint" class="loader-subtext">Preparing an engaging experience...</div>
+      <div class="loader-dots" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
     </div>
   </div>
   <div id="toastWrap" class="toast-wrap" aria-live="polite" aria-atomic="true"></div>

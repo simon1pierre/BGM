@@ -49,8 +49,14 @@
                     @if (!empty($onlyFeatured))
                         <input type="hidden" name="featured" value="1">
                     @endif
+                    <label class="sr-only" for="preacherFilter">{{ __('messages.home.preacher') }}</label>
                     <div class="flex items-center gap-2 bg-white border border-slate-200 rounded-full px-3 py-1.5 shadow-sm">
+                        <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-1 rounded-full">
+                            <i data-lucide="mic" class="w-3.5 h-3.5"></i>
+                            {{ __('messages.home.preacher') }}
+                        </span>
                         <input
+                            id="preacherFilter"
                             type="text"
                             name="preacher"
                             value="{{ $activePreacher ?? '' }}"
