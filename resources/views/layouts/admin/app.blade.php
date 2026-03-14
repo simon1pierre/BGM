@@ -107,8 +107,92 @@
             margin-bottom: 0;
         }
 
+        .admin-footer {
+            margin-top: 2rem;
+            padding: 1.25rem 1.5rem;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(15, 43, 94, 0.96), rgba(11, 21, 48, 0.98));
+            color: #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .admin-footer a {
+            color: #f8fafc;
+            text-decoration: none;
+            opacity: .88;
+        }
+
+        .admin-footer a:hover {
+            opacity: 1;
+        }
+
+        .admin-footer .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+
+        .admin-footer .footer-brand img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #fff;
+            padding: 4px;
+        }
+
+        .admin-footer .footer-title {
+            font-weight: 600;
+            font-size: .95rem;
+        }
+
+        .admin-footer .footer-subtitle {
+            font-size: .75rem;
+            opacity: .7;
+        }
+
+        .admin-footer .footer-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .35rem 1rem;
+            font-size: .75rem;
+            opacity: .75;
+        }
+
+        .admin-footer .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem 1.25rem;
+            font-size: .75rem;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
         .table td.text-end form {
             display: inline-block;
+        }
+
+        .table td.text-end {
+            white-space: nowrap;
+        }
+
+        .table td.text-end .btn,
+        .table td.text-end form {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .table td.text-end form {
+            margin-right: .35rem;
+        }
+
+        .table td.text-end form:last-child {
+            margin-right: 0;
         }
 
         @media (max-width: 991.98px) {
@@ -202,21 +286,6 @@
         }
 
         @media (max-width: 767.98px) {
-            .table td.text-end {
-                text-align: left !important;
-                display: flex;
-                flex-wrap: wrap;
-                gap: .35rem;
-            }
-
-            .table td.text-end form {
-                margin: 0;
-            }
-
-            .table td.text-end .btn {
-                width: auto;
-            }
-
             .nxl-h-dropdown {
                 width: min(92vw, 320px) !important;
             }
@@ -233,6 +302,10 @@
             .page-header-right .btn,
             .page-header-right .btn-group .btn {
                 justify-content: center;
+            }
+
+            .admin-footer {
+                padding: 1rem 1.1rem;
             }
         }
 
@@ -309,18 +382,22 @@
     <main class="nxl-container">
         @yield('contents')
         <!-- [ Footer ] start -->
-        <footer class="footer">
-            <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
-                <span>Copyright ©</span>
-                <script>
-                    document.write(new Date().getFullYear());
-                </script>
-            </p>
-            <p><span>Developed by:<a href="#">Simon Pierre</a></span> • <span> For: <a href="" target="_blank">Beacons of God Ministries</a></span></p>
-            <div class="d-flex align-items-center gap-4">
-                <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Help</a>
-                <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Terms</a>
-                <a href="javascript:void(0);" class="fs-11 fw-semibold text-uppercase">Privacy</a>
+        <footer class="footer admin-footer">
+            <div class="footer-brand">
+                <img src="{{ asset('images/logo.png') }}" alt="Beacons of God Ministries">
+                <div>
+                    <div class="footer-title">Beacons of God Ministries</div>
+                    <div class="footer-subtitle">Light, Truth, and Guidance</div>
+                </div>
+            </div>
+            <div class="footer-meta">
+                <span>&copy; <script>document.write(new Date().getFullYear());</script> All rights reserved.</span>
+                <span>Developed by <a href="javascript:void(0);">Simon Pierre</a></span>
+            </div>
+            <div class="footer-links">
+                <a href="javascript:void(0);">Help</a>
+                <a href="javascript:void(0);">Terms</a>
+                <a href="javascript:void(0);">Privacy</a>
             </div>
         </footer>
         <!-- [ Footer ] end -->
@@ -587,6 +664,7 @@
     @stack('scripts')
 </body>
 </html>
+
 
 
 
