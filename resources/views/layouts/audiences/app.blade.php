@@ -51,7 +51,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
+  <link rel="manifest" href="{{ asset('manifest.json') }}">
   <link rel="canonical" href="https://beaconsofgod.org">
  <!-- Favicon -->
 <link rel="icon" type="image/png" sizes="18x18" href="{{ $faviconPathSmall }}">
@@ -1057,7 +1057,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('{{ asset('sw.js') }}')
+        navigator.serviceWorker.register('{{ asset('sw.js') }}', { scope: '/' })
           .catch(() => {});
       });
     }
