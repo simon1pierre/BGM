@@ -1279,6 +1279,8 @@
         }
       };
 
+      let loaderFailSafe = setTimeout(hideLoader, 3500);
+
       const startProgress = () => {
         if (!progress) return;
         progress.style.width = '18%';
@@ -1321,6 +1323,7 @@
           if (target === '_blank' || isHash || isJs || isExternal) return;
           startProgress();
           if (pageLoader) pageLoader.classList.remove('hidden');
+          setTimeout(hideLoader, 4500);
         }, { passive: true });
       });
 
@@ -1345,9 +1348,18 @@
         media.addEventListener('error', markDone, { once: true });
       });
 
+      window.addEventListener('DOMContentLoaded', () => {
+        hideLoader();
+        finishProgress();
+      });
+
       window.addEventListener('load', () => {
         hideLoader();
         finishProgress();
+        if (loaderFailSafe) {
+          clearTimeout(loaderFailSafe);
+          loaderFailSafe = null;
+        }
       });
 
       @if (session('status'))
@@ -1395,6 +1407,7 @@
 
 </body>
 </html>
+
 
 
 
