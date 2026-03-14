@@ -21,6 +21,7 @@ return [
         'about' => 'Ibyerekeye',
         'contact' => 'Twandikire',
         'join_ministry' => 'Injira mu murimo',
+        'language' => 'Ururimi',
     ],
     'footer' => [
         'ministry' => 'Umurimo',

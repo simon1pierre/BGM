@@ -21,6 +21,7 @@ return [
         'about' => 'À propos',
         'contact' => 'Contact',
         'join_ministry' => 'Rejoindre le ministère',
+        'language' => 'Langue',
     ],
     'footer' => [
         'ministry' => 'Ministère',

@@ -21,6 +21,7 @@ return [
         'about' => 'About',
         'contact' => 'Contact',
         'join_ministry' => 'Join Ministry',
+        'language' => 'Language',
     ],
     'footer' => [
         'ministry' => 'Ministry',
