@@ -12,11 +12,11 @@ use App\Models\VideoEvent;
 use App\Services\GeoIpService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ContentDownloadController extends Controller
 {
-    public function audio(Request $request, Audio $audio): StreamedResponse
+    public function audio(Request $request, Audio $audio): Response
     {
         $storagePath = (string) $audio->audio_file;
         $publicPath = public_path('storage/'.$storagePath);
@@ -38,7 +38,7 @@ class ContentDownloadController extends Controller
         return response()->download($publicPath, $filename);
     }
 
-    public function document(Request $request, Book $document): StreamedResponse
+    public function document(Request $request, Book $document): Response
     {
         $storagePath = (string) $document->file_path;
         $publicPath = public_path('storage/'.$storagePath);
@@ -60,7 +60,7 @@ class ContentDownloadController extends Controller
         return response()->download($publicPath, $filename);
     }
 
-    public function audiobookPart(Request $request, AudiobookPart $part): StreamedResponse
+    public function audiobookPart(Request $request, AudiobookPart $part): Response
     {
         $storagePath = (string) $part->audio_file;
         $publicPath = public_path('storage/'.$storagePath);
