@@ -13,7 +13,7 @@
                <i class="feather-align-left" style="color: white"></i>
             </a>
             <a href="javascript:void(0);" id="menu-expend-button" style="display: none">
-               <i class="feather-arrow-right"></i>
+               <i class="feather-arrow-right" style="color:white"></i>
             </a>
          </div>
       </div>
@@ -165,7 +165,7 @@
                                     <span class="badge bg-primary">New</span>
                                  @endif
                               </span>
-                              <span class="d-block fs-12 text-muted">{{ $metaEmail ? $metaEmail.' • ' : '' }}{{ $actor }}</span>
+                              <span class="d-block fs-12 text-muted">{{ $metaEmail ? $metaEmail.' ï¿½ ' : '' }}{{ $actor }}</span>
                               <span class="d-block fs-11 text-muted">{{ $notification->created_at?->diffForHumans() }}</span>
                            </span>
                         </a>
