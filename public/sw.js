@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bgm-pwa-v2';
+const CACHE_NAME = 'bgm-pwa-v3';
 const CORE_ASSETS = [
   '/',
   '/offline.html',
