@@ -21,6 +21,7 @@ class LoginController extends Controller
     }
     public function store(Request $request)
     {
+        $twoFactorEnabled = filter_var(env('ADMIN_2FA_ENABLED', true), FILTER_VALIDATE_BOOLEAN);
         $credentials = $request->validate([
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
@@ -78,6 +79,19 @@ class LoginController extends Controller
 
         $user = Auth::user();
         if ($user instanceof User) {
+            if (!$twoFactorEnabled) {
+                UserLoginLog::create([
+                    'user_id' => $user->id,
+                    'email' => $user->email,
+                    'ip_address' => $request->ip(),
+                    'user_agent' => $request->userAgent(),
+                    'success' => true,
+                    'logged_in_at' => now(),
+                ]);
+
+                return redirect()->intended(route('admin.dashboard'));
+            }
+
             if (!$user->email_verified_at) {
                 $verification = VerificationCode::create([
                     'user_id' => $user->id,
