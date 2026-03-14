@@ -819,7 +819,7 @@
           >
             <option value="{{ route('locale.switch', 'rw') }}" {{ $currentLocale === 'rw' ? 'selected' : '' }}>Kinyarwanda</option>
             <option value="{{ route('locale.switch', 'en') }}" {{ $currentLocale === 'en' ? 'selected' : '' }}>English</option>
-            <option value="{{ route('locale.switch', 'fr') }}" {{ $currentLocale === 'fr' ? 'selected' : '' }}>Français</option>
+            <option value="{{ route('locale.switch', 'fr') }}" {{ $currentLocale === 'fr' ? 'selected' : '' }}>Franï¿½ais</option>
           </select>
         </div>
       </div>
@@ -927,7 +927,7 @@
   <!-- PWA Install Button + Modal -->
   <button
     id="pwa-install-button"
-    class="hidden fixed bottom-6 right-6 z-50 px-5 py-3 bg-brand-blue text-white text-sm font-semibold rounded-full shadow-lg hover:bg-blue-800 transition-colors"
+    class="hidden fixed bottom-6 right-6 z-50 px-5 py-3 bg-white text-black text-sm font-semibold rounded-full shadow-lg hover:bg-blue-800 transition-colors"
     type="button"
   >
     {{ __('messages.site.install_app') }}
