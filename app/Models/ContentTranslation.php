@@ -13,6 +13,8 @@ class ContentTranslation extends Model
         'source_locale',
         'title',
         'description',
+        'excerpt',
+        'body',
         'translation_status',
         'translated_by',
         'quality_score',

@@ -36,6 +36,7 @@
                 $isTranslationNeedsReview = $isTranslations && $translationStatus === 'needs_review';
                 $isTranslationApproved = $isTranslations && $translationStatus === 'approved';
                 $isTranslationManual = $isTranslations && $translationTranslatedBy === 'manual';
+                $isTranslationSearch = request()->routeIs('admin.translations.search');
                 $isContentMenu = $isVideos || $isAudios || $isDocuments || $isCategories || $isContentNotifications || $isPlaylists || $isVideoSeries || $isDevotionals;
             @endphp
             <div class="navbar-content" style="background-color: #10295E">
@@ -165,6 +166,9 @@
                             </li>
                             <li class="nxl-item {{ $isTranslationManual ? 'active' : '' }}">
                                 <a class="nxl-link" style="color: white" href="{{ route('admin.translations.review', ['translated_by' => 'manual', 'status' => 'all']) }}">Manual</a>
+                            </li>
+                            <li class="nxl-item {{ $isTranslationSearch ? 'active' : '' }}">
+                                <a class="nxl-link" style="color: white" href="{{ route('admin.translations.search') }}">Search & Edit</a>
                             </li>
                         </ul>
                     </li>
