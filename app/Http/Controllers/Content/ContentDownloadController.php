@@ -18,7 +18,10 @@ class ContentDownloadController extends Controller
 {
     public function audio(Request $request, Audio $audio): StreamedResponse
     {
-        if (!Storage::disk('public')->exists($audio->audio_file)) {
+        $storagePath = (string) $audio->audio_file;
+        $publicPath = public_path('storage/'.$storagePath);
+
+        if ($storagePath === '' || (!Storage::disk('public')->exists($storagePath) && !is_file($publicPath))) {
             abort(404);
         }
 
@@ -26,15 +29,21 @@ class ContentDownloadController extends Controller
         $this->recordContentEvent($request, $audio->getMorphClass(), $audio->id, 'download');
         $audio->increment('download_count');
 
-        return Storage::disk('public')->download(
-            $audio->audio_file,
-            $this->sanitizeDownloadName($audio->title, 'mp3')
-        );
+        $filename = $this->sanitizeDownloadName($audio->title, 'mp3');
+
+        if (Storage::disk('public')->exists($storagePath)) {
+            return Storage::disk('public')->download($storagePath, $filename);
+        }
+
+        return response()->download($publicPath, $filename);
     }
 
     public function document(Request $request, Book $document): StreamedResponse
     {
-        if (!Storage::disk('public')->exists($document->file_path)) {
+        $storagePath = (string) $document->file_path;
+        $publicPath = public_path('storage/'.$storagePath);
+
+        if ($storagePath === '' || (!Storage::disk('public')->exists($storagePath) && !is_file($publicPath))) {
             abort(404);
         }
 
@@ -42,15 +51,21 @@ class ContentDownloadController extends Controller
         $this->recordContentEvent($request, $document->getMorphClass(), $document->id, 'download');
         $document->increment('download_count');
 
-        return Storage::disk('public')->download(
-            $document->file_path,
-            $this->sanitizeDownloadName($document->title, 'pdf')
-        );
+        $filename = $this->sanitizeDownloadName($document->title, 'pdf');
+
+        if (Storage::disk('public')->exists($storagePath)) {
+            return Storage::disk('public')->download($storagePath, $filename);
+        }
+
+        return response()->download($publicPath, $filename);
     }
 
     public function audiobookPart(Request $request, AudiobookPart $part): StreamedResponse
     {
-        if (!$part->is_published || empty($part->audio_file) || !Storage::disk('public')->exists($part->audio_file)) {
+        $storagePath = (string) $part->audio_file;
+        $publicPath = public_path('storage/'.$storagePath);
+
+        if (!$part->is_published || $storagePath === '' || (!Storage::disk('public')->exists($storagePath) && !is_file($publicPath))) {
             abort(404);
         }
 
@@ -66,10 +81,13 @@ class ContentDownloadController extends Controller
             $part->audiobook->increment('download_count');
         }
 
-        return Storage::disk('public')->download(
-            $part->audio_file,
-            $this->sanitizeDownloadName($part->title, $extension)
-        );
+        $filename = $this->sanitizeDownloadName($part->title, $extension);
+
+        if (Storage::disk('public')->exists($storagePath)) {
+            return Storage::disk('public')->download($storagePath, $filename);
+        }
+
+        return response()->download($publicPath, $filename);
     }
 
     public function videoView(Video $video)
