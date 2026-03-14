@@ -64,6 +64,53 @@
             color: #334155;
         }
 
+        .page-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .75rem 1rem;
+        }
+
+        .page-header-left {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .4rem 1rem;
+        }
+
+        .page-header-title h5 {
+            margin-bottom: 0;
+        }
+
+        .breadcrumb {
+            margin-bottom: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: .25rem .6rem;
+        }
+
+        .page-header-right {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .card-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .5rem 1rem;
+        }
+
+        .card-header .card-title {
+            margin-bottom: 0;
+        }
+
+        .table td.text-end form {
+            display: inline-block;
+        }
+
         @media (max-width: 991.98px) {
             .nxl-header .header-wrapper {
                 flex-wrap: wrap;
@@ -116,6 +163,20 @@
                 padding-inline: 1rem !important;
             }
 
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .page-header-right {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .breadcrumb {
+                font-size: .85rem;
+            }
+
             .card,
             .card-body {
                 border-radius: .9rem;
@@ -137,6 +198,41 @@
             .form-select,
             .btn {
                 min-height: 40px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .table td.text-end {
+                text-align: left !important;
+                display: flex;
+                flex-wrap: wrap;
+                gap: .35rem;
+            }
+
+            .table td.text-end form {
+                margin: 0;
+            }
+
+            .table td.text-end .btn {
+                width: auto;
+            }
+
+            .nxl-h-dropdown {
+                width: min(92vw, 320px) !important;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .page-header-right .btn,
+            .page-header-right .btn-group,
+            .page-header-right .dropdown,
+            .page-header-right form {
+                width: 100%;
+            }
+
+            .page-header-right .btn,
+            .page-header-right .btn-group .btn {
+                justify-content: center;
             }
         }
 
