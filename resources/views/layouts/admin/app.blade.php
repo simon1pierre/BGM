@@ -109,28 +109,28 @@
 
         .admin-footer {
             position: fixed;
-            left: 1rem;
-            right: 1rem;
-            bottom: 1rem;
+            left: 260px;
+            right: 0;
+            bottom: 0;
             z-index: 1030;
             margin-top: 0;
-            padding: .9rem 1.25rem;
-            border-radius: 18px;
+            padding: 1rem 1.5rem;
+            border-radius: 18px 0 0 0;
             background: #10295E;
             color: #e2e8f0;
-            border: 1px solid rgba(15, 43, 94, 0.25);
-            box-shadow: 0 18px 30px rgba(15, 23, 42, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 -12px 22px rgba(15, 23, 42, 0.18);
             display: flex;
             flex-wrap: wrap;
-            gap: .75rem 1.5rem;
+            gap: .85rem 1.5rem;
             align-items: center;
             justify-content: space-between;
         }
 
         .admin-footer a {
-            color: #e2e8f0;
+            color: #f8fafc;
             text-decoration: none;
-            opacity: .9;
+            opacity: .88;
         }
 
         .admin-footer a:hover {
@@ -144,8 +144,8 @@
         }
 
         .admin-footer .footer-brand img {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
             border-radius: 10px;
             background: #fff;
@@ -154,12 +154,12 @@
 
         .admin-footer .footer-title {
             font-weight: 600;
-            font-size: .9rem;
+            font-size: .95rem;
         }
 
         .admin-footer .footer-subtitle {
-            font-size: .72rem;
-            opacity: .75;
+            font-size: .75rem;
+            opacity: .7;
         }
 
         .admin-footer .footer-meta {
@@ -167,7 +167,7 @@
             flex-wrap: wrap;
             gap: .35rem 1rem;
             font-size: .75rem;
-            opacity: .8;
+            opacity: .75;
         }
 
         .admin-footer .footer-links {
@@ -180,7 +180,7 @@
         }
 
         .nxl-container {
-            padding-bottom: 6.5rem;
+            padding-bottom: 5.75rem;
         }
 
         .table td.text-end form {
@@ -315,10 +315,11 @@
             }
 
             .admin-footer {
-                left: .75rem;
-                right: .75rem;
-                bottom: .75rem;
-                padding: .85rem 1rem;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border-radius: 0;
+                padding: .9rem 1.1rem;
             }
         }
 
@@ -677,7 +678,6 @@
     @stack('scripts')
 </body>
 </html>
-
 
 
 
