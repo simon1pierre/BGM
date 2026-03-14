@@ -11,6 +11,7 @@ use App\Models\UserActivityLog;
 use App\Models\VerificationCode;
 use App\Notifications\VerificationCodeNotification;
 use Illuminate\Support\Facades\Notification;
+use Throwable;
 
 class LoginController extends Controller
 {
@@ -85,7 +86,21 @@ class LoginController extends Controller
                     'purpose' => 'register',
                     'expires_at' => now()->addMinutes(10),
                 ]);
-                Notification::route('mail', $user->email)->notify(new VerificationCodeNotification($verification));
+                try {
+                    Notification::route('mail', $user->email)->notify(new VerificationCodeNotification($verification));
+                } catch (Throwable $e) {
+                    report($e);
+                    $verification->delete();
+
+                    Auth::logout();
+                    $request->session()->invalidate();
+                    $request->session()->regenerateToken();
+
+                    return redirect()->route('admin.login')->with(
+                        'error',
+                        'Unable to send verification email right now. Please try again later or contact support.'
+                    );
+                }
 
                 Auth::logout();
                 $request->session()->invalidate();
@@ -102,7 +117,21 @@ class LoginController extends Controller
                 'purpose' => 'login',
                 'expires_at' => now()->addMinutes(10),
             ]);
-            Notification::route('mail', $user->email)->notify(new VerificationCodeNotification($verification));
+            try {
+                Notification::route('mail', $user->email)->notify(new VerificationCodeNotification($verification));
+            } catch (Throwable $e) {
+                report($e);
+                $verification->delete();
+
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return redirect()->route('admin.login')->with(
+                    'error',
+                    'Unable to send verification email right now. Please try again later or contact support.'
+                );
+            }
 
             Auth::logout();
             $request->session()->put('pending_2fa_user_id', $user->id);
