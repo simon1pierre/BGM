@@ -107,9 +107,17 @@
             margin-bottom: 0;
         }
 
+        html {
+            --admin-sidebar-width: 260px;
+        }
+
+        html.minimenu {
+            --admin-sidebar-width: 90px;
+        }
+
         .admin-footer {
             position: fixed;
-            left: 260px;
+            left: var(--admin-sidebar-width);
             right: 0;
             bottom: 0;
             z-index: 1030;
@@ -678,8 +686,6 @@
     @stack('scripts')
 </body>
 </html>
-
-
 
 
 
