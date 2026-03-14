@@ -7,6 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        'custom-blue': '#162556',
         brand: {
           blue: '#0f2b5e',
           light: '#f8fafc',
