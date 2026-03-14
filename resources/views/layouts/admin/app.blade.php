@@ -64,6 +64,82 @@
             color: #334155;
         }
 
+        @media (max-width: 991.98px) {
+            .nxl-header .header-wrapper {
+                flex-wrap: wrap;
+                gap: .75rem;
+                padding: .75rem 1rem;
+            }
+
+            .nxl-header .header-left,
+            .nxl-header .header-right {
+                width: 100%;
+            }
+
+            .nxl-header .header-right .d-flex {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                gap: .5rem;
+            }
+
+            .nxl-navigation {
+                position: fixed;
+                inset: 0 auto 0 0;
+                width: min(86vw, 320px);
+                transform: translateX(-105%);
+                transition: transform .2s ease;
+                z-index: 1050;
+            }
+
+            .nxl-navigation.mobile-open {
+                transform: translateX(0);
+            }
+
+            .admin-mobile-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(15, 23, 42, .55);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity .2s ease;
+                z-index: 1040;
+            }
+
+            .admin-mobile-overlay.show {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .nxl-container,
+            .nxl-content,
+            .main-content {
+                padding-inline: 1rem !important;
+            }
+
+            .card,
+            .card-body {
+                border-radius: .9rem;
+            }
+
+            .table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .table thead th,
+            .table td {
+                padding: .65rem .75rem;
+            }
+
+            .form-control,
+            .form-select,
+            .btn {
+                min-height: 40px;
+            }
+        }
+
         @media print {
             body {
                 background: #fff !important;
@@ -114,6 +190,7 @@
 
 <body>
     <div id="adminToastWrap" class="admin-toast-wrap" aria-live="polite" aria-atomic="true"></div>
+    <div id="adminMobileOverlay" class="admin-mobile-overlay" aria-hidden="true"></div>
     <div class="modal fade admin-confirm-modal" id="adminConfirmModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
@@ -366,6 +443,29 @@
             document.querySelectorAll('input[data-upload-monitor]').forEach((input) => {
                 input.addEventListener('change', () => updateUploadSummary(input));
                 updateUploadSummary(input);
+            });
+        })();
+    </script>
+    <script>
+        (() => {
+            const toggle = document.getElementById('mobile-collapse');
+            const nav = document.querySelector('.nxl-navigation');
+            const overlay = document.getElementById('adminMobileOverlay');
+
+            const closeNav = () => {
+                nav?.classList.remove('mobile-open');
+                overlay?.classList.remove('show');
+            };
+
+            toggle?.addEventListener('click', (event) => {
+                event.preventDefault();
+                nav?.classList.toggle('mobile-open');
+                overlay?.classList.toggle('show');
+            });
+
+            overlay?.addEventListener('click', closeNav);
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 992) closeNav();
             });
         })();
     </script>
