@@ -88,6 +88,7 @@ Route::prefix('beacons/admin')->middleware(['auth', 'admin'])->name('admin.trans
     Route::get('/translations/search', [\App\Http\Controllers\Admin\Translations\TranslationSearchController::class, 'index'])->name('search');
     Route::post('/translations/search/content/{translation}', [\App\Http\Controllers\Admin\Translations\TranslationSearchController::class, 'updateContent'])->name('search.content.update');
     Route::post('/translations/search/settings/{translation}', [\App\Http\Controllers\Admin\Translations\TranslationSearchController::class, 'updateSetting'])->name('search.setting.update');
+    Route::post('/translations/search/lang', [\App\Http\Controllers\Admin\Translations\TranslationSearchController::class, 'updateLang'])->name('search.lang.update');
 });
 Route::controller(ManageController::class)->group(function(){
     Route::get('/beacons/admin/register','index')->name('admin.register')->middleware(['auth', 'admin']);
@@ -245,7 +246,6 @@ Route::post('/books/{book}/track', [PublicContentEngagementController::class, 't
     ->name('content.book.track');
 Route::post('/analytics/audience/track', [AudienceAnalyticsController::class, 'track'])
     ->name('content.audience.track');
-
 
 
 

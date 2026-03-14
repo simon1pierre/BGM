@@ -40,7 +40,7 @@
                         <div class="col-md-3">
                             <label class="form-label">Source</label>
                             <select name="source" class="form-select">
-                                @foreach (['all' => 'All', 'content' => 'Content', 'settings' => 'Site Settings'] as $key => $label)
+                                @foreach (['all' => 'All', 'content' => 'Content', 'settings' => 'Site Settings', 'lang' => 'Language Files'] as $key => $label)
                                     <option value="{{ $key }}" {{ $source === $key ? 'selected' : '' }}>{{ $label }}</option>
                                 @endforeach
                             </select>
@@ -55,6 +55,62 @@
                             <div class="text-muted fs-12">Search shows matches in content translations (titles, descriptions, excerpts, bodies) and site settings translations.</div>
                         </div>
                     </form>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header"><h5 class="card-title">Language File Translations</h5></div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Locale</th>
+                                    <th>File</th>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($langResults as $row)
+                                    <tr>
+                                        <td class="text-uppercase">{{ $row['locale'] }}</td>
+                                        <td>{{ $row['file'] }}.php</td>
+                                        <td class="text-muted fs-12">{{ $row['key'] }}</td>
+                                        <td class="fs-12">{{ \Illuminate\Support\Str::limit($row['value'], 120) }}</td>
+                                        <td class="text-end">
+                                            <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#langEdit{{ $loop->index }}" aria-expanded="false">
+                                                Edit
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="collapse" id="langEdit{{ $loop->index }}">
+                                        <td colspan="5" class="bg-light">
+                                            <form method="POST" action="{{ route('admin.translations.search.lang.update') }}" class="row g-2">
+                                                @csrf
+                                                <input type="hidden" name="locale" value="{{ $row['locale'] }}">
+                                                <input type="hidden" name="file" value="{{ $row['file'] }}">
+                                                <input type="hidden" name="key" value="{{ $row['key'] }}">
+                                                <div class="col-md-10">
+                                                    <label class="form-label fs-12">{{ $row['file'] }}.php → {{ $row['key'] }}</label>
+                                                    <textarea name="value" class="form-control form-control-sm" rows="2">{{ $row['value'] }}</textarea>
+                                                </div>
+                                                <div class="col-md-2 d-flex align-items-end">
+                                                    <button class="btn btn-sm btn-success w-100">Save</button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr><td colspan="5" class="text-center text-muted">No language file matches yet.</td></tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-3">
+                        {{ $langResults->links('pagination.admin') }}
+                    </div>
                 </div>
             </div>
 

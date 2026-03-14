@@ -8,6 +8,8 @@ use App\Models\SettingTranslation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -74,12 +76,39 @@ class TranslationSearchController extends Controller
 
         $settingsResults = $this->paginateCollection($settingMatches, 20, $request, 'settings_page');
 
+        $langMatches = collect();
+        if ($q !== '' && in_array($source, ['all', 'lang'], true)) {
+            $langLocales = $locale === 'all' ? self::LOCALES : [$locale];
+            foreach ($langLocales as $langLocale) {
+                foreach ($this->langFiles($langLocale) as $file) {
+                    $entries = $this->flattenLang($this->loadLang($langLocale, $file));
+                    foreach ($entries as $key => $value) {
+                        $value = (string) $value;
+                        if ($value === '') {
+                            continue;
+                        }
+                        if (Str::contains(Str::lower($value), Str::lower($q))) {
+                            $langMatches->push([
+                                'locale' => $langLocale,
+                                'file' => $file,
+                                'key' => $key,
+                                'value' => $value,
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+
+        $langResults = $this->paginateCollection($langMatches, 20, $request, 'lang_page');
+
         return view('Admin.Translations.search', [
             'q' => $q,
             'locale' => $locale,
             'source' => $source,
             'contentResults' => $contentResults,
             'settingsResults' => $settingsResults,
+            'langResults' => $langResults,
         ]);
     }
 
@@ -138,6 +167,34 @@ class TranslationSearchController extends Controller
         return back()->with('status', 'Setting translation updated.');
     }
 
+    public function updateLang(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'locale' => ['required', 'string'],
+            'file' => ['required', 'string'],
+            'key' => ['required', 'string'],
+            'value' => ['nullable', 'string'],
+        ]);
+
+        if (!in_array($validated['locale'], self::LOCALES, true)) {
+            return back()->with('status_error', 'Unsupported language selected.');
+        }
+
+        $file = $validated['file'];
+        if (!in_array($file, $this->langFiles($validated['locale']), true)) {
+            return back()->with('status_error', 'Invalid language file selected.');
+        }
+
+        $data = $this->loadLang($validated['locale'], $file);
+        Arr::set($data, $validated['key'], $validated['value']);
+
+        $path = lang_path($validated['locale'] . '/' . $file . '.php');
+        $payload = "<?php\n\nreturn " . var_export($data, true) . ";\n";
+        File::put($path, $payload);
+
+        return back()->with('status', 'Language line updated.');
+    }
+
     private function paginateCollection($items, int $perPage, Request $request, string $pageName): LengthAwarePaginator
     {
         $page = (int) $request->query($pageName, 1);
@@ -151,6 +208,44 @@ class TranslationSearchController extends Controller
             $page,
             ['path' => $request->url(), 'pageName' => $pageName, 'query' => $request->query()]
         );
+    }
+
+    private function langFiles(string $locale): array
+    {
+        $path = lang_path($locale);
+        if (!File::isDirectory($path)) {
+            return [];
+        }
+
+        return collect(File::files($path))
+            ->map(fn ($file) => $file->getFilenameWithoutExtension())
+            ->values()
+            ->all();
+    }
+
+    private function loadLang(string $locale, string $file): array
+    {
+        $path = lang_path($locale . '/' . $file . '.php');
+        if (!File::exists($path)) {
+            return [];
+        }
+
+        $data = include $path;
+        return is_array($data) ? $data : [];
+    }
+
+    private function flattenLang(array $data, string $prefix = ''): array
+    {
+        $result = [];
+        foreach ($data as $key => $value) {
+            $fullKey = $prefix === '' ? (string) $key : $prefix . '.' . $key;
+            if (is_array($value)) {
+                $result += $this->flattenLang($value, $fullKey);
+            } else {
+                $result[$fullKey] = $value;
+            }
+        }
+        return $result;
     }
 
     private function hasQualityColumns(): bool
