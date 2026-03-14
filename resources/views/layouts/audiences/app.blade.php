@@ -927,7 +927,7 @@
   <!-- PWA Install Button + Modal -->
   <button
     id="pwa-install-button"
-    class="hidden fixed bottom-5 left-4 right-4 sm:left-auto sm:right-6 sm:w-auto z-50 flex items-center justify-center gap-3 px-5 py-3 bg-white/95 text-slate-900 text-sm font-semibold rounded-full shadow-xl border border-white/60 backdrop-blur hover:-translate-y-0.5 hover:shadow-2xl transition-all"
+    class="fixed bottom-5 right-4 sm:right-6 z-50 flex items-center justify-center gap-3 px-5 py-3 bg-white/95 text-slate-900 text-sm font-semibold rounded-full shadow-xl border border-white/60 backdrop-blur hover:-translate-y-0.5 hover:shadow-2xl transition-all"
     type="button"
   >
     <span class="flex items-center justify-center w-9 h-9 rounded-full bg-blue-900/10">
@@ -956,6 +956,9 @@
       </p>
       <p class="hidden text-xs text-slate-500 mb-5" id="pwa-install-ios">
         On iPhone/iPad: tap Share, then “Add to Home Screen”.
+      </p>
+      <p class="hidden text-xs text-slate-500 mb-5" id="pwa-install-desktop">
+        On desktop Chrome/Edge: open the browser menu (⋮) and choose “Install app”.
       </p>
       <div class="grid gap-3 mb-6 sm:grid-cols-2">
         <div class="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 px-3 py-3">
@@ -1079,13 +1082,19 @@
     const installNow = document.getElementById('pwa-install-now');
     const installLater = document.getElementById('pwa-install-later');
     const installClose = document.getElementById('pwa-install-close');
+    const iosHint = document.getElementById('pwa-install-ios');
+    const desktopHint = document.getElementById('pwa-install-desktop');
+    const genericCopy = document.getElementById('pwa-install-copy');
+    const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent || '');
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    const showInstallButton = () => installButton?.classList.remove('hidden');
+    const hideInstallButton = () => installButton?.classList.add('hidden');
 
     window.addEventListener('beforeinstallprompt', (event) => {
       event.preventDefault();
       deferredPrompt = event;
-      if (installButton) {
-        installButton.classList.remove('hidden');
-      }
+      showInstallButton();
     });
 
     function hideInstallModal() {
@@ -1104,6 +1113,17 @@
 
     if (installButton) {
       installButton.addEventListener('click', () => {
+        if (!deferredPrompt) {
+          if (isIos) {
+            iosHint?.classList.remove('hidden');
+            desktopHint?.classList.add('hidden');
+          } else {
+            desktopHint?.classList.remove('hidden');
+            iosHint?.classList.add('hidden');
+          }
+          genericCopy?.classList.add('hidden');
+          installNow?.classList.add('hidden');
+        }
         showInstallModal();
       });
     }
@@ -1139,16 +1159,15 @@
       });
     }
 
-    const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent || '');
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-
-    if (!isStandalone && isIos && installButton) {
-      installButton.classList.remove('hidden');
-      if (installNow) installNow.classList.add('hidden');
-      const iosHint = document.getElementById('pwa-install-ios');
-      const genericCopy = document.getElementById('pwa-install-copy');
-      iosHint?.classList.remove('hidden');
-      genericCopy?.classList.add('hidden');
+    if (isStandalone) {
+      hideInstallButton();
+    } else {
+      showInstallButton();
+      if (isIos) {
+        iosHint?.classList.remove('hidden');
+        genericCopy?.classList.add('hidden');
+        installNow?.classList.add('hidden');
+      }
     }
   </script>
   <script>
