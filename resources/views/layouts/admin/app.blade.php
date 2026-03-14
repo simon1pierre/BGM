@@ -109,6 +109,7 @@
 
         html {
             --admin-sidebar-width: 260px;
+            --admin-header-height: 70px;
         }
 
         html.minimenu {
@@ -117,20 +118,20 @@
 
         .admin-footer {
             position: fixed;
-            left: var(--admin-sidebar-width);
-            right: 0;
-            bottom: 0;
+            left: calc(var(--admin-sidebar-width) + 1rem);
+            right: 1rem;
+            bottom: 1rem;
             z-index: 1030;
             margin-top: 0;
-            padding: 1rem 1.5rem;
-            border-radius: 18px 0 0 0;
+            padding: .8rem 1.1rem;
+            border-radius: 16px;
             background: #10295E;
             color: #e2e8f0;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 -12px 22px rgba(15, 23, 42, 0.18);
+            box-shadow: 0 12px 26px rgba(15, 23, 42, 0.2);
             display: flex;
             flex-wrap: wrap;
-            gap: .85rem 1.5rem;
+            gap: .5rem 1.25rem;
             align-items: center;
             justify-content: space-between;
         }
@@ -152,43 +153,43 @@
         }
 
         .admin-footer .footer-brand img {
-            width: 40px;
-            height: 40px;
+            width: 34px;
+            height: 34px;
             object-fit: contain;
             border-radius: 10px;
             background: #fff;
-            padding: 4px;
+            padding: 3px;
         }
 
         .admin-footer .footer-title {
             font-weight: 600;
-            font-size: .95rem;
+            font-size: .85rem;
         }
 
         .admin-footer .footer-subtitle {
-            font-size: .75rem;
+            font-size: .7rem;
             opacity: .7;
         }
 
         .admin-footer .footer-meta {
             display: flex;
             flex-wrap: wrap;
-            gap: .35rem 1rem;
-            font-size: .75rem;
+            gap: .35rem .8rem;
+            font-size: .7rem;
             opacity: .75;
         }
 
         .admin-footer .footer-links {
             display: flex;
             flex-wrap: wrap;
-            gap: .5rem 1.25rem;
-            font-size: .75rem;
+            gap: .4rem 1rem;
+            font-size: .7rem;
             text-transform: uppercase;
             letter-spacing: .04em;
         }
 
         .nxl-container {
-            padding-bottom: 5.75rem;
+            padding-bottom: 6.5rem;
         }
 
         .table td.text-end form {
@@ -327,7 +328,7 @@
                 right: 0;
                 bottom: 0;
                 border-radius: 0;
-                padding: .9rem 1.1rem;
+                padding: .85rem 1rem;
             }
         }
 
@@ -686,7 +687,6 @@
     @stack('scripts')
 </body>
 </html>
-
 
 
 
