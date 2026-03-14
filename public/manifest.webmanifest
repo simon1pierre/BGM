@@ -1,21 +1,47 @@
 {
-  "name": "Beacons of God Ministries",
+  "name": "Beacons of God Ministries | Light, Truth, and Guidance",
   "short_name": "BGM",
-  "start_url": "/",
+  "description": "Daily devotionals, sermons, and resources from Beacons of God Ministries.",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#f8fafc",
   "theme_color": "#0f2b5e",
+  "categories": ["education", "lifestyle", "spirituality"],
   "icons": [
     {
       "src": "/pwa/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/pwa/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Latest Sermons",
+      "short_name": "Sermons",
+      "url": "/sermons?source=pwa",
+      "icons": [{ "src": "/pwa/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Daily Devotionals",
+      "short_name": "Devotionals",
+      "url": "/devotionals?source=pwa",
+      "icons": [{ "src": "/pwa/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Resources",
+      "short_name": "Resources",
+      "url": "/resources?source=pwa",
+      "icons": [{ "src": "/pwa/icon-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }

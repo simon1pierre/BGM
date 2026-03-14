@@ -927,23 +927,50 @@
   <!-- PWA Install Button + Modal -->
   <button
     id="pwa-install-button"
-    class="hidden fixed bottom-6 right-6 z-50 px-5 py-3 bg-white text-black text-sm font-semibold rounded-full shadow-lg hover:bg-blue-800 transition-colors"
+    class="hidden fixed bottom-5 left-4 right-4 sm:left-auto sm:right-6 sm:w-auto z-50 flex items-center justify-center gap-3 px-5 py-3 bg-white/95 text-slate-900 text-sm font-semibold rounded-full shadow-xl border border-white/60 backdrop-blur hover:-translate-y-0.5 hover:shadow-2xl transition-all"
     type="button"
   >
-    {{ __('messages.site.install_app') }}
+    <span class="flex items-center justify-center w-9 h-9 rounded-full bg-blue-900/10">
+      <img src="{{ $logoPath }}" alt="{{ $siteName }}" class="w-6 h-6 object-contain">
+    </span>
+    <span>{{ __('messages.site.install_app') }}</span>
   </button>
-  <div id="pwa-install-modal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/60 px-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl">
-      <div class="flex items-center justify-between mb-3">
-        <h3 class="text-lg font-semibold text-slate-900">{{ __('messages.site.install_title') }}</h3>
-        <button id="pwa-install-close" class="text-slate-500 hover:text-slate-900" type="button" aria-label="Close">
+  <div id="pwa-install-modal" class="hidden fixed inset-0 z-50 items-center justify-center bg-slate-900/70 px-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl">
+      <div class="flex items-start justify-between gap-4 mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-14 h-14 rounded-2xl bg-blue-900/10 flex items-center justify-center">
+            <img src="{{ $logoPath }}" alt="{{ $siteName }}" class="w-9 h-9 object-contain">
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-semibold text-slate-900">{{ __('messages.site.install_title') }}</h3>
+            <p class="text-xs text-slate-500">Beacons of God Ministries</p>
+          </div>
+        </div>
+        <button id="pwa-install-close" class="text-slate-400 hover:text-slate-900" type="button" aria-label="Close">
           <svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true"><path fill="currentColor" d="M18.3 5.71L12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.71 2.88 18.3 9.17 12 2.88 5.71 4.29 4.29 10.59 10.6l6.3-6.31z"/></svg>
         </button>
       </div>
-      <p class="text-sm text-slate-600 mb-6">
+      <p class="text-sm text-slate-600 mb-5">
         {{ __('messages.site.install_prompt', ['name' => $siteName]) }}
       </p>
-      <div class="flex items-center justify-end gap-2">
+      <div class="grid gap-3 mb-6 sm:grid-cols-2">
+        <div class="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 px-3 py-3">
+          <span class="text-blue-900 text-sm font-semibold">1</span>
+          <div>
+            <div class="text-sm font-semibold text-slate-900">Instant Access</div>
+            <div class="text-xs text-slate-500">Open sermons, books, and devotionals faster.</div>
+          </div>
+        </div>
+        <div class="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 px-3 py-3">
+          <span class="text-blue-900 text-sm font-semibold">2</span>
+          <div>
+            <div class="text-sm font-semibold text-slate-900">App-like Experience</div>
+            <div class="text-xs text-slate-500">Full screen, smooth navigation, saved session.</div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2">
         <button id="pwa-install-later" class="px-4 py-2 text-sm rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50" type="button">
           {{ __('messages.site.later') }}
         </button>
